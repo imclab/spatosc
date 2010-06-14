@@ -1,0 +1,13 @@
+spatosc is a C/C++ library that facilitates communication with various 3D audio spatializers.
+
+Support is planned for:
+
+Zirkonium         http://ima.zkm.de/~cramakri/zirkonium
+Audioscape        http://audioscape.org
+SPIN Framework    http://spinframework.org
+SPATDif           http://www.spatdif.org
+D-Mitri           http://www.meyersound.com/products/d-mitri
+
+For more information, contact:
+Mike Wozniewski :: mike@mikewoz.com
+
