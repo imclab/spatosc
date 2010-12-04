@@ -1,0 +1,550 @@
+$LastChangedDate: 2009-01-21 11:40:41 -0800 (Wed, 21 Jan 2009) $
+$Rev: 13943 $
+
+In the Gravity system, there is a variant ControlPointValue class which can hold any 
+one of several types of value:
+
+null    - value contains no data
+bool    - true or false
+float   - floating point
+int32   - signed 32-bit integer
+string  - variable-length character string
+point   - a pair of floating point values
+Message - a MUSCLE Message (reference-counted)
+Config  - a Gravity Config object (reference-counted)
+Address - a ControlPointAddress object
+int64   - a 64-bit integer
+vlist   - a list of ControlPointValue objects
+
+Addressing is done by concatenating between one and eight of the following
+tokens together.  Note that each token's meaning depends on all the tokens 
+that preceded it!  
+
+For the current token list, please see qtnet/gravity/GravityProtocol.h.
+
+// -----------------------------------------------------------------------------
+// list of control point value types and their semantics / invariances
+
+cvt_bool
+   - value is a boolean; true or false
+
+cvt_dbid
+   - value is an int32 indicating the ID of an item in the automation database
+
+cvt_eqtype
+   - value is an int32; one of the enumerated EQ types
+
+cvt_float
+   - value is a float (any float is permissible)
+
+cvt_freq
+   - value is a float that represents a frequency in Hz
+
+cvt_gain
+   - value is a float that represents a decibel gain value
+
+cvt_pan
+   - value is a float that represents a pan value.  -1.0 is hard left, 0.0 is centered, +1.0 is hard right.
+
+cvt_index
+   - value is an int32 representing an index into an ordered set (or -1 if invalid)
+
+cvt_count
+   - value is an int32 representing the number of something in a set (0 or higher)
+
+cvt_name
+   - value is a human-readable string
+
+cvt_linklight
+   - A value between 0 and 3, inclusive, indicating "off", "red", "green", and "orange"
+
+cvt_temperature
+   - A floating point value indicating a temperature in degrees celsius
+
+cvt_voltage
+   - A floating point value indicating a voltage (in volts, of course ;^))
+
+cvt_meters
+   - value is a float representing a physical distance or offset in meters
+
+cvt_position
+   - value is a Point (2 floats) representing a location in a space map
+
+cvt_ms
+   - value is an int32 representing milliseconds
+
+cvt_nanoseconds
+   - value is an int64 representing nanoseconds
+
+cvt_nfloat
+   - value is a normalized float.  Must be between 0.0f and 1.0f, inclusive.
+
+cvt_q
+   - value is a float representing 'q'.  (direct representation?  normalized?  how?)
+
+cvt_timecode
+   - value is an int32 representing a bitpacked timecode value according to the MTC spec
+
+cvt_traceString
+   - a string encodes a set of control points along a signal path.
+      e.g. "I1-25,36,47,50-50;B1-5;O1-10"
+
+cvt_fadetimebase
+   - A list of ControlPointValues and their time stamps, that (taken together)
+     represent the curve of a fader's fade over time.
+
+// -------------------------------------------------------------------------------
+// exhaustive list of Gravity control points
+
+ciAutomation, ciActive, ciCue, ciID, (player#)     ->  cvt_index
+ciAutomation, ciActive, ciCueEntry, ciID, (player#)
+ciAutomation, ciActive, ciCueEntry, ciIndex, (player#)     ->  cvt_index
+ciAutomation, ciActive, ciCueList, ciID, (player#)       -> cvt_index
+ciAutomation, ciActive, ciDuration, (player#) -> cvt_int64  cvt_nanoseconds
+ciAutomation, ciActive, ciSubcue, ciID, (player#)     ->  cvt_index
+ciAutomation, ciEnable, (player#)  -> cvt_bool  (FogBugz #4606)
+ciAutomation, ciNext, ciCueEntry, ciID, (player#)
+ciAutomation, ciNext, ciCueEntry, ciIndex, (player#)     ->  cvt_index
+ciAutomation, ciStatus, ciCueEntry, ciID, (player#)
+ciAutomation, ciActive, ciTimeBase, (player#) -> cvt_int64 (a value indicating whether the player's automation is paused or playing, and when)
+ciAutomation, ciTimeCode, ciEnable, (player#) -> cvt_bool
+ciAutomation, ciWildTracks, ciNext, Media, (player#), (unit#) -> cvt_message (Message containing upcoming-load hints for the Wild Tracks units)
+
+ciAux, ciActive, ciChannel, ciSet, (aux#) -> cvt_traceString (set of signal-path points that are associated with the specified Aux Master)
+ciAux, ciAnalog, ciScale, (aux#)  -> cvt_dB (analog aux scale (ie +6, +16, +26)
+ciAux, ciChannel, ciActive, (aux#) -> cvt_bool NOT IMPLEMENTED YET: (Read-only control point, is true iff this aux-out is being fed by any inputs)
+ciAux, ciChannel, ciEnable, (aux#) -> cvt_bool
+ciAux, ciClip, (aux#)            -> cvt_bool (aux clipping indicator)
+ciAux, ciDelay, (aux#)     ->  cvt_nanoseconds
+ciAux, ciDelay, ciEnable, (aux#) -> cvt_bool
+
+// New dynamics control points, per FogBugz #5374
+ciAux, ciDynamics, ciBypass,     (aux#)                ->  cvt_bool
+ciAux, ciDynamics, ciMakeupGain, (aux#)                ->  cvt_db
+ciAux, ciDynamics, ciNoiseGate,  ciBypass,      (aux#) ->  cvt_bool
+ciAux, ciDynamics, ciNoiseGate,  ciThreshold,   (aux#) ->  cvt_db
+ciAux, ciDynamics, ciNoiseGate,  ciAttack,      (aux#) ->  cvt_nanoseconds
+ciAux, ciDynamics, ciNoiseGate,  ciHold,        (aux#) ->  cvt_nanoseconds
+ciAux, ciDynamics, ciNoiseGate,  ciRelease,     (aux#) ->  cvt_nanoseconds
+ciAux, ciDynamics, ciNoiseGate,  ciRange,       (aux#) ->  cvt_dynamicsratiofloat
+ciAux, ciDynamics, ciCompressor, ciBypass,      (aux#) ->  cvt_bool
+ciAux, ciDynamics, ciCompressor, ciThreshold,   (aux#) ->  cvt_db
+ciAux, ciDynamics, ciCompressor, ciAttack,      (aux#) ->  cvt_nanoseconds
+ciAux, ciDynamics, ciCompressor, ciHold,        (aux#) ->  cvt_nanoseconds
+ciAux, ciDynamics, ciCompressor, ciRelease,     (aux#) ->  cvt_nanoseconds
+ciAux, ciDynamics, ciCompressor, ciRatio,       (aux#) ->  cvt_dynamicsrange
+ciAux, ciDynamics, ciLimiter,    ciBypass,      (aux#) ->  cvt_bool
+ciAux, ciDynamics, ciLimiter,    ciThreshold,   (aux#) ->  cvt_db
+ciAux, ciDynamics, ciLimiter,    ciAttack,      (aux#) ->  cvt_nanoseconds
+ciAux, ciDynamics, ciLimiter,    ciHold,        (aux#) ->  cvt_nanoseconds
+ciAux, ciDynamics, ciLimiter,    ciRelease,     (aux#) ->  cvt_nanoseconds
+ciAux, ciDynamics, ciLimiter,    ciRatio,       (aux#) ->  cvt_dynamicsrange
+ciAux, ciDynamics, ciExpander,   ciBypass,      (aux#) ->  cvt_bool
+ciAux, ciDynamics, ciExpander,   ciThreshold,   (aux#) ->  cvt_db
+ciAux, ciDynamics, ciExpander,   ciAttack,      (aux#) ->  cvt_nanoseconds
+ciAux, ciDynamics, ciExpander,   ciHold,        (aux#) ->  cvt_nanoseconds
+ciAux, ciDynamics, ciExpander,   ciRelease,     (aux#) ->  cvt_nanoseconds
+ciAux, ciDynamics, ciExpander,   ciRatio,       (aux#) ->  cvt_dynamicsrange
+
+ciAux, ciEQ, ciBandEnabled, (aux#), (band#) ->  cvt_bool
+ciAux, ciEQ, ciEnable, (aux#)                 ->  cvt_bool
+ciAux, ciEQ, ciFrequency, (aux#), (band#)     ->  cvt_freq
+ciAux, ciEQ, ciName, (aux#), (band#)     ->  cvt_string
+ciAux, ciEQ, ciLevel, (aux#), (band#)     ->  cvt_gain
+ciAux, ciEQ, ciQ, (aux#), (band#)     ->  cvt_q
+ciAux, ciEQ, ciStatus, (aux#)     ->  cvt_int32 (read only, bitchord of EQ_STATUS_* bits)
+ciAux, ciEQ, ciType, (aux#), (band#)     ->  cvt_eqtype
+ciAux, ciInvert, (aux#)     ->  cvt_bool
+ciAux, ciIsolate, (aux#)    ->  cvt_bool
+ciAux, ciTouched, (aux#)    ->  cvt_bool
+ciAux, ciName, (aux#)       ->  cvt_name
+ciAux, ciLevel, (aux#)      ->  cvt_bool
+ciAux, ciMeter, (aux#)    -> cvt_gain
+ciAux, ciMute, (aux#)     -> cvt_bool
+ciAux, ciSolo, (aux#)     -> cvt_bool
+ciAux, ciSystem, ciEnable, (aux#) -> cvt_bool  (FogBugz #6107)
+ciAux, ciTrim, (aux#)     -> cvt_gain
+ciAux, ciVGroup, (aux#) (vgroupLayer#) ->  cvt_index
+ciAux, ciChannel, ciPosition, (channel#) -> cvt_int (channel frame/slot/position bit chord)
+
+ciBus, ciActive, ciChannel, ciSet, (channel#) -> cvt_traceString (set of signal-path points that are associated with the specified Bus)
+ciBus, ciChannel, ciActive, (channel#) -> cvt_bool NOT IMPLEMENTED YET: (Read-only control point, is true iff this bus is connecting any inputs into any outputs/auxouts)
+ciAux, ciClip, (bus#)            -> cvt_bool (aux clipping indicator)
+ciBus, ciDelay, (bus#)     ->  cvt_nanoseconds
+ciBus, ciDelay, ciEnable, (bus#) -> cvt_bool
+
+// New dynamics control points, per FogBugz #5374
+ciBus, ciDynamics, ciBypass,     (bus#)                ->  cvt_bool
+ciBus, ciDynamics, ciMakeupGain, (bus#)                ->  cvt_db
+ciBus, ciDynamics, ciNoiseGate,  ciBypass,      (bus#) ->  cvt_bool
+ciBus, ciDynamics, ciNoiseGate,  ciThreshold,   (bus#) ->  cvt_db
+ciBus, ciDynamics, ciNoiseGate,  ciAttack,      (bus#) ->  cvt_nanoseconds
+ciBus, ciDynamics, ciNoiseGate,  ciHold,        (bus#) ->  cvt_nanoseconds
+ciBus, ciDynamics, ciNoiseGate,  ciRelease,     (bus#) ->  cvt_nanoseconds
+ciBus, ciDynamics, ciNoiseGate,  ciRange,       (bus#) ->  cvt_dynamicsratiofloat
+ciBus, ciDynamics, ciCompressor, ciBypass,      (bus#) ->  cvt_bool
+ciBus, ciDynamics, ciCompressor, ciThreshold,   (bus#) ->  cvt_db
+ciBus, ciDynamics, ciCompressor, ciAttack,      (bus#) ->  cvt_nanoseconds
+ciBus, ciDynamics, ciCompressor, ciHold,        (bus#) ->  cvt_nanoseconds
+ciBus, ciDynamics, ciCompressor, ciRelease,     (bus#) ->  cvt_nanoseconds
+ciBus, ciDynamics, ciCompressor, ciRatio,       (bus#) ->  cvt_dynamicsrange
+ciBus, ciDynamics, ciLimiter,    ciBypass,      (bus#) ->  cvt_bool
+ciBus, ciDynamics, ciLimiter,    ciThreshold,   (bus#) ->  cvt_db
+ciBus, ciDynamics, ciLimiter,    ciAttack,      (bus#) ->  cvt_nanoseconds
+ciBus, ciDynamics, ciLimiter,    ciHold,        (bus#) ->  cvt_nanoseconds
+ciBus, ciDynamics, ciLimiter,    ciRelease,     (bus#) ->  cvt_nanoseconds
+ciBus, ciDynamics, ciLimiter,    ciRatio,       (bus#) ->  cvt_dynamicsrange
+ciBus, ciDynamics, ciExpander,   ciBypass,      (bus#) ->  cvt_bool
+ciBus, ciDynamics, ciExpander,   ciThreshold,   (bus#) ->  cvt_db
+ciBus, ciDynamics, ciExpander,   ciAttack,      (bus#) ->  cvt_nanoseconds
+ciBus, ciDynamics, ciExpander,   ciHold,        (bus#) ->  cvt_nanoseconds
+ciBus, ciDynamics, ciExpander,   ciRelease,     (bus#) ->  cvt_nanoseconds
+ciBus, ciDynamics, ciExpander,   ciRatio,       (bus#) ->  cvt_dynamicsrange
+
+ciBus, ciEQ, ciBandEnabled, (bus#), (band#) ->  cvt_bool
+ciBus, ciEQ, ciEnable, (bus#)                 ->  cvt_bool
+ciBus, ciEQ, ciFrequency, (bus#), (band#)     ->  cvt_freq
+ciBus, ciEQ, ciName, (bus#), (band#)     ->  cvt_string
+ciBus, ciEQ, ciLevel, (bus#), (band#)     ->  cvt_gain
+ciBus, ciEQ, ciQ, (bus#), (band#)     ->  cvt_q
+ciBus, ciEQ, ciStatus, (bus#)     ->  cvt_int32 (read only, bitchord of EQ_STATUS_* bits)
+ciBus, ciEQ, ciType, (bus#), (band#)     ->  cvt_eqtype
+ciBus, ciInvert, (bus#)     ->   cvt_bool
+ciBus, ciIsolate, (bus#)    ->  cvt_bool
+ciBus, ciTouched, (bus#)    ->  cvt_bool
+ciBus, ciName, (bus#)     ->  cvt_name
+ciBus, ciLevel, (bus#)     ->  cvt_gain
+ciBus, ciMeter, (bus#)            -> cvt_gain
+ciBus, ciMute, (bus#)     ->  cvt_bool
+ciBus, ciAux,    ciLevel, (busindex#), (auxindex#)     ->  cvt_gain
+ciBus, ciAux,    ciDelay, (busindex#), (auxindex#)     ->  cvt_nanoseconds
+ciBus, ciOutput, ciLevel, (busindex#), (outputindex#)  ->  cvt_gain
+ciBus, ciOutput, ciDelay, (busindex#), (outputindex#)  ->  cvt_nanoseconds
+ciBus, ciAux,    ciIsolate, (busindex#)  -> cvt_bool (isolate a row in the Aux    Matrix -- FogBugz #3335)
+ciBus, ciOutput, ciIsolate, (busindex#)  -> cvt_bool (isolate a row in the Output Matrix -- FogBugz #3335)
+ciBus, ciPosition, (bus#) -> cvt_position (set the given bus to the given position)
+ciBus, ciSolo, (bus#)     ->  cvt_bool
+ciBus, ciSpaceMap, ciA, (bus#) -> cvt_dbid (set the bus's primary spacemap for trajectory playback)
+ciBus, ciSpaceMap, ciB, (bus#) -> cvt_dbid (set the bus's secondary spacemap for trajectory playback)
+
+ciBus, ciTrajectory, ciActive, ciDivergence, (bus#) -> cvt_float (read-only:  effective current divergence for this bus, based on trajectory interpolation and the trajectory divergence CP)
+ciBus, ciTrajectory, ciActive, ciLevel, (bus#) -> cvt_db (read-only:  effective current trajectory level for this bus, based on trajectory interpolation and the trajectory level CP)
+ciBus, ciTrajectory, ciActive, ciPan, (bus#) -> cvt_pan (read-only:  effective current trajectory pan for this bus, based on trajectory interpolation and the trajectory pan CP)
+
+ciBus, ciTrajectory, ciDivergence, (bus#) -> cvt_float (set the bus's divergence value)
+ciBus, ciTrajectory, ciDuration, (bus#) -> cvt_nanoseconds (set the number of nanoseconds the bus's trajectory should play; negative == infinite)
+ciBus, ciTrajectory, ciEnable, (bus#) -> cvt_bool (set the whether the trajectory should be enabled (i.e. running).  True = go, false = pause)
+ciBus, ciTrajectory, ciHold, (bus#) -> cvt_bool (set the whether the trajectory should be held, despite its enabled-status True = hold, false = okay)
+ciBus, ciTrajectory, ciID, (bus#) -> cvt_dbid (set the given bus to the given trajectory ID)
+ciBus, ciTrajectory, ciIsolate, (bus#) -> cvt_bool (Isolates the trajectory control points for the specified bus from being recalled via subcue)
+ciBus, ciTrajectory, ciLevel, (bus#) -> cvt_gain (set the bus's trajectory playback volume, in decibels)
+ciBus, ciTrajectory, ciOffset, ciX, (bus#) -> cvt_float
+ciBus, ciTrajectory, ciOffset, ciY, (bus#) -> cvt_float
+ciBus, ciTrajectory, ciPan, (bus#) -> cvt_pan (set the bus's spacemap-panning value, -1.0 == map A, 0.0 == centered, 1.0 == map B)
+ciBus, ciTrajectory, ciPosition, (bus#) -> cvt_nanoseconds (set the current position of the playback pointer in the path, in nanoseconds)
+ciBus, ciTrajectory, ciPositionPercent, (bus#) -> cvt_float (set the current position of the playback pointer in the path, in trajectory-lengths)
+ciBus, ciTrajectory, ciRate, (bus#) -> cvt_float (set the bus's playback rate multiplier, 1.00 == speed as recorded)
+ciBus, ciTrajectory, ciRepetitions, (bus#) -> cvt_float (set the number of times the bus's trajectory should play; negative == infinite)
+ciBus, ciTrajectory, ciRotation, (bus#) -> cvt_degrees (set the bus's trajectory rotation value)
+ciBus, ciTrajectory, ciScale, ciX, (bus#) -> cvt_float
+ciBus, ciTrajectory, ciScale, ciY, (bus#) -> cvt_float
+ciBus, ciTrajectory, ciStatus, (bus#) -> (int32) (bus trajectory playback status, e.g. stopped,paused/playing)
+ciBus, ciTrajectory, ciTimeBase, (bus#) -> (cvt_message) A Message representing a TrajectoryPlaybackTimeBase object for the given bus
+
+ciBus, ciTrim, (bus#)           ->   cvt_gain
+ciBus, ciVGroup, (bus#) (vgroupLayer#)->   cvt_index
+
+ciDSP, ciChecksum, (dsp#) -> cvt_int
+ciDSP, ciStatus, ciName, (dspID) -> cvt_string
+ciDSP, ciTrack, ciCount, (dsp#) -> cvt_int (used by cued and CueStation to track when DSPs are done doing TFT -- see FogBugz #3200)
+
+ciEngine, ciChecksum, (dspID), (checksum#) -> cvt_count
+ciEngine, ciDSP, (dspID) -> cvt_nfloat
+ciEngine, ciEnable, (dspID)   -> cvt_bool
+ciEngine, ciID, (dspID) -> int32 (frame's per boot random number session ID)
+ciEngine, ciLink, (dspID), 0 -> cvt_linklight
+ciEngine, ciLink, (dspID), 1 -> cvt_linklight
+ciEngine, ciLink, (frame#), (light#) -> cvt_int
+ciEngine, ciLowLevel, ciVoltage, (dspID#), (whichInput#) -> cvt_voltage Frame voltage sensors  (FogBugz #3133) 
+ciEngine, ciMemory, (dspID) -> cvt_nfloat
+ciEngine, ciSubscription, ciCount, (frame#)  -> cvs_int
+ciEngine, ciTemperature, (dspID), (temp#) -> cvt_temperature
+ciEngine, ciVoltage, (dspID), (voltage#) -> cvt_voltage
+
+ciInput, ciChannel, ciPosition, (channel#) -> cvt_int (channel frame/slot/position bit chord)
+ciInput, ciEQ, ciBandEnabled, (input#), (band#) ->  cvt_bool
+ciInput, ciActive, ciChannel, ciSet, (channel#) -> cvt_traceString (set of signal-path points that are associated with the specified Input)
+ciInput, ciAnalog, ciPhantom, ciEnable -> cvt_bool
+ciInput, ciAnalog, ciScale, (input#)  -> cvt_dB (analog input scale (ie +6, +16, +26)
+ciInput, ciAssign, ciEnable, (input#), (asn#) ->  cvt_bool
+ciInput, ciAssign, ciIndex, (input#), (asn#)   ->  cvt_index
+ciInput, ciAux, ciAffectPost, (input#), (aux#)     ->  cvt_bool
+ciInput, ciAux, ciLevel, (input#), (aux#)     ->  cvt_gain
+ciInput, ciAux, ciPan       -> cvt_pan
+ciInput, ciChannel, ciActive, (channel#) -> cvt_bool NOT IMPLEMENTED YET: (Read-only control point, is true iff this input is feeding into any outputs/auxouts)
+ciInput, ciChannel, ciEnable, (chan#) -> cvt_bool
+ciInput, ciClip, (input#)            -> cvt_bool (input clipping indicator)
+ciInput, ciDelay, (input#)     ->  cvt_nanoseconds
+ciInput, ciDelay, ciEnable, (chan#) -> cvt_bool
+
+// New dynamics control points, per FogBugz #5374
+ciInput, ciDynamics, ciBypass,     (input#)                ->  cvt_bool
+ciInput, ciDynamics, ciMakeupGain, (input#)                ->  cvt_db
+ciInput, ciDynamics, ciNoiseGate,  ciBypass,      (input#) ->  cvt_bool
+ciInput, ciDynamics, ciNoiseGate,  ciThreshold,   (input#) ->  cvt_db
+ciInput, ciDynamics, ciNoiseGate,  ciAttack,      (input#) ->  cvt_nanoseconds
+ciInput, ciDynamics, ciNoiseGate,  ciHold,        (input#) ->  cvt_nanoseconds
+ciInput, ciDynamics, ciNoiseGate,  ciRelease,     (input#) ->  cvt_nanoseconds
+ciInput, ciDynamics, ciNoiseGate,  ciRange,       (input#) ->  cvt_dynamicsratiofloat
+ciInput, ciDynamics, ciCompressor, ciBypass,      (input#) ->  cvt_bool
+ciInput, ciDynamics, ciCompressor, ciThreshold,   (input#) ->  cvt_db
+ciInput, ciDynamics, ciCompressor, ciAttack,      (input#) ->  cvt_nanoseconds
+ciInput, ciDynamics, ciCompressor, ciHold,        (input#) ->  cvt_nanoseconds
+ciInput, ciDynamics, ciCompressor, ciRelease,     (input#) ->  cvt_nanoseconds
+ciInput, ciDynamics, ciCompressor, ciRatio,       (input#) ->  cvt_dynamicsrange
+ciInput, ciDynamics, ciLimiter,    ciBypass,      (input#) ->  cvt_bool
+ciInput, ciDynamics, ciLimiter,    ciThreshold,   (input#) ->  cvt_db
+ciInput, ciDynamics, ciLimiter,    ciAttack,      (input#) ->  cvt_nanoseconds
+ciInput, ciDynamics, ciLimiter,    ciHold,        (input#) ->  cvt_nanoseconds
+ciInput, ciDynamics, ciLimiter,    ciRelease,     (input#) ->  cvt_nanoseconds
+ciInput, ciDynamics, ciLimiter,    ciRatio,       (input#) ->  cvt_dynamicsrange
+ciInput, ciDynamics, ciExpander,   ciBypass,      (input#) ->  cvt_bool
+ciInput, ciDynamics, ciExpander,   ciThreshold,   (input#) ->  cvt_db
+ciInput, ciDynamics, ciExpander,   ciAttack,      (input#) ->  cvt_nanoseconds
+ciInput, ciDynamics, ciExpander,   ciHold,        (input#) ->  cvt_nanoseconds
+ciInput, ciDynamics, ciExpander,   ciRelease,     (input#) ->  cvt_nanoseconds
+ciInput, ciDynamics, ciExpander,   ciRatio,       (input#) ->  cvt_dynamicsrange
+
+ciInput, ciEQ, ciEnable, (input#)                   ->  cvt_bool
+ciInput, ciEQ, ciFrequency, (input#), (band#)     ->  cvt_freq
+ciInput, ciEQ, ciName, (input#), (band#)     ->  cvt_string
+ciInput, ciEQ, ciLevel, (input#), (band#)     ->  cvt_gain
+ciInput, ciEQ, ciQ, (input#), (band#)     ->  cvt_q
+ciInput, ciEQ, ciStatus, (input#)     ->  cvt_int32 (read only, bitchord of EQ_STATUS_* bits)
+ciInput, ciEQ, ciType, (input#), (band#)     ->  cvt_eqtype
+ciInput, ciInvert, (input#)   ->  cvt_bool
+ciInput, ciIsolate, (input#)  ->  cvt_bool
+ciInput, ciTouched, (input#)  ->  cvt_bool
+ciInput, ciName, (input#)     ->  cvt_name
+ciInput, ciLevel, (input#)     ->  cvt_gain
+
+ciInput, ciMeter, (input#)            -> cvt_gain
+ciInput, ciMute, (input#)     ->  cvt_bool
+ciInput, ciPan, (input#)     ->  cvt_pan
+ciInput, ciSolo, (input#)     ->  cvt_bool
+ciInput, ciTrim, (input#)     ->  cvt_gain
+ciInput, ciVGroup, (input#) (vgroupLayer#) ->  cvt_index
+ciInfo, [...],                -> cvt_message containing ControlPointAddressInfo about control point specified by (...)
+
+ciListen, ciAux,    ciLeft,  ciEnable, (listen#), (aux#)    -> cvt_bool
+ciListen, ciAux,    ciRight, ciEnable, (listen#), (aux#)    -> cvt_bool
+ciListen, ciBus,    ciLeft,  ciEnable, (listen#), (bus#)    -> cvt_bool
+ciListen, ciBus,    ciRight, ciEnable, (listen#), (bus#)    -> cvt_bool
+ciListen, ciInput,  ciLeft,  ciEnable, (listen#), (input#)  -> cvt_bool
+ciListen, ciInput,  ciRight, ciEnable, (listen#), (input#)  -> cvt_bool
+ciListen, ciOutput, ciLeft,  ciEnable, (listen#), (output#) -> cvt_bool
+ciListen, ciOutput, ciRight, ciEnable, (listen#), (output#) -> cvt_bool
+
+ciMaster, *, *                -> cvt_bool
+ciMaster, ciWildTracks, ciDeck, ciHold, (unit#) -> cvt_int32 (non-zero iff any decks are held on the unit)
+ciMaster, ciWildTracks, ciDeck, ciIsolate, (unit#) -> cvt_int32 (non-zero iff any decks are isolated on the unit)
+
+ciAux,    ciAux,    ciIsolate, (aux#)    -> cvt_bool (isolate a column in the Aux Matrix    -- FogBugz #3335)
+ciOutput, ciOutput, ciIsolate, (output#) -> cvt_bool (isolate a column in the Output Matrix -- FogBugz #3335)
+
+ciOutput, ciActive, ciChannel, ciSet, (output#) -> cvt_traceString (set of signal-path points that are associated with the specified Output)
+ciOutput, ciAnalog, ciScale, (output##)  -> cvt_dB (analog output scale (ie +6, +16, +26)
+ciOutput, ciChannel, ciActive, (output#) -> cvt_bool NOT IMPLEMENTED YET: (Read-only control point, is true iff this output is being fed by any inputs)
+ciOutput, ciChannel, ciEnable, (output#) -> cvt_bool
+ciOutput, ciChannel, ciPosition, (output#) -> cvt_int (channel frame/slot/position bit chord)
+ciOutput, ciClip, (output#)            -> cvt_bool (output clipping indicator)
+ciOutput, ciDelay, (output#)     ->  cvt_nanoseconds
+ciOutput, ciDelay, ciEnable, (output#) -> cvt_bool
+
+// New dynamics control points, per FogBugz #5374
+ciOutput, ciDynamics, ciBypass,     (output#)                ->  cvt_bool
+ciOutput, ciDynamics, ciMakeupGain, (output#)                ->  cvt_db
+ciOutput, ciDynamics, ciNoiseGate,  ciBypass,      (output#) ->  cvt_bool
+ciOutput, ciDynamics, ciNoiseGate,  ciThreshold,   (output#) ->  cvt_db
+ciOutput, ciDynamics, ciNoiseGate,  ciAttack,      (output#) ->  cvt_nanoseconds
+ciOutput, ciDynamics, ciNoiseGate,  ciHold,        (output#) ->  cvt_nanoseconds
+ciOutput, ciDynamics, ciNoiseGate,  ciRelease,     (output#) ->  cvt_nanoseconds
+ciOutput, ciDynamics, ciNoiseGate,  ciRange,       (output#) ->  cvt_dynamicsratiofloat
+ciOutput, ciDynamics, ciCompressor, ciBypass,      (output#) ->  cvt_bool
+ciOutput, ciDynamics, ciCompressor, ciThreshold,   (output#) ->  cvt_db
+ciOutput, ciDynamics, ciCompressor, ciAttack,      (output#) ->  cvt_nanoseconds
+ciOutput, ciDynamics, ciCompressor, ciHold,        (output#) ->  cvt_nanoseconds
+ciOutput, ciDynamics, ciCompressor, ciRelease,     (output#) ->  cvt_nanoseconds
+ciOutput, ciDynamics, ciCompressor, ciRatio,       (output#) ->  cvt_dynamicsrange
+ciOutput, ciDynamics, ciLimiter,    ciBypass,      (output#) ->  cvt_bool
+ciOutput, ciDynamics, ciLimiter,    ciThreshold,   (output#) ->  cvt_db
+ciOutput, ciDynamics, ciLimiter,    ciAttack,      (output#) ->  cvt_nanoseconds
+ciOutput, ciDynamics, ciLimiter,    ciHold,        (output#) ->  cvt_nanoseconds
+ciOutput, ciDynamics, ciLimiter,    ciRelease,     (output#) ->  cvt_nanoseconds
+ciOutput, ciDynamics, ciLimiter,    ciRatio,       (output#) ->  cvt_dynamicsrange
+ciOutput, ciDynamics, ciExpander,   ciBypass,      (output#) ->  cvt_bool
+ciOutput, ciDynamics, ciExpander,   ciThreshold,   (output#) ->  cvt_db
+ciOutput, ciDynamics, ciExpander,   ciAttack,      (output#) ->  cvt_nanoseconds
+ciOutput, ciDynamics, ciExpander,   ciHold,        (output#) ->  cvt_nanoseconds
+ciOutput, ciDynamics, ciExpander,   ciRelease,     (output#) ->  cvt_nanoseconds
+ciOutput, ciDynamics, ciExpander,   ciRatio,       (output#) ->  cvt_dynamicsrange
+
+ciOutput, ciEQ, ciBandEnabled, (output#), (band#) ->  cvt_bool
+ciOutput, ciEQ, ciEnable, (output#)                 ->  cvt_bool
+ciOutput, ciEQ, ciFrequency, (output#), (band#)     ->  cvt_freq
+ciOutput, ciEQ, ciFrequency, (output#), (band#)     ->  cvt_freq
+ciOutput, ciEQ, ciName, (output#), (band#)     ->  cvt_string
+ciOutput, ciEQ, ciName, (output#), (band#)     ->  cvt_string
+ciOutput, ciEQ, ciLevel, (output#), (band#)     ->  cvt_gain
+ciOutput, ciEQ, ciLevel, (output#), (band#)     ->  cvt_gain
+ciOutput, ciEQ, ciQ, (output#), (band#)     ->  cvt_q
+ciOutput, ciEQ, ciQ, (output#), (band#)     ->  cvt_q
+ciOutput, ciEQ, ciStatus, (output#)     ->  cvt_int32 (read only, bitchord of EQ_STATUS_* bits)
+ciOutput, ciEQ, ciType, (output#), (band#)     ->  cvt_eqtype
+ciOutput, ciEQ, ciType, (output#), (band#)     ->  cvt_eqtype
+ciOutput, ciInvert, (output#)     ->  cvt_bool
+ciOutput, ciIsolate, (output#)    ->  cvt_bool
+ciOutput, ciTouched, (output#)    ->  cvt_bool
+ciOutput, ciName, (output#)       ->  cvt_name
+ciOutput, ciLevel, (output#)      ->   cvt_gain
+ciOutput, ciMeter, (output#)            -> cvt_gain
+ciOutput, ciMute, (output#)     ->  cvt_bool
+ciOutput, ciSolo, (output#)     ->  cvt_bool
+ciOutput, ciSystem, ciEnable, (output#) -> cvt_bool  (FogBugz #6107)
+ciOutput, ciTrim, (output#)     ->   cvt_gain
+ciOutput, ciVGroup, (output#) (vgroupLayer#) ->  cvt_index
+
+ciPageGroup, ciPosition, (pagegroup#), (axis#) -> cvt_int32 Current Page Group page number for the given page group and axis
+ciPageGroup, ciSize,     (pagegroup#), (axis#) -> cvt_int32 Page size for the nth Page group (i.e. number of CASL indices per page)
+ciPageGroup, ciMinimum,  (pagegroup#), (axis#) -> cvt_int32 minimum allowed page group value for the given page group and axis
+ciPageGroup, ciMaximum,  (pagegroup#), (axis#) -> cvt_int32 maximum allowed page group value for the given page group and axis
+
+ciScript, ciCommand, (process#) -> cvt_string This specifies the command arguments used to launch a script (e.g. "myscript.py arg1 arg2")
+ciScript, ciName, (process#) -> cvt_string This is a simple string value that is displayed in association with the script.
+ciScript, ciStatus, (process#) -> cvt_int (0==stopped, 1==running, 2==restart) This control point specifies whether a given script processor is/should be stopped, started, or reset.
+
+ciServer, ciDSP, (serverID) -> cvt_nfloat (Ethertracks CPU load percentage -- serverID is currently always 0)
+ciServer, ciMemory, (serverID) -> cvt_nfloat (Ethertracks memory usage percentage -- serverID is currently always 0)
+
+ciSpaceMap, ciTimeCode, ciEnable -> cvt_bool
+ciSpaceMap, ciTrajectory, ciRate ->  cvt_float
+ciSpaceMap, ciTrajectory, ciRotation,  ->  cvt_nfloat  (0.0f = 0 degrees ... 1.0f = 360 degrees)
+
+ciSystem, ciConfig  -> cvt_config (current system Config object)
+ciSystem, ciLowLevel, ciMeter, ciServer  -> cvt_string (multicast meters location, e.g. "239.255.10.10:6629")
+ciSystem, ciLowLevel, ciConfig -> (deflated Message listing of current present I/O modules)
+ciSystem, ciTimeCode ->  cvt_timecode
+
+ciSystem, ciAux, ciMute  -> cvt_bool
+ciSystem, ciIsolate,     -> cvt_bool
+ciSystem, ciTouched,     -> cvt_bool
+ciSystem, ciLevel        ->  cvt_gain
+ciSystem, ciLowLevel, ciMeter, ciServer -> cvt_ipaddr This control point indicates the IP address that UDP multicast metering packets are expected to come from.
+ciSystem, ciMute         -> cvt_bool
+ciSystem, ciTimeBase     -> cvt_nanoseconds   (system time, in nanoseconds.  This is the value that is included in every UDP metering packet that is multicast out)
+ciSystem, ciTimeCode, ciEnable  -> cvt_bool
+ciSystem, ciTimeCode, ciHint  -> cvt_timecodehint  (bit-chord int32 containing a hint on how to interpret 30fps MTC (FogBugz #6271))
+ciSystem, ciTimeCode, ciFreewheel, ciDuration  -> cvt_timecodehint  (int64 indicating nanoseconds within freewheel period (FogBugz #6302))
+ciSystem, ciTrim         ->  cvt_gain
+ciSystem, ciType -> cvt_int (0==simulator only, 1==real hardware) This control point gives a hint as to how the system is physically set up (read only)
+ciSystem, ciUnknown      -> cvt_int
+ciSystem, ciHold,        -> cvt_bool (iff true, all fades are paused)
+
+ciTimeBase, ciAux, ciLevel, (aux#)                    ->  cvt_fadetimebase
+ciTimeBase, ciBus, ciLevel, (bus#)                    ->  cvt_fadetimebase
+ciTimeBase, ciBus, ciAux,    ciLevel, (busindex#), (auxindex#)    -> cvt_fadetimebase
+ciTimeBase, ciBus, ciOutput, ciLevel, (busindex#), (outputindex#) -> cvt_fadetimebase
+ciTimeBase, ciInput, ciAux, ciLevel, (input#), (aux#) ->  cvt_fadetimebase
+ciTimeBase, ciInput, ciAux, ciPan, (input#), (aux#)   ->  cvt_fadetimebase
+ciTimeBase, ciInput, ciLevel, (input#)                ->  cvt_fadetimebase
+ciTimeBase, ciInput, ciPan, (input#)                  ->  cvt_fadetimebase
+ciTimeBase, ciOutput, ciLevel, (output#)              ->  cvt_fadetimebase
+ciTimeBase, ciSystem, ciLevel                         ->  cvt_fadetimebase
+ciTimeBase, ciVGroup, ciLevel, (vgroup#)              ->  cvt_fadetimebase
+
+ciVGroup, ciActive, ciChannel, ciSet, (aux#) -> cvt_traceString (set of signal-path points that are associated with the specified VGroup)
+ciVGroup, ciChannel, ciActive, (channel#) -> cvt_bool NOT IMPLEMENTED YET: (Read-only control point, is true iff this vgroup has any users)
+ciVGroup, ciInvert, (vgroup#)   ->  cvt_bool
+ciVGroup, ciIsolate, (vgroup#)  ->  cvt_bool
+ciVGroup, ciTouched, (vgroup#)  ->  cvt_bool
+ciVGroup, ciName, (vgroup#)     ->  cvt_name
+ciVGroup, ciLevel, (vgroup#)    ->   cvt_gain
+ciVGroup, ciMute, (vgroup#)     -> cvt_bool
+ciVGroup, ciSolo, (vgroup#)     -> cvt_bool
+ciVGroup, ciTrim, (vgroup#)     -> cvt_gain
+
+ciVRAS, ciChannel, ciAttenuation, (vras#), (band#)  -> cvt_gain (vras channel attenuation)
+ciVRAS, ciChannel, ciDelay, (vras#), (band#)  -> (cvt_int64 nanoseconds) (vras delay)
+ciVRAS, ciChannel, ciEarlyReflection, ciLevel, (vras#), (band#)     -> cvt_gain (vars ER level -- FogBugz #2411, CS4.6+)
+ciVRAS, ciChannel, ciEarlyReflections, ciDelay, (vras#), (band#)  -> cvt_nanoseconds
+ciVRAS, ciChannel, ciInput, (vras#), (band#)  -> (float)(0.0f-0.5f, seconds) (vras input channel mapping)
+ciVRAS, ciChannel, ciMute, (vras#), (band#)  -> cvt_bool  (FogBugz #1498) (vras channel mute)
+ciVRAS, ciChannel, ciVGroup, (vras#), (band#), (vgroupLayer#) ->  cvt_index  (FogBugz #2437) (vras channel vgroup)
+ciVRAS, ciEarlyReflections, ciAttenuation, (vras#)       -> (float)(0.0f-1.0f, percent) (vras ER high-frequency attenuation percentage)
+ciVRAS, ciEarlyReflections, ciFrequency, (vras#)         -> (float)(0.2f-20.0f, KHz) (vras ER cutoff frequency)
+ciVRAS, ciEarlyReflections, ciInput, ciConfig, (vras#)   -> (MessageRef) (matrix spec) (vras ER input configuration matrix)
+ciVRAS, ciEarlyReflections, ciOutput, ciConfig, (vras#)  -> (MessageRef) (matrix spec) (vras ER output configuration matrix)
+ciVRAS, ciName, (vras#)  -> cvt_name
+ciVRAS, ciReverb, ciChannel, ciCount, (vras#)    -> (int32) (0-14) (how many diffusion channels to use in VRAS Reverb -- FogBugz #3981)
+ciVRAS, ciReverb, ciDamping, ciFrequency, (vras#), (damper#)  -> (float)(0.02f-20.0f, KHz) (vras Damping Frequency)
+ciVRAS, ciReverb, ciDamping, ciLevel, (vras#), (damper#) -> (float)(0.0f-1.0f, percent) (vras Damping percentage)
+ciVRAS, ciReverb, ciDamping, ciType, (vras#), (damper#) -> (int32)(0=low,1=mid,2=high) (vras Damping type (mid/low/high))
+ciVRAS, ciReverb, ciDeltaMax, (vras#), (diffusion#)          -> (float)(0.7f-0.9f, ???) (vras Delta maximum)
+ciVRAS, ciReverb, ciDuration, (vras#)          -> cvt_nanoseconds (0.2 seconds - 10.0 seconds) (vras Reverb time)
+ciVRAS, ciReverb, ciInput, ciConfig, (vras#)    -> (MessageRef) (matrix spec) (vras input configuration matrix)
+ciVRAS, ciReverb, ciLevel, (vras#)             -> (float)(0.0f-1.0f, percent) (vras Unitary/Direct Level)
+ciVRAS, ciReverb, ciShapeFactor, (vras#), (diffusion#)      -> (float)(2.0f-20.0f, ???) (vras Shape factor)
+ciVRAS, ciType, (vras#) -> (int32)(ciReverb or ciEarlyReflections) (vras algorithm type)
+
+# These control points store the current values of the "Wait" and "Fade" boxes underneath the Level boxes in various parts of the CueStation GUI
+ciWaitTime, ciAux, ciLevel, (aux#)         ->  cvt_ms
+ciFadeTime, ciAux, ciLevel, (aux#)         ->  cvt_ms
+ciWaitTime, ciBus, ciLevel, (bus#)         ->  cvt_ms
+ciFadeTime, ciBus, ciLevel, (bus#)         ->  cvt_ms
+ciWaitTime, ciBus, ciAux,    ciLevel, (bus#), (aux#) ->  cvt_ms
+ciFadeTime, ciBus, ciAux,    ciLevel, (bus#), (aux#) ->  cvt_ms
+ciWaitTime, ciBus, ciOutput, ciLevel, (bus#), (output#) ->  cvt_ms
+ciFadeTime, ciBus, ciOutput, ciLevel, (bus#), (output#) ->  cvt_ms
+ciWaitTime, ciInput, ciPan, (input#)       ->  cvt_ms
+ciFadeTime, ciInput, ciPan, (input#)       ->  cvt_ms
+ciWaitTime, ciInput, ciLevel, (input#)     ->  cvt_ms
+ciFadeTime, ciInput, ciLevel, (input#)     ->  cvt_ms
+ciWaitTime, ciOutput, ciLevel, (output#)   ->  cvt_ms
+ciFadeTime, ciOutput, ciLevel, (output#)   ->  cvt_ms
+ciWaitTime, ciVGroup, ciLevel, (vgroup#)   ->  cvt_ms
+ciFadeTime, ciVGroup, ciLevel, (vgroup#)   ->  cvt_ms
+ciWaitTime, ciSystem, ciLevel              ->  cvt_ms
+ciFadeTime, ciSystem, ciLevel              ->  cvt_ms
+
+ciWildTracks, ciChannel, ciDeck, (unit#), (channel#) -> cvt_index (int32) deck that is currently playing on this channel
+ciWildTracks, ciChannel, ciStatus, (unit#), (channel#) -> cvt_int (bitchord of WTRX_CHANNEL_STATUS_* bits)
+ciWildTracks, ciDSP, (unit#) -> cvt_norm (percent of CPU being used on ELC card)
+ciWildTracks, ciDeck, ciDuration, (unit#), (deck#) -> (int64) (total length deck's track-set, in nanoseconds -- read only)
+ciWildTracks, ciDeck, ciHold, (unit#), (deck#) -> cvt_int32 (if non-zero, the deck is held and playback/recording will be disabled)
+ciWildTracks, ciDeck, ciIsolate, (unit#), (deck#) -> cvt_bool (if non-zero, the deck is isolated and won't repond to subcue recalls)
+ciWildTracks, ciDeck, ciMedia, (unit#), (deck#) -> (Message) (file mapping table info)
+ciWildTracks, ciDeck, ciPosition, (unit#), (deck#) -> (int64) (offset into deck, in nanoseconds)
+ciWildTracks, ciDeck, ciPositionPercent, (unit#), (deck#) -> (float) (percent offset into deck)
+ciWildTracks, ciDeck, ciThreshold, ciClip, <unit #>, deck# -> (Message) (Message indicating track(s) to clip initial silence from
+ciWildTracks, ciDeck, ciTimeBase, <unit #>, deck# -> (int64) (a value representing the current play/paused status of the deck, as well as its position)
+ciWildTracks, ciDeck, ciStatus, (unit#), (deck#) -> (int32) (track status, WILDTRACKS_CHANNEL_STATUS_*)
+ciWildTracks, ciMaximum, ciMemory, (unit#) -> cvt_int (max number of bytes of daemon memory usable, as reported by wtrxd)
+ciWildTracks, ciMedia, ciPath, (unit#) -> (String) (file-lookup path prefix list for playback files)
+ciWildTracks, ciMedia, ciServer, (unit#) -> (int32) IP address of the Wild Tracks unit's ELC card (read only)
+ciWildTracks, ciMedia, ciTrack, ciPath, ciSet, (unit#) -> (Message with path-expansion data)
+ciWildTracks, ciMedia, ciTrack, ciPath, ciShapeFactor, (unit#) -> (Message with waveform prerendering progress data)
+ciWildTracks, ciMemory, (unit#) -> (uint32) (number of bytes of daemon memory in use, as reported by wtrxd)
+ciWildTracks, ciRecording, ciPath, (unit#) -> (String) (file-lookup path prefix list for recording output files)
+ciWildTracks, ciDropout, ciStatus, (unit#) ->  (bool)  (becomes briefly true whenever a dropout event occurs)
+ciWildTracks, ciTimeCode, ciEnable, (unit#) -> cvt_bool
+ciWildTracks, ciTimeCode, ciSettings, (unit#) -> cvt_int64  (deck synchronization settings, expressed as an int64)
+ciWildTracks, ciTrack, ciCount, (unit#), ((deck#*128)+track#) -> (uint32) (number of streams in file -- read only)
+ciWildTracks, ciTrack, ciDuration, (unit#), ((deck#*128)+track#) -> (int64) (total length of track, in nanoseconds -- read only)
+ciWildTracks, ciTrack, ciName, (unit#), ((deck#*128)+track#) -> (string) (short human-readable track contents description)
+ciWildTracks, ciTrack, ciLoopback, (unit#), ((deck#*128)+track#) -> (int64) (number of loops in track, or -1 if infinite)
+ciWildTracks, ciTrack, ciMedia, ciStatus, (unit#) -> (Message with sndfile-info output, queryd-by-string only) (FogBugz #3619)
+ciWildTracks, ciTrack, ciPath, ciName, (unit#) -> (Message with WildTracksDeckData, queryd-by-string only) (FogBugz #3867)
+ciWildTracks, ciTrack, ciPath, ciMedia, (unit#), ((deck#*128)+track#) -> (string) (filepath/name to write batch file data to -- write only)
+ciWildTracks, ciTrack, ciShapeFactor, (unit#), ((deck#*128)+track#) -> (Message with waveform graphic data)
+
+

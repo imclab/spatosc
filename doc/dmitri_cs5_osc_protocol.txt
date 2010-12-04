@@ -1,0 +1,699 @@
+This document describes the OpenSoundControl protocol implemented by CS5.0 and above.
+Jeremy Friesner - Level Control Systems - v1.10 3/13/2009
+
+This document assumes the reader has some familiarity with the OpenSoundControl
+protocol.  If not, please read about OpenSoundControl at their web page:
+
+http://www.cnmat.berkeley.edu/OpenSoundControl/
+
+----------------------
+
+As of v5.0, the CueStation server "mixerd" listens for incoming OpenSoundControl commands
+on port 18033 (port 21233 in the demo version).  mixerd listens for both UDP packets
+and TCP connections on that port.  If a TCP connection is received, the expected protocol
+is the standard one for OpenSoundControl-over-TCP:  a 4-byte big-endian length field, 
+followed by an OpenSoundControl packet of that length, then repeat as necessary.
+
+The Meyer OpenSoundControl suite currently consists of the following methods:
+
+/go               - equivalent to pressing the "go" button in the Transport window
+/stop             - equivalent to pressing a "stop" button in the Transport window
+/moveby           - move the "on deck cue" in the cue list up or down by N steps
+/recall           - recall a cue or subcue
+/set              - set one or more control points to one or more values
+/setwf            - similar to "/set", but allows wait and fade times to be specified also
+/setblock         - similar to "/set", but sets a block of control points instead of a list
+/setblockwf       - similar to "/setblock", but allows wait and fade times to be specified also
+/get              - retrieve the current values of one or more control points
+/getblock         - similar to "/get", but with addresses specified as a block instead of a list.
+/ping             - causes a "/pong" packet with the same data to be sent back to the client.
+/heypython        - send a string to a running Python script
+/runpython        - launch a Python script in a new process
+/subscribe        - subscribe to a set of control point addresses (for "live updates")
+/subscribeblock   - similar to "/subscribe", but with addresses specified as a block
+/unsubscribe      - unsubscribe from a set of control point addresses
+/unsubscribeblock - similar to "/unsubscribe", but with addresses specified as a block
+/unsubscribeall   - cancel all current subscriptions for this client
+/log              - sends a text message to the system log
+
+
+Below are descriptions of the method commands that clients can send
+to mixerd in their OSC packets:
+
+-----------------------
+
+/go - equivalent to pressing the "go" button in the Transport window
+""
+",i"
+
+This command takes zero or one arguments.  It causes the current cue-on-deck
+in the current Cue List to be recalled, and the cue-on-deck pointer
+to be advanced.
+
+If an integer argument is specified, it is taken to be the Cue List Player
+index (0-127).  If it isn't specified, player #0 is assumed (for backwards
+compatibility)
+
+-----------------------
+
+/stop - equivalent to pressing a "stop" button in the Transport window
+""
+",i"
+
+This command takes zero or one arguments.  If zero arguments are provided,
+/stop causes all current automation activity (including cue list 
+autofollows, spacemap trajectory playback, Wild Tracks 
+audio playback, fader fades, etc) to be immediately stopped.
+
+If an integer argument is specified, it is taken to be a Cue List Player
+index (0-126), and only that Cue List Player will be stopped.  If the
+index is 127, this is interpreted as a special case meaning "all
+Cue List Players in the current config".
+
+-----------------------
+
+/moveby - move the "on deck cue" in the cue list up or down by N steps
+",i"
+",ii"
+
+This command takes a single integer argument which indicates the number of
+entries that the "on deck cue pointer" should move forward in the current
+cue list.  So for example, +1 is equivalent to pressing the "next" button
+in the Transport window once, and -1 is equivalent to pressing the "previous"
+button in the Transport window once.
+
+If you wish to move immediately to the top or bottom of the cue list,
+you can do so by passing a very large positive or negative value as
+the argument here.  (this works because the cue-on-deck pointer's position
+will be constrained to keep it from moving "off the ends" of the cue list)
+
+If a second integer argument is specified, it is taken to be the Cue List Player
+index (0-126).  If it isn't specified, player #0 is assumed (for backwards
+compatibility).  If 127 is specified, all cue list players will be affected.
+
+-----------------------
+
+/recall - recall a cue or subcue
+",ii"
+",iii"
+
+This command takes two or three integer arguments.  The first argument should
+either be zero (to indicate a cue recall) or one (to indicate a subcue recall).
+The second argument is the ID of the cue (or subcue) to be recalled.
+
+If a third argument is specified, it will be parsed as the index of
+the Cue List Player that should do the cue/subcue recall.  If the
+third argument is not specified, Cue List Player #0 (aka the first
+one) will be used by default.
+
+-----------------------
+
+/set - set one or more control points to one or more values
+",s*"
+",A**"
+
+This command is quite flexible in that its arguments can be sent in
+several forms.  In any form, however, the arguments indicate a set of
+one or more ControlPointAddresses, followed by a list of one or more
+ControlPointValues.  The specified ControlPointValues will be assigned
+to the specified ControlPointAddresses, in the order they are listed.
+
+The easy way to specify the set of ControlPointAddresses is as a string.
+In this case, the string takes uses the exact same human-readable format
+as is seen in the Subcue Library window.  Here are a few example address
+strings that you could use:
+
+"Input 1 Mute"
+"Bus 1,4,9 Invert"
+"Output 1-8 Level"
+"Bus 1-3 Output 5,7,15-20 Level"
+
+You can even specify several sets in a single string if you prefer,
+by separating the sets with semicolons, like this:
+
+"Input 1-4 Mute; Output 1-8 Level; System Level"
+
+A less user-friendly but more server-CPU-efficient way to specify the
+set of ControlPointAddresses is as a set of one or more "address arguments".
+An address argument represents a ControlPointAddress using a custom data
+type ('A').  The data of this type is always 16 bytes long, and always
+consists of 8 2-byte big-endian integers.
+Negative numbers have special meanings as tokens, as documented in 
+cp_indices.py.  For example, -114 is the token for "Input", and -113 is the 
+token for "Output", and so on.  Therefore, if you wanted to express 
+"Input 1 Mute" as an Address , the array of int16s would look like this:
+
+[-114, -91, 0, 0, 0, 0, 0, 0]  // i.e. (ciInput, ciMute, 0, ...)
+
+Note that the "0" indicates input 1 (indices are always numbered starting from
+zero in this format) and that the numeric indices should always appear
+after the negative token values.
+
+As another example, here is "Bus 5 Output 7 Level" expressed as an Address:
+
+[-110, -113, -94, 4, 6, 0, 0, 0]  // i.e. (ciBus, ciOutput, ciLevel, 4, 6, ...)
+
+You can specify as many Addresses as you like in this command; each Address
+specifies one ControlPointAddress to set to the values that are specified next.
+
+Next, you should specify one or more value arguments.  These arguments
+may be any of the following OpenSoundControl argument types:
+
+i - 32-bit integer
+f - 32-bit floating point
+s - OSC string
+F - boolean false
+T - boolean true
+h - 64-bit integer
+P - Point (a non-standard Meyer type which consists of 2 32-bit big-endian floats)
+A - ControlPointAddress The 16-byte non-standard Meyer type described above
+M - Message (a non-standard Meyer type which has the same format as an OSC-blob but 
+            indicates that the data is a flattened MUSCLE Message argument)
+C - Config (a non-standard Meyer type which has the same format as 'M', but indicates
+            that the data represents an Meyer System Config argument)
+
+The number of value arguments included in your /set command should be less than or 
+equal to the number of addresses specified in the address arguments -- if there 
+are more values than addresses, the surplus values will be ignored.
+
+If the number of ControlPointValues specified is less than the number of 
+ControlPointAddresses specified, the last ControlPointValue in the values 
+list will be re-used for the remaining ControlPointAddresses.  This behaviour 
+is useful when you wish to set a large number of control points to the same value.
+For example, to clear an entire 64x64 Matrix, you might send this packet:
+
+"/set"                                     // method name
+",sf"                                      // argument types string                         
+(string arg) "Bus 1-64 Output 1-64 Level"  // control point addresses string
+(float arg) -90.0f                         // a single value for all (-90.0 == -inf)
+
+-----------------------
+
+/setblock - similar to "/set", but sets a block of control points instead of a list
+",s*"
+",A**"
+
+When used with a string address, this command behaves identically to "/set".  When
+used with "Address-addressing", however, the Addresses are interpreted differently.  Each
+pair of specified Addresses is presumed to indicate a "block" of ControlPointAddresses.
+The server will iterate through all addresses in the block in order.  So, for
+example, if you specified two "Address" arguments, say (Input 1 Level) and
+(Input 8 Level), they would be interpreted as indicating inputs levels 1 through
+8 inclusive.
+
+[-114, -94, 0, 0, 0, 0, 0, 0]  (i.e. first address = ciInput, ciLevel, 0)
+[-114, -94, 7, 0, 0, 0, 0, 0]  (i.e. last address  = ciInput, ciLevel, 7)
+
+A block can be multi-dimensional.  For example, if you wanted to specify
+Outputs 1-8 of Buses 2-4 in the matrix, you could add these two Addresses:
+
+[-110, -113, -94, 0, 0, 0, 0, 0]  (i.e. first address = ciBus, ciOutput, ciLevel, 1, 0)
+[-110, -113, -94, 0, 0, 0, 0, 0]  (i.e. last address  = ciBus, ciOutput, ciLevel, 3, 7)
+
+You can add more than one pair of Addresses, if you wish to specify
+more than one block of addresses.  For example, if you wanted to specify
+Input Mutes 3-8 _and_ Input Levels 10-20, you could add these:
+
+[-114, -91, 2,  0, 0, 0, 0, 0]  (i.e. first address = ciInput, ciMute, 3)
+[-114, -91, 7,  0, 0, 0, 0, 0]  (i.e. last address  = ciInput, ciMute, 8)
+[-114, -94, 9,  0, 0, 0, 0, 0]  (i.e. first address = ciInput, ciLevel, 10)
+[-114, -94, 19, 0, 0, 0, 0, 0]  (i.e. last address  = ciInput, ciLevel, 20)
+
+If there are an odd number of Addresses, the last Address is interpreted as a single address.
+
+After the Addresses, the control point value field(s) should then be specified as
+described in the "/set" documentation above.
+
+-----------------------
+
+/setwf - set one or more control points to one or more values with wait and fade times
+",s*ff*"
+",A*ff*"
+
+This command is similar to /set, except that after the address argument(s)
+(but before the value argument(s)) you must specify two floating point
+arguments:  a wait time and then a fade time.  Both arguments should be
+expressed in seconds, and should range between 0.0 and 1000.0.
+
+Note that the LX-300 firmware only supports doing waits and fades on certain
+control points (e.g. Matrix Levels).  If you specify control points for which
+wait and fade times are not supported, the wait and fade times will be ignored
+and those control points will be set to the specified value immediately.
+
+Also note that due to the more complex semantics of this command, feedback
+from the server is not suppressed.  So for example if you send a /setwf
+command to set Input 1 Level to unity, and you are subscribed to Input 1 Level,
+you will soon receive a /got OSC message indicating that Input 1 Level has
+been set to unity.
+
+For example, to have the LX-300s wait 3 seconds and then fade up the first 
+row of a 64x64 Matrix over the next 5 seconds, you might send this packet:
+
+"/setwf"                                // method name
+",sfff"                                 // argument types string                         
+(string arg) "Bus 1 Output 1-64 Level"  // control point addresses string
+(float arg) 3.0f                        // wait time (3 seconds)
+(float arg) 5.0f                        // fade time (5 seconds)
+(float arg) 0.0f                        // a single value for all (0.0 == unity)
+
+-----------------------
+
+/setblockwf - similar to "/setblock", but sets a block of control points instead of a list
+",sff*"
+",A*ff*"
+
+This command is similar to /setblock, except that after the address argument(s)
+(but before the value argument(s)) you must specify two floating point
+arguments:  a wait time and then a fade time.  Both arguments should be
+expressed in seconds, and should range between 0.0 and 1000.0.
+
+Note that the LX-300 firmware only supports doing waits and fades on certain
+control points (e.g. Matrix Levels).  If you specify control points for which
+wait and fade times are not supported, the wait and fade times will be ignored
+and those control points will be set to the specified value immediately.
+
+Also note that due to the more complex semantics of this command, feedback
+from the server is not suppressed.  So for example if you send a /setblockwf
+command to set Input 1 Level to unity, and you are subscribed to Input 1 Level,
+you will soon receive a /got OSC message indicating that Input 1 Level has
+been set to unity.
+
+For example, to have the LX-300s wait 3 seconds and then fade up the first 
+three rows of a 64x64 Matrix over the next 5 seconds, you might send this packet:
+
+"/setblockwf"                           // method name
+",AAfff"                                // argument types string                         
+[ciBus, ciOutput, ciLevel, 0, 0,  0, 0, 0] // block indicating start-corner of block
+[ciBus, ciOutput, ciLevel, 2, 63, 0, 0, 0] // block indicating end-corner of block
+(float arg) 3.0f                        // wait time (3 seconds)
+(float arg) 5.0f                        // fade time (5 seconds)
+(float arg) 0.0f                        // a single value for all (0.0 == unity)
+
+-----------------------
+
+/get - retrieve the current values of one or more control points
+",s"
+",ss"
+",A*"
+",A*s"
+
+This command lets you query the server for the current state of one
+or more control points.  The control point addresses should be
+specified either via a human-readable string or via a series of
+one or more Addresses, exactly as described in the "/set" documentation.
+
+Values are not specified in this command, of course, since you 
+are requesting values, not sending them.
+
+You may, however, optionally specify a string argument after the
+address argument(s).  This string may be any string you like.  It 
+will be used as a tag for your request, and will be sent back to 
+you in the reply packet(s).  This is useful to help determine which 
+reply packets are associated with which requests.
+
+If you do not include a tag string, a unique tag string will
+be chosen for you by the server.
+
+The server will send back the requested data as a series of one or
+more "/got" OSC packets.  If the "/get" command was received on from a TCP
+stream, the "/got" packets will be sent back to that TCP stream; if
+the "/get" command was received in the form of UDP packets, the
+"/got" packets will be sent back to the IP address and port that
+the "/get" packet was sent from.
+
+For info on the "/got" packet's format, see the section on "/got"
+at the bottom of this document.
+
+-----------------------
+
+/getblock - similar to "/get", but with addresses specified as a block instead of a list.
+
+This command is the same as /get, except that any included Addresses will
+be interpreted in pairs instead of as individual addresses.  See /setblock for
+information on how this is done.
+
+-----------------------
+
+/ping     - causes a "/pong" packet with the same data to be sent back to the client.
+(any argument types may be used)
+
+This command's packet will be immediately sent back to the client, with the only
+difference being that the method name string will be changed from "/ping" to "/pong".
+
+-----------------------
+
+/heypython   - Send a command string to a currently running Python script.
+",is"
+
+This command lets you specify a string that will be sent to a currently executing
+Python script (as seen in CueStation's Script Execution window).  Assuming that
+the Python script is based on the BasicClient.py base class, the string will be
+passed to the UserCommandReceived() callback method.  The default implementation
+of that method executes the string as Python source code; customized scripts are 
+free to override it to handle the string differently, of course.
+
+The first argument is the index of the script execution slot that the command
+should be sent to.  This integer should be a value between 0 (the first execution
+slot, at the top of the Script Execution window) and 31 (the last execution slot).
+
+There are also Some "special" values that you can pass for the index argument:
+   -1 = send to all python scripts (whether shown in the Script Execution window or not)
+   -2 = send to all "foreground" python scripts (i.e. all scripts shown in the Script Execution window)
+   -3 = send to all "background" python scripts (i.e. all scripts not shown in the Script Execution window)
+
+The string argument may be any string you like, although it does need to be short 
+enough to fit into an OSC packet, of course.  This string is the text that will
+be passed to the targetted Python process(es).  This string may optionally contain 
+one or more special directives of the form
+
+#include "some_support_file.py"
+
+These tokens will be expanded into a copy of the contents of the specified file,
+if that file can be found in the Support Files window or Python path.
+
+-----------------------
+
+/runpython    - Launch a Python script in a new process.
+",is"
+",iss"
+
+This command lets you launch a Python script in a new process.
+
+The first argument is the index of the script-execution-slot that the new process should
+run in.  This value can range between 0 (the first execution slot, at the top of the
+Script Execution window) and 31 (the last execution slot, at the bottom of the window).
+Or you can pass in -1 as this argument if you want the script to run in the background.
+
+The second argument is a string containing some Python source code
+to execute.  This string may optionally contain one or more special 
+directives of the form
+
+#include "some_support_file.py"
+
+These tokens will be expanded into a copy of the contents of the specified file,
+if that file can be found in the Support Files window or Python path.
+
+The third argument, if specified, is a string containing command line arguments
+to pass to the Python script at launch.
+
+-----------------------
+
+/subscribe - subscribe to a set of control point addresses
+",s"
+",A*"
+
+This command has syntax similar to /get, except that the specified control point
+addresses are remembered by the server, which will continue to send "/got" updates 
+to your client whenever any of the addresses change.  This allowed your client to 
+keep track of the current state of the specified addresses at all times, without 
+having to constantly poll their state via /get packets.
+
+Unlike "/get", no request-tag can be specified in a /subscribe command.  The /got
+packets returned by subscriptions will always have an empty string ("") as
+their tag value.
+
+Note that subscriptions are handled per control point address, so it is possible
+to "build up your subscription set" via multiple /subscribe commands, and likewise
+you can unsubscribe from any arbitrary sub-portion of your subscription set at any time.
+
+Trying to subscribe again to control points that you are already subscribed to
+will cause the server to immediately re-send you those control points' current values,
+but otherwise will have no effect.  (i.e. a client can't have two simultaneous 
+subscriptions to the same control point)
+
+For TCP clients, the subscriptions will remain active until they are countermanded
+by a /unsubscribe, /unsubscribeblock or /unsubscribeall command, or until the
+client's TCP connection is broken.
+
+For UDP clients, the subscriptions will remain active until they are countermanded
+by a /unsubscribe, /unsubscribeblock or /unsubscribeall command, or until at least
+30 seconds have passed without the server receiving any UDP packets from your client.
+For this reason, it is important to be sure that your UDP client sends an OSC packet 
+to the server at least once every 30 seconds, to avoid losing your subscriptions.
+An empty "/ping" packet will be sufficient.
+
+-----------------------
+
+/subscribeblock - similar to "/subscribe", but with addresses specified as a block
+",A*"
+
+/subscribeblock works the same as "/subscribe", except that any Address
+pairs will be interpreted as blocks of addresses, rather than as separate
+single addresses.  See the "/setblock" documentation for syntax details.
+
+-----------------------
+
+/unsubscribe - unsubscribe from a set of control point addresses
+",s"
+",A*"
+
+This command has the same syntax as "/subscribe", but the opposite effect.  
+Any control point addresses specified by this command that are currently subscribed
+to by this client will have their subscription-records removed from the server,
+so that in the future when those control point addresses change, your client
+will no longer be notified.  For control points that your client is not currently
+subscribed to, this command will have no effect.
+
+
+-----------------------
+
+/unsubscribeblock - similar to "/unsubscribe", but with addresses specified as a block
+",A*"
+
+/subscribeblock works the same as "/unsubscribe", except that any Address
+pairs will be interpreted as blocks of addresses, rather than as separate
+single addresses.  See the "/setblock" documentation for syntax details.
+
+
+-----------------------
+
+/unsubscribeall - cancel all current subscriptions for this client
+
+This command takes no arguments.  It causes any and all current subscriptions 
+for this client to be cancelled.  This command is useful for returning your
+client the default "completely-unsubscribed" state without having to
+specify all the control points your client is currently subscribed to.
+
+It's recommended that UDP clients always send this packet on startup, just
+so that they can be guaranteed a known state on the server (otherwise the server
+might still have subscriptions in your client's name, from a previous session!)
+
+
+------------------------
+
+/log - sends the specified log message to the system log
+",s"
+",is"
+
+This command sends the log message you specify to the Meyer log
+(as shown in the CueStation Log window).  The first argument
+is an integer indicating the "severity level" of the message,
+and it should be one of the following values:
+
+1 = critical error:  this message indicates a critical system failure
+2 = error:           this message indicates an error condition
+3 = warning:         this message indicates a warning
+4 = info:            this message is a normal informational message
+5 = debug:           this message contains debugging information only
+6 = trace:           this message is being used to trace program execution
+
+If you skip the first argument (i.e. include only a string argument)
+then the message will default to level 4 (info).
+
+The second argument is the string that you want to have added to the log.
+(NOTE:  This command was added on 11/13/2005, and is therefore only supported
+        releases 4.4.0 and above of the Meyer server software)
+
+
+-----------------------------------------------------
+
+OSC reply packets sent by mixerd back to clients
+
+-----------------------
+
+/got     - contains control point value data previously requested by a "/get" or "/subscribe" packet.
+",s((A*)*)"
+
+The /got packet should not be sent by clients -- rather, it is sent by the server
+back to the clients in response to a "/get" or "/subscribe" packet.  The /got 
+packet contains as its first argument the tag string that was passed in to the 
+"/get" command.  If no tag string was passed in to "/get", the server will 
+generate a unique string for the /got packets.  If the "/got" packet is being 
+sent in response to a "/subscribe" packet, the response tag string will always be 
+empty (i.e. "").
+
+After the tag string, the remainder of the packet will consist of one or more
+(Address, value) pairs.  The Address format and value formats are
+the same as the ones described in the /set command documentation.  Each pair
+indicates that the current value for (that address) is (the provided value).
+
+A single /get command may result in more than one /got reply, if there is too
+much data to fit into a single packet.  You can use the tag string to determine
+whether or not two different /got packets correspond to the same "/get" command.
+
+If you need to know whether or not you have received all the /got packets corresponding
+to your request yet, or whether more are coming, you can find out by sending a 
+second "/get" command immediately after your first one.  The second "/get" command 
+can be trivial; just make sure it has a different tag-string from the first one.  
+Once you receive a packet with the second command's tag string, you can assume that 
+the first request has been fully handled (requests are handled in FIFO order).  (Note 
+that you can't use the "/ping" command for this purpose, since "/ping" short-circuits
+the data path that /get uses and so you would likely receive the /pong reply
+before you received all of your /got replies)
+
+-----------------------
+
+/pong   - Response to the /ping command.
+
+When the server receives a /ping command, it will send back a /pong reply that
+is otherwise byte-for-byte identical to the /ping packet.  This command is useful
+for network testing and as a keep-alive for UDP subscriptions (see the "/subscribe"
+documentation for details)
+
+
+================================================================
+EXAMPLE OSC PACKETS
+================================================================
+
+Below are hex dumps showing the contents of various UDP packets that
+represent valid Meyer/OSC commands and replies.  These same byte sequences 
+are valid for sending over TCP to the Meyer system, but when using TCP
+you must preface them with a 4-byte, big-endian byte-count field,
+so that the TCP OSC parse can know where the packet ends and the next
+packet begins.
+
+-----------------------
+
+/go - equivalent to pressing the "go" button in the Transport window
+
+2f 67 6f 00 2c 00 00 00
+
+-----------------------
+
+/stop - equivalent to pressing the "stop" button in the Transport window
+
+2f 73 74 6f 70 00 00 00 2c 00 00 00
+
+-----------------------
+
+/moveby 1 - equivalent to pressing the "next" button in the Transport window
+
+2f 6d 6f 76 65 62 79 00 2c 69 00 00 00 00 00 01
+
+/moveby -1 - equivalent to pressing the "previous" button in the Transport window
+
+2f 6d 6f 76 65 62 79 00 2c 69 00 00 ff ff ff ff
+
+-----------------------
+
+/recall cue 5 - tell the system to recall Cue #5
+
+2f 72 65 63 61 6c 6c 00 2c 69 69 00 00 00 00 00 00 00 00 05
+
+/recall cue 5 - tell the system to recall Subcue #58
+
+2f 72 65 63 61 6c 6c 00 2c 69 69 00 00 00 00 01 00 00 00 3a
+
+-----------------------
+
+/set input 1 mute = true
+
+2f 73 65 74 00 00 00 00 2c 73 54 00 69 6e 70 75 74 20 31 20
+6d 75 74 65 00 00 00 00
+
+/set output 5 level = 5.5
+
+2f 73 65 74 00 00 00 00 2c 73 66 00 6f 75 74 70 75 74 20 35
+20 6c 65 76 65 6c 00 00 40 b0 00 00
+
+// TODO:  show the non-string versions
+
+-----------------------
+
+/setblock - similar to "/set", but sets a block of control points instead of a list
+",s*"
+",A**"
+
+// TODO
+
+-----------------------
+
+/get input 1-8 level
+
+2f 67 65 74 00 00 00 00 2c 73 00 00 69 6e 70 75 74 20 31 2d
+38 20 6c 65 76 65 6c 20 00 00 00 00
+
+// TODO:  show non-string versions
+
+-----------------------
+
+/getblock - similar to "/get", but with addresses specified as a block instead of a list.
+
+TODO
+
+-----------------------
+
+/ping HelloSailor
+
+2f 70 69 6e 67 00 00 00 2c 73 00 00 48 65 6c 6c 6f 53 61 69
+6c 6f 72 00
+
+-----------------------
+
+/python 1 "print Hello"
+
+2f 70 79 74 68 6f 6e 00 2c 69 73 00 00 00 00 00 70 72 69 6e
+74 20 22 48 65 6c 6c 6f 22 00 00 00
+
+-----------------------
+
+/subscribe input 1-8 level
+
+2f 73 75 62 73 63 72 69 62 65 00 00 2c 73 00 00 69 6e 70 75
+74 20 31 2d 38 20 6c 65 76 65 6c 20 00 00 00 00
+
+TODO:  non-string versions
+
+-----------------------
+
+/subscribeblock - similar to "/subscribe", but with addresses specified as a block
+",A*"
+
+TODO
+
+-----------------------
+
+/unsubscribe input 3,5,7 mute
+
+2f 75 6e 73 75 62 73 63 72 69 62 65 00 00 00 00 2c 73 00 00
+69 6e 70 75 74 20 33 2c 35 2c 37 20 6d 75 74 65 20 00 00 00
+
+-----------------------
+
+/unsubscribeblock - similar to "/unsubscribe", but with addresses specified as a block
+",A*"
+
+TODO
+
+-----------------------
+
+/unsubscribeall - cancel all current subscriptions for this client
+
+2f 75 6e 73 75 62 73 63 72 69 62 65 61 6c 6c 00 2c 00 00 00
+
+-----------------------------------------------------
+
+OSC reply packets sent by mixerd back to clients
+
+-----------------------
+
+/got     - from a subscription to "input 1-2 level"
+
+TODO
+
+-----------------------
+
+/pong   - from a "ping HelloSailor"
+
+2f 70 6f 6e 67 00 00 00 2c 73 00 00 48 65 6c 6c 6f 53 61 69
+6c 6f 72 00
