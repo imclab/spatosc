@@ -2,6 +2,7 @@
 #include <sys/utsname.h>
 #include <ifaddrs.h>
 #include <arpa/inet.h>
+#include <cstdlib>
 
 #include "OSCutil.h"
 
