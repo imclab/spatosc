@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT(spatosc, [0.1], [https://github.com/mikewoz/spatosc])
+AC_INIT(spatosc, [0.1.0], [https://github.com/mikewoz/spatosc])
 AC_MSG_NOTICE([Configuring spatosc])
 AM_INIT_AUTOMAKE([subdir-objects -Wno-portability])
 AC_CONFIG_HEADERS([include/config.h])
