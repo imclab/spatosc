@@ -6,6 +6,7 @@
 #include "vSoundSource.h"
 #include "vSoundConn.h"
 
+#if 0
 // *****************************************************************************
 // This is a function that can be used by std::sort to make a
 // list of nodes alphabetical:
@@ -13,6 +14,7 @@ static bool nodeSortFunction (vBaseNode *n1, vBaseNode *n2)
 {
 	return ( n1->getID() < n2->getID() );
 }
+#endif
 
 
 // *****************************************************************************
@@ -340,7 +342,7 @@ vSoundConn* vAudioManager::connect (vBaseNode *src, vBaseNode *snk)
 	else return NULL;
 }
 
-void vAudioManager::disconnect(vSoundConn *conn)
+void vAudioManager::disconnect(vSoundConn * /*conn*/)
 {
 	std::cout << "vAudioManager::disconnect NOT IMPLEMENTED YET" << std::endl;
 }

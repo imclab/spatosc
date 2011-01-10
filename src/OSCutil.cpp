@@ -164,7 +164,7 @@ bool wildcardMatch(const char *pat, const char *str)
         case '\0':
             return *str=='\0';
         case '*':
-            return wildcardMatch(pat+1, str) || *str && wildcardMatch(pat, str+1);
+            return wildcardMatch(pat+1, str) or (*str and wildcardMatch(pat, str+1));
         case '?':
             return *str && wildcardMatch(pat+1, str+1);
         default:

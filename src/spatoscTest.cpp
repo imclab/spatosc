@@ -2,7 +2,7 @@
 #include <vPlugin_dmitri.h>
 #include <iostream>
 
-int main(int argc, char **argv)
+int main(int /*argc*/, char ** /*argv*/)
 {
 	std::cout << "\nRunning spatoscTest ...\n" << std::endl;
 
@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 
 
 	// Each scene needs to have at least one vListener:
-	vListener *listener = vAudioManager::Instance().getOrCreateListener("listener");
+	//vListener *listener = vAudioManager::Instance().getOrCreateListener("listener");
 
 	// A variable number of vSoundSource instances can then be generated. Note
 	// that a bus number must be assigned to each source in order to render in

@@ -51,7 +51,7 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 	// now from distance, compute gain and variable delay:
 
 	double distanceScalar = 1 / (1.0 + pow(distance,(double)conn->distanceEffect*.01));
-	double vdel = distance * (1/SPEED_OF_SOUND) * .01 * conn->dopplerEffect;  // speed of sound
+	//double vdel = distance * (1/SPEED_OF_SOUND) * .01 * conn->dopplerEffect;  // speed of sound
 	double gain = 20 * log10(distanceScalar);
 
 	str = "Input " + stringify(src->getBus()) + " Level";
