@@ -1,7 +1,7 @@
 #ifndef __vPlugin_H
 #define __vPlugin_H
 
-#include "vSoundConn.h";
+#include "vSoundConn.h"
 
 class vPlugin
 {
