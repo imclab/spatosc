@@ -1,11 +1,13 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT(spatosc, [0.1.0], [https://github.com/mikewoz/spatosc])
+AC_INIT(spatosc, [0.1.0], [http://github.com/mikewoz/spatosc])
+# TODO: AC_DEFINE_UNQUOTED(SPATOSC_API_VERSION, "0.1", "The version of the API. Should be major.minor and not change until not backward-compatible")
 AC_MSG_NOTICE([Configuring spatosc])
 AM_INIT_AUTOMAKE([subdir-objects -Wno-portability])
 AC_CONFIG_HEADERS([include/config.h])
 AC_CANONICAL_HOST # fills $host variable
+# AC_CONFIG_MACRO_DIR([m4])
 
 # Special cases
 case "$host" in *-darwin* | *-macos10*)
@@ -30,12 +32,6 @@ export PKG_CONFIG_PATH
 CXXFLAGS+=" -Wall -Wextra -Wfatal-errors"
 LDFLAGS="$LDFLAGS -L/usr/local/lib -L/usr/local/lib64"
 
-AC_CONFIG_FILES([
-        Makefile 
-        src/Makefile 
-        doxyfile 
-        ])
-
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
@@ -47,7 +43,6 @@ AC_HEADER_STDBOOL
 AC_C_INLINE
 AC_TYPE_SIZE_T
 AC_CHECK_TYPES([ptrdiff_t])
-
 
 # Checks for libraries
 AC_CHECK_LIB([m],[sqrt])
@@ -73,5 +68,12 @@ if test $cross_compiling = no; then
 else
     HELP2MAN=:
 fi
+
+AC_CONFIG_FILES([
+        Makefile 
+        spatosc.pc 
+        src/Makefile 
+        doxyfile 
+        ])
 
 AC_OUTPUT

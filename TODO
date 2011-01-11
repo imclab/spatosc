@@ -13,3 +13,4 @@ Spatosc TODO
  * use cmath, not math.h (?)
  * find from where vMath.h comes from. Maybe refactor it?
  * should data member have a trailing underscore in their name?
+ * use SPATOSC_API_VERSION in spatosc.pc.in

@@ -1,12 +1,14 @@
 # "foreign" means not GNU, and is common for avoiding boring messages about files organized differently from what gnu expects
 AUTOMAKE_OPTIONS = foreign
+# ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = src
 
-#pkgconfigdir = $(libdir)/pkgconfig
-#pkgconfig_DATA = libspatosc.pc
+EXTRA_DIST = README LICENSE doxyfile.in spatosc.pc.in autogen.sh
+DISTCLEANFILES = spatosc.pc
 
-EXTRA_DIST = README LICENSE doxyfile.in
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = spatosc.pc
 
 html-local: doxygen
 doxygen:

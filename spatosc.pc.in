@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: spatosc
+Description: audio spatialization tool
+Version: @PACKAGE_VERSION@
+Libs: -L${libdir} -lspatosc
+Cflags: -I${includedir}/spatosc
