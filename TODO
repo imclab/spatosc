@@ -1,0 +1,7 @@
+Spatosc TODO
+------------
+
+ * refactor the API
+ * enclose everything in the spatosc namespace
+ * create a stable 0.2 branch
+
