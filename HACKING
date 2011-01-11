@@ -90,7 +90,7 @@ Let's now describe a bit the C++ coding style in this project.
  * Class/type names should be camel case with the first letter capital. Like "EggSpam".
  * File names should be lowercase, and the words should be stuck together. Like "eggspam.cpp" and "eggspam.h".
  * The file name should be named after the single class it contents, if possible. 
- * Avoid global functions, they should enclosed be in a namespace.
+ * Avoid global functions, they should be enclosed in a namespace.
  * Try to comment the methods, attributes and classes you write. Use inline comments, plus the Doxygen-style headers.
  * Try to explain what a thing does in how you name it.
  * Indent with four spaces. No tabs.
