@@ -58,20 +58,11 @@ The README File
 We use the GNU Autotools, and Automake overwrites the INSTALL file. Therefore, we write the installation instructions in the README file, along with a quick explanation of how to use the software, and what it does.
 
 
-The Manual Page
----------------
-
-The text of manual page for this software is located in the following file:
-
- man/man-???
-
-We use help2man to generate a man page from this file and from the program's output. The man page is the primary location for any help and documentation about using this software.
-
-
 The TODO File
 -------------
 
 We store a list of things todo there.
+
 
 The README File
 ---------------
@@ -94,9 +85,9 @@ Let's now describe a bit the C++ coding style in this project.
 
 (this is just a proposal for now, please modify. Maybe we want camelcase methods)
 
- * variables should be lowercase words, separated by underscores. Like "egg_spam".
- * Class attributes should be lowercase words, separated by underscores, with a trailing underscore. Like "egg_spam_".
- * Class names should be camel case. Like "EggSpam".
+ * variables should camelcase. Like "eggSpam".
+ * Class attributes should camelcase, with a trailing underscore. Like "eggSpam_".
+ * Class names should be camel case with the first letter capital. Like "EggSpam".
  * File names should be lowercase, and the words should be stuck together. Like "eggspam.cpp" and "eggspam.h".
  * The file name should be named after the single class it contents, if possible. 
  * If a file contains no class, but only functions, they should enclosed be in a namespace.
