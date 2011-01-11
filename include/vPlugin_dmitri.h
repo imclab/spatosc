@@ -5,19 +5,19 @@
 #include <string>
 #include "vPlugin.h"
 
-#define SPACEMAP_RADIUS 750.0
-
 class vPlugin_dmitri : public vPlugin
 {
 
 public:
 
-	vPlugin_dmitri(std::string ip);
+	vPlugin_dmitri(const std::string &ip);
 	~vPlugin_dmitri();
 
 	void update(vSoundConn *conn);
 
 private:
+
+    static const double SPACEMAP_RADIUS;
 
 	lo_address destAddr;
 	lo_server lo_serv;

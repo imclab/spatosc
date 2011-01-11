@@ -4,8 +4,10 @@
 
 #include <iostream>
 
+const double vPlugin_dmitri::SPACEMAP_RADIUS = 750.0;
+
 // *****************************************************************************
-vPlugin_dmitri::vPlugin_dmitri(std::string ip) : vPlugin()
+vPlugin_dmitri::vPlugin_dmitri(const std::string &ip) : vPlugin()
 {
 	type = vPlugin::DMITRI;
 
