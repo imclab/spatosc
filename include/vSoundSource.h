@@ -8,17 +8,17 @@ class vSoundSource : virtual public vBaseNode
 
 public:
 	
-	vSoundSource(std::string nodeID);
+	vSoundSource(const std::string &nodeID);
 	~vSoundSource();
 	
 	void debugPrint();
 
-	void setBus(int bus);
-	int getBus() { return busID; }
+	void setChannelID(int channel);
+	int getChannelID() const { return channelID_; }
 
 protected:
 
-	int busID;
+	int channelID_;
 	
 };
 

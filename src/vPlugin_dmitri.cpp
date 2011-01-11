@@ -4,8 +4,10 @@
 
 #include <iostream>
 
+const double vPlugin_dmitri::SPACEMAP_RADIUS = 750.0;
+
 // *****************************************************************************
-vPlugin_dmitri::vPlugin_dmitri(std::string ip) : vPlugin()
+vPlugin_dmitri::vPlugin_dmitri(const std::string &ip) : vPlugin()
 {
 	type = vPlugin::DMITRI;
 
@@ -29,7 +31,7 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 	vSoundSource *src = dynamic_cast<vSoundSource*>(conn->src);
 
 	if (!src) return;
-	if (src->getBus() < 0) return;
+	if (src->getChannelID() < 0) return;
 
 	Vector3 vect = conn->snk->pos - conn->src->pos;
 	double distance = (double)vect.Mag();
@@ -42,10 +44,10 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 	float spacemapX = cos(azim) * r * SPACEMAP_RADIUS;
 	float spacemapY = sin(azim) * r * SPACEMAP_RADIUS;
 
-	str = "/spacemap/" + stringify(src->getBus()) + "/x";
+	str = "/spacemap/" + stringify(src->getChannelID()) + "/x";
 	lo_send_from(destAddr, lo_serv, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
 
-	str = "/spacemap/" + stringify(src->getBus()) + "/y";
+	str = "/spacemap/" + stringify(src->getChannelID()) + "/y";
 	lo_send_from(destAddr, lo_serv, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
 
 	// now from distance, compute gain and variable delay:
@@ -54,6 +56,6 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 	//double vdel = distance * (1/SPEED_OF_SOUND) * .01 * conn->dopplerEffect;  // speed of sound
 	double gain = 20 * log10(distanceScalar);
 
-	str = "Input " + stringify(src->getBus()) + " Level";
+	str = "Input " + stringify(src->getChannelID()) + " Level";
 	lo_send_from(destAddr, lo_serv, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), gain);
 }
