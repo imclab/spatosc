@@ -135,7 +135,7 @@ std::vector<std::string> tokenize(const std::string& str, const std::string& del
     }
 }
 
-std::vector<float> floatsFromString (std::string theString)
+std::vector<float> floatsFromString (const std::string &theString)
 {
     using namespace std;
 

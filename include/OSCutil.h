@@ -28,7 +28,7 @@ std::string stringify(int i);
 std::string stringify(float x);
 std::string leadingSpaces(int n);
 std::vector<std::string> tokenize(const std::string& str, const std::string& delimiters = " ");
-std::vector<float> floatsFromString (std::string theString);
+std::vector<float> floatsFromString (const std::string &theString);
 
 bool wildcardMatch(const char *pat, const char *str);
 
