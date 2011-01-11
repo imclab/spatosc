@@ -83,14 +83,14 @@ Coding style
 
 Let's now describe a bit the C++ coding style in this project.
 
-(this is just a proposal for now, please modify. Maybe we want camelcase methods)
+(this is just a proposal for now, please modify.)
 
  * variables should camelcase. Like "eggSpam".
  * Class attributes should camelcase, with a trailing underscore. Like "eggSpam_".
- * Class names should be camel case with the first letter capital. Like "EggSpam".
+ * Class/type names should be camel case with the first letter capital. Like "EggSpam".
  * File names should be lowercase, and the words should be stuck together. Like "eggspam.cpp" and "eggspam.h".
  * The file name should be named after the single class it contents, if possible. 
- * If a file contains no class, but only functions, they should enclosed be in a namespace.
+ * Avoid global functions, they should enclosed be in a namespace.
  * Try to comment the methods, attributes and classes you write. Use inline comments, plus the Doxygen-style headers.
  * Try to explain what a thing does in how you name it.
  * Indent with four spaces. No tabs.
@@ -102,4 +102,3 @@ Libraries we use
 ----------------
 
  * liblo
-
