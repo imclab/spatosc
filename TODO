@@ -1,7 +1,15 @@
 Spatosc TODO
 ------------
 
- * refactor the API
+ * decide on a coding style
+ * choose a namespace
+ * refactor the API (remove v prefix, maybe change camel case methods for boost-style (underscores))
  * enclose everything in the spatosc namespace
  * create a stable 0.2 branch
-
+ * remove non-public functions and typedefs from include/*.h
+ * document the API (doxygen-style)
+ * package the doxygen doc generation
+ * remove friend classes in vBaseNode
+ * use cmath, not math.h (?)
+ * find from where vMath.h comes from. Maybe refactor it?
+ * should data member have a trailing underscore in their name?
