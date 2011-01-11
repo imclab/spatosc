@@ -21,3 +21,5 @@ src/spatoscTest
 *.lo
 *.la
 *.o
+html/
+doxyfile

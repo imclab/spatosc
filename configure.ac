@@ -33,6 +33,7 @@ LDFLAGS="$LDFLAGS -L/usr/local/lib -L/usr/local/lib64"
 AC_CONFIG_FILES([
         Makefile 
         src/Makefile 
+        doxyfile 
         ])
 
 # Checks for programs.

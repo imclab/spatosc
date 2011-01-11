@@ -6,7 +6,10 @@ SUBDIRS = src
 #pkgconfigdir = $(libdir)/pkgconfig
 #pkgconfig_DATA = libspatosc.pc
 
+EXTRA_DIST = README LICENSE doxyfile.in
 
-EXTRA_DIST = README LICENSE
-
-
+html-local: doxygen
+doxygen:
+	@if [ -z `which doxygen` ]; then echo "No Doxygen!"; else doxygen; fi
+clean-local:
+	rm -rf html
