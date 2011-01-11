@@ -19,9 +19,9 @@ int main(int /*argc*/, char ** /*argv*/)
 	// D-Mitri. Setting the bus to -1 will effectively disable computation for
 	// that node:
 	vSoundSource *foo = vAudioManager::Instance().getOrCreateSoundSource("foo");
-	foo->setBus(1);
+	foo->setChannelID(1);
 	vSoundSource *kak = vAudioManager::Instance().getOrCreateSoundSource("kak");
-	kak->setBus(2);
+	kak->setChannelID(2);
 
 	// In order to send OSC, some output plugin must be specified. In this case,
 	// we choose D-Mitri, and provide the IP address of the server on the

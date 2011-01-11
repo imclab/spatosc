@@ -2,10 +2,8 @@
 
 
 // *****************************************************************************
-vSoundSource::vSoundSource(std::string nodeID) : vBaseNode(nodeID)
+vSoundSource::vSoundSource(const std::string &nodeID) : vBaseNode(nodeID), channelID_(-1)
 {
-
-	busID = -1;
 }
 
 vSoundSource::~vSoundSource()
@@ -17,12 +15,12 @@ void vSoundSource::debugPrint()
 {
 	vBaseNode::debugPrint();
 
-	std::cout << "    busID\t" << busID << std::endl;
+	std::cout << "    channelID\t" << channelID_ << std::endl;
 }
 
 
-void vSoundSource::setBus(int bus)
+void vSoundSource::setChannelID(int channel)
 {
-	busID = bus;
+	channelID_ = channel;
 
 }
