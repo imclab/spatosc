@@ -26,3 +26,4 @@ src/spatoscTest
 html/
 doxyfile
 spatosc.pc
+examples/clutterspat/clutterspat

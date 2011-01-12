@@ -1,5 +1,7 @@
 /**
  * Clutter spatosc example
+ *
+ * This example is in the public domain.
  */
 #include <clutter/clutter.h>
 #include <vAudioManager.h>

@@ -56,6 +56,7 @@ vAudioManager::~vAudioManager()
 		delete (*C);
 		vSoundConnList.erase(C);
 	}
+	if (plugin) delete plugin;
 }
 
 
@@ -69,6 +70,8 @@ vAudioManager& vAudioManager::Instance()
 // *****************************************************************************
 void vAudioManager::setPlugin(vPlugin *p)
 {
+    if (plugin == p)
+        return;
 	// clean up old plugin:
 	if (plugin) delete plugin;
 
