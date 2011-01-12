@@ -17,7 +17,7 @@ void vListener::debugPrint()
 {
 	vBaseNode::debugPrint();
 
-	connIterator c;
+    vAudioManager::connIterator c;
 	std::cout << "    listen to:\t";
 	for (c = connectFROM.begin(); c != connectFROM.end(); c++)
 	{
