@@ -59,16 +59,16 @@ class vAudioManager
         // assign the singleton vAudioManager to itself:
         vAudioManager& operator=(vAudioManager const&);
 
-        vPlugin *plugin;
+        vPlugin *plugin_;
 
-        bool autoConnect;
+        bool autoConnect_;
 
-        std::string connectFilter;
-        regex_t connectRegex;
+        std::string connectFilter_;
+        regex_t connectRegex_;
 
-        std::vector<vListener*>  vListenerList;
-        std::vector<vSoundSource*> vSoundSourceList;
-        std::vector<vSoundConn*> vSoundConnList;
+        std::vector<vListener*>  vListenerList_;
+        std::vector<vSoundSource*> vSoundSourceList_;
+        std::vector<vSoundConn*> vSoundConnList_;
 };
 
 #endif
