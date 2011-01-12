@@ -70,6 +70,8 @@ int main(int argc, char *argv[])
     app.foo_sound = vAudioManager::Instance().getOrCreateSoundSource("foo_sound");
     app.foo_sound->setChannelID(1);
     vAudioManager::Instance().setPlugin(new vPlugin_dmitri("192.168.2.26"));
+    app.foo_sound->setPosition(clutter_actor_get_x(app.foo_actor),
+            clutter_actor_get_y(app.foo_actor), 0);
     vAudioManager::Instance().debugPrint();
 
     g_signal_connect(stage, "key-press-event", G_CALLBACK(key_event_cb),
