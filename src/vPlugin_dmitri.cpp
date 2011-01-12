@@ -44,10 +44,10 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 	float spacemapX = cos(azim) * r * SPACEMAP_RADIUS;
 	float spacemapY = sin(azim) * r * SPACEMAP_RADIUS;
 
-	str = "/spacemap/" + stringify(src->getChannelID()) + "/x";
+	str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/x";
 	lo_send_from(destAddr, lo_serv, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
 
-	str = "/spacemap/" + stringify(src->getChannelID()) + "/y";
+	str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/y";
 	lo_send_from(destAddr, lo_serv, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
 
 	// now from distance, compute gain and variable delay:
@@ -56,6 +56,6 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 	//double vdel = distance * (1/SPEED_OF_SOUND) * .01 * conn->dopplerEffect;  // speed of sound
 	double gain = 20 * log10(distanceScalar);
 
-	str = "Input " + stringify(src->getChannelID()) + " Level";
+	str = "Input " + OSCutil::stringify(src->getChannelID()) + " Level";
 	lo_send_from(destAddr, lo_serv, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), gain);
 }
