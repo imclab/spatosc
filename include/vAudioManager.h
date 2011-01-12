@@ -5,11 +5,12 @@
 #include <string>
 #include <vector>
 
-#include "vBaseNode.h"
-#include "vListener.h"
-#include "vSoundSource.h"
-#include "vSoundConn.h"
-#include "vPlugin.h"
+// forward declarations
+class vListener;
+class vBaseNode;
+class vSoundSource;
+class vSoundConn;
+class vPlugin;
 
 class vAudioManager
 {
@@ -27,21 +28,21 @@ class vAudioManager
 
         void setPlugin(vPlugin *p);
 
-        vSoundSource* getOrCreateSoundSource(std::string id);
-        vListener* getOrCreateListener(std::string id);
+        vSoundSource* getOrCreateSoundSource(const std::string &id);
+        vListener* getOrCreateListener(const std::string &id);
 
-        vBaseNode* getNode(std::string id);
-        vSoundSource* getSoundSource(std::string id);
-        vListener* getListener(std::string id);
+        vBaseNode* getNode(const std::string &id);
+        vSoundSource* getSoundSource(const std::string &id);
+        vListener* getListener(const std::string &id);
 
-        std::vector<vSoundConn*> getConnections(std::string id);
-        vSoundConn* getConnection(std::string src, std::string snk);
-        vSoundConn* getConnection(std::string id);
+        std::vector<vSoundConn*> getConnections(const std::string &id);
+        vSoundConn* getConnection(const std::string &src, const std::string &snk);
+        vSoundConn* getConnection(const std::string &id);
 
-        void setConnectFilter (std::string s);
+        void setConnectFilter(std::string s);
 
-        vSoundConn* connect (std::string src, std::string snk);
-        vSoundConn* connect (vBaseNode *src, vBaseNode *snk);
+        vSoundConn* connect(const std::string &src, const std::string &snk);
+        vSoundConn* connect(vBaseNode *src, vBaseNode *snk);
 
         void disconnect(vSoundConn *conn);
 
@@ -68,7 +69,6 @@ class vAudioManager
         std::vector<vListener*>  vListenerList;
         std::vector<vSoundSource*> vSoundSourceList;
         std::vector<vSoundConn*> vSoundConnList;
-
 };
 
 #endif

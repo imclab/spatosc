@@ -1,5 +1,6 @@
 #include "vListener.h"
 #include "vAudioManager.h"
+#include "vSoundConn.h"
 
 // *****************************************************************************
 vListener::vListener(std::string nodeID) : vBaseNode(nodeID)

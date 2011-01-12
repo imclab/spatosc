@@ -1,6 +1,7 @@
+#include "vAudioManager.h"
 #include <iostream>
 
-#include "vAudioManager.h"
+#include "vPlugin.h"
 #include "vListener.h"
 #include "vBaseNode.h"
 #include "vSoundSource.h"
@@ -118,7 +119,7 @@ void vAudioManager::debugPrint ()
 
 
 // *****************************************************************************
-vSoundSource* vAudioManager::getOrCreateSoundSource(std::string id)
+vSoundSource* vAudioManager::getOrCreateSoundSource(const std::string &id)
 {
 	// check if it already exists:
 	vSoundSource *n = getSoundSource(id);
@@ -145,7 +146,7 @@ vSoundSource* vAudioManager::getOrCreateSoundSource(std::string id)
 }
 
 // *****************************************************************************
-vListener* vAudioManager::getOrCreateListener(std::string id)
+vListener* vAudioManager::getOrCreateListener(const std::string &id)
 {
 	// check if it already exists:
 	vListener *L = getListener(id);
@@ -173,7 +174,7 @@ vListener* vAudioManager::getOrCreateListener(std::string id)
 
 // *****************************************************************************
 // return a vBaseNode reference by looking through all storage vectors:
-vBaseNode* vAudioManager::getNode(std::string id)
+vBaseNode* vAudioManager::getNode(const std::string &id)
 {
 	vBaseNode *n = 0;
 
@@ -189,7 +190,7 @@ vBaseNode* vAudioManager::getNode(std::string id)
 
 // *****************************************************************************
 // return a pointer to a vSoundNode in the vSoundSourceList, given an id:
-vSoundSource* vAudioManager::getSoundSource(std::string id)
+vSoundSource* vAudioManager::getSoundSource(const std::string &id)
 {
 	sourceIterator n;
 	for (n = vSoundSourceList.begin(); n != vSoundSourceList.end(); n++)
@@ -207,7 +208,7 @@ vSoundSource* vAudioManager::getSoundSource(std::string id)
 
 // *****************************************************************************
 // return a pointer to a vListener in the vListenerList, given an id:
-vListener* vAudioManager::getListener(std::string id)
+vListener* vAudioManager::getListener(const std::string &id)
 {
 	listenerIterator L;
 	for (L = vListenerList.begin(); L != vListenerList.end(); L++)
@@ -224,7 +225,7 @@ vListener* vAudioManager::getListener(std::string id)
 // *****************************************************************************
 // return a list of all connections that "directly involve" a node (ie, as the
 // source or the sink):
-std::vector<vSoundConn*> vAudioManager::getConnections(std::string id)
+std::vector<vSoundConn*> vAudioManager::getConnections(const std::string &id)
 {
 	std::vector<vSoundConn*> foundConnections;
 	
@@ -241,7 +242,7 @@ std::vector<vSoundConn*> vAudioManager::getConnections(std::string id)
 
 // *****************************************************************************
 // return a pointer to a vSoundConn in the vSoundConnList:
-vSoundConn* vAudioManager::getConnection(std::string src, std::string snk)
+vSoundConn* vAudioManager::getConnection(const std::string &src, const std::string &snk)
 {
 	connIterator c;
 	for (c = vSoundConnList.begin(); c != vSoundConnList.end(); c++)
@@ -255,7 +256,7 @@ vSoundConn* vAudioManager::getConnection(std::string src, std::string snk)
 	return NULL;
 }
 
-vSoundConn* vAudioManager::getConnection(std::string id)
+vSoundConn* vAudioManager::getConnection(const std::string &id)
 {
 	connIterator c;
 	for (c = vSoundConnList.begin(); c != vSoundConnList.end(); c++)
@@ -274,11 +275,12 @@ vSoundConn* vAudioManager::getConnection(std::string id)
 // *****************************************************************************
 
 
-void vAudioManager::setConnectFilter (std::string s)
+void vAudioManager::setConnectFilter(std::string s)
 {
 	// we like specifying just one asterisk ( * ), so we need to convert to a
 	// regular expression:
-	if (s=="*") s = ".*";
+	if (s=="*")
+        s = ".*";
 
 	if (regcomp(&connectRegex, s.c_str(), REG_EXTENDED|REG_NOSUB) != 0)
 	{
@@ -289,7 +291,7 @@ void vAudioManager::setConnectFilter (std::string s)
 	connectFilter = s;
 }
 
-vSoundConn* vAudioManager::connect (std::string src, std::string snk)
+vSoundConn* vAudioManager::connect(const std::string &src, const std::string &snk)
 {
 	// check if exists first:
 	vSoundConn* conn = getConnection(src,snk);

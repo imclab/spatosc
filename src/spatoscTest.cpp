@@ -1,6 +1,8 @@
-#include <vAudioManager.h>
-#include <vPlugin_dmitri.h>
 #include <iostream>
+
+#include "vAudioManager.h"
+#include "vPlugin_dmitri.h"
+#include "vSoundSource.h"
 
 int main(int /*argc*/, char ** /*argv*/)
 {
