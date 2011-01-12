@@ -27,13 +27,13 @@ class vBaseNode
 
 public:
 	
-	vBaseNode(std::string nodeID);
+	vBaseNode(const std::string &nodeID);
 	~vBaseNode();
 
     /**
      * Returns the identifier of this node.
      */
-	std::string getID() { return id; }
+	std::string getID() { return id_; }
 	
     /**
      * Prints debug info about this node to the console.
@@ -52,18 +52,17 @@ public:
 
 protected:
 
-	std::string id;
+	std::string id_;
 	
-	Vector3 pos;
-	Vector3 rot;
+	Vector3 pos_;
+	Vector3 rot_;
 	
-	bool active;
+	bool active_;
 	
-	std::vector<vSoundConn*> connectTO;
-	std::vector<vSoundConn*> connectFROM;
+	std::vector<vSoundConn*> connectTO_;
+	std::vector<vSoundConn*> connectFROM_;
 	
-	bool updateFlag;
-	
+	bool updateFlag_;
 };
 
 

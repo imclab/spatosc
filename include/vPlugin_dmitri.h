@@ -8,6 +8,8 @@
 #include <string>
 #include "vPlugin.h"
 
+class vSoundConn;
+
 /**
  * Renderer for the proprietary D-Mitri system.
  */
@@ -25,9 +27,8 @@ private:
 
     static const double SPACEMAP_RADIUS;
 
-	lo_address destAddr;
-	lo_server lo_serv;
-
+	lo_address destAddr_;
+	lo_server lo_serv_;
 };
 
 

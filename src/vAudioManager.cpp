@@ -1,6 +1,7 @@
+#include "vAudioManager.h"
 #include <iostream>
 
-#include "vAudioManager.h"
+#include "vPlugin.h"
 #include "vListener.h"
 #include "vBaseNode.h"
 #include "vSoundSource.h"
@@ -21,14 +22,14 @@ static bool nodeSortFunction (vBaseNode *n1, vBaseNode *n2)
 // constructor
 vAudioManager::vAudioManager ()
 {
-	this->vListenerList.clear();
-	this->vSoundSourceList.clear();
-	this->vSoundConnList.clear();
+	this->vListenerList_.clear();
+	this->vSoundSourceList_.clear();
+	this->vSoundConnList_.clear();
 
 	// for now, create a basic (CONSOLE) plugin:
-	plugin = new vPlugin();
+	plugin_ = new vPlugin();
 
-	autoConnect = true;
+	autoConnect_ = true;
 
 	setConnectFilter(".*"); // match everything
 
@@ -38,25 +39,26 @@ vAudioManager::vAudioManager ()
 // destructor
 vAudioManager::~vAudioManager()
 {
-	listenerIterator L = vListenerList.begin();
-	while (L != vListenerList.end())
+	listenerIterator L = vListenerList_.begin();
+	while (L != vListenerList_.end())
 	{
 		delete (*L);
-		vListenerList.erase(L);
+		vListenerList_.erase(L);
 	}
-	sourceIterator N = vSoundSourceList.begin();
-	while (N != vSoundSourceList.end())
+	sourceIterator N = vSoundSourceList_.begin();
+	while (N != vSoundSourceList_.end())
 	{
 		delete (*N);
-		vSoundSourceList.erase(N);
+		vSoundSourceList_.erase(N);
 	}
-	connIterator C = vSoundConnList.begin();
-	while (C != vSoundConnList.end())
+	connIterator C = vSoundConnList_.begin();
+	while (C != vSoundConnList_.end())
 	{
 		delete (*C);
-		vSoundConnList.erase(C);
+		vSoundConnList_.erase(C);
 	}
-	if (plugin) delete plugin;
+	if (plugin_)
+        delete plugin_;
 }
 
 
@@ -70,12 +72,13 @@ vAudioManager& vAudioManager::Instance()
 // *****************************************************************************
 void vAudioManager::setPlugin(vPlugin *p)
 {
-    if (plugin == p)
+    if (plugin_ == p)
         return;
 	// clean up old plugin:
-	if (plugin) delete plugin;
+	if (plugin_)
+        delete plugin_;
 
-	plugin = p;
+	plugin_ = p;
 }
 
 // *****************************************************************************
@@ -87,38 +90,38 @@ void vAudioManager::debugPrint ()
 
 	std::cout << "\n=====================================================" << std::endl;
 
-	std::cout << "[vAudioManager]:: connectFilter = " << connectFilter << std::endl;
+	std::cout << "[vAudioManager]:: connectFilter = " << connectFilter_ << std::endl;
 
-	if (plugin) std::cout << "[vAudioManager]:: using " << plugin->getTypeString() << " plugin" << std::endl;
+	if (plugin_) std::cout << "[vAudioManager]:: using " << plugin_->getTypeString() << " plugin" << std::endl;
 	else std::cout << "[vAudioManager]:: NO plugin specified" << std::endl;
 
-	std::cout << "[vAudioManager]:: " << vListenerList.size() << " listeners:" << std::endl;
-	for (L = vListenerList.begin(); L != vListenerList.end(); L++)
+	std::cout << "[vAudioManager]:: " << vListenerList_.size() << " listeners:" << std::endl;
+	for (L = vListenerList_.begin(); L != vListenerList_.end(); ++L)
 	{
 		(*L)->debugPrint();
 	}
 
-	std::cout << "[vAudioManager]:: " << vSoundSourceList.size() << " sources:" << std::endl;
-	for (n = vSoundSourceList.begin(); n != vSoundSourceList.end() ; n++)
+	std::cout << "[vAudioManager]:: " << vSoundSourceList_.size() << " sources:" << std::endl;
+	for (n = vSoundSourceList_.begin(); n != vSoundSourceList_.end(); ++n)
 	{
 		(*n)->debugPrint();
 	}
 
-	std::cout << "[vAudioManager]:: " << vSoundConnList.size() << " connections:" << std::endl;
-	for (c = vSoundConnList.begin(); c != vSoundConnList.end(); c++)
+	std::cout << "[vAudioManager]:: " << vSoundConnList_.size() << " connections:" << std::endl;
+	for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
 	{
-		std::cout << "  " << (*c)->id << ":" << std::endl;
-		std::cout << "    distanceEffect:\t" << (*c)->distanceEffect << "%" << std::endl;
-		std::cout << "    rolloffEffect:\t" << (*c)->rolloffEffect << "%" << std::endl;
-		std::cout << "    dopplerEffect:\t" << (*c)->dopplerEffect << "%" << std::endl;
-		std::cout << "    diffractionEffect:\t" << (*c)->diffractionEffect << "%" << std::endl;
+		std::cout << "  " << (*c)->id_ << ":" << std::endl;
+		std::cout << "    distanceEffect:\t" << (*c)->distanceEffect_ << "%" << std::endl;
+		std::cout << "    rolloffEffect:\t" << (*c)->rolloffEffect_ << "%" << std::endl;
+		std::cout << "    dopplerEffect:\t" << (*c)->dopplerEffect_ << "%" << std::endl;
+		std::cout << "    diffractionEffect:\t" << (*c)->diffractionEffect_ << "%" << std::endl;
 	}
 
 }
 
 
 // *****************************************************************************
-vSoundSource* vAudioManager::getOrCreateSoundSource(std::string id)
+vSoundSource* vAudioManager::getOrCreateSoundSource(const std::string &id)
 {
 	// check if it already exists:
 	vSoundSource *n = getSoundSource(id);
@@ -129,12 +132,12 @@ vSoundSource* vAudioManager::getOrCreateSoundSource(std::string id)
 		n = new vSoundSource(id);
 
 		// add it to the vSoundSourceList:
-		vSoundSourceList.push_back(n);
+		vSoundSourceList_.push_back(n);
 
-		if (autoConnect)
+		if (autoConnect_)
 		{
 			listenerIterator L;
-			for (L = vListenerList.begin(); L != vListenerList.end(); L++)
+			for (L = vListenerList_.begin(); L != vListenerList_.end(); ++L)
 			{
 				connect(n,(*L));
 			}
@@ -145,7 +148,7 @@ vSoundSource* vAudioManager::getOrCreateSoundSource(std::string id)
 }
 
 // *****************************************************************************
-vListener* vAudioManager::getOrCreateListener(std::string id)
+vListener* vAudioManager::getOrCreateListener(const std::string &id)
 {
 	// check if it already exists:
 	vListener *L = getListener(id);
@@ -156,12 +159,12 @@ vListener* vAudioManager::getOrCreateListener(std::string id)
 		L = new vListener(id);
 
 		// add it to the vListenerList:
-		vListenerList.push_back(L);
+		vListenerList_.push_back(L);
 
-		if (autoConnect)
+		if (autoConnect_)
 		{
 			sourceIterator n;
-			for (n = vSoundSourceList.begin(); n != vSoundSourceList.end(); n++)
+			for (n = vSoundSourceList_.begin(); n != vSoundSourceList_.end(); ++n)
 			{
 				connect((*n),L);
 			}
@@ -173,7 +176,7 @@ vListener* vAudioManager::getOrCreateListener(std::string id)
 
 // *****************************************************************************
 // return a vBaseNode reference by looking through all storage vectors:
-vBaseNode* vAudioManager::getNode(std::string id)
+vBaseNode* vAudioManager::getNode(const std::string &id)
 {
 	vBaseNode *n = 0;
 
@@ -189,12 +192,12 @@ vBaseNode* vAudioManager::getNode(std::string id)
 
 // *****************************************************************************
 // return a pointer to a vSoundNode in the vSoundSourceList, given an id:
-vSoundSource* vAudioManager::getSoundSource(std::string id)
+vSoundSource* vAudioManager::getSoundSource(const std::string &id)
 {
 	sourceIterator n;
-	for (n = vSoundSourceList.begin(); n != vSoundSourceList.end(); n++)
+	for (n = vSoundSourceList_.begin(); n != vSoundSourceList_.end(); ++n)
 	{
-		if ((*n)->id == id)
+		if ((*n)->id_ == id)
 		{
 			return (*n);
 		}
@@ -207,12 +210,12 @@ vSoundSource* vAudioManager::getSoundSource(std::string id)
 
 // *****************************************************************************
 // return a pointer to a vListener in the vListenerList, given an id:
-vListener* vAudioManager::getListener(std::string id)
+vListener* vAudioManager::getListener(const std::string &id)
 {
 	listenerIterator L;
-	for (L = vListenerList.begin(); L != vListenerList.end(); L++)
+	for (L = vListenerList_.begin(); L != vListenerList_.end(); ++L)
 	{
-		if ((*L)->id == id)
+		if ((*L)->id_ == id)
 		{
 			return (*L);
 		}
@@ -224,14 +227,14 @@ vListener* vAudioManager::getListener(std::string id)
 // *****************************************************************************
 // return a list of all connections that "directly involve" a node (ie, as the
 // source or the sink):
-std::vector<vSoundConn*> vAudioManager::getConnections(std::string id)
+std::vector<vSoundConn*> vAudioManager::getConnections(const std::string &id)
 {
 	std::vector<vSoundConn*> foundConnections;
 	
 	connIterator c;
-	for (c = vSoundConnList.begin(); c != vSoundConnList.end(); c++)
+	for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
 	{
-		if (((*c)->src->id == id) || ((*c)->snk->id == id))
+		if (((*c)->src_->id_ == id) || ((*c)->snk_->id_ == id))
 		{
 			foundConnections.push_back(*c);
 		}
@@ -241,12 +244,12 @@ std::vector<vSoundConn*> vAudioManager::getConnections(std::string id)
 
 // *****************************************************************************
 // return a pointer to a vSoundConn in the vSoundConnList:
-vSoundConn* vAudioManager::getConnection(std::string src, std::string snk)
+vSoundConn* vAudioManager::getConnection(const std::string &src, const std::string &snk)
 {
 	connIterator c;
-	for (c = vSoundConnList.begin(); c != vSoundConnList.end(); c++)
+	for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
 	{
-		if (((*c)->src->id == src) && ((*c)->snk->id == snk))
+		if (((*c)->src_->id_ == src) && ((*c)->snk_->id_ == snk))
 		{
 			return (*c);
 		}
@@ -255,12 +258,12 @@ vSoundConn* vAudioManager::getConnection(std::string src, std::string snk)
 	return NULL;
 }
 
-vSoundConn* vAudioManager::getConnection(std::string id)
+vSoundConn* vAudioManager::getConnection(const std::string &id)
 {
 	connIterator c;
-	for (c = vSoundConnList.begin(); c != vSoundConnList.end(); c++)
+	for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
 	{
-		if ((*c)->id == id)
+		if ((*c)->id_ == id)
 		{
 			return (*c);
 		}
@@ -274,25 +277,26 @@ vSoundConn* vAudioManager::getConnection(std::string id)
 // *****************************************************************************
 
 
-void vAudioManager::setConnectFilter (std::string s)
+void vAudioManager::setConnectFilter(std::string s)
 {
 	// we like specifying just one asterisk ( * ), so we need to convert to a
 	// regular expression:
-	if (s=="*") s = ".*";
+	if (s=="*")
+        s = ".*";
 
-	if (regcomp(&connectRegex, s.c_str(), REG_EXTENDED|REG_NOSUB) != 0)
+	if (regcomp(&connectRegex_, s.c_str(), REG_EXTENDED|REG_NOSUB) != 0)
 	{
 		std::cout << "vAudioManager error: bad regex pattern passed to setConnectFilter(): " << s << std::endl;
 	    return;
 	}
 
-	connectFilter = s;
+	connectFilter_ = s;
 }
 
-vSoundConn* vAudioManager::connect (std::string src, std::string snk)
+vSoundConn* vAudioManager::connect(const std::string &src, const std::string &snk)
 {
 	// check if exists first:
-	vSoundConn* conn = getConnection(src,snk);
+	vSoundConn* conn = getConnection(src, snk);
 	if (!conn)
 	{
 		// check if both nodes exist
@@ -318,24 +322,24 @@ vSoundConn* vAudioManager::connect (std::string src, std::string snk)
 vSoundConn* vAudioManager::connect (vBaseNode *src, vBaseNode *snk)
 {
 	// if the node pointers are invalid for some reason, return:
-	if (!src || !snk) return NULL;
+	if (!src or !snk) return NULL;
 
 
 	// Check src and snk id's against the connectFilter. If either match, then
 	// proceed with the connection:
-	int srcRegexStatus = regexec(&connectRegex, src->id.c_str(), (size_t)0, NULL, 0);
-	int snkRegexStatus = regexec(&connectRegex, snk->id.c_str(), (size_t)0, NULL, 0);
+	int srcRegexStatus = regexec(&connectRegex_, src->id_.c_str(), (size_t)0, NULL, 0);
+	int snkRegexStatus = regexec(&connectRegex_, snk->id_.c_str(), (size_t)0, NULL, 0);
 
-	if ((srcRegexStatus==0) || (snkRegexStatus==0))
+	if (srcRegexStatus == 0 or snkRegexStatus == 0)
 	{
 		// create connection:
 		vSoundConn *conn = new vSoundConn(src, snk);
 
 		// register the connection with both the vAudioManager and the
 		// sink node (for backwards connectivity computation):
-		vSoundConnList.push_back(conn);
-		src->connectTO.push_back(conn);
-		snk->connectFROM.push_back(conn);
+		vSoundConnList_.push_back(conn);
+		src->connectTO_.push_back(conn);
+		snk->connectFROM_.push_back(conn);
 
 		update(conn);
 
@@ -353,11 +357,11 @@ void vAudioManager::disconnect(vSoundConn * /*conn*/)
 void vAudioManager::update(vBaseNode *n)
 {
 	connIterator c;
-	for (c = n->connectTO.begin(); c != n->connectTO.end(); c++)
+	for (c = n->connectTO_.begin(); c != n->connectTO_.end(); ++c)
 	{
 		update(*c);
 	}
-	for (c = n->connectFROM.begin(); c != n->connectFROM.end(); c++)
+	for (c = n->connectFROM_.begin(); c != n->connectFROM_.end(); ++c)
 	{
 		update(*c);
 	}
@@ -368,8 +372,9 @@ void vAudioManager::update(vSoundConn *conn)
 	// If one of the connected nodes has been deactivated, then there is no need
 	// to compute anything. Enable the mute (and send the status change if this
 	// has just happened)
-	if ((conn->src->active) && (conn->snk->active))
+	if ((conn->src_->active_) and (conn->snk_->active_))
 	{
-		if (plugin) plugin->update(conn);
+		if (plugin_)
+            plugin_->update(conn);
 	}
 }

@@ -9,17 +9,12 @@
 #include <string>
 #include <vector>
 
-#include "vBaseNode.h"
-#include "vListener.h"
-#include "vSoundSource.h"
-#include "vSoundConn.h"
-#include "vPlugin.h"
-
-// iterators:
-typedef std::vector<vListener*>::iterator listenerIterator;
-typedef std::vector<vBaseNode*>::iterator nodeIterator;
-typedef std::vector<vSoundSource*>::iterator sourceIterator;
-typedef std::vector<vSoundConn*>::iterator connIterator;
+// forward declarations
+class vListener;
+class vBaseNode;
+class vSoundSource;
+class vSoundConn;
+class vPlugin;
 
 /**
  * The Audio Manager manages the nodes and their connections.
@@ -27,65 +22,66 @@ typedef std::vector<vSoundConn*>::iterator connIterator;
  */
 class vAudioManager
 {
-	public:
+    public:
+        // iterators:
+        typedef std::vector<vListener*>::iterator listenerIterator;
+        typedef std::vector<vBaseNode*>::iterator nodeIterator;
+        typedef std::vector<vSoundSource*>::iterator sourceIterator;
+        typedef std::vector<vSoundConn*>::iterator connIterator;
 
 		/**
          *  Singleton instance reference
          */
-		static vAudioManager& Instance();
+        static vAudioManager& Instance();
 
         /**
          * Prints debug info to the console.
          */
-		void debugPrint();
+        void debugPrint();
 
         /**
          * Sets the renderer plugin.
          *
          * Accepts a child class of vPlugin.
          */
-		void setPlugin(vPlugin *p);
-        
+        void setPlugin(vPlugin *p);
+
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
          */
-		vSoundSource* getOrCreateSoundSource(std::string id);
-
-        /**
-         * Returns a listener node in the scene identified by its identifier. Creates it if it does not exist yet.
-         */
-		vListener* getOrCreateListener(std::string id);
+        vSoundSource* getOrCreateSoundSource(const std::string &id);
 
         /**
          * Returns a node in the scene identified by its identifier.
          */
-		vBaseNode* getNode(std::string id);
+        vListener* getOrCreateListener(const std::string &id);
+
+        /**
+         * Returns a node in the scene identified by its identifier.
+         */
+        vBaseNode* getNode(const std::string &id);
 
         /**
          * Returns a sound source node in the scene identified by its identifier.
          */
-		vSoundSource* getSoundSource(std::string id);
+        vSoundSource* getSoundSource(const std::string &id);
 
         /**
          * Returns a listener node in the scene identified by its identifier.
          */
-		vListener* getListener(std::string id);
+        vListener* getListener(const std::string &id);
 
         /**
          * Returns all the audio connections in the scene.
          */
-		std::vector<vSoundConn*> getConnections(std::string id);
-
-        /**
-         * Returns a connection in the scene identified by its source and sink nodes.
-         */
-		vSoundConn* getConnection(std::string src, std::string snk);
+        std::vector<vSoundConn*> getConnections(const std::string &id);
 
         /**
          * Returns a connection in the scene identified by its identifier.
          */
-		vSoundConn* getConnection(std::string id);
-		
+        vSoundConn* getConnection(const std::string &src, const std::string &snk);
+        vSoundConn* getConnection(const std::string &id);
+
         /**
          * Sets the audio filter to add to each audio connection.
          * 
@@ -98,54 +94,53 @@ class vAudioManager
          * 
          * You can use this as a blacklist to avoid connection some nodes according to their id.
          */
-		void setConnectFilter (std::string s);
+        void setConnectFilter(std::string s);
 
         /** 
          * Connects two nodes together, using their identifiers.
          */
-		vSoundConn* connect (std::string src, std::string snk);
-        
+        vSoundConn* connect(const std::string &src, const std::string &snk);
+
         /** 
          * Connects two nodes together.
          */
-		vSoundConn* connect (vBaseNode *src, vBaseNode *snk);
+        vSoundConn* connect(vBaseNode *src, vBaseNode *snk);
 
         /** 
          * Disconnects two nodes.
          */
-		void disconnect(vSoundConn *conn);
+        void disconnect(vSoundConn *conn);
 
         /**
          * Updates all the connected nodes.
          */
-		void update(vBaseNode *n);
+        void update(vBaseNode *n);
 
         /**
          * Updates the renderer plugin.
          */
-		void update(vSoundConn *conn);
+        void update(vSoundConn *conn);
 
-	private:
-		
-		// singleton constructors & desctructor (hidden):
-		vAudioManager();
-		~vAudioManager();
-		vAudioManager(vAudioManager const&); // copy constructor
-		// hide the assignment operator, otherwise it would be possible to
-		// assign the singleton vAudioManager to itself:
-		vAudioManager& operator=(vAudioManager const&);
-		
-		vPlugin *plugin;
+    private:
 
-		bool autoConnect;
+        // singleton constructors & desctructor (hidden):
+        vAudioManager();
+        ~vAudioManager();
+        vAudioManager(vAudioManager const&); // copy constructor
+        // hide the assignment operator, otherwise it would be possible to
+        // assign the singleton vAudioManager to itself:
+        vAudioManager& operator=(vAudioManager const&);
 
-		std::string connectFilter;
-		regex_t connectRegex;
+        vPlugin *plugin_;
 
-		std::vector<vListener*>  vListenerList;
-		std::vector<vSoundSource*> vSoundSourceList;
-	 	std::vector<vSoundConn*> vSoundConnList;
+        bool autoConnect_;
 
+        std::string connectFilter_;
+        regex_t connectRegex_;
+
+        std::vector<vListener*>  vListenerList_;
+        std::vector<vSoundSource*> vSoundSourceList_;
+        std::vector<vSoundConn*> vSoundConnList_;
 };
 
 #endif

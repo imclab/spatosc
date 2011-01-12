@@ -1,16 +1,16 @@
-#include "vAudioManager.h"
 #include "vBaseNode.h"
+#include "vAudioManager.h"
 #include "vSoundConn.h"
 
 // *****************************************************************************
-vBaseNode::vBaseNode(std::string nodeID) {
+vBaseNode::vBaseNode(const std::string &nodeID)
+{
+	this->id_ = nodeID;
+	this->active_ = true;
+	this->updateFlag_ = true;
 	
-	this->id = nodeID;
-	this->active = true;
-	this->updateFlag = true;
-	
-	connectTO.clear();
-	connectFROM.clear();
+	connectTO_.clear();
+	connectFROM_.clear();
 }
 
 vBaseNode::~vBaseNode()
@@ -20,24 +20,22 @@ vBaseNode::~vBaseNode()
 
 void vBaseNode::debugPrint()
 {
-	std::cout << "  " << id << ":" << std::endl;
-	std::cout << "    pos:\t" << pos.x << "," << pos.y << "," << pos.z << std::endl;
-	std::cout << "    rot:\t" << rot.x << "," << rot.y << "," << rot.z << std::endl;
-	std::cout << "    active?\t" << active << std::endl;
+	std::cout << "  " << id_ << ":" << std::endl;
+	std::cout << "    pos:\t" << pos_.x << "," << pos_.y << "," << pos_.z << std::endl;
+	std::cout << "    rot:\t" << rot_.x << "," << rot_.y << "," << rot_.z << std::endl;
+	std::cout << "    active?\t" << active_ << std::endl;
 }
 
 void vBaseNode::setPosition(double x, double y, double z)
 {
-	pos = Vector3(x,y,z);
-	updateFlag = true;
+	pos_ = Vector3(x,y,z);
+	updateFlag_ = true;
 	vAudioManager::Instance().update(this);
 }
 
 void vBaseNode::setRotation(double pitch, double roll, double yaw)
 {
-	rot = Vector3(pitch,roll,yaw);
-	updateFlag=true;
+	rot_ = Vector3(pitch, roll, yaw);
+	updateFlag_ = true;
 	vAudioManager::Instance().update(this);
 }
-
-

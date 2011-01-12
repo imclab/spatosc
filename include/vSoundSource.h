@@ -6,26 +6,27 @@
 
 #include "vBaseNode.h"
 
+// FIXME: tmatth Wed Jan 12 16:05:10 EST 2011: why is this virtual?
 /**
  * Sound source node.
  */
-class vSoundSource : virtual public vBaseNode
+class vSoundSource : /*virtual*/ public vBaseNode
 {
 
-public:
-	
-	vSoundSource(const std::string &nodeID);
-	~vSoundSource();
-	
-	void debugPrint();
+    public:
 
-	void setChannelID(int channel);
-	int getChannelID() const { return channelID_; }
+        vSoundSource(const std::string &nodeID);
+        ~vSoundSource();
 
-protected:
+        void debugPrint();
 
-	int channelID_;
-	
+        void setChannelID(int channel);
+        int getChannelID() const { return channelID_; }
+
+    protected:
+
+        int channelID_;
+
 };
 
 #endif

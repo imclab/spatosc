@@ -1,6 +1,7 @@
 #include "vPlugin_dmitri.h"
 #include "OSCutil.h"
 #include "vSoundSource.h"
+#include "vSoundConn.h"
 
 #include <iostream>
 
@@ -9,31 +10,31 @@ const double vPlugin_dmitri::SPACEMAP_RADIUS = 750.0;
 // *****************************************************************************
 vPlugin_dmitri::vPlugin_dmitri(const std::string &ip) : vPlugin()
 {
-	type = vPlugin::DMITRI;
+	type_ = vPlugin::DMITRI;
 
-	destAddr = lo_address_new(ip.c_str(), "18033");
-	lo_serv = lo_server_new("18099", NULL);
+	destAddr_ = lo_address_new(ip.c_str(), "18033");
+	lo_serv_ = lo_server_new("18099", NULL);
 
-	std::cout << "Sending to D-Mitri on: " << lo_address_get_url(destAddr) << std::endl;
-	std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv) << std::endl;
+	std::cout << "Sending to D-Mitri on: " << lo_address_get_url(destAddr_) << std::endl;
+	std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
 }
 
 vPlugin_dmitri::~vPlugin_dmitri()
 {
 	// destructor
-	lo_server_free(lo_serv);
-	lo_address_free(destAddr);
+	lo_server_free(lo_serv_);
+	lo_address_free(destAddr_);
 }
 
 void vPlugin_dmitri::update(vSoundConn *conn)
 {
 	std::string str;
-	vSoundSource *src = dynamic_cast<vSoundSource*>(conn->src);
+	vSoundSource *src = dynamic_cast<vSoundSource*>(conn->src_);
 
 	if (!src) return;
 	if (src->getChannelID() < 0) return;
 
-	Vector3 vect = conn->snk->pos - conn->src->pos;
+	Vector3 vect = conn->snk_->pos_ - conn->src_->pos_;
 	double distance = (double)vect.Mag();
 	double azim = atan2(vect.y, vect.x);
 	double elev = atan2( sqrt(pow(vect.x,2) + pow(vect.y,2)), vect.z );
@@ -44,18 +45,18 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 	float spacemapX = cos(azim) * r * SPACEMAP_RADIUS;
 	float spacemapY = sin(azim) * r * SPACEMAP_RADIUS;
 
-	str = "/spacemap/" + stringify(src->getChannelID()) + "/x";
-	lo_send_from(destAddr, lo_serv, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
+	str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/x";
+	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
 
-	str = "/spacemap/" + stringify(src->getChannelID()) + "/y";
-	lo_send_from(destAddr, lo_serv, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
+	str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/y";
+	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
 
 	// now from distance, compute gain and variable delay:
 
-	double distanceScalar = 1 / (1.0 + pow(distance,(double)conn->distanceEffect*.01));
+	double distanceScalar = 1 / (1.0 + pow(distance, (double)conn->distanceEffect_ * 0.01));
 	//double vdel = distance * (1/SPEED_OF_SOUND) * .01 * conn->dopplerEffect;  // speed of sound
 	double gain = 20 * log10(distanceScalar);
 
-	str = "Input " + stringify(src->getChannelID()) + " Level";
-	lo_send_from(destAddr, lo_serv, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), gain);
+	str = "Input " + OSCutil::stringify(src->getChannelID()) + " Level";
+	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), gain);
 }
