@@ -33,9 +33,9 @@ std::string vPlugin::getTypeString()
 
 void vPlugin::update(vSoundConn *conn)
 {
-    std::cout << "Computation update for " << conn->src->id << " -> " << conn->snk->id << " :" <<std::endl;
+    std::cout << "Computation update for " << conn->src->id_ << " -> " << conn->snk->id_ << " :" <<std::endl;
 
-    Vector3 vect = conn->snk->pos - conn->src->pos;
+    Vector3 vect = conn->snk->pos_ - conn->src->pos_;
     double distance = (double)vect.Mag();
     double azim = atan2(vect.y, vect.x);
     double elev = atan2( sqrt(pow(vect.x,2) + pow(vect.y,2)), vect.z ) / (M_PI/2);
@@ -45,8 +45,6 @@ void vPlugin::update(vSoundConn *conn)
 
     double vdel = distance * (1/SPEED_OF_SOUND) * .01 * conn->dopplerEffect;  // speed of sound
     double gain = 20 * log10(distanceScalar);
-
-
 
     /*
     // SRC INCIDENCE:

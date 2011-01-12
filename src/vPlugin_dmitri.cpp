@@ -33,7 +33,7 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 	if (!src) return;
 	if (src->getChannelID() < 0) return;
 
-	Vector3 vect = conn->snk->pos - conn->src->pos;
+	Vector3 vect = conn->snk->pos_ - conn->src->pos_;
 	double distance = (double)vect.Mag();
 	double azim = atan2(vect.y, vect.x);
 	double elev = atan2( sqrt(pow(vect.x,2) + pow(vect.y,2)), vect.z );

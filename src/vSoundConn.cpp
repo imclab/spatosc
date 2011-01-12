@@ -4,7 +4,7 @@
 
 vSoundConn::vSoundConn(vBaseNode *src, vBaseNode *snk)
 {
-	id = src->id + "-" + snk->id + ".conn";
+	id = src->id_ + "-" + snk->id_ + ".conn";
 	this->src = src;
 	this->snk = snk;
 	distanceEffect = 100.0;
@@ -13,7 +13,7 @@ vSoundConn::vSoundConn(vBaseNode *src, vBaseNode *snk)
 	diffractionEffect = 100.0;
 	
 	// set updateFlag on at least one of the nodes for initial computation:
-	src->updateFlag = true;
+	src->updateFlag_ = true;
 }
 
 

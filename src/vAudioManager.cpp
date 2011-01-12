@@ -197,7 +197,7 @@ vSoundSource* vAudioManager::getSoundSource(const std::string &id)
 	sourceIterator n;
 	for (n = vSoundSourceList_.begin(); n != vSoundSourceList_.end(); ++n)
 	{
-		if ((*n)->id == id)
+		if ((*n)->id_ == id)
 		{
 			return (*n);
 		}
@@ -215,7 +215,7 @@ vListener* vAudioManager::getListener(const std::string &id)
 	listenerIterator L;
 	for (L = vListenerList_.begin(); L != vListenerList_.end(); ++L)
 	{
-		if ((*L)->id == id)
+		if ((*L)->id_ == id)
 		{
 			return (*L);
 		}
@@ -234,7 +234,7 @@ std::vector<vSoundConn*> vAudioManager::getConnections(const std::string &id)
 	connIterator c;
 	for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
 	{
-		if (((*c)->src->id == id) || ((*c)->snk->id == id))
+		if (((*c)->src->id_ == id) || ((*c)->snk->id_ == id))
 		{
 			foundConnections.push_back(*c);
 		}
@@ -249,7 +249,7 @@ vSoundConn* vAudioManager::getConnection(const std::string &src, const std::stri
 	connIterator c;
 	for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
 	{
-		if (((*c)->src->id == src) && ((*c)->snk->id == snk))
+		if (((*c)->src->id_ == src) && ((*c)->snk->id_ == snk))
 		{
 			return (*c);
 		}
@@ -327,8 +327,8 @@ vSoundConn* vAudioManager::connect (vBaseNode *src, vBaseNode *snk)
 
 	// Check src and snk id's against the connectFilter. If either match, then
 	// proceed with the connection:
-	int srcRegexStatus = regexec(&connectRegex_, src->id.c_str(), (size_t)0, NULL, 0);
-	int snkRegexStatus = regexec(&connectRegex_, snk->id.c_str(), (size_t)0, NULL, 0);
+	int srcRegexStatus = regexec(&connectRegex_, src->id_.c_str(), (size_t)0, NULL, 0);
+	int snkRegexStatus = regexec(&connectRegex_, snk->id_.c_str(), (size_t)0, NULL, 0);
 
 	if (srcRegexStatus == 0 or snkRegexStatus == 0)
 	{
@@ -338,8 +338,8 @@ vSoundConn* vAudioManager::connect (vBaseNode *src, vBaseNode *snk)
 		// register the connection with both the vAudioManager and the
 		// sink node (for backwards connectivity computation):
 		vSoundConnList_.push_back(conn);
-		src->connectTO.push_back(conn);
-		snk->connectFROM.push_back(conn);
+		src->connectTO_.push_back(conn);
+		snk->connectFROM_.push_back(conn);
 
 		update(conn);
 
@@ -357,11 +357,11 @@ void vAudioManager::disconnect(vSoundConn * /*conn*/)
 void vAudioManager::update(vBaseNode *n)
 {
 	connIterator c;
-	for (c = n->connectTO.begin(); c != n->connectTO.end(); ++c)
+	for (c = n->connectTO_.begin(); c != n->connectTO_.end(); ++c)
 	{
 		update(*c);
 	}
-	for (c = n->connectFROM.begin(); c != n->connectFROM.end(); ++c)
+	for (c = n->connectFROM_.begin(); c != n->connectFROM_.end(); ++c)
 	{
 		update(*c);
 	}
@@ -372,7 +372,7 @@ void vAudioManager::update(vSoundConn *conn)
 	// If one of the connected nodes has been deactivated, then there is no need
 	// to compute anything. Enable the mute (and send the status change if this
 	// has just happened)
-	if ((conn->src->active) && (conn->snk->active))
+	if ((conn->src->active_) and (conn->snk->active_))
 	{
 		if (plugin_)
             plugin_->update(conn);
