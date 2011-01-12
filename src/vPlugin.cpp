@@ -5,7 +5,7 @@
 
 vPlugin::vPlugin()
 {
-	type = CONSOLE;
+	type_ = CONSOLE;
 }
 
 vPlugin::~vPlugin()
@@ -14,7 +14,7 @@ vPlugin::~vPlugin()
 
 std::string vPlugin::getTypeString()
 {
-    switch (type)
+    switch (type_)
     {
         case (CONSOLE):
             return "CONSOLE";

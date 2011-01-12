@@ -9,7 +9,7 @@ const double vPlugin_dmitri::SPACEMAP_RADIUS = 750.0;
 // *****************************************************************************
 vPlugin_dmitri::vPlugin_dmitri(const std::string &ip) : vPlugin()
 {
-	type = vPlugin::DMITRI;
+	type_ = vPlugin::DMITRI;
 
 	destAddr = lo_address_new(ip.c_str(), "18033");
 	lo_serv = lo_server_new("18099", NULL);

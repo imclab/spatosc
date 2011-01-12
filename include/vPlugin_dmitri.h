@@ -21,7 +21,6 @@ private:
 
 	lo_address destAddr;
 	lo_server lo_serv;
-
 };
 
 

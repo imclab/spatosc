@@ -5,27 +5,23 @@
 
 class vPlugin
 {
+    public:
 
-public:
+        enum PluginType { CONSOLE, DMITRI, MULTICAST };
 
-	enum PluginType { CONSOLE, DMITRI, MULTICAST };
+        vPlugin();
+        ~vPlugin();
 
-	vPlugin();
-	~vPlugin();
+        std::string getTypeString();
 
-	std::string getTypeString();
+        /**
+         * The main work of the plugin is done by the update() method, which is
+         * called whenever there is a change to some parameters within a connection.
+         */
+        virtual void update(vSoundConn *conn);
 
-	/**
-	 * The main work of the plugin is done by the update() method, which is
-	 * called whenever there is a change to some parameters within a connection.
-	 */
-	virtual void update(vSoundConn *conn);
-
-
-protected:
-
-	PluginType type;
-
+    protected:
+        PluginType type_;
 };
 
 
