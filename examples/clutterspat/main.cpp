@@ -1,5 +1,7 @@
 /**
  * Clutter spatosc example
+ *
+ * This example is in the public domain.
  */
 #include <clutter/clutter.h>
 #include <vAudioManager.h>
@@ -16,7 +18,7 @@ typedef struct __app__
 
 static void key_event_cb(ClutterActor *actor, ClutterKeyEvent *event, gpointer data)
 {
-    ExampleApplication *app = (ExampleApplication *) data;
+    ExampleApplication *app = static_cast<ExampleApplication *>(data);
     switch (event->keyval)
     {
         case CLUTTER_Escape:
