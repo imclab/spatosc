@@ -1,10 +1,8 @@
 #ifndef _VMATH_H
 #define _VMATH_H
 
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cmath>
+#include <cstring>
 
 //#define M_PI 3.14159265358979323846
 #define TO_DEGREES (180.0 / M_PI)
