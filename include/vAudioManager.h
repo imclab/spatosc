@@ -1,4 +1,4 @@
-/**
+/** @file
  * The vAudioManager class.
  */
 

@@ -1,4 +1,4 @@
-/**
+/** @file
  * The vSoundSource class.
  */
 #ifndef __vSoundSource_H

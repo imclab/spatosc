@@ -1,4 +1,4 @@
-/**
+/** @file
  * The vPlugin_dmitri class.
  */
 #ifndef __vPlugin_dmitri_H

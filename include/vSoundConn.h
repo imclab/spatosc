@@ -1,4 +1,4 @@
-/**
+/** @file
  * The vSoundConn class.
  */
 #ifndef __vSoundConn_H

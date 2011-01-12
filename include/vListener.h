@@ -1,4 +1,4 @@
-/**
+/** @file
  * The vListener class.
  */
 #ifndef __vListener_H

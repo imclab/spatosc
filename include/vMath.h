@@ -1,4 +1,4 @@
-/**
+/** @file
  * Vectors, matrices and quaternions.
  */
 #ifndef _VMATH_H

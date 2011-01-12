@@ -1,4 +1,4 @@
-/**
+/** @file
  * The vPlugin class.
  */
 #ifndef __vPlugin_H

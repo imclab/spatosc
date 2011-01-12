@@ -1,4 +1,4 @@
-/**
+/** @file
  * OpenSoundControl utilities.
  */
 #ifndef __OSCutil_H
