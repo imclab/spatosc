@@ -1,3 +1,6 @@
+/**
+ * OpenSoundControl utilities.
+ */
 #ifndef __OSCutil_H
 #define __OSCutil_H
 

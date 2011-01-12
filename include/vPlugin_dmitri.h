@@ -1,3 +1,6 @@
+/**
+ * The vPlugin_dmitri class.
+ */
 #ifndef __vPlugin_dmitri_H
 #define __vPlugin_dmitri_H
 
@@ -5,6 +8,9 @@
 #include <string>
 #include "vPlugin.h"
 
+/**
+ * Renderer for the proprietary D-Mitri system.
+ */
 class vPlugin_dmitri : public vPlugin
 {
 

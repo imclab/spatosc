@@ -1,3 +1,7 @@
+/**
+ * The vAudioManager class.
+ */
+
 #ifndef __vAudioManager_H
 #define __vAudioManager_H
 

@@ -1,8 +1,14 @@
+/**
+ * The vSoundConn class.
+ */
 #ifndef __vSoundConn_H
 #define __vSoundConn_H
 
 #include "vBaseNode.h"
 
+/**
+ * Audio connection between two nodes.
+ */
 class vSoundConn
 {
 	// TODO: get rid of friend classes, and add proper getter methods:

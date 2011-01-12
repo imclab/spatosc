@@ -1,8 +1,14 @@
+/**
+ * The vPlugin class.
+ */
 #ifndef __vPlugin_H
 #define __vPlugin_H
 
 #include "vSoundConn.h"
 
+/**
+ * Base class for audio renderers.
+ */
 class vPlugin
 {
 

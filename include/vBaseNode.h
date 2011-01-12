@@ -1,3 +1,7 @@
+/**
+ * The vBaseNode class. 
+ */
+
 #ifndef __vBaseNode_H
 #define __vBaseNode_H
 
@@ -9,6 +13,9 @@
 class vSoundConn;
 class vAudioManager;
 
+/**
+ * Base class for a node in the scene.
+ */
 class vBaseNode
 {
 	// TODO: remove friend classes and provide real getter methods:
@@ -23,11 +30,24 @@ public:
 	vBaseNode(std::string nodeID);
 	~vBaseNode();
 
+    /**
+     * Returns the identifier of this node.
+     */
 	std::string getID() { return id; }
 	
+    /**
+     * Prints debug info about this node to the console.
+     */
 	virtual void debugPrint();
-
+    
+    /**
+     * Sets this node's position in the 3D space.
+     */
 	virtual void setPosition(double x, double y, double z);
+
+    /**
+     * Sets this node's orientation.
+     */
 	virtual void setRotation(double pitch, double roll, double yaw);
 
 protected:

@@ -1,3 +1,6 @@
+/**
+ * Vectors, matrices and quaternions.
+ */
 #ifndef _VMATH_H
 #define _VMATH_H
 
@@ -16,6 +19,9 @@
 
 // Below are a bunch of helper classes/functions for 2D/3D math:
 
+/**
+ * 2D vector
+ */
 class Vector2 {
 
 public:
@@ -73,6 +79,9 @@ public:
 };
 
 
+/**
+ * 3D vector
+ */
 class Vector3 {
 	
 public:
@@ -180,6 +189,9 @@ inline Vector3 operator%(Vector3 &a, Vector3 &b){
 */
 
 
+/**
+ * 3x3 matrix
+ */
 class Matrix3
 {
 public:
@@ -221,7 +233,9 @@ inline Matrix3 Matrix3Identity(){
 }
 
 
-
+/**
+ * 4x4 matrix
+ */
 class Matrix4
 {
 public:
@@ -289,6 +303,9 @@ inline Matrix4 Matrix4Translation(double x, double y, double z){
 	return r;
 }
 
+/**
+ * A quaternion represents an orientation in the 3D space.
+ */
 class Quaternion{
 public:
 	double x, y, z, w;
