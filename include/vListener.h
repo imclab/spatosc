@@ -13,20 +13,11 @@
  */
 class vListener : public vBaseNode
 {
-<<<<<<< HEAD
     public:
         vListener(const std::string &nodeID);
         ~vListener();
 
         void debugPrint();
-=======
-public:
-	
-	vListener(std::string nodeID);
-	~vListener();
-	
-	void debugPrint();
->>>>>>> master
 };
 
 #endif

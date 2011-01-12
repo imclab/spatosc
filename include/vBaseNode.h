@@ -30,14 +30,10 @@ public:
 	vBaseNode(const std::string &nodeID);
 	~vBaseNode();
 
-<<<<<<< HEAD
-	std::string getID() { return id_; }
-=======
     /**
      * Returns the identifier of this node.
      */
-	std::string getID() { return id; }
->>>>>>> master
+	std::string getID() { return id_; }
 	
     /**
      * Prints debug info about this node to the console.
