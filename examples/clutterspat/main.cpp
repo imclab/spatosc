@@ -112,6 +112,7 @@ static void on_drag_motion( ClutterDragAction *action, ClutterActor *actor,
     gfloat delta_x, gfloat delta_y, gpointer data)
 {
     ExampleApplication *app = static_cast<ExampleApplication *>(data);
+    (void) app; // Unused
     float x_pos = clutter_actor_get_x(actor) + delta_x;
     float y_pos = clutter_actor_get_y(actor) + delta_y;
     bool stop_it = false;
@@ -131,7 +132,7 @@ static void on_drag_motion( ClutterDragAction *action, ClutterActor *actor,
         stop_it = true;
         clutter_actor_set_y(actor, WINDOW_HEIGHT);
     }
-    else if ( && y_pos <= 0.0f)
+    else if (y_pos <= 0.0f)
     {
         stop_it = true;
         clutter_actor_set_y(actor, 0.0);
