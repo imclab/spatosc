@@ -13,6 +13,8 @@ oscreceiver.o: oscreceiver.cpp
 openalspat: main.o oscreceiver.o
 	g++ -Wall -g $(LIBS) main.o oscreceiver.o -o openalspat
 
+.PHONY: clean
+
 clean:
 	rm -f openalspat *.o
 
