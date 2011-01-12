@@ -4,8 +4,8 @@ Spatosc TODO
  * decide on a coding style
  * choose a namespace
  * refactor the API (remove v prefix, maybe change camel case methods for boost-style (underscores))
- * enclose everything in the spatosc namespace
- * create a stable 0.2 branch
+ * enclose everything in the chosen namespace
+ * create a stable 0.2 branch, and an update to 0.3 in the master branch
  * remove non-public functions and typedefs from include/*.h
  * document the API (doxygen-style)
  * package the doxygen doc generation
@@ -13,5 +13,7 @@ Spatosc TODO
  * use cmath, not math.h (?)
  * find from where vMath.h comes from. Maybe refactor it?
  * should data member have a trailing underscore in their name?
- * use SPATOSC_API_VERSION in spatosc.pc.in
+ * use SPATOSC_API_VERSION in spatosc.pc.in and src/Makefile.am
  * move the example to examples/
+ * the src/*.la should depend on include/*.h
+
