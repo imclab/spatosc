@@ -8,8 +8,8 @@
 #include <vPlugin_dmitri.h>
 #include <algorithm>
 
-static const unsigned int WINDOW_WIDTH = 500;
-static const unsigned int WINDOW_HEIGHT = 500;
+static const float WINDOW_WIDTH = 500;
+static const float WINDOW_HEIGHT = 500;
 static const char *WINDOW_TITLE = "Press arrow keys to move the sound source";
 
 /**
@@ -107,9 +107,46 @@ gboolean pointer_scroll_cb(ClutterActor *actor, ClutterEvent *event,
     return TRUE; /* event has been handled */
 }
 
+#if CLUTTER_CHECK_VERSION(1, 4, 0)
+static void on_drag_motion( ClutterDragAction *action, ClutterActor *actor,
+    gfloat delta_x, gfloat delta_y, gpointer data)
+{
+    ExampleApplication *app = static_cast<ExampleApplication *>(data);
+    float x_pos = clutter_actor_get_x(actor) + delta_x;
+    float y_pos = clutter_actor_get_y(actor) + delta_y;
+    bool stop_it = false;
+
+    if (x_pos >= WINDOW_WIDTH)
+    {
+        stop_it = true;
+        clutter_actor_set_x(actor, WINDOW_WIDTH);
+    }
+    else if (x_pos <= 0.0f)
+    {
+        stop_it = true;
+        clutter_actor_set_x(actor, 0.0f);
+    }
+    else if (y_pos >= WINDOW_HEIGHT)
+    {
+        stop_it = true;
+        clutter_actor_set_y(actor, WINDOW_HEIGHT);
+    }
+    else if ( && y_pos <= 0.0f)
+    {
+        stop_it = true;
+        clutter_actor_set_y(actor, 0.0);
+    }
+
+    // in Clutter 2.0 we will be able to simply return FALSE instead of calling g_signal_stop_emission_by_name
+    if (stop_it)
+        g_signal_stop_emission_by_name(action, "drag-motion");
+}
+
+#endif
+
 int main(int argc, char *argv[])
 {
-    ClutterActor *stage = 0;
+    ClutterActor *stage = NULL;
     ClutterColor black = { 0x00, 0x00, 0x00, 0xff };
     ClutterColor orange = { 0xff, 0xcc, 0x33, 0x00 }; /* transparent orange */
     ExampleApplication app;
@@ -128,6 +165,15 @@ int main(int argc, char *argv[])
     clutter_actor_set_size(app.foo_actor, 50.0f, 50.0f);
     clutter_actor_set_position(app.foo_actor, WINDOW_WIDTH / 2.0f,
             WINDOW_HEIGHT / 2.0f);
+    
+    // Make it draggable
+#if CLUTTER_CHECK_VERSION(1, 4, 0)
+    ClutterAction *drag_action = clutter_drag_action_new();
+    g_signal_connect(drag_action, "drag-motion", G_CALLBACK(on_drag_motion), 
+            static_cast<gpointer>(&app));
+    clutter_actor_set_reactive(app.foo_actor, TRUE);
+    clutter_actor_add_action(app.foo_actor, drag_action);
+#endif
 
     app.foo_sound = vAudioManager::Instance().getOrCreateSoundSource("foo_sound");
     app.foo_sound->setChannelID(1);
