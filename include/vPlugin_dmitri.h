@@ -1,3 +1,6 @@
+/** @file
+ * The vPlugin_dmitri class.
+ */
 #ifndef __vPlugin_dmitri_H
 #define __vPlugin_dmitri_H
 
@@ -5,8 +8,14 @@
 #include <string>
 #include "vPlugin.h"
 
+<<<<<<< HEAD
 class vSoundConn;
 
+=======
+/**
+ * Renderer for the proprietary D-Mitri system.
+ */
+>>>>>>> master
 class vPlugin_dmitri : public vPlugin
 {
 

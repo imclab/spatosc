@@ -1,9 +1,15 @@
+/** @file
+ * The vSoundConn class.
+ */
 #ifndef __vSoundConn_H
 #define __vSoundConn_H
 
 #include <string>
 class vBaseNode;
 
+/**
+ * Audio connection between two nodes.
+ */
 class vSoundConn
 {
 private:
