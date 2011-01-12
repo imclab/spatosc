@@ -9,8 +9,9 @@
 
 static const unsigned int WINDOW_WIDTH = 500;
 static const unsigned int WINDOW_HEIGHT = 500;
+static const char *WINDOW_TITLE = "Press arrow keys to move the sound source";
 
-typedef struct __app__
+typedef struct _app
 {
     ClutterActor *foo_actor;
     vSoundSource *foo_sound;
@@ -53,7 +54,7 @@ int main(int argc, char *argv[])
     clutter_init(&argc, &argv);
     stage = clutter_stage_get_default();
     clutter_stage_set_color(CLUTTER_STAGE(stage), &black);
-    clutter_stage_set_title(CLUTTER_STAGE(stage), "Clutter spatosc example");
+    clutter_stage_set_title(CLUTTER_STAGE(stage), WINDOW_TITLE);
     clutter_actor_set_size(stage, WINDOW_WIDTH, WINDOW_HEIGHT);
 
     app->foo_actor = clutter_rectangle_new_with_color(&orange);
