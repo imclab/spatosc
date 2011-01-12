@@ -1,10 +1,12 @@
 #ifndef __vSoundConn_H
 #define __vSoundConn_H
 
-#include "vBaseNode.h"
+#include <string>
+class vBaseNode;
 
 class vSoundConn
 {
+private:
 	// TODO: get rid of friend classes, and add proper getter methods:
 	friend class vAudioManager;
 	friend class vPlugin;
@@ -18,17 +20,15 @@ public:
 	
 protected:
 
-	std::string id;
+	std::string id_;
 	
-	vBaseNode *src;
-	vBaseNode *snk;
+	vBaseNode *src_;
+	vBaseNode *snk_;
 	
-	float distanceEffect;
-	float rolloffEffect;
-	float dopplerEffect;
-	float diffractionEffect;
-	
-	
+	float distanceEffect_;
+	float rolloffEffect_;
+	float dopplerEffect_;
+	float diffractionEffect_;
 };
 
 #endif

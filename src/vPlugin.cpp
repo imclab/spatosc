@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include "vPlugin.h"
+#include "vSoundConn.h"
+#include "vBaseNode.h"
 
 
 vPlugin::vPlugin()
@@ -33,17 +35,17 @@ std::string vPlugin::getTypeString()
 
 void vPlugin::update(vSoundConn *conn)
 {
-    std::cout << "Computation update for " << conn->src->id_ << " -> " << conn->snk->id_ << " :" <<std::endl;
+    std::cout << "Computation update for " << conn->src_->id_ << " -> " << conn->snk_->id_ << " :" <<std::endl;
 
-    Vector3 vect = conn->snk->pos_ - conn->src->pos_;
+    Vector3 vect = conn->snk_->pos_ - conn->src_->pos_;
     double distance = (double)vect.Mag();
     double azim = atan2(vect.y, vect.x);
-    double elev = atan2( sqrt(pow(vect.x,2) + pow(vect.y,2)), vect.z ) / (M_PI/2);
+    double elev = atan2(sqrt(pow(vect.x,2) + pow(vect.y,2)), vect.z) / (M_PI/2);
     if (elev < 0) elev = 0.0; // for now, force sources to be above equator
 
-    double distanceScalar = 1 / (1.0 + pow(distance,(double)conn->distanceEffect*.01));
+    double distanceScalar = 1 / (1.0 + pow(distance, (double)conn->distanceEffect_ * 0.01));
 
-    double vdel = distance * (1/SPEED_OF_SOUND) * .01 * conn->dopplerEffect;  // speed of sound
+    double vdel = distance * (1/SPEED_OF_SOUND) * .01 * conn->dopplerEffect_;  // speed of sound
     double gain = 20 * log10(distanceScalar);
 
     /*

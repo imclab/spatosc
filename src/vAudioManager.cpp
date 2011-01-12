@@ -110,11 +110,11 @@ void vAudioManager::debugPrint ()
 	std::cout << "[vAudioManager]:: " << vSoundConnList_.size() << " connections:" << std::endl;
 	for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
 	{
-		std::cout << "  " << (*c)->id << ":" << std::endl;
-		std::cout << "    distanceEffect:\t" << (*c)->distanceEffect << "%" << std::endl;
-		std::cout << "    rolloffEffect:\t" << (*c)->rolloffEffect << "%" << std::endl;
-		std::cout << "    dopplerEffect:\t" << (*c)->dopplerEffect << "%" << std::endl;
-		std::cout << "    diffractionEffect:\t" << (*c)->diffractionEffect << "%" << std::endl;
+		std::cout << "  " << (*c)->id_ << ":" << std::endl;
+		std::cout << "    distanceEffect:\t" << (*c)->distanceEffect_ << "%" << std::endl;
+		std::cout << "    rolloffEffect:\t" << (*c)->rolloffEffect_ << "%" << std::endl;
+		std::cout << "    dopplerEffect:\t" << (*c)->dopplerEffect_ << "%" << std::endl;
+		std::cout << "    diffractionEffect:\t" << (*c)->diffractionEffect_ << "%" << std::endl;
 	}
 
 }
@@ -234,7 +234,7 @@ std::vector<vSoundConn*> vAudioManager::getConnections(const std::string &id)
 	connIterator c;
 	for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
 	{
-		if (((*c)->src->id_ == id) || ((*c)->snk->id_ == id))
+		if (((*c)->src_->id_ == id) || ((*c)->snk_->id_ == id))
 		{
 			foundConnections.push_back(*c);
 		}
@@ -249,7 +249,7 @@ vSoundConn* vAudioManager::getConnection(const std::string &src, const std::stri
 	connIterator c;
 	for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
 	{
-		if (((*c)->src->id_ == src) && ((*c)->snk->id_ == snk))
+		if (((*c)->src_->id_ == src) && ((*c)->snk_->id_ == snk))
 		{
 			return (*c);
 		}
@@ -263,7 +263,7 @@ vSoundConn* vAudioManager::getConnection(const std::string &id)
 	connIterator c;
 	for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
 	{
-		if ((*c)->id == id)
+		if ((*c)->id_ == id)
 		{
 			return (*c);
 		}
@@ -372,7 +372,7 @@ void vAudioManager::update(vSoundConn *conn)
 	// If one of the connected nodes has been deactivated, then there is no need
 	// to compute anything. Enable the mute (and send the status change if this
 	// has just happened)
-	if ((conn->src->active_) and (conn->snk->active_))
+	if ((conn->src_->active_) and (conn->snk_->active_))
 	{
 		if (plugin_)
             plugin_->update(conn);

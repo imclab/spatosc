@@ -5,6 +5,8 @@
 #include <string>
 #include "vPlugin.h"
 
+class vSoundConn;
+
 class vPlugin_dmitri : public vPlugin
 {
 
