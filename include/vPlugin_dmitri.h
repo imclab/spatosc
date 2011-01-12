@@ -21,8 +21,8 @@ private:
 
     static const double SPACEMAP_RADIUS;
 
-	lo_address destAddr;
-	lo_server lo_serv;
+	lo_address destAddr_;
+	lo_server lo_serv_;
 };
 
 

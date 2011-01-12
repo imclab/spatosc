@@ -12,18 +12,18 @@ vPlugin_dmitri::vPlugin_dmitri(const std::string &ip) : vPlugin()
 {
 	type_ = vPlugin::DMITRI;
 
-	destAddr = lo_address_new(ip.c_str(), "18033");
-	lo_serv = lo_server_new("18099", NULL);
+	destAddr_ = lo_address_new(ip.c_str(), "18033");
+	lo_serv_ = lo_server_new("18099", NULL);
 
-	std::cout << "Sending to D-Mitri on: " << lo_address_get_url(destAddr) << std::endl;
-	std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv) << std::endl;
+	std::cout << "Sending to D-Mitri on: " << lo_address_get_url(destAddr_) << std::endl;
+	std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
 }
 
 vPlugin_dmitri::~vPlugin_dmitri()
 {
 	// destructor
-	lo_server_free(lo_serv);
-	lo_address_free(destAddr);
+	lo_server_free(lo_serv_);
+	lo_address_free(destAddr_);
 }
 
 void vPlugin_dmitri::update(vSoundConn *conn)
@@ -46,10 +46,10 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 	float spacemapY = sin(azim) * r * SPACEMAP_RADIUS;
 
 	str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/x";
-	lo_send_from(destAddr, lo_serv, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
+	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
 
 	str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/y";
-	lo_send_from(destAddr, lo_serv, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
+	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
 
 	// now from distance, compute gain and variable delay:
 
@@ -58,5 +58,5 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 	double gain = 20 * log10(distanceScalar);
 
 	str = "Input " + OSCutil::stringify(src->getChannelID()) + " Level";
-	lo_send_from(destAddr, lo_serv, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), gain);
+	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), gain);
 }
