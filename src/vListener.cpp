@@ -3,10 +3,8 @@
 #include "vSoundConn.h"
 
 // *****************************************************************************
-vListener::vListener(std::string nodeID) : vBaseNode(nodeID)
+vListener::vListener(const std::string &nodeID) : vBaseNode(nodeID)
 {
-	
-	
 }
 
 vListener::~vListener()

@@ -5,13 +5,11 @@
 
 class vListener : public vBaseNode
 {
-	
-public:
-	
-	vListener(std::string nodeID);
-	~vListener();
-	
-	void debugPrint();
+    public:
+        vListener(const std::string &nodeID);
+        ~vListener();
+
+        void debugPrint();
 };
 
 
