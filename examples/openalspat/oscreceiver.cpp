@@ -12,7 +12,6 @@ OscReceiver::OscReceiver(const std::string &port) :
 #endif
 }
 
-
 OscReceiver::~OscReceiver()
 {
 //    std::cout << "Freeing OSC server thread\n";
@@ -28,7 +27,6 @@ void OscReceiver::listen()
 {
     std::cout << "Listening on port " << port_ << std::endl;
     lo_server_thread_start(server_);
-
 }
 
 void OscReceiver::error(int num, const char *msg, const char *path)
@@ -54,11 +52,9 @@ int OscReceiver::genericHandler(const char *path,
     } 
     printf("\n"); 
     fflush(stdout); 
-
     return 1; 
 } 
 #endif // CONFIG_DEBUG
-
 
 std::string OscReceiver::toString() const
 {
