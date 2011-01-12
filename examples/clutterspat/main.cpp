@@ -6,17 +6,40 @@
 #include <clutter/clutter.h>
 #include <vAudioManager.h>
 #include <vPlugin_dmitri.h>
+#include <algorithm>
 
 static const unsigned int WINDOW_WIDTH = 500;
 static const unsigned int WINDOW_HEIGHT = 500;
 static const char *WINDOW_TITLE = "Press arrow keys to move the sound source";
 
+/**
+ * Info for our little application.
+ */
 struct ExampleApplication
 {
     ClutterActor *foo_actor;
     vSoundSource *foo_sound;
 };
 
+/**
+ * We override the paint method of a rectangle to actually paint a circle.
+ *
+ * We use its original color, but with an alpha of 100%.
+ */
+void paint_circle(ClutterActor *actor)
+{
+    gfloat radius = std::min(clutter_actor_get_width(actor), 
+            clutter_actor_get_height(actor)) / 2.0f;
+    ClutterColor color;
+    clutter_rectangle_get_color(CLUTTER_RECTANGLE(actor), &color);
+    cogl_set_source_color4ub(color.red, color.green, color.blue, 0xff);
+    cogl_path_arc(radius, radius, radius, radius, 0, 360);
+    cogl_path_fill();
+}
+
+/**
+ * Handler for key events.
+ */
 static void key_event_cb(ClutterActor *actor, ClutterKeyEvent *event,
         gpointer data)
 {
@@ -46,11 +69,49 @@ static void key_event_cb(ClutterActor *actor, ClutterKeyEvent *event,
     vAudioManager::Instance().debugPrint();
 }
 
+/**
+ * Scrolling causes the sound source to move in the z direction.
+ */
+gboolean pointer_scroll_cb(ClutterActor *actor, ClutterEvent *event,
+        gpointer data)
+{
+    ExampleApplication *app = static_cast<ExampleApplication *>(data);
+
+    ClutterScrollDirection direction;
+    direction = clutter_event_get_scroll_direction(event);
+    gfloat actor_width;
+    gfloat actor_height;
+    clutter_actor_get_size(app->foo_actor, &actor_width,
+            &actor_height);
+
+    switch (direction)
+    {
+        case CLUTTER_SCROLL_UP:
+            // increase circle radius
+            clutter_actor_set_size(app->foo_actor, actor_width * 1.1,
+                    actor_height * 1.1);
+            // TODO increase sound source's position in z
+            break;
+
+        case CLUTTER_SCROLL_DOWN:
+            // decrease circle radius
+            clutter_actor_set_size(app->foo_actor, actor_width * 0.9f,
+                    actor_height * 0.9);
+            // TODO: decrease sound source's position in z
+            break;
+
+        default:
+            break;
+    }
+
+    return TRUE; /* event has been handled */
+}
+
 int main(int argc, char *argv[])
 {
     ClutterActor *stage = 0;
     ClutterColor black = { 0x00, 0x00, 0x00, 0xff };
-    ClutterColor orange = { 0xff, 0xcc, 0x33, 0xff };
+    ClutterColor orange = { 0xff, 0xcc, 0x33, 0x00 }; /* transparent orange */
     ExampleApplication app;
 
     clutter_init(&argc, &argv);
@@ -60,6 +121,7 @@ int main(int argc, char *argv[])
     clutter_actor_set_size(stage, WINDOW_WIDTH, WINDOW_HEIGHT);
 
     app.foo_actor = clutter_rectangle_new_with_color(&orange);
+    g_signal_connect(app.foo_actor, "paint", G_CALLBACK(paint_circle), NULL);
     clutter_container_add_actor(CLUTTER_CONTAINER(stage), app.foo_actor);
     clutter_actor_set_anchor_point_from_gravity(app.foo_actor,
             CLUTTER_GRAVITY_CENTER);
@@ -76,6 +138,9 @@ int main(int argc, char *argv[])
 
     g_signal_connect(stage, "key-press-event", G_CALLBACK(key_event_cb),
             static_cast<gpointer>(&app));
+    g_signal_connect(stage, "scroll-event", G_CALLBACK(pointer_scroll_cb), 
+            static_cast<gpointer>(&app));
+            
     clutter_actor_show(stage);
 
     clutter_main();
