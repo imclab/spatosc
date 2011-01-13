@@ -31,6 +31,9 @@ protected:
 	vBaseNode *src_;
 	vBaseNode *snk_;
 	
+    double distance_;
+    double azim_;
+    double elev_;
 	float distanceEffect_;
 	float rolloffEffect_;
 	float dopplerEffect_;
