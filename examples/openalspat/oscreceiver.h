@@ -1,7 +1,7 @@
 #ifndef _OSC_RECEIVER_H_
 #define _OSC_RECEIVER_H_
 
-#include "lo/lo.h"
+#include <lo/lo.h>
 #include <string>
 
 /** General-purpose wrapper around liblo to receive OSC messages.
