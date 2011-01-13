@@ -19,7 +19,7 @@
 
 #include "listener.h"
 #include "scene.h"
-#include "vSoundConn.h"
+#include "connection.h"
 
 namespace spatosc
 {

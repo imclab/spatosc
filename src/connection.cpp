@@ -17,7 +17,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "vSoundConn.h"
+#include "connection.h"
 #include "node.h"
 
 namespace spatosc

@@ -20,7 +20,7 @@
 #include <iostream>
 
 #include "translator.h"
-#include "vSoundConn.h"
+#include "connection.h"
 #include "node.h"
 
 namespace spatosc

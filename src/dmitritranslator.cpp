@@ -20,7 +20,7 @@
 #include "dmitritranslator.h"
 #include "OSCutil.h"
 #include "soundsource.h"
-#include "vSoundConn.h"
+#include "connection.h"
 
 #include <iostream>
 

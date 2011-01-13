@@ -33,7 +33,7 @@
 #include "vMath.h"
 #include "dmitritranslator.h"
 #include "translator.h"
-#include "vSoundConn.h"
+#include "connection.h"
 #include "soundsource.h"
 
 #endif

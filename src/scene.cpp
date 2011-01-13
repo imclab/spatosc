@@ -24,7 +24,7 @@
 #include "listener.h"
 #include "node.h"
 #include "soundsource.h"
-#include "vSoundConn.h"
+#include "connection.h"
 
 namespace spatosc
 {
