@@ -17,7 +17,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "vListener.h"
+#include "listener.h"
 #include "vAudioManager.h"
 #include "vSoundConn.h"
 

@@ -7,7 +7,7 @@ libspatosc_la_SOURCES = \
     oscreceiver.cpp \
 	vAudioManager.cpp \
     node.cpp \
-    vListener.cpp \
+    listener.cpp \
     vMath.cpp \
     translator.cpp \
     dmitritranslator.cpp \
