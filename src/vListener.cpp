@@ -21,6 +21,9 @@
 #include "vAudioManager.h"
 #include "vSoundConn.h"
 
+namespace spatosc
+{
+
 // *****************************************************************************
 vListener::vListener(const std::string &nodeID) : vBaseNode(nodeID)
 {
@@ -45,3 +48,6 @@ void vListener::debugPrint()
         std::cout << "<NO CONNECTIONS>";
     std::cout << std::endl;
 }
+
+};
+

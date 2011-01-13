@@ -25,6 +25,8 @@
 
 #include "vBaseNode.h"
 
+namespace spatosc
+{
 /**
  * Listener nodes can listen to sound sources.
  * 
@@ -37,6 +39,7 @@ class vListener : public vBaseNode
         ~vListener();
 
         void debugPrint();
+};
 };
 
 #endif

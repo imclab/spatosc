@@ -27,6 +27,8 @@
 #include <string>
 #include "vPlugin.h"
 
+namespace spatosc
+{
 class vSoundConn;
 
 /**
@@ -44,6 +46,7 @@ private:
     static const double SPACEMAP_RADIUS;
     lo_address destAddr_;
     lo_server lo_serv_;
+};
 };
 
 #endif

@@ -26,6 +26,9 @@
 #include "vSoundSource.h"
 #include "vSoundConn.h"
 
+namespace spatosc
+{
+
 #if 0
 // *****************************************************************************
 // This is a function that can be used by std::sort to make a
@@ -368,4 +371,6 @@ void vAudioManager::update(vSoundConn *conn)
         }
     }
 }
+
+};
 

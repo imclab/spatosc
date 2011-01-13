@@ -24,6 +24,9 @@
 
 #include <iostream>
 
+namespace spatosc
+{
+
 const double DmitriTranslator::SPACEMAP_RADIUS = 750.0;
 
 // *****************************************************************************
@@ -70,3 +73,6 @@ std::string DmitriTranslator::getTypeString() const
 {
     return "DMITIRI";
 }
+
+};
+

@@ -24,6 +24,9 @@
 #define __vSoundConn_H
 
 #include <string>
+namespace spatosc
+{
+
 class vBaseNode;
 
 /**
@@ -67,6 +70,8 @@ protected:
     float rolloffEffect_;
     float dopplerEffect_;
     float diffractionEffect_;
+};
+
 };
 
 #endif

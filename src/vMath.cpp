@@ -20,6 +20,9 @@
 #include "vMath.h"
 
 
+namespace spatosc
+{
+
 double distance2(Vector2 v1, Vector2 v2)
 {
     double dx = v2.x - v1.x;
@@ -282,3 +285,6 @@ Matrix3 ComputeHomography(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4)
    
     return result;
 }
+
+};
+

@@ -29,6 +29,8 @@
 #include <vector>
 #include <tr1/memory>
 
+namespace spatosc
+{
 // forward declarations
 class vListener;
 class vBaseNode;
@@ -165,6 +167,7 @@ class vAudioManager
         std::vector<std::tr1::shared_ptr<vListener> >  vListenerList_;
         std::vector<std::tr1::shared_ptr<vSoundSource> > vSoundSourceList_;
         std::vector<std::tr1::shared_ptr<vSoundConn> > vSoundConnList_;
+};
 };
 
 #endif

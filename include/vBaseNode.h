@@ -30,6 +30,8 @@
 #include <tr1/memory>
 #include "vMath.h"
 
+namespace spatosc
+{
 class vSoundConn;
 
 /**
@@ -83,6 +85,7 @@ class vBaseNode
         std::vector<std::tr1::shared_ptr<vSoundConn> > connectFROM_;
 
         bool updateFlag_;
+};
 };
 
 

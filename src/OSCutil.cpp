@@ -26,6 +26,9 @@
 #include "OSCutil.h"
 
 
+namespace spatosc
+{
+
 // *****************************************************************************
 // networking functions
 
@@ -198,3 +201,5 @@ bool OSCutil::wildcardMatch(const char *pat, const char *str)
             return *pat == *str and wildcardMatch(pat + 1, str + 1);
     }
 }
+
+};

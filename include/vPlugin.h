@@ -23,6 +23,9 @@
 #ifndef __translator_h__
 #define __translator_h__
 
+namespace spatosc
+{
+
 class vSoundConn;
 
 /**
@@ -48,6 +51,7 @@ class Translator
          * messages to control some audio engine, or by rendering audio by itself.
          */
         virtual void update(vSoundConn *conn);
+};
 };
 
 #endif

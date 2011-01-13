@@ -20,6 +20,9 @@
 #include "vSoundConn.h"
 #include "vBaseNode.h"
 
+namespace spatosc
+{
+
 // *****************************************************************************
 
 vSoundConn::vSoundConn(vBaseNode *src, vBaseNode *snk) : 
@@ -66,3 +69,6 @@ void vSoundConn::update()
         snk_->updateFlag_ = false;
     }
 }
+
+};
+

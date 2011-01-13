@@ -23,6 +23,9 @@
 #include "vSoundConn.h"
 #include "vBaseNode.h"
 
+namespace spatosc
+{
+
 std::string Translator::getTypeString() const
 {
     return "CONSOLE";
@@ -53,4 +56,6 @@ void Translator::update(vSoundConn *conn)
     std::cout << "  elev:\t" << conn->elevation() << std::endl;
     std::cout << "  gain:\t" << conn->gain() << " dB" << std::endl;
 }
+
+};
 

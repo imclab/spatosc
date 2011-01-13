@@ -21,6 +21,8 @@
 #include <tr1/memory>
 #include "spatosc.h"
 
+using namespace spatosc;
+
 int main(int /*argc*/, char ** /*argv*/)
 {
     using std::tr1::shared_ptr;

@@ -27,6 +27,8 @@
 #include <string>
 #include <sstream>
 
+namespace spatosc
+{
 namespace OSCutil 
 {
     // *****************************************************************************
@@ -55,5 +57,5 @@ namespace OSCutil
 
     bool wildcardMatch(const char *pat, const char *str);
 };
-
+};
 #endif

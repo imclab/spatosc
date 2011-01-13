@@ -21,6 +21,9 @@
 #include "vAudioManager.h"
 #include "vSoundConn.h"
 
+namespace spatosc
+{
+
 // *****************************************************************************
 vBaseNode::vBaseNode(const std::string &nodeID)
 {
@@ -58,3 +61,6 @@ void vBaseNode::setRotation(double pitch, double roll, double yaw)
     updateFlag_ = true;
     vAudioManager::Instance().update(this);
 }
+
+};
+
