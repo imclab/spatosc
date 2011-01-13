@@ -23,7 +23,7 @@
 #include "translator.h"
 #include "listener.h"
 #include "node.h"
-#include "vSoundSource.h"
+#include "soundsource.h"
 #include "vSoundConn.h"
 
 namespace spatosc

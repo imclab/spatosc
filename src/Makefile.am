@@ -12,7 +12,7 @@ libspatosc_la_SOURCES = \
     translator.cpp \
     dmitritranslator.cpp \
     vSoundConn.cpp \
-    vSoundSource.cpp
+    soundsource.cpp
 
 libspatosc_la_LDFLAGS = $(LIBLO_LDFLAGS) -export-dynamic
 libspatosc_la_includedir = $(includedir)/spatosc

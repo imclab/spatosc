@@ -17,7 +17,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "vSoundSource.h"
+#include "soundsource.h"
 
 
 namespace spatosc
