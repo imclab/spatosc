@@ -27,7 +27,7 @@
 
 #include "OSCutil.h"
 #include "oscreceiver.h"
-#include "vAudioManager.h"
+#include "scene.h"
 #include "node.h"
 #include "listener.h"
 #include "vMath.h"

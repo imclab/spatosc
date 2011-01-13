@@ -17,7 +17,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "vAudioManager.h"
+#include "scene.h"
 #include <iostream>
 
 #include "translator.h"

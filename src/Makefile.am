@@ -5,7 +5,7 @@ lib_LTLIBRARIES = libspatosc.la
 libspatosc_la_SOURCES = \
     OSCutil.cpp \
     oscreceiver.cpp \
-	vAudioManager.cpp \
+	scene.cpp \
     node.cpp \
     listener.cpp \
     vMath.cpp \

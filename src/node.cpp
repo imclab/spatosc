@@ -18,7 +18,7 @@
  */
 
 #include "node.h"
-#include "vAudioManager.h"
+#include "scene.h"
 #include "vSoundConn.h"
 
 namespace spatosc
