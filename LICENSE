@@ -1,23 +1,16 @@
-// https://github.com/mikewoz/spatosc
-// Copyright (C) 2010 Mike Wozniewski
-//
-// Developed for:
-//    La Societe des Arts Technologiques (http://www.sat.qc.ca)
-//
-// -----------------------------------------------------------------------------
-// This file is part of the spatosc
-//
-// spatosc is free software: you can redistribute it and/or modify it under the
-// terms of the GNU General Public License as published by the Free Software
-// Foundation, either version 3 of the License, or (at your option) any later
-// version.
-//
-// spatosc is distributed in the hope that it will be useful, but WITHOUT ANY 
-// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
-// A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License along with
-// spatosc. If not, see <http://www.gnu.org/licenses/>.
-// -----------------------------------------------------------------------------
+This file is part of Spatosc.
 
+Copyright (c) 2010 Society for Arts and Technologies <info@sat.qc.ca>
 
+Spatosc is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Spatosc is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
