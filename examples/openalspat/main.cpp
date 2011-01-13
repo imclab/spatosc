@@ -107,8 +107,21 @@ gboolean pointer_motion_cb(ClutterActor *actor, ClutterEvent *event,
     return TRUE;
 }
 
+static int on_ping_received(
+        const char *path, 
+        const char * /*types*/, lo_arg ** /*argv*/,
+        int /*argc*/, void * /*data*/, void * /*user_data*/)
+{
+    std::cout << "Got " << path << std::endl;
+    return 0;
+}
+
 int main(int argc, const char* argv[])
 {
+    spatosc::OscReceiver receiver("14444");
+    receiver.addHandler("/ping", "", on_ping_received, 0);
+    receiver.listen();
+    
     alutInit(0, 0);
     clutter_init(0, 0);
 

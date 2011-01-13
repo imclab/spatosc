@@ -4,6 +4,9 @@
 #include <lo/lo.h>
 #include <string>
 
+namespace spatosc
+{
+
 /** General-purpose wrapper around liblo to receive OSC messages.
  */
 class OscReceiver
@@ -39,6 +42,8 @@ class OscReceiver
 #endif
         static void error(int num, const char *msg, const char *path);
 };
+
+}
 
 #endif // _OSC_RECEIVER_H_
 

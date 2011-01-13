@@ -2,6 +2,9 @@
 #include <iostream>
 #include <cstdio>
 
+namespace spatosc
+{
+
 OscReceiver::OscReceiver(const std::string &port) :
     port_(port), 
     server_(lo_server_thread_new(port_.c_str(), error))
@@ -61,3 +64,4 @@ std::string OscReceiver::toString() const
     return "port:" + port_;
 }
 
+}

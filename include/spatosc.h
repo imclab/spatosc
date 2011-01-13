@@ -26,6 +26,7 @@
 #define __SPATOSC_H__
 
 #include "OSCutil.h"
+#include "oscreceiver.h"
 #include "vAudioManager.h"
 #include "vBaseNode.h"
 #include "vListener.h"
