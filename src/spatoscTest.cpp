@@ -41,8 +41,8 @@ int main(int /*argc*/, char ** /*argv*/)
 	// that node:
 	vSoundSource *foo = vAudioManager::Instance().getOrCreateSoundSource("foo");
 	foo->setChannelID(1);
-	vSoundSource *kak = vAudioManager::Instance().getOrCreateSoundSource("kak");
-	kak->setChannelID(2);
+	vSoundSource *bar = vAudioManager::Instance().getOrCreateSoundSource("bar");
+	bar->setChannelID(2);
 
 	// In order to send OSC, some output plugin must be specified. In this case,
 	// we choose D-Mitri, and provide the IP address of the server on the
@@ -56,14 +56,15 @@ int main(int /*argc*/, char ** /*argv*/)
 	// Now we just move nodes around and updates should be sent to D-Mitri:
 
 	foo->setPosition(0,10,0);
-	kak->setPosition(5,5,0);
+	bar->setPosition(5,5,0);
 
 	sleep(1);
 
 	foo->setPosition(0,5,0);
-	kak->setPosition(-5,5,0);
+	bar->setPosition(-5,5,0);
 
 	vAudioManager::Instance().debugPrint();
 
     return 0;
 }
+
