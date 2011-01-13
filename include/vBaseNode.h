@@ -40,8 +40,8 @@ class vBaseNode
     private:
         // TODO: remove friend classes and provide real getter methods:
 
-        friend class vPlugin;
-        friend class vPlugin_dmitri;
+        friend class Translator;
+        friend class DmitriTranslator;
         friend class vAudioManager;
         friend class vSoundConn;
 

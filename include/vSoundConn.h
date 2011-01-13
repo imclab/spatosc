@@ -34,8 +34,8 @@ class vSoundConn
 private:
 	// TODO: get rid of friend classes, and add proper getter methods:
 	friend class vAudioManager;
-	friend class vPlugin;
-	friend class vPlugin_dmitri;
+	friend class Translator;
+	friend class DmitriTranslator;
 	friend class vListener;
 
 public:

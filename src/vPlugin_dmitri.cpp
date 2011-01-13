@@ -24,10 +24,10 @@
 
 #include <iostream>
 
-const double vPlugin_dmitri::SPACEMAP_RADIUS = 750.0;
+const double DmitriTranslator::SPACEMAP_RADIUS = 750.0;
 
 // *****************************************************************************
-vPlugin_dmitri::vPlugin_dmitri(const std::string &ip) : vPlugin()
+DmitriTranslator::DmitriTranslator(const std::string &ip) : Translator()
 {
 	destAddr_ = lo_address_new(ip.c_str(), "18033");
 	lo_serv_ = lo_server_new("18099", NULL);
@@ -36,14 +36,14 @@ vPlugin_dmitri::vPlugin_dmitri(const std::string &ip) : vPlugin()
 	std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
 }
 
-vPlugin_dmitri::~vPlugin_dmitri()
+DmitriTranslator::~DmitriTranslator()
 {
 	// destructor
 	lo_server_free(lo_serv_);
 	lo_address_free(destAddr_);
 }
 
-void vPlugin_dmitri::update(vSoundConn *conn)
+void DmitriTranslator::update(vSoundConn *conn)
 {
 	std::string str;
 	vSoundSource *src = dynamic_cast<vSoundSource*>(conn->src_);
@@ -66,7 +66,7 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
 }
 
-std::string vPlugin_dmitri::getTypeString() const
+std::string DmitriTranslator::getTypeString() const
 {
     return "DMITIRI";
 }

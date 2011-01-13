@@ -19,15 +19,11 @@
 
 #include <iostream>
 #include <tr1/memory>
-
-#include "vAudioManager.h"
-#include "vPlugin_dmitri.h"
-#include "vSoundSource.h"
+#include "spatosc.h"
 
 int main(int /*argc*/, char ** /*argv*/)
 {
     using std::tr1::shared_ptr;
-
 	std::cout << "\nRunning spatoscTest ...\n" << std::endl;
 
 	// The spatosc library provides an API structured around one singleton class
@@ -51,8 +47,8 @@ int main(int /*argc*/, char ** /*argv*/)
 	// we choose D-Mitri, and provide the IP address of the server on the
 	// control network. Note that D-Mitri uses 2 interfaces, a control network
 	// (typically IPv4) and an audio network (AVB):
-    shared_ptr<vPlugin_dmitri> plugin(new vPlugin_dmitri("192.168.2.26"));
-    vAudioManager::Instance().setPlugin(plugin);
+    shared_ptr<DmitriTranslator> translator(new DmitriTranslator("192.168.2.26"));
+    vAudioManager::Instance().setTranslator(translator);
 
     // The vAudioManager class can print out everything to the console:
     vAudioManager::Instance().debugPrint();
@@ -72,3 +68,4 @@ int main(int /*argc*/, char ** /*argv*/)
     std::cout << "Exitting...\n";
     return 0;
 }
+

@@ -18,17 +18,17 @@
  */
 
 /** @file
- * The vPlugin class.
+ * The Translator class.
  */
-#ifndef __vPlugin_H
-#define __vPlugin_H
+#ifndef __translator_h__
+#define __translator_h__
 
 class vSoundConn;
 
 /**
- * Base class for audio renderers.
+ * Base class for translator which send OSC messages to audio rendering engines.
  */
-class vPlugin
+class Translator
 {
     public:
         /**
@@ -49,6 +49,5 @@ class vPlugin
          */
         virtual void update(vSoundConn *conn);
 };
-
 
 #endif

@@ -23,13 +23,12 @@
 #include "vSoundConn.h"
 #include "vBaseNode.h"
 
-std::string vPlugin::getTypeString() const
+std::string Translator::getTypeString() const
 {
     return "CONSOLE";
 }
 
-
-void vPlugin::update(vSoundConn *conn)
+void Translator::update(vSoundConn *conn)
 {
     std::cout << "Computation update for " << conn->src_->id_ << " -> " << conn->snk_->id_ << " :" <<std::endl;
 
@@ -52,7 +51,6 @@ void vPlugin::update(vSoundConn *conn)
     std::cout << "  dist:\t" << conn->distance() << std::endl;
     std::cout << "  azim:\t" << conn->azimuth() << std::endl;
     std::cout << "  elev:\t" << conn->elevation() << std::endl;
-
     std::cout << "  gain:\t" << conn->gain() << " dB" << std::endl;
-
 }
+

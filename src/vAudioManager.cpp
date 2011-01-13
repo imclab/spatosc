@@ -45,13 +45,10 @@ vAudioManager::vAudioManager ()
 	this->vSoundSourceList_.clear();
 	this->vSoundConnList_.clear();
 
-	// for now, create a basic (CONSOLE) plugin:
-	plugin_.reset(new vPlugin());
-
+	// for now, create a basic (CONSOLE) translator:
+	translator_.reset(new Translator());
 	autoConnect_ = true;
-
 	setConnectFilter(".*"); // match everything
-
 }
 
 // *****************************************************************************
@@ -59,7 +56,6 @@ vAudioManager::vAudioManager ()
 vAudioManager::~vAudioManager()
 {
 }
-
 
 vAudioManager& vAudioManager::Instance()
 {
@@ -69,12 +65,12 @@ vAudioManager& vAudioManager::Instance()
 }
 
 // *****************************************************************************
-void vAudioManager::setPlugin(const std::tr1::shared_ptr<vPlugin> &p)
+void vAudioManager::setTranslator(const std::tr1::shared_ptr<Translator> &p)
 {
-    if (plugin_ == p)
+    if (translator_ == p)
         return;
-	// replace old plugin:
-	plugin_ = p;
+	// replace old translator:
+	translator_ = p;
 }
 
 // *****************************************************************************
@@ -85,11 +81,11 @@ void vAudioManager::debugPrint ()
 	connIterator c;
 
 	std::cout << "\n=====================================================" << std::endl;
-
 	std::cout << "[vAudioManager]:: connectFilter = " << connectFilter_ << std::endl;
 
-	if (plugin_) std::cout << "[vAudioManager]:: using " << plugin_->getTypeString() << " plugin" << std::endl;
-	else std::cout << "[vAudioManager]:: NO plugin specified" << std::endl;
+	if (translator_)
+        std::cout << "[vAudioManager]:: using " << translator_->getTypeString() << " translator" << std::endl;
+	else std::cout << "[vAudioManager]:: NO translator specified" << std::endl;
 
 	std::cout << "[vAudioManager]:: " << vListenerList_.size() << " listeners:" << std::endl;
 	for (L = vListenerList_.begin(); L != vListenerList_.end(); ++L)
@@ -112,7 +108,6 @@ void vAudioManager::debugPrint ()
 		std::cout << "    dopplerEffect:\t" << (*c)->dopplerEffect_ << "%" << std::endl;
 		std::cout << "    diffractionEffect:\t" << (*c)->diffractionEffect_ << "%" << std::endl;
 	}
-
 }
 
 
@@ -203,11 +198,8 @@ vSoundSource* vAudioManager::getSoundSource(const std::string &id)
 			return n->get();
 		}
 	}
-	
 	return NULL;
 }
-
-
 
 // *****************************************************************************
 // return a pointer to a vListener in the vListenerList, given an id:
@@ -221,7 +213,6 @@ vListener* vAudioManager::getListener(const std::string &id)
 			return L->get();
 		}
 	}
-
 	return NULL;
 }
 
@@ -255,7 +246,6 @@ vSoundConn* vAudioManager::getConnection(const std::string &src, const std::stri
 			return c->get();
 		}
 	}
-
 	return NULL;
 }
 
@@ -269,14 +259,10 @@ vSoundConn* vAudioManager::getConnection(const std::string &id)
 			return c->get();
 		}
 	}
-	
 	return NULL;
 }
 
-
-
 // *****************************************************************************
-
 
 void vAudioManager::setConnectFilter(std::string s)
 {
@@ -318,7 +304,6 @@ vSoundConn* vAudioManager::connect(const std::string &src, const std::string &sn
 
 	return conn;
 }
-
 
 vSoundConn* vAudioManager::connect(vBaseNode *src, vBaseNode *snk)
 {
@@ -376,10 +361,11 @@ void vAudioManager::update(vSoundConn *conn)
 	// has just happened)
 	if ((conn->src_->active_) and (conn->snk_->active_))
 	{
-		if (plugin_)
+		if (translator_)
         {
             conn->update();
-            plugin_->update(conn);
+            translator_->update(conn);
         }
 	}
 }
+

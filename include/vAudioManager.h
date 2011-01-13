@@ -34,7 +34,7 @@ class vListener;
 class vBaseNode;
 class vSoundSource;
 class vSoundConn;
-class vPlugin;
+class Translator;
 
 /**
  * The Audio Manager manages the nodes and their connections.
@@ -62,9 +62,9 @@ class vAudioManager
         /**
          * Sets the renderer plugin.
          *
-         * Accepts a child class of vPlugin.
+         * Accepts a child class of Translator.
          */
-        void setPlugin(const std::tr1::shared_ptr<vPlugin> &p);
+        void setTranslator(const std::tr1::shared_ptr<Translator> &p);
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
@@ -155,7 +155,7 @@ class vAudioManager
         // assign the singleton vAudioManager to itself:
         vAudioManager& operator=(vAudioManager const&);
 
-        std::tr1::shared_ptr<vPlugin> plugin_;
+        std::tr1::shared_ptr<Translator> translator_;
 
         bool autoConnect_;
 
