@@ -4,6 +4,7 @@ AM_CPPFLAGS = $(all_includes)
 lib_LTLIBRARIES = libspatosc.la
 libspatosc_la_SOURCES = \
     OSCutil.cpp \
+    oscreceiver.cpp \
 	vAudioManager.cpp \
     vBaseNode.cpp \
     vListener.cpp \

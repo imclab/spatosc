@@ -3,8 +3,10 @@
 #include <clutter/clutter.h>
 #include <cmath>
 #include <iostream>
+#include <spatosc.h>
 
-struct SourceData {
+struct SourceData 
+{
     SourceData(ClutterActor *actor) : sourceActor(actor)
     {}
 
@@ -35,7 +37,6 @@ ClutterActor *create_circle(gfloat radius)
     g_signal_connect(circle, "paint", G_CALLBACK(paint_circle), NULL);
     return circle;
 }
-
 
 // scrolling causes the sound source to move in the z direction
 gboolean pointer_scroll_cb(ClutterActor *actor, ClutterEvent *event,

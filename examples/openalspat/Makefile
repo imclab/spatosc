@@ -7,11 +7,8 @@ all: openalspat
 main.o: main.cpp
 	g++ -Wall -g $(CFLAGS) main.cpp -c -o main.o
 
-oscreceiver.o: oscreceiver.cpp
-	g++ -Wall -g $(CFLAGS) oscreceiver.cpp -c -o oscreceiver.o
-
-openalspat: main.o oscreceiver.o
-	g++ -Wall -g $(LIBS) main.o oscreceiver.o -o openalspat
+openalspat: main.o
+	g++ -Wall -g $(LIBS) main.o -o openalspat
 
 .PHONY: clean
 
