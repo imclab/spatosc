@@ -1,4 +1,4 @@
-AM_CPPFLAGS = $(all_includes)
+AM_CPPFLAGS = -I$(top_srcdir)/include
 
 # use lib_LTLIBRARIES to build a shared lib:
 lib_LTLIBRARIES = libspatosc.la
@@ -12,6 +12,7 @@ libspatosc_la_SOURCES = \
     vPlugin_dmitri.cpp \
     vSoundConn.cpp \
     vSoundSource.cpp
+
 libspatosc_la_LDFLAGS = $(LIBLO_LDFLAGS) -export-dynamic
 libspatosc_la_includedir = $(includedir)/spatosc
 libspatosc_la_include_HEADERS = $(top_srcdir)/include/*.h
