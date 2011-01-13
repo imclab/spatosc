@@ -18,14 +18,14 @@
  */
 
 #include "vSoundConn.h"
-#include "vBaseNode.h"
+#include "node.h"
 
 namespace spatosc
 {
 
 // *****************************************************************************
 
-vSoundConn::vSoundConn(vBaseNode *src, vBaseNode *snk) : 
+vSoundConn::vSoundConn(Node *src, Node *snk) : 
     src_(src), 
     snk_(snk), 
     distance_(0.0),

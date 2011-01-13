@@ -23,7 +23,7 @@
 #ifndef __vSoundSource_H
 #define __vSoundSource_H
 
-#include "vBaseNode.h"
+#include "node.h"
 
 namespace spatosc
 {
@@ -32,7 +32,7 @@ namespace spatosc
 /**
  * Sound source node.
  */
-class vSoundSource : /*virtual*/ public vBaseNode
+class vSoundSource : /*virtual*/ public Node
 {
 
     public:

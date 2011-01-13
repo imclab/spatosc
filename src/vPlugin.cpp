@@ -21,7 +21,7 @@
 
 #include "vPlugin.h"
 #include "vSoundConn.h"
-#include "vBaseNode.h"
+#include "node.h"
 
 namespace spatosc
 {

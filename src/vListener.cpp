@@ -25,7 +25,7 @@ namespace spatosc
 {
 
 // *****************************************************************************
-vListener::vListener(const std::string &nodeID) : vBaseNode(nodeID)
+vListener::vListener(const std::string &nodeID) : Node(nodeID)
 {
 }
 
@@ -36,7 +36,7 @@ vListener::~vListener()
 
 void vListener::debugPrint()
 {
-    vBaseNode::debugPrint();
+    Node::debugPrint();
 
     vAudioManager::connIterator c;
     std::cout << "    listen to:\t";

@@ -6,7 +6,7 @@ libspatosc_la_SOURCES = \
     OSCutil.cpp \
     oscreceiver.cpp \
 	vAudioManager.cpp \
-    vBaseNode.cpp \
+    node.cpp \
     vListener.cpp \
     vMath.cpp \
     vPlugin.cpp \

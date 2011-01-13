@@ -28,7 +28,7 @@
 #include "OSCutil.h"
 #include "oscreceiver.h"
 #include "vAudioManager.h"
-#include "vBaseNode.h"
+#include "node.h"
 #include "vListener.h"
 #include "vMath.h"
 #include "vPlugin_dmitri.h"

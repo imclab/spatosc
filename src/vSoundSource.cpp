@@ -24,7 +24,7 @@ namespace spatosc
 {
 
 // *****************************************************************************
-vSoundSource::vSoundSource(const std::string &nodeID) : vBaseNode(nodeID), channelID_(-1)
+vSoundSource::vSoundSource(const std::string &nodeID) : Node(nodeID), channelID_(-1)
 {
 }
 
@@ -35,7 +35,7 @@ vSoundSource::~vSoundSource()
 
 void vSoundSource::debugPrint()
 {
-    vBaseNode::debugPrint();
+    Node::debugPrint();
     std::cout << "    channelID\t" << channelID_ << std::endl;
 }
 

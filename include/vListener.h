@@ -23,7 +23,7 @@
 #ifndef __vListener_H
 #define __vListener_H
 
-#include "vBaseNode.h"
+#include "node.h"
 
 namespace spatosc
 {
@@ -32,7 +32,7 @@ namespace spatosc
  * 
  * The listener represents a person that listens to an audio scene. There is usually only one listener in a scene.
  */
-class vListener : public vBaseNode
+class vListener : public Node
 {
     public:
         vListener(const std::string &nodeID);

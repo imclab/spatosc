@@ -27,7 +27,7 @@
 namespace spatosc
 {
 
-class vBaseNode;
+class Node;
 
 /**
  * Audio connection between two nodes.
@@ -43,7 +43,7 @@ private:
 
 public:
     
-    vSoundConn(vBaseNode *src, vBaseNode *snk);
+    vSoundConn(Node *src, Node *snk);
     /**
      * Update distance, azimuth and elevation values
      */
@@ -58,8 +58,8 @@ protected:
 
     std::string id_;
     
-    vBaseNode *src_;
-    vBaseNode *snk_;
+    Node *src_;
+    Node *snk_;
     
     double distance_;
     double azim_;

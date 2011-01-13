@@ -18,11 +18,11 @@
  */
 
 /** @file
- * The vBaseNode class. 
+ * The Node class. 
  */
 
-#ifndef __vBaseNode_H
-#define __vBaseNode_H
+#ifndef __Node_H
+#define __Node_H
 
 #include <string>
 #include <vector>
@@ -37,7 +37,7 @@ class vSoundConn;
 /**
  * Base class for a node in the scene.
  */
-class vBaseNode
+class Node
 {
     private:
         // TODO: remove friend classes and provide real getter methods:
@@ -49,8 +49,8 @@ class vBaseNode
 
     public:
 
-        vBaseNode(const std::string &nodeID);
-        ~vBaseNode();
+        Node(const std::string &nodeID);
+        ~Node();
 
         /**
          * Returns the identifier of this node.

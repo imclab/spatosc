@@ -33,7 +33,7 @@ namespace spatosc
 {
 // forward declarations
 class vListener;
-class vBaseNode;
+class Node;
 class vSoundSource;
 class vSoundConn;
 class Translator;
@@ -47,7 +47,7 @@ class vAudioManager
     public:
         // iterators:
         typedef std::vector<std::tr1::shared_ptr<vListener> >::iterator listenerIterator;
-        typedef std::vector<std::tr1::shared_ptr<vBaseNode> >::iterator nodeIterator;
+        typedef std::vector<std::tr1::shared_ptr<Node> >::iterator nodeIterator;
         typedef std::vector<std::tr1::shared_ptr<vSoundSource> >::iterator sourceIterator;
         typedef std::vector<std::tr1::shared_ptr<vSoundConn> >::iterator connIterator;
 
@@ -81,7 +81,7 @@ class vAudioManager
         /**
          * Returns a node in the scene identified by its identifier.
          */
-        vBaseNode* getNode(const std::string &id);
+        Node* getNode(const std::string &id);
 
         /**
          * Returns a sound source node in the scene identified by its identifier.
@@ -130,7 +130,7 @@ class vAudioManager
         /** 
          * Connects two nodes together.
          */
-        vSoundConn* connect(vBaseNode *src, vBaseNode *snk);
+        vSoundConn* connect(Node *src, Node *snk);
 
         /** 
          * Disconnects two nodes.
@@ -140,7 +140,7 @@ class vAudioManager
         /**
          * Called by a node when it is changed so that the audio manager updates all its sibling nodes.
          */
-        void update(vBaseNode *n);
+        void update(Node *n);
 
         /**
          * Called by a connection when it is changed so that the audio manager updates all its sibling nodes.

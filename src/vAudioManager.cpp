@@ -22,7 +22,7 @@
 
 #include "vPlugin.h"
 #include "vListener.h"
-#include "vBaseNode.h"
+#include "node.h"
 #include "vSoundSource.h"
 #include "vSoundConn.h"
 
@@ -33,7 +33,7 @@ namespace spatosc
 // *****************************************************************************
 // This is a function that can be used by std::sort to make a
 // list of nodes alphabetical:
-static bool nodeSortFunction (vBaseNode *n1, vBaseNode *n2)
+static bool nodeSortFunction (Node *n1, Node *n2)
 {
     return ( n1->getID() < n2->getID() );
 }
@@ -173,10 +173,10 @@ vListener* vAudioManager::getOrCreateListener(const std::string &id)
 }
 
 // *****************************************************************************
-// return a vBaseNode reference by looking through all storage vectors:
-vBaseNode* vAudioManager::getNode(const std::string &id)
+// return a Node reference by looking through all storage vectors:
+Node* vAudioManager::getNode(const std::string &id)
 {
-    vBaseNode *n = 0;
+    Node *n = 0;
 
     n = getSoundSource(id);
     if (n) 
@@ -290,9 +290,9 @@ vSoundConn* vAudioManager::connect(const std::string &src, const std::string &sn
     if (!conn)
     {
         // check if both nodes exist
-        vBaseNode *srcNode = getNode(src);
+        Node *srcNode = getNode(src);
         vListener *listener = getListener(snk);
-        vBaseNode *snkNode;
+        Node *snkNode;
 
         bool isNormalConnection = true;
         if (listener)
@@ -308,7 +308,7 @@ vSoundConn* vAudioManager::connect(const std::string &src, const std::string &sn
     return conn;
 }
 
-vSoundConn* vAudioManager::connect(vBaseNode *src, vBaseNode *snk)
+vSoundConn* vAudioManager::connect(Node *src, Node *snk)
 {
     using std::tr1::shared_ptr;
     // if the node pointers are invalid for some reason, return:
@@ -344,7 +344,7 @@ void vAudioManager::disconnect(vSoundConn * /*conn*/)
     std::cout << "vAudioManager::disconnect NOT IMPLEMENTED YET" << std::endl;
 }
 
-void vAudioManager::update(vBaseNode *n)
+void vAudioManager::update(Node *n)
 {
     connIterator c;
     for (c = n->connectTO_.begin(); c != n->connectTO_.end(); ++c)

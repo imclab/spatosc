@@ -17,7 +17,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "vBaseNode.h"
+#include "node.h"
 #include "vAudioManager.h"
 #include "vSoundConn.h"
 
@@ -25,7 +25,7 @@ namespace spatosc
 {
 
 // *****************************************************************************
-vBaseNode::vBaseNode(const std::string &nodeID)
+Node::Node(const std::string &nodeID)
 {
     this->id_ = nodeID;
     this->active_ = true;
@@ -35,12 +35,12 @@ vBaseNode::vBaseNode(const std::string &nodeID)
     connectFROM_.clear();
 }
 
-vBaseNode::~vBaseNode()
+Node::~Node()
 {
     // destructor
 }
 
-void vBaseNode::debugPrint()
+void Node::debugPrint()
 {
     std::cout << "  " << id_ << ":" << std::endl;
     std::cout << "    pos:\t" << pos_.x << "," << pos_.y << "," << pos_.z << std::endl;
@@ -48,14 +48,14 @@ void vBaseNode::debugPrint()
     std::cout << "    active?\t" << active_ << std::endl;
 }
 
-void vBaseNode::setPosition(double x, double y, double z)
+void Node::setPosition(double x, double y, double z)
 {
     pos_ = Vector3(x,y,z);
     updateFlag_ = true;
     vAudioManager::Instance().update(this);
 }
 
-void vBaseNode::setRotation(double pitch, double roll, double yaw)
+void Node::setRotation(double pitch, double roll, double yaw)
 {
     rot_ = Vector3(pitch, roll, yaw);
     updateFlag_ = true;
