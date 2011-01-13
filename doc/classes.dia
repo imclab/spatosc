@@ -724,7 +724,7 @@
         <dia:real val="4"/>
       </dia:attribute>
       <dia:attribute name="name">
-        <dia:string>#Renderer#</dia:string>
+        <dia:string>#Translator#</dia:string>
       </dia:attribute>
       <dia:attribute name="stereotype">
         <dia:string>##</dia:string>
@@ -949,22 +949,22 @@
         <dia:point val="33.69,24.54"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="33.64,24.49;41.24,27.19"/>
+        <dia:rectangle val="33.64,24.49;41.645,27.19"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
         <dia:point val="33.69,24.54"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
-        <dia:real val="7.5"/>
+        <dia:real val="7.9050000000000002"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
         <dia:real val="2.6000000000000001"/>
       </dia:attribute>
       <dia:attribute name="name">
-        <dia:string>#DmitriRenderer#</dia:string>
+        <dia:string>#DmitriTranslator#</dia:string>
       </dia:attribute>
       <dia:attribute name="stereotype">
-        <dia:string>#Renderer#</dia:string>
+        <dia:string>#Translator#</dia:string>
       </dia:attribute>
       <dia:attribute name="comment">
         <dia:string>##</dia:string>
@@ -1235,7 +1235,7 @@
         <dia:point val="42.2,20.8728"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="37.39,20.8228;43.05,24.5397"/>
+        <dia:rectangle val="37.5925,20.8228;43.05,24.5397"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -1243,8 +1243,8 @@
       <dia:attribute name="orth_points">
         <dia:point val="42.2,20.8728"/>
         <dia:point val="42.2,22.6812"/>
-        <dia:point val="37.44,22.6812"/>
-        <dia:point val="37.44,24.4897"/>
+        <dia:point val="37.6425,22.6812"/>
+        <dia:point val="37.6425,24.4897"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="1"/>
@@ -2065,22 +2065,22 @@
         <dia:point val="42.7675,25.7125"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="42.7175,25.6625;50.7575,28.3625"/>
+        <dia:rectangle val="42.7175,25.6625;51.1625,28.3625"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
         <dia:point val="42.7675,25.7125"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
-        <dia:real val="7.9400000000000004"/>
+        <dia:real val="8.3449999999999989"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
         <dia:real val="2.6000000000000001"/>
       </dia:attribute>
       <dia:attribute name="name">
-        <dia:string>#SpatdifRenderer#</dia:string>
+        <dia:string>#SpatdifTranslator#</dia:string>
       </dia:attribute>
       <dia:attribute name="stereotype">
-        <dia:string>#Renderer#</dia:string>
+        <dia:string>#Translator#</dia:string>
       </dia:attribute>
       <dia:attribute name="comment">
         <dia:string>##</dia:string>
@@ -2175,7 +2175,7 @@
         <dia:point val="42.2,20.8728"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="41.35,20.8228;46.7875,25.7122"/>
+        <dia:rectangle val="41.35,20.8228;46.99,25.7122"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
@@ -2183,8 +2183,8 @@
       <dia:attribute name="orth_points">
         <dia:point val="42.2,20.8728"/>
         <dia:point val="42.2,23.2675"/>
-        <dia:point val="46.7375,23.2675"/>
-        <dia:point val="46.7375,25.6622"/>
+        <dia:point val="46.94,23.2675"/>
+        <dia:point val="46.94,25.6622"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="1"/>
