@@ -28,7 +28,7 @@
           <dia:boolean val="false"/>
         </dia:attribute>
         <dia:attribute name="scaling">
-          <dia:real val="0.44347447156906128"/>
+          <dia:real val="0.44218772649765015"/>
         </dia:attribute>
         <dia:attribute name="fitto">
           <dia:boolean val="true"/>
@@ -410,19 +410,19 @@
     </dia:object>
     <dia:object type="UML - Class" version="0" id="O2">
       <dia:attribute name="obj_pos">
-        <dia:point val="2.02,20.745"/>
+        <dia:point val="1.87,20.645"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="1.97,20.695;6.2625,23.395"/>
+        <dia:rectangle val="1.82,20.595;29.755,23.895"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="2.02,20.745"/>
+        <dia:point val="1.87,20.645"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
-        <dia:real val="4.1924999999999999"/>
+        <dia:real val="27.835000000000001"/>
       </dia:attribute>
       <dia:attribute name="elem_height">
-        <dia:real val="2.6000000000000001"/>
+        <dia:real val="3.2000000000000002"/>
       </dia:attribute>
       <dia:attribute name="name">
         <dia:string>#Listener#</dia:string>
@@ -512,7 +512,56 @@
         <dia:real val="0.69999999999999996"/>
       </dia:attribute>
       <dia:attribute name="attributes"/>
-      <dia:attribute name="operations"/>
+      <dia:attribute name="operations">
+        <dia:composite type="umloperation">
+          <dia:attribute name="name">
+            <dia:string>#setLoudspeakersLayout#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="stereotype">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="type">
+            <dia:string>#void#</dia:string>
+          </dia:attribute>
+          <dia:attribute name="visibility">
+            <dia:enum val="0"/>
+          </dia:attribute>
+          <dia:attribute name="comment">
+            <dia:string>##</dia:string>
+          </dia:attribute>
+          <dia:attribute name="abstract">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="inheritance_type">
+            <dia:enum val="2"/>
+          </dia:attribute>
+          <dia:attribute name="query">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="class_scope">
+            <dia:boolean val="false"/>
+          </dia:attribute>
+          <dia:attribute name="parameters">
+            <dia:composite type="umlparameter">
+              <dia:attribute name="name">
+                <dia:string>#loudspeakers#</dia:string>
+              </dia:attribute>
+              <dia:attribute name="type">
+                <dia:string>#vector&lt;shared_ptr&lt;Vector3&gt; &gt;#</dia:string>
+              </dia:attribute>
+              <dia:attribute name="value">
+                <dia:string>##</dia:string>
+              </dia:attribute>
+              <dia:attribute name="comment">
+                <dia:string>##</dia:string>
+              </dia:attribute>
+              <dia:attribute name="kind">
+                <dia:enum val="0"/>
+              </dia:attribute>
+            </dia:composite>
+          </dia:attribute>
+        </dia:composite>
+      </dia:attribute>
       <dia:attribute name="template">
         <dia:boolean val="false"/>
       </dia:attribute>
@@ -520,13 +569,13 @@
     </dia:object>
     <dia:object type="UML - Class" version="0" id="O3">
       <dia:attribute name="obj_pos">
-        <dia:point val="13.83,20.3675"/>
+        <dia:point val="18.18,15.9675"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="13.78,20.3175;26.7,24.4175"/>
+        <dia:rectangle val="18.13,15.9175;31.05,20.0175"/>
       </dia:attribute>
       <dia:attribute name="elem_corner">
-        <dia:point val="13.83,20.3675"/>
+        <dia:point val="18.18,15.9675"/>
       </dia:attribute>
       <dia:attribute name="elem_width">
         <dia:real val="12.82"/>
@@ -1273,22 +1322,20 @@
     </dia:object>
     <dia:object type="UML - Generalization" version="1" id="O8">
       <dia:attribute name="obj_pos">
-        <dia:point val="11.205,15.6503"/>
+        <dia:point val="20.3603,13.2"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="10.355,15.6003;20.29,20.3672"/>
+        <dia:rectangle val="20.3103,12.35;24.64,15.9672"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
-        <dia:point val="11.205,15.6503"/>
-        <dia:point val="11.205,17.9838"/>
-        <dia:point val="20.24,17.9838"/>
-        <dia:point val="20.24,20.3172"/>
+        <dia:point val="20.3603,13.2"/>
+        <dia:point val="24.59,13.2"/>
+        <dia:point val="24.59,15.9172"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
-        <dia:enum val="1"/>
         <dia:enum val="0"/>
         <dia:enum val="1"/>
       </dia:attribute>
@@ -1317,16 +1364,16 @@
         <dia:point val="11.205,15.6503"/>
       </dia:attribute>
       <dia:attribute name="obj_bb">
-        <dia:rectangle val="4.06625,15.6003;12.055,20.7447"/>
+        <dia:rectangle val="10.355,15.6003;15.8375,20.6446"/>
       </dia:attribute>
       <dia:attribute name="meta">
         <dia:composite type="dict"/>
       </dia:attribute>
       <dia:attribute name="orth_points">
         <dia:point val="11.205,15.6503"/>
-        <dia:point val="11.205,18.1725"/>
-        <dia:point val="4.11625,18.1725"/>
-        <dia:point val="4.11625,20.6947"/>
+        <dia:point val="11.205,18.1224"/>
+        <dia:point val="15.7875,18.1224"/>
+        <dia:point val="15.7875,20.5946"/>
       </dia:attribute>
       <dia:attribute name="orth_orient">
         <dia:enum val="1"/>
@@ -1350,7 +1397,7 @@
       </dia:attribute>
       <dia:connections>
         <dia:connection handle="0" to="O1" connection="16"/>
-        <dia:connection handle="1" to="O2" connection="8"/>
+        <dia:connection handle="1" to="O2" connection="10"/>
       </dia:connections>
     </dia:object>
     <dia:object type="UML - Class" version="0" id="O10">
@@ -1370,7 +1417,7 @@
         <dia:real val="13"/>
       </dia:attribute>
       <dia:attribute name="name">
-        <dia:string>#AudioManager#</dia:string>
+        <dia:string>#Scene#</dia:string>
       </dia:attribute>
       <dia:attribute name="stereotype">
         <dia:string>##</dia:string>
