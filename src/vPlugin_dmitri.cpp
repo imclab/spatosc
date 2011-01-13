@@ -52,7 +52,6 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 	if (src->getChannelID() < 0) return;
 
 	float r = conn->elevation() / (M_PI/2);
-	if (r < 0) r = 0.0; // for now, force sources to be above equator
 
 	float spacemapX = cos(conn->azimuth()) * r * SPACEMAP_RADIUS;
 	float spacemapY = sin(conn->azimuth()) * r * SPACEMAP_RADIUS;
@@ -63,13 +62,8 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 	str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/y";
 	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
 
-	// now from distance, compute gain and variable delay:
-
-	//double vdel = distance * (1/SPEED_OF_SOUND) * .01 * conn->dopplerEffect;  // speed of sound
-	double gain = 20 * log10(conn->distanceScalar());
-
 	str = "Input " + OSCutil::stringify(src->getChannelID()) + " Level";
-	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), gain);
+	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
 }
 
 std::string vPlugin_dmitri::getTypeString() const
