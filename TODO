@@ -1,13 +1,11 @@
 Spatosc TODO
 ------------
 
- * enclose everything in the spatosc namespace
  * rename vBaseNode to Node
  * rename vListener to Listener
  * rename vSoundSource to SoundSource
  * rename vAudioManager to Scene
  * rename vSoundConn to Sonnection
- 
  * remove non-public functions and typedefs from include/*.h
  * remove friend classes in vBaseNode
  * find from where vMath.h comes from. Maybe refactor it?
