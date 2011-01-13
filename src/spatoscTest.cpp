@@ -69,5 +69,6 @@ int main(int /*argc*/, char ** /*argv*/)
 
     vAudioManager::Instance().debugPrint();
 
+    std::cout << "Exitting...\n";
     return 0;
 }

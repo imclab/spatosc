@@ -235,7 +235,7 @@ std::vector<vSoundConn*> vAudioManager::getConnections(const std::string &id)
 	connIterator c;
 	for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
 	{
-		if (((*c)->src_->id_ == id) || ((*c)->snk_->id_ == id))
+		if (((*c)->src_->id_ == id) or ((*c)->snk_->id_ == id))
 		{
 			foundConnections.push_back(c->get());
 		}
@@ -250,7 +250,7 @@ vSoundConn* vAudioManager::getConnection(const std::string &src, const std::stri
 	connIterator c;
 	for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
 	{
-		if (((*c)->src_->id_ == src) && ((*c)->snk_->id_ == snk))
+		if (((*c)->src_->id_ == src) and ((*c)->snk_->id_ == snk))
 		{
 			return c->get();
 		}
@@ -320,12 +320,12 @@ vSoundConn* vAudioManager::connect(const std::string &src, const std::string &sn
 }
 
 
-vSoundConn* vAudioManager::connect (vBaseNode *src, vBaseNode *snk)
+vSoundConn* vAudioManager::connect(vBaseNode *src, vBaseNode *snk)
 {
     using std::tr1::shared_ptr;
 	// if the node pointers are invalid for some reason, return:
-	if (!src or !snk) return NULL;
-
+	if (!src or !snk) 
+        return NULL;
 
 	// Check src and snk id's against the connectFilter. If either match, then
 	// proceed with the connection:
