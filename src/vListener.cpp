@@ -28,20 +28,20 @@ vListener::vListener(const std::string &nodeID) : vBaseNode(nodeID)
 
 vListener::~vListener()
 {
-	// destructor
+    // destructor
 }
 
 void vListener::debugPrint()
 {
-	vBaseNode::debugPrint();
+    vBaseNode::debugPrint();
 
     vAudioManager::connIterator c;
-	std::cout << "    listen to:\t";
-	for (c = connectFROM_.begin(); c != connectFROM_.end(); ++c)
-	{
-		std::cout << (*c)->src_->getID() << " ";
-	}
-	if (connectFROM_.empty())
+    std::cout << "    listen to:\t";
+    for (c = connectFROM_.begin(); c != connectFROM_.end(); ++c)
+    {
+        std::cout << (*c)->src_->getID() << " ";
+    }
+    if (connectFROM_.empty())
         std::cout << "<NO CONNECTIONS>";
-	std::cout << std::endl;
+    std::cout << std::endl;
 }

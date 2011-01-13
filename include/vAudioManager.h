@@ -49,7 +49,7 @@ class vAudioManager
         typedef std::vector<std::tr1::shared_ptr<vSoundSource> >::iterator sourceIterator;
         typedef std::vector<std::tr1::shared_ptr<vSoundConn> >::iterator connIterator;
 
-		/**
+        /**
          *  Singleton instance reference
          */
         static vAudioManager& Instance();
@@ -109,7 +109,7 @@ class vAudioManager
          * A connectFilter is a regular expression. 
          * An asterisk character (*) means it's a wildcard.
          * 
-	     * When the two nodes are connected, we check the identifiers of the source and sink nodes.
+         * When the two nodes are connected, we check the identifiers of the source and sink nodes.
          * If either of those two id match, we proceed with the connection.
          * 
          * You can use this as a blacklist to avoid connection some nodes according to their id.

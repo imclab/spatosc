@@ -27,19 +27,19 @@ vSoundSource::vSoundSource(const std::string &nodeID) : vBaseNode(nodeID), chann
 
 vSoundSource::~vSoundSource()
 {
-	// destructor
+    // destructor
 }
 
 void vSoundSource::debugPrint()
 {
-	vBaseNode::debugPrint();
+    vBaseNode::debugPrint();
 
-	std::cout << "    channelID\t" << channelID_ << std::endl;
+    std::cout << "    channelID\t" << channelID_ << std::endl;
 }
 
 
 void vSoundSource::setChannelID(int channel)
 {
-	channelID_ = channel;
+    channelID_ = channel;
 
 }

@@ -35,15 +35,15 @@ class vSoundConn;
 class DmitriTranslator : public Translator
 {
 public:
-	DmitriTranslator(const std::string &ip);
-	~DmitriTranslator();
-	void update(vSoundConn *conn);
+    DmitriTranslator(const std::string &ip);
+    ~DmitriTranslator();
+    void update(vSoundConn *conn);
     virtual std::string getTypeString() const;
 
 private:
     static const double SPACEMAP_RADIUS;
-	lo_address destAddr_;
-	lo_server lo_serv_;
+    lo_address destAddr_;
+    lo_server lo_serv_;
 };
 
 #endif

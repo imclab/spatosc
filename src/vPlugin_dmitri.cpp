@@ -29,41 +29,41 @@ const double DmitriTranslator::SPACEMAP_RADIUS = 750.0;
 // *****************************************************************************
 DmitriTranslator::DmitriTranslator(const std::string &ip) : Translator()
 {
-	destAddr_ = lo_address_new(ip.c_str(), "18033");
-	lo_serv_ = lo_server_new("18099", NULL);
+    destAddr_ = lo_address_new(ip.c_str(), "18033");
+    lo_serv_ = lo_server_new("18099", NULL);
 
-	std::cout << "Sending to D-Mitri on: " << lo_address_get_url(destAddr_) << std::endl;
-	std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
+    std::cout << "Sending to D-Mitri on: " << lo_address_get_url(destAddr_) << std::endl;
+    std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
 }
 
 DmitriTranslator::~DmitriTranslator()
 {
-	// destructor
-	lo_server_free(lo_serv_);
-	lo_address_free(destAddr_);
+    // destructor
+    lo_server_free(lo_serv_);
+    lo_address_free(destAddr_);
 }
 
 void DmitriTranslator::update(vSoundConn *conn)
 {
-	std::string str;
-	vSoundSource *src = dynamic_cast<vSoundSource*>(conn->src_);
+    std::string str;
+    vSoundSource *src = dynamic_cast<vSoundSource*>(conn->src_);
 
-	if (!src) return;
-	if (src->getChannelID() < 0) return;
+    if (!src) return;
+    if (src->getChannelID() < 0) return;
 
-	float r = conn->elevation() / (M_PI/2);
+    float r = conn->elevation() / (M_PI/2);
 
-	float spacemapX = cos(conn->azimuth()) * r * SPACEMAP_RADIUS;
-	float spacemapY = sin(conn->azimuth()) * r * SPACEMAP_RADIUS;
+    float spacemapX = cos(conn->azimuth()) * r * SPACEMAP_RADIUS;
+    float spacemapY = sin(conn->azimuth()) * r * SPACEMAP_RADIUS;
 
-	str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/x";
-	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
+    str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/x";
+    lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
 
-	str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/y";
-	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
+    str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/y";
+    lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
 
-	str = "Input " + OSCutil::stringify(src->getChannelID()) + " Level";
-	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
+    str = "Input " + OSCutil::stringify(src->getChannelID()) + " Level";
+    lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
 }
 
 std::string DmitriTranslator::getTypeString() const

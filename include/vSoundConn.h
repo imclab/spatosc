@@ -32,15 +32,15 @@ class vBaseNode;
 class vSoundConn
 {
 private:
-	// TODO: get rid of friend classes, and add proper getter methods:
-	friend class vAudioManager;
-	friend class Translator;
-	friend class DmitriTranslator;
-	friend class vListener;
+    // TODO: get rid of friend classes, and add proper getter methods:
+    friend class vAudioManager;
+    friend class Translator;
+    friend class DmitriTranslator;
+    friend class vListener;
 
 public:
-	
-	vSoundConn(vBaseNode *src, vBaseNode *snk);
+    
+    vSoundConn(vBaseNode *src, vBaseNode *snk);
     /**
      * Update distance, azimuth and elevation values
      */
@@ -50,23 +50,23 @@ public:
     double azimuth() const { return azim_; }
     double elevation() const { return elev_; }
     double gain() const { return gain_; }
-	
+    
 protected:
 
-	std::string id_;
-	
-	vBaseNode *src_;
-	vBaseNode *snk_;
-	
+    std::string id_;
+    
+    vBaseNode *src_;
+    vBaseNode *snk_;
+    
     double distance_;
     double azim_;
     double elev_;
     double gain_;
 //    double vdel_;
-	float distanceEffect_;
-	float rolloffEffect_;
-	float dopplerEffect_;
-	float diffractionEffect_;
+    float distanceEffect_;
+    float rolloffEffect_;
+    float dopplerEffect_;
+    float diffractionEffect_;
 };
 
 #endif
