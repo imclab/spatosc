@@ -1,7 +1,6 @@
 Spatosc TODO
 ------------
 
- * rename vBaseNode to Node
  * rename vListener to Listener
  * rename vSoundSource to SoundSource
  * rename vAudioManager to Scene
