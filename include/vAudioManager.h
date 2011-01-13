@@ -93,6 +93,10 @@ class vAudioManager
          * If either of those two id match, we proceed with the connection.
          * 
          * You can use this as a blacklist to avoid connection some nodes according to their id.
+         * 
+         * Example:
+         * 
+         * One audio manager maintains a list of all audio sources, listeners and connections between them. Let say you write a game using a 3D library such as Ogre. You have many players. Each of those players might have an external process that is an audio renderer. For this game process, you'd have several plugins instances that would send different OSC streams to their respective renderers. For each of those plugins instances, you'd have a different connect filter, so that player A listens to player B, but not to itself. 
          */
         void setConnectFilter(std::string s);
 
