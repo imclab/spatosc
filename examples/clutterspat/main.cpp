@@ -4,8 +4,7 @@
  * This example is in the public domain.
  */
 #include <clutter/clutter.h>
-#include <vAudioManager.h>
-#include <vPlugin_dmitri.h>
+#include <spatosc.h>
 #include <algorithm>
 
 static const float WINDOW_WIDTH = 500;

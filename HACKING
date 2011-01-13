@@ -2,16 +2,27 @@ Contributing to spatosc
 -----------------------
 
 This file describes some development practices and coding standards for this project. Its syntax follows the rst format.
+This file is in the public domain.
 
-    Copyright (C)  2010  Alexandre Quessy.
-    Permission is granted to copy, distribute and/or modify this document
-    under the terms of the GNU Free Documentation License, Version 1.3
-    or any later version published by the Free Software Foundation;
-    with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
-    A copy of the license is included in the section entitled "GNU
-    Free Documentation License".
 
-(please add your name above and the year if you edit this file)
+Coding style
+------------
+
+Let's now describe a bit the C++ coding style in this project.
+
+(this is just a proposal for now, please modify.)
+
+ * variables should camelcase. Like "eggSpam".
+ * Class attributes should camelcase, with a trailing underscore. Like "eggSpam_".
+ * Class/type names should be camel case with the first letter capital. Like "EggSpam".
+ * File names should be lowercase, and the words should be stuck together. Like "eggspam.cpp" and "eggspam.h".
+ * The file name should be named after the single class it contents, if possible. 
+ * Avoid global functions, they should be enclosed in a namespace.
+ * Try to comment the methods, attributes and classes you write. Use inline comments, plus the Doxygen-style headers.
+ * Try to explain what a thing does in how you name it.
+ * Indent with four spaces. No tabs.
+ * No need to use curly braces with if, for, do, and while statements if they contain only one line of code. (but indent it)
+ * Declare local variables as close as possible to where they are used, not in the beginning of the method.
 
 
 Version Number
@@ -78,24 +89,6 @@ Let's talk about the choices made in this library and software.
 
 [todo]
 
-Coding style
-------------
-
-Let's now describe a bit the C++ coding style in this project.
-
-(this is just a proposal for now, please modify.)
-
- * variables should camelcase. Like "eggSpam".
- * Class attributes should camelcase, with a trailing underscore. Like "eggSpam_".
- * Class/type names should be camel case with the first letter capital. Like "EggSpam".
- * File names should be lowercase, and the words should be stuck together. Like "eggspam.cpp" and "eggspam.h".
- * The file name should be named after the single class it contents, if possible. 
- * Avoid global functions, they should be enclosed in a namespace.
- * Try to comment the methods, attributes and classes you write. Use inline comments, plus the Doxygen-style headers.
- * Try to explain what a thing does in how you name it.
- * Indent with four spaces. No tabs.
- * No need to use curly braces with if, for, do, and while statements if they contain only one line of code. (but indent it)
- * Declare local variables as close as possible to where they are used, not in the beginning of the method.
 
 
 Libraries we use

@@ -17,31 +17,23 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "vListener.h"
+/**
+ * Single public header file for spatosc.
+ * 
+ * Includes the other header files.
+ */
+#ifndef __SPATOSC_H__
+#define __SPATOSC_H__
+
+#include "OSCutil.h"
 #include "vAudioManager.h"
+#include "vBaseNode.h"
+#include "vListener.h"
+#include "vMath.h"
+#include "vPlugin_dmitri.h"
+#include "vPlugin.h"
 #include "vSoundConn.h"
+#include "vSoundSource.h"
 
-// *****************************************************************************
-vListener::vListener(const std::string &nodeID) : vBaseNode(nodeID)
-{
-}
+#endif
 
-vListener::~vListener()
-{
-	// destructor
-}
-
-void vListener::debugPrint()
-{
-	vBaseNode::debugPrint();
-
-    vAudioManager::connIterator c;
-	std::cout << "    listen to:\t";
-	for (c = connectFROM_.begin(); c != connectFROM_.end(); ++c)
-	{
-		std::cout << (*c)->src_->getID() << " ";
-	}
-	if (connectFROM_.empty())
-        std::cout << "<NO CONNECTIONS>";
-	std::cout << std::endl;
-}
