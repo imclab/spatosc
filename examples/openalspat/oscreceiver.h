@@ -6,12 +6,25 @@
 
 /** General-purpose wrapper around liblo to receive OSC messages.
  */
-class OscReceiver {
+class OscReceiver
+{
     public:
+        /**
+         * Constructor. Note that the port is a string, not an int.
+         */
         OscReceiver(const std::string &port);
         ~OscReceiver();
+        /**
+         * Starts listening to OSC messages in its own thread.
+         */
         void listen();
+        /**
+         * Returns the port as a C string.
+         */
         const char * port() const { return port_.c_str(); }
+        /**
+         * Add a callback for a given OSC path.
+         */
         void addHandler(const char *path, 
                 const char *types, lo_method_handler handler, 
                 void *user_data);
