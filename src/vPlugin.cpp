@@ -23,26 +23,14 @@
 #include "vSoundConn.h"
 #include "vBaseNode.h"
 
-std::string vPlugin::getTypeString() const
+std::string Translator::getTypeString() const
 {
     return "CONSOLE";
 }
 
-
-void vPlugin::update(vSoundConn *conn)
+void Translator::update(vSoundConn *conn)
 {
     std::cout << "Computation update for " << conn->src_->id_ << " -> " << conn->snk_->id_ << " :" <<std::endl;
-
-    Vector3 vect = conn->snk_->pos_ - conn->src_->pos_;
-    double distance = (double)vect.Mag();
-    double azim = atan2(vect.y, vect.x);
-    double elev = atan2(sqrt(pow(vect.x,2) + pow(vect.y,2)), vect.z) / (M_PI/2);
-    if (elev < 0) elev = 0.0; // for now, force sources to be above equator
-
-    double distanceScalar = 1 / (1.0 + pow(distance, (double)conn->distanceEffect_ * 0.01));
-
-    double vdel = distance * (1/SPEED_OF_SOUND) * .01 * conn->dopplerEffect_;  // speed of sound
-    double gain = 20 * log10(distanceScalar);
 
     /*
     // SRC INCIDENCE:
@@ -60,11 +48,9 @@ void vPlugin::update(vSoundConn *conn)
     double snkScalar = (double) (1.0 - (.01*xconn->rolloffEffect  * (1.0 - snkIncidenceGain)));
      */
 
-    std::cout << "  dist:\t" << distance << std::endl;
-    std::cout << "  azim:\t" << azim << std::endl;
-    std::cout << "  elev:\t" << elev << std::endl;
-
-    std::cout << "  gain:\t" << gain << " dB" << std::endl;
-    std::cout << "  delay:\t" << vdel << " ms" << std::endl;
-
+    std::cout << "  dist:\t" << conn->distance() << std::endl;
+    std::cout << "  azim:\t" << conn->azimuth() << std::endl;
+    std::cout << "  elev:\t" << conn->elevation() << std::endl;
+    std::cout << "  gain:\t" << conn->gain() << " dB" << std::endl;
 }
+

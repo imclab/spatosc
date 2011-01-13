@@ -27,6 +27,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <tr1/memory>
 #include "vMath.h"
 
 class vSoundConn;
@@ -39,8 +40,8 @@ class vBaseNode
     private:
         // TODO: remove friend classes and provide real getter methods:
 
-        friend class vPlugin;
-        friend class vPlugin_dmitri;
+        friend class Translator;
+        friend class DmitriTranslator;
         friend class vAudioManager;
         friend class vSoundConn;
 
@@ -78,8 +79,8 @@ class vBaseNode
 
         bool active_;
 
-        std::vector<vSoundConn*> connectTO_;
-        std::vector<vSoundConn*> connectFROM_;
+        std::vector<std::tr1::shared_ptr<vSoundConn> > connectTO_;
+        std::vector<std::tr1::shared_ptr<vSoundConn> > connectFROM_;
 
         bool updateFlag_;
 };

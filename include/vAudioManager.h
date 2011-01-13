@@ -27,13 +27,14 @@
 #include <regex.h>
 #include <string>
 #include <vector>
+#include <tr1/memory>
 
 // forward declarations
 class vListener;
 class vBaseNode;
 class vSoundSource;
 class vSoundConn;
-class vPlugin;
+class Translator;
 
 /**
  * The Audio Manager manages the nodes and their connections.
@@ -43,12 +44,12 @@ class vAudioManager
 {
     public:
         // iterators:
-        typedef std::vector<vListener*>::iterator listenerIterator;
-        typedef std::vector<vBaseNode*>::iterator nodeIterator;
-        typedef std::vector<vSoundSource*>::iterator sourceIterator;
-        typedef std::vector<vSoundConn*>::iterator connIterator;
+        typedef std::vector<std::tr1::shared_ptr<vListener> >::iterator listenerIterator;
+        typedef std::vector<std::tr1::shared_ptr<vBaseNode> >::iterator nodeIterator;
+        typedef std::vector<std::tr1::shared_ptr<vSoundSource> >::iterator sourceIterator;
+        typedef std::vector<std::tr1::shared_ptr<vSoundConn> >::iterator connIterator;
 
-		/**
+        /**
          *  Singleton instance reference
          */
         static vAudioManager& Instance();
@@ -61,9 +62,9 @@ class vAudioManager
         /**
          * Sets the renderer plugin.
          *
-         * Accepts a child class of vPlugin.
+         * Accepts a child class of Translator.
          */
-        void setPlugin(vPlugin *p);
+        void setTranslator(const std::tr1::shared_ptr<Translator> &p);
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
@@ -108,7 +109,7 @@ class vAudioManager
          * A connectFilter is a regular expression. 
          * An asterisk character (*) means it's a wildcard.
          * 
-	     * When the two nodes are connected, we check the identifiers of the source and sink nodes.
+         * When the two nodes are connected, we check the identifiers of the source and sink nodes.
          * If either of those two id match, we proceed with the connection.
          * 
          * You can use this as a blacklist to avoid connection some nodes according to their id.
@@ -154,16 +155,16 @@ class vAudioManager
         // assign the singleton vAudioManager to itself:
         vAudioManager& operator=(vAudioManager const&);
 
-        vPlugin *plugin_;
+        std::tr1::shared_ptr<Translator> translator_;
 
         bool autoConnect_;
 
         std::string connectFilter_;
         regex_t connectRegex_;
 
-        std::vector<vListener*>  vListenerList_;
-        std::vector<vSoundSource*> vSoundSourceList_;
-        std::vector<vSoundConn*> vSoundConnList_;
+        std::vector<std::tr1::shared_ptr<vListener> >  vListenerList_;
+        std::vector<std::tr1::shared_ptr<vSoundSource> > vSoundSourceList_;
+        std::vector<std::tr1::shared_ptr<vSoundConn> > vSoundConnList_;
 };
 
 #endif
