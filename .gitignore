@@ -29,3 +29,4 @@ spatosc.pc
 !examples/*/Makefile
 examples/clutterspat/clutterspat
 examples/openalspat/openalspat
+*.pdf
