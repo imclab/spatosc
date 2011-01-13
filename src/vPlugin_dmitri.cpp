@@ -10,8 +10,6 @@ const double vPlugin_dmitri::SPACEMAP_RADIUS = 750.0;
 // *****************************************************************************
 vPlugin_dmitri::vPlugin_dmitri(const std::string &ip) : vPlugin()
 {
-	type_ = vPlugin::DMITRI;
-
 	destAddr_ = lo_address_new(ip.c_str(), "18033");
 	lo_serv_ = lo_server_new("18099", NULL);
 
@@ -53,4 +51,9 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 
 	str = "Input " + OSCutil::stringify(src->getChannelID()) + " Level";
 	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), gain);
+}
+
+std::string vPlugin_dmitri::getTypeString() const
+{
+    return "DMITIRI";
 }

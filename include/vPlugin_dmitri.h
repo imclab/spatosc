@@ -22,6 +22,7 @@ public:
 	~vPlugin_dmitri();
 
 	void update(vSoundConn *conn);
+    virtual std::string getTypeString() const;
 
 private:
 

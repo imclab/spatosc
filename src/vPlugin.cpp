@@ -4,32 +4,9 @@
 #include "vSoundConn.h"
 #include "vBaseNode.h"
 
-
-vPlugin::vPlugin()
+std::string vPlugin::getTypeString() const
 {
-	type_ = CONSOLE;
-}
-
-vPlugin::~vPlugin()
-{
-}
-
-std::string vPlugin::getTypeString()
-{
-    switch (type_)
-    {
-        case (CONSOLE):
-            return "CONSOLE";
-            break;
-        case (DMITRI):
-            return "DMITRI";
-            break;
-        case (MULTICAST):
-            return "MULTICAST";
-            break;
-        default:
-            return "";
-    }
+    return "CONSOLE";
 }
 
 
