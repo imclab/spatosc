@@ -69,12 +69,12 @@ vAudioManager& vAudioManager::Instance()
 }
 
 // *****************************************************************************
-void vAudioManager::setPlugin(vPlugin *p)
+void vAudioManager::setPlugin(const std::tr1::shared_ptr<vPlugin> &p)
 {
-    if (plugin_.get() == p)
+    if (plugin_ == p)
         return;
 	// replace old plugin:
-	plugin_.reset(p);
+	plugin_ = p;
 }
 
 // *****************************************************************************

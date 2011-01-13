@@ -64,7 +64,7 @@ class vAudioManager
          *
          * Accepts a child class of vPlugin.
          */
-        void setPlugin(vPlugin *p);
+        void setPlugin(const std::tr1::shared_ptr<vPlugin> &p);
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
