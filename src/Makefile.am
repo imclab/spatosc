@@ -9,7 +9,7 @@ libspatosc_la_SOURCES = \
     node.cpp \
     vListener.cpp \
     vMath.cpp \
-    vPlugin.cpp \
+    translator.cpp \
     vPlugin_dmitri.cpp \
     vSoundConn.cpp \
     vSoundSource.cpp

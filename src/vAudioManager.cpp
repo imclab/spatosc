@@ -20,7 +20,7 @@
 #include "vAudioManager.h"
 #include <iostream>
 
-#include "vPlugin.h"
+#include "translator.h"
 #include "vListener.h"
 #include "node.h"
 #include "vSoundSource.h"

@@ -25,7 +25,7 @@
 
 #include <lo/lo.h>
 #include <string>
-#include "vPlugin.h"
+#include "translator.h"
 
 namespace spatosc
 {

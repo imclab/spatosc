@@ -37,7 +37,7 @@ class Translator
         /**
          * Returns the name of this vPlugin.
          * 
-         * Each child of vPlugin has a unique string identifier.
+         * Each child of translator.has a unique string identifier.
          */
         virtual std::string getTypeString() const;
 

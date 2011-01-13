@@ -19,7 +19,7 @@
 
 #include <iostream>
 
-#include "vPlugin.h"
+#include "translator.h"
 #include "vSoundConn.h"
 #include "node.h"
 
