@@ -17,7 +17,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "vPlugin_dmitri.h"
+#include "dmitritranslator.h"
 #include "OSCutil.h"
 #include "vSoundSource.h"
 #include "vSoundConn.h"

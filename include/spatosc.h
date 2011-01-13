@@ -31,7 +31,7 @@
 #include "node.h"
 #include "vListener.h"
 #include "vMath.h"
-#include "vPlugin_dmitri.h"
+#include "dmitritranslator.h"
 #include "translator.h"
 #include "vSoundConn.h"
 #include "vSoundSource.h"
