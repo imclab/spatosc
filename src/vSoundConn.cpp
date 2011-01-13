@@ -65,6 +65,4 @@ void vSoundConn::update()
         src_->updateFlag_ = false;
         snk_->updateFlag_ = false;
     }
-    else
-        ; // noop
 }

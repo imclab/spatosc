@@ -27,6 +27,7 @@
 #include <regex.h>
 #include <string>
 #include <vector>
+#include <tr1/memory>
 
 // forward declarations
 class vListener;
@@ -43,10 +44,10 @@ class vAudioManager
 {
     public:
         // iterators:
-        typedef std::vector<vListener*>::iterator listenerIterator;
-        typedef std::vector<vBaseNode*>::iterator nodeIterator;
-        typedef std::vector<vSoundSource*>::iterator sourceIterator;
-        typedef std::vector<vSoundConn*>::iterator connIterator;
+        typedef std::vector<std::tr1::shared_ptr<vListener> >::iterator listenerIterator;
+        typedef std::vector<std::tr1::shared_ptr<vBaseNode> >::iterator nodeIterator;
+        typedef std::vector<std::tr1::shared_ptr<vSoundSource> >::iterator sourceIterator;
+        typedef std::vector<std::tr1::shared_ptr<vSoundConn> >::iterator connIterator;
 
 		/**
          *  Singleton instance reference
@@ -63,7 +64,7 @@ class vAudioManager
          *
          * Accepts a child class of vPlugin.
          */
-        void setPlugin(vPlugin *p);
+        void setPlugin(const std::tr1::shared_ptr<vPlugin> &p);
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
@@ -154,16 +155,16 @@ class vAudioManager
         // assign the singleton vAudioManager to itself:
         vAudioManager& operator=(vAudioManager const&);
 
-        vPlugin *plugin_;
+        std::tr1::shared_ptr<vPlugin> plugin_;
 
         bool autoConnect_;
 
         std::string connectFilter_;
         regex_t connectRegex_;
 
-        std::vector<vListener*>  vListenerList_;
-        std::vector<vSoundSource*> vSoundSourceList_;
-        std::vector<vSoundConn*> vSoundConnList_;
+        std::vector<std::tr1::shared_ptr<vListener> >  vListenerList_;
+        std::vector<std::tr1::shared_ptr<vSoundSource> > vSoundSourceList_;
+        std::vector<std::tr1::shared_ptr<vSoundConn> > vSoundConnList_;
 };
 
 #endif

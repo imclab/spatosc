@@ -18,6 +18,7 @@
  */
 
 #include <iostream>
+#include <tr1/memory>
 
 #include "vAudioManager.h"
 #include "vPlugin_dmitri.h"
@@ -25,6 +26,8 @@
 
 int main(int /*argc*/, char ** /*argv*/)
 {
+    using std::tr1::shared_ptr;
+
 	std::cout << "\nRunning spatoscTest ...\n" << std::endl;
 
 	// The spatosc library provides an API structured around one singleton class
@@ -48,23 +51,24 @@ int main(int /*argc*/, char ** /*argv*/)
 	// we choose D-Mitri, and provide the IP address of the server on the
 	// control network. Note that D-Mitri uses 2 interfaces, a control network
 	// (typically IPv4) and an audio network (AVB):
-	vAudioManager::Instance().setPlugin(new vPlugin_dmitri("192.168.2.26"));
+    shared_ptr<vPlugin_dmitri> plugin(new vPlugin_dmitri("192.168.2.26"));
+    vAudioManager::Instance().setPlugin(plugin);
 
-	// The vAudioManager class can print out everything to the console:
-	vAudioManager::Instance().debugPrint();
+    // The vAudioManager class can print out everything to the console:
+    vAudioManager::Instance().debugPrint();
 
-	// Now we just move nodes around and updates should be sent to D-Mitri:
+    // Now we just move nodes around and updates should be sent to D-Mitri:
 
-	foo->setPosition(0,10,0);
-	bar->setPosition(5,5,0);
+    foo->setPosition(0,10,0);
+    bar->setPosition(5,5,0);
 
-	sleep(1);
+    sleep(1);
 
-	foo->setPosition(0,5,0);
-	bar->setPosition(-5,5,0);
+    foo->setPosition(0,5,0);
+    bar->setPosition(-5,5,0);
 
-	vAudioManager::Instance().debugPrint();
+    vAudioManager::Instance().debugPrint();
 
+    std::cout << "Exitting...\n";
     return 0;
 }
-
