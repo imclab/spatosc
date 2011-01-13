@@ -46,7 +46,7 @@ vAudioManager::vAudioManager ()
 	this->vSoundConnList_.clear();
 
 	// for now, create a basic (CONSOLE) plugin:
-	plugin_ = new vPlugin();
+	plugin_.reset(new vPlugin());
 
 	autoConnect_ = true;
 
@@ -58,26 +58,6 @@ vAudioManager::vAudioManager ()
 // destructor
 vAudioManager::~vAudioManager()
 {
-	listenerIterator L = vListenerList_.begin();
-	while (L != vListenerList_.end())
-	{
-		delete (*L);
-		vListenerList_.erase(L);
-	}
-	sourceIterator N = vSoundSourceList_.begin();
-	while (N != vSoundSourceList_.end())
-	{
-		delete (*N);
-		vSoundSourceList_.erase(N);
-	}
-	connIterator C = vSoundConnList_.begin();
-	while (C != vSoundConnList_.end())
-	{
-		delete (*C);
-		vSoundConnList_.erase(C);
-	}
-	if (plugin_)
-        delete plugin_;
 }
 
 
@@ -91,13 +71,10 @@ vAudioManager& vAudioManager::Instance()
 // *****************************************************************************
 void vAudioManager::setPlugin(vPlugin *p)
 {
-    if (plugin_ == p)
+    if (plugin_.get() == p)
         return;
-	// clean up old plugin:
-	if (plugin_)
-        delete plugin_;
-
-	plugin_ = p;
+	// replace old plugin:
+	plugin_.reset(p);
 }
 
 // *****************************************************************************
@@ -142,23 +119,25 @@ void vAudioManager::debugPrint ()
 // *****************************************************************************
 vSoundSource* vAudioManager::getOrCreateSoundSource(const std::string &id)
 {
+    using std::tr1::shared_ptr;
 	// check if it already exists:
 	vSoundSource *n = getSoundSource(id);
 
-	if (!n)
+	if (n == 0)
 	{
 		// if not, create a new vSoundNode:
-		n = new vSoundSource(id);
+        shared_ptr<vSoundSource> tmp(new vSoundSource(id));
 
 		// add it to the vSoundSourceList:
-		vSoundSourceList_.push_back(n);
+		vSoundSourceList_.push_back(tmp);
+        n = tmp.get();
 
 		if (autoConnect_)
 		{
 			listenerIterator L;
 			for (L = vListenerList_.begin(); L != vListenerList_.end(); ++L)
 			{
-				connect(n,(*L));
+				connect(n, L->get());
 			}
 		}
 	}
@@ -169,23 +148,25 @@ vSoundSource* vAudioManager::getOrCreateSoundSource(const std::string &id)
 // *****************************************************************************
 vListener* vAudioManager::getOrCreateListener(const std::string &id)
 {
+    using std::tr1::shared_ptr;
 	// check if it already exists:
 	vListener *L = getListener(id);
 
 	if (!L)
 	{
 		// if not, create a new vSoundNode:
-		L = new vListener(id);
+        shared_ptr<vListener> tmp(new vListener(id));
+        L = tmp.get();
 
 		// add it to the vListenerList:
-		vListenerList_.push_back(L);
+		vListenerList_.push_back(tmp);
 
 		if (autoConnect_)
 		{
 			sourceIterator n;
 			for (n = vSoundSourceList_.begin(); n != vSoundSourceList_.end(); ++n)
 			{
-				connect((*n),L);
+				connect(n->get(), L);
 			}
 		}
 	}
@@ -200,14 +181,15 @@ vBaseNode* vAudioManager::getNode(const std::string &id)
 	vBaseNode *n = 0;
 
 	n = getSoundSource(id);
-	if (n) return n;
+	if (n) 
+        return n;
 
 	n = getListener(id);
-	if (n) return n;
+	if (n) 
+        return n;
 
-	return NULL;
+	return 0;
 }
-
 
 // *****************************************************************************
 // return a pointer to a vSoundNode in the vSoundSourceList, given an id:
@@ -218,7 +200,7 @@ vSoundSource* vAudioManager::getSoundSource(const std::string &id)
 	{
 		if ((*n)->id_ == id)
 		{
-			return (*n);
+			return n->get();
 		}
 	}
 	
@@ -236,7 +218,7 @@ vListener* vAudioManager::getListener(const std::string &id)
 	{
 		if ((*L)->id_ == id)
 		{
-			return (*L);
+			return L->get();
 		}
 	}
 
@@ -255,7 +237,7 @@ std::vector<vSoundConn*> vAudioManager::getConnections(const std::string &id)
 	{
 		if (((*c)->src_->id_ == id) || ((*c)->snk_->id_ == id))
 		{
-			foundConnections.push_back(*c);
+			foundConnections.push_back(c->get());
 		}
 	}
 	return foundConnections;
@@ -270,7 +252,7 @@ vSoundConn* vAudioManager::getConnection(const std::string &src, const std::stri
 	{
 		if (((*c)->src_->id_ == src) && ((*c)->snk_->id_ == snk))
 		{
-			return (*c);
+			return c->get();
 		}
 	}
 
@@ -284,7 +266,7 @@ vSoundConn* vAudioManager::getConnection(const std::string &id)
 	{
 		if ((*c)->id_ == id)
 		{
-			return (*c);
+			return c->get();
 		}
 	}
 	
@@ -340,6 +322,7 @@ vSoundConn* vAudioManager::connect(const std::string &src, const std::string &sn
 
 vSoundConn* vAudioManager::connect (vBaseNode *src, vBaseNode *snk)
 {
+    using std::tr1::shared_ptr;
 	// if the node pointers are invalid for some reason, return:
 	if (!src or !snk) return NULL;
 
@@ -352,7 +335,7 @@ vSoundConn* vAudioManager::connect (vBaseNode *src, vBaseNode *snk)
 	if (srcRegexStatus == 0 or snkRegexStatus == 0)
 	{
 		// create connection:
-		vSoundConn *conn = new vSoundConn(src, snk);
+		shared_ptr<vSoundConn> conn(new vSoundConn(src, snk));
 
 		// register the connection with both the vAudioManager and the
 		// sink node (for backwards connectivity computation):
@@ -360,9 +343,9 @@ vSoundConn* vAudioManager::connect (vBaseNode *src, vBaseNode *snk)
 		src->connectTO_.push_back(conn);
 		snk->connectFROM_.push_back(conn);
 
-		update(conn);
+		update(conn.get());
 
-		return conn;
+		return conn.get();
 	}
 
 	else return NULL;
@@ -378,11 +361,11 @@ void vAudioManager::update(vBaseNode *n)
 	connIterator c;
 	for (c = n->connectTO_.begin(); c != n->connectTO_.end(); ++c)
 	{
-		update(*c);
+		update(c->get());
 	}
 	for (c = n->connectFROM_.begin(); c != n->connectFROM_.end(); ++c)
 	{
-		update(*c);
+		update(c->get());
 	}
 }
 
