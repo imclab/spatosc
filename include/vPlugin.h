@@ -31,18 +31,12 @@ class vSoundConn;
 class vPlugin
 {
     public:
-
-        enum PluginType { CONSOLE, DMITRI, MULTICAST };
-
-        vPlugin();
-        ~vPlugin();
-
         /**
          * Returns the name of this vPlugin.
          * 
          * Each child of vPlugin has a unique string identifier.
          */
-        std::string getTypeString();
+        virtual std::string getTypeString() const;
 
         /**
          * The main work of the plugin is done by the update() method, which is
@@ -54,9 +48,6 @@ class vPlugin
          * messages to control some audio engine, or by rendering audio by itself.
          */
         virtual void update(vSoundConn *conn);
-
-    protected:
-        PluginType type_;
 };
 
 
