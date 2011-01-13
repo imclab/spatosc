@@ -116,12 +116,12 @@ class vAudioManager
         void disconnect(vSoundConn *conn);
 
         /**
-         * Updates all the connected nodes.
+         * Called by a node when it is changed so that the audio manager updates all its sibling nodes.
          */
         void update(vBaseNode *n);
 
         /**
-         * Updates the renderer plugin.
+         * Called by a connection when it is changed so that the audio manager updates all its sibling nodes.
          */
         void update(vSoundConn *conn);
 
