@@ -34,16 +34,11 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 	if (!src) return;
 	if (src->getChannelID() < 0) return;
 
-	Vector3 vect = conn->snk_->pos_ - conn->src_->pos_;
-	double distance = (double)vect.Mag();
-	double azim = atan2(vect.y, vect.x);
-	double elev = atan2( sqrt(pow(vect.x,2) + pow(vect.y,2)), vect.z );
-
-	float r = elev / (M_PI/2);
+	float r = conn->elevation() / (M_PI/2);
 	if (r < 0) r = 0.0; // for now, force sources to be above equator
 
-	float spacemapX = cos(azim) * r * SPACEMAP_RADIUS;
-	float spacemapY = sin(azim) * r * SPACEMAP_RADIUS;
+	float spacemapX = cos(conn->azimuth()) * r * SPACEMAP_RADIUS;
+	float spacemapY = sin(conn->azimuth()) * r * SPACEMAP_RADIUS;
 
 	str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/x";
 	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
@@ -53,9 +48,8 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 
 	// now from distance, compute gain and variable delay:
 
-	double distanceScalar = 1 / (1.0 + pow(distance, (double)conn->distanceEffect_ * 0.01));
 	//double vdel = distance * (1/SPEED_OF_SOUND) * .01 * conn->dopplerEffect;  // speed of sound
-	double gain = 20 * log10(distanceScalar);
+	double gain = 20 * log10(conn->distanceScalar());
 
 	str = "Input " + OSCutil::stringify(src->getChannelID()) + " Level";
 	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), gain);

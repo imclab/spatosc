@@ -375,6 +375,9 @@ void vAudioManager::update(vSoundConn *conn)
 	if ((conn->src_->active_) and (conn->snk_->active_))
 	{
 		if (plugin_)
+        {
+            conn->update();
             plugin_->update(conn);
+        }
 	}
 }

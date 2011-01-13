@@ -23,6 +23,15 @@ public:
 	
 	vSoundConn(vBaseNode *src, vBaseNode *snk);
 	~vSoundConn();
+    /**
+     * Update distance, azimuth and elevation values
+     */
+    void update();
+
+    double distance() const { return distance_; }
+    double distanceScalar() const { return distanceScalar_; }
+    double azimuth() const { return azim_; }
+    double elevation() const { return elev_; }
 	
 protected:
 
@@ -32,6 +41,7 @@ protected:
 	vBaseNode *snk_;
 	
     double distance_;
+    double distanceScalar_;
     double azim_;
     double elev_;
 	float distanceEffect_;
