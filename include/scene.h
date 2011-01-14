@@ -51,10 +51,10 @@ class Scene
         typedef std::vector<std::tr1::shared_ptr<SoundSource> >::iterator sourceIterator;
         typedef std::vector<std::tr1::shared_ptr<Connection> >::iterator connIterator;
 
-        /**
-         *  Singleton instance reference
+        /** 
+         * Constructor
          */
-        static Scene& Instance();
+        Scene();
 
         /**
          * Prints debug info to the console.
@@ -153,14 +153,6 @@ class Scene
         void update(Connection *conn);
 
     private:
-
-        // singleton constructors & desctructor (hidden):
-        Scene();
-        ~Scene();
-        Scene(Scene const&); // copy constructor
-        // hide the assignment operator, otherwise it would be possible to
-        // assign the singleton Scene to itself:
-        Scene& operator=(Scene const&);
 
         // TODO: Fri Jan 14 11:14:34 EST 2011: have mulitple translators
         std::tr1::shared_ptr<Translator> translator_;

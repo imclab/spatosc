@@ -17,29 +17,13 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** @file
- * The Listener class.
- */
-#ifndef __Listener_H
-#define __Listener_H
-
-#include "node.h"
-
-namespace spatosc
-{
 /**
- * Listener nodes can listen to sound sources.
+ * Provides version info for spatosc.
  * 
- * The listener represents a person that listens to an audio scene. There is usually only one listener in a scene.
  */
-class Listener : public Node
-{
-    public:
-        Listener(const std::string &nodeID, Scene &scene);
-        void debugPrint();
-};
+#ifndef __VERSION_H__
+#define __VERSION_H__
 
-} // end namespace spatosc
+#define SPATOSC_VERSION     (@PACKAGE_VERSION@)
 
-#endif
-
+#endif // __VERSION_H__

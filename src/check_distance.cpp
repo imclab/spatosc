@@ -31,8 +31,9 @@ int main(int /*argc*/, char ** /*argv*/)
 
     if (VERBOSE)
         std::cout << std::endl << "Running..." << std::endl;
-    Scene& scene = Scene::Instance();
-    
+
+    Scene scene;
+
     shared_ptr<DmitriTranslator> translator(new DmitriTranslator("127.0.0.1"));
     scene.setTranslator(translator);
 
