@@ -1,10 +1,6 @@
 Spatosc TODO
 ------------
 
- * rename vListener to Listener
- * rename vSoundSource to SoundSource
- * rename vAudioManager to Scene
- * rename vSoundConn to Sonnection
  * remove non-public functions and typedefs from include/*.h
  * remove friend classes in vBaseNode
  * rename all files so that they are in small caps only
