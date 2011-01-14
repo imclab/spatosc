@@ -62,7 +62,7 @@ int main(int /*argc*/, char ** /*argv*/)
     foo->setPosition(0,10,0);
     bar->setPosition(5,5,0);
 
-    sleep(1);
+    sleep(0.1);
 
     foo->setPosition(0,5,0);
     bar->setPosition(-5,5,0);
