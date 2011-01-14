@@ -19,6 +19,9 @@
 
 /** @file
  * This test checks that distances between two nodes are OK.
+ * 
+ * To run it though gdb:
+ * $ libtool --mode=execute gdb check_distance
  */
 #include <iostream>
 #include <tr1/memory>
