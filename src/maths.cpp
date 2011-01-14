@@ -17,7 +17,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "vMath.h"
+#include "maths.h"
 
 
 namespace spatosc

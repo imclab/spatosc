@@ -30,7 +30,7 @@
 #include "scene.h"
 #include "node.h"
 #include "listener.h"
-#include "vMath.h"
+#include "maths.h"
 #include "dmitritranslator.h"
 #include "translator.h"
 #include "connection.h"

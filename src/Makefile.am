@@ -8,7 +8,7 @@ libspatosc_la_SOURCES = \
 	scene.cpp \
     node.cpp \
     listener.cpp \
-    vMath.cpp \
+    maths.cpp \
     translator.cpp \
     dmitritranslator.cpp \
     connection.cpp \

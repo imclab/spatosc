@@ -28,7 +28,7 @@
 #include <vector>
 #include <iostream>
 #include <tr1/memory>
-#include "vMath.h"
+#include "maths.h"
 
 namespace spatosc
 {
