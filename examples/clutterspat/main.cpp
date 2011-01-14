@@ -6,6 +6,7 @@
 #include <clutter/clutter.h>
 #include <spatosc.h>
 #include <algorithm>
+#include <tr1/memory>
 
 static const float WINDOW_WIDTH = 500;
 static const float WINDOW_HEIGHT = 500;
@@ -17,7 +18,7 @@ static const char *WINDOW_TITLE = "Press arrow keys to move the sound source";
 struct ExampleApplication
 {
     ClutterActor *foo_actor;
-    vSoundSource *foo_sound;
+    spatosc::SoundSource *foo_sound;
 };
 
 /**
@@ -65,7 +66,6 @@ static void key_event_cb(ClutterActor *actor, ClutterKeyEvent *event,
     }
     app->foo_sound->setPosition(clutter_actor_get_x(app->foo_actor),
             clutter_actor_get_y(app->foo_actor), 0);
-    vAudioManager::Instance().debugPrint();
 }
 
 /**
@@ -146,6 +146,9 @@ static void on_drag_motion( ClutterDragAction *action, ClutterActor *actor,
 
 int main(int argc, char *argv[])
 {
+    using namespace spatosc;
+    using std::tr1::shared_ptr;
+    Scene scene;
     ClutterActor *stage = NULL;
     ClutterColor black = { 0x00, 0x00, 0x00, 0xff };
     ClutterColor orange = { 0xff, 0xcc, 0x33, 0x00 }; /* transparent orange */
@@ -175,12 +178,13 @@ int main(int argc, char *argv[])
     clutter_actor_add_action(app.foo_actor, drag_action);
 #endif
 
-    app.foo_sound = vAudioManager::Instance().getOrCreateSoundSource("foo_sound");
+    app.foo_sound = scene.getOrCreateSoundSource("foo_sound");
     app.foo_sound->setChannelID(1);
-    vAudioManager::Instance().setPlugin(new vPlugin_dmitri("192.168.2.26"));
+    shared_ptr<Translator> translator(new DmitriTranslator("192.168.2.26"));
+    scene.setTranslator(translator);
     app.foo_sound->setPosition(clutter_actor_get_x(app.foo_actor),
             clutter_actor_get_y(app.foo_actor), 0);
-    vAudioManager::Instance().debugPrint();
+    scene.debugPrint();
 
     g_signal_connect(stage, "key-press-event", G_CALLBACK(key_event_cb),
             static_cast<gpointer>(&app));
