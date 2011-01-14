@@ -31,7 +31,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
     if (VERBOSE)
         std::cout << std::endl << "Running..." << std::endl;
-    Scene& scene = Scene::Instance();
+    Scene scene;
 
     SoundSource *sound_a = scene.getOrCreateSoundSource("sound_a");
     sound_a->setChannelID(1);
