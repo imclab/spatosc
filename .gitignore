@@ -34,5 +34,5 @@ examples/openalspat/openalspat
 *.gz
 *.swp
 include/version.h
-tests/check_*.cpp
+tests/check_*
 !tests/check_*.cpp
