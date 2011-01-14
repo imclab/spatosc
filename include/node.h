@@ -33,6 +33,7 @@
 namespace spatosc
 {
 class Connection;
+class Scene;
 
 /**
  * Base class for a node in the scene.
@@ -49,8 +50,7 @@ class Node
 
     public:
 
-        Node(const std::string &nodeID);
-        ~Node();
+        Node(const std::string &nodeID, Scene& scene);
 
         /**
          * Returns the identifier of this node.
@@ -75,6 +75,7 @@ class Node
     protected:
 
         std::string id_;
+        Scene &scene_;
 
         Vector3 pos_;
         Vector3 rot_;

@@ -35,7 +35,7 @@ namespace spatosc
 class Listener : public Node
 {
     public:
-        Listener(const std::string &nodeID);
+        Listener(const std::string &nodeID, Scene &scene);
         void debugPrint();
 };
 

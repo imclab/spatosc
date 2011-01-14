@@ -27,6 +27,8 @@ int main(int /*argc*/, char ** /*argv*/)
 {
     using std::tr1::shared_ptr;
     std::cout << "\nRunning spatoscTest ...\n" << std::endl;
+    // create the scene
+    Scene scene;
 
     // The spatosc library provides an API structured around one singleton class
     // called Scene. This class maintains lists of listeners and sound
@@ -34,15 +36,15 @@ int main(int /*argc*/, char ** /*argv*/)
 
 
     // Each scene needs to have at least one Listener:
-    //Listener *listener = Scene::Instance().getOrCreateListener("listener");
+    //Listener *listener = scene.getOrCreateListener("listener");
 
     // A variable number of SoundSource instances can then be generated. Note
     // that a bus number must be assigned to each source in order to render in
     // D-Mitri. Setting the bus to -1 will effectively disable computation for
     // that node:
-    SoundSource *foo = Scene::Instance().getOrCreateSoundSource("foo");
+    SoundSource *foo = scene.getOrCreateSoundSource("foo");
     foo->setChannelID(1);
-    SoundSource *bar = Scene::Instance().getOrCreateSoundSource("bar");
+    SoundSource *bar = scene.getOrCreateSoundSource("bar");
     bar->setChannelID(2);
 
     // In order to send OSC, some output plugin must be specified. In this case,
@@ -50,10 +52,10 @@ int main(int /*argc*/, char ** /*argv*/)
     // control network. Note that D-Mitri uses 2 interfaces, a control network
     // (typically IPv4) and an audio network (AVB):
     shared_ptr<DmitriTranslator> translator(new DmitriTranslator("192.168.2.26"));
-    Scene::Instance().setTranslator(translator);
+    scene.setTranslator(translator);
 
     // The Scene class can print out everything to the console:
-    Scene::Instance().debugPrint();
+    scene.debugPrint();
 
     // Now we just move nodes around and updates should be sent to D-Mitri:
 
@@ -65,9 +67,8 @@ int main(int /*argc*/, char ** /*argv*/)
     foo->setPosition(0,5,0);
     bar->setPosition(-5,5,0);
 
-    Scene::Instance().debugPrint();
+    scene.debugPrint();
 
     std::cout << "Exitting...\n";
     return 0;
 }
-

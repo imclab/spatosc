@@ -55,19 +55,6 @@ Scene::Scene ()
 }
 
 // *****************************************************************************
-// destructor
-Scene::~Scene()
-{
-}
-
-Scene& Scene::Instance()
-{
-    // Meyers' singleton design pattern
-    static Scene s;
-    return s;
-}
-
-// *****************************************************************************
 void Scene::setTranslator(const std::tr1::shared_ptr<Translator> &p)
 {
     if (translator_ == p)
@@ -124,7 +111,7 @@ SoundSource* Scene::getOrCreateSoundSource(const std::string &id)
     if (n == 0)
     {
         // if not, create a new vSoundNode:
-        shared_ptr<SoundSource> tmp(new SoundSource(id));
+        shared_ptr<SoundSource> tmp(new SoundSource(id, *this));
 
         // add it to the SoundSourceList:
         SoundSourceList_.push_back(tmp);
@@ -153,7 +140,7 @@ Listener* Scene::getOrCreateListener(const std::string &id)
     if (!L)
     {
         // if not, create a new vSoundNode:
-        shared_ptr<Listener> tmp(new Listener(id));
+        shared_ptr<Listener> tmp(new Listener(id, *this));
         L = tmp.get();
 
         // add it to the ListenerList:

@@ -37,8 +37,7 @@ class SoundSource : /*virtual*/ public Node
 
     public:
 
-        SoundSource(const std::string &nodeID);
-        ~SoundSource();
+        SoundSource(const std::string &nodeID, Scene &scene);
 
         void debugPrint();
 

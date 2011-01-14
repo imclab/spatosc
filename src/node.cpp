@@ -25,20 +25,16 @@ namespace spatosc
 {
 
 // *****************************************************************************
-Node::Node(const std::string &nodeID)
+Node::Node(const std::string &nodeID, Scene &scene) :
+    id_(nodeID), 
+    scene_(scene), 
+    active_(true), 
+    updateFlag_(true)
 {
-    this->id_ = nodeID;
-    this->active_ = true;
-    this->updateFlag_ = true;
-    
     connectTO_.clear();
     connectFROM_.clear();
 }
 
-Node::~Node()
-{
-    // destructor
-}
 
 void Node::debugPrint()
 {
@@ -52,14 +48,14 @@ void Node::setPosition(double x, double y, double z)
 {
     pos_ = Vector3(x,y,z);
     updateFlag_ = true;
-    Scene::Instance().update(this);
+    scene_.update(this);
 }
 
 void Node::setRotation(double pitch, double roll, double yaw)
 {
     rot_ = Vector3(pitch, roll, yaw);
     updateFlag_ = true;
-    Scene::Instance().update(this);
+    scene_.update(this);
 }
 
 } // end namespace spatosc
