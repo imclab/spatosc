@@ -18,8 +18,11 @@ libspatosc_la_LDFLAGS = $(LIBLO_LDFLAGS) -export-dynamic
 libspatosc_la_includedir = $(includedir)/spatosc
 libspatosc_la_include_HEADERS = $(top_srcdir)/include/*.h
 
-# Build an example program:
-noinst_PROGRAMS = spatoscTest
+# Build example programs:
+noinst_PROGRAMS = spatoscTest check_distance
 spatoscTest_SOURCES = spatoscTest.cpp
 spatoscTest_LDADD = libspatosc.la
+
+check_distance_SOURCES = check_distance.cpp
+check_distance_LDADD = libspatosc.la
 
