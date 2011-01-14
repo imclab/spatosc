@@ -1,13 +1,25 @@
-spatosc is a C/C++ library that facilitates communication with various 3D audio spatializers.
+Spatosc is a C/C++ library that facilitates communication with various 3D audio spatializers.
 
 Support is planned for:
+ * Zirkonium         http://ima.zkm.de/~cramakri/zirkonium
+ * Audioscape        http://audioscape.org
+ * SPIN Framework    http://spinframework.org
+ * SPATDif           http://www.spatdif.org
+ * D-Mitri           http://www.meyersound.com/products/d-mitri
 
-Zirkonium         http://ima.zkm.de/~cramakri/zirkonium
-Audioscape        http://audioscape.org
-SPIN Framework    http://spinframework.org
-SPATDif           http://www.spatdif.org
-D-Mitri           http://www.meyersound.com/products/d-mitri
+For more information, contact one of the authors:
+ * Mike Wozniewski <mike@mikewoz.com>
+ * Tristan Matthews <tristan@sat.qc.ca>
+ * Alexandre Quessy <alexandre@quessy.net>
 
-For more information, contact:
-Mike Wozniewski :: mike@mikewoz.com
 
+Version numbers
+---------------
+
+Spatosc uses the common "Linux kernel" versioning system, where even-numbered minor versions are stable and odd-numbered minor versions are development snapshots.
+
+The micro version indicates the origin of the release: even micro numbers are only used for released archives; odd micro numbers are only used on the Git repository.
+
+A stable series means that the command-line options and the interactive keyboard controls should not change much for all tags whose version number start with the same major-minor numbers. Some new features might be developped in that branch, but each release should be backward-compatible with their ancestor. Releases from a stable series should be use for production. 
+
+In contrast, unstable branches consist of tags which are developer snapshots. They are not expected to be compatible with any other version. Some features might change between different stable branches.
