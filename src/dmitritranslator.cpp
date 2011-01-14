@@ -18,7 +18,7 @@
  */
 
 #include "dmitritranslator.h"
-#include "OSCutil.h"
+#include "oscutils.h"
 #include "soundsource.h"
 #include "connection.h"
 

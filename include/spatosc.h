@@ -25,7 +25,7 @@
 #ifndef __SPATOSC_H__
 #define __SPATOSC_H__
 
-#include "OSCutil.h"
+#include "oscutils.h"
 #include "oscreceiver.h"
 #include "scene.h"
 #include "node.h"

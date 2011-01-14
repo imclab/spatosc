@@ -3,7 +3,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/include
 # use lib_LTLIBRARIES to build a shared lib:
 lib_LTLIBRARIES = libspatosc.la
 libspatosc_la_SOURCES = \
-    OSCutil.cpp \
+    oscutils.cpp \
     oscreceiver.cpp \
 	scene.cpp \
     node.cpp \

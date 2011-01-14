@@ -23,7 +23,7 @@
 #include <arpa/inet.h>
 #include <cstdlib>
 
-#include "OSCutil.h"
+#include "oscutils.h"
 
 
 namespace spatosc
