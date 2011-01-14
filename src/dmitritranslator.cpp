@@ -49,7 +49,7 @@ DmitriTranslator::~DmitriTranslator()
 void DmitriTranslator::update(vSoundConn *conn)
 {
     std::string str;
-    vSoundSource *src = dynamic_cast<vSoundSource*>(conn->src_);
+    SoundSource *src = dynamic_cast<SoundSource*>(conn->src_);
 
     if (!src) return;
     if (src->getChannelID() < 0) return;

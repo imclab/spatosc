@@ -45,7 +45,7 @@ static bool nodeSortFunction (Node *n1, Node *n2)
 vAudioManager::vAudioManager ()
 {
     this->vListenerList_.clear();
-    this->vSoundSourceList_.clear();
+    this->SoundSourceList_.clear();
     this->vSoundConnList_.clear();
 
     // for now, create a basic (CONSOLE) translator:
@@ -96,8 +96,8 @@ void vAudioManager::debugPrint ()
         (*L)->debugPrint();
     }
 
-    std::cout << "[vAudioManager]:: " << vSoundSourceList_.size() << " sources:" << std::endl;
-    for (n = vSoundSourceList_.begin(); n != vSoundSourceList_.end(); ++n)
+    std::cout << "[vAudioManager]:: " << SoundSourceList_.size() << " sources:" << std::endl;
+    for (n = SoundSourceList_.begin(); n != SoundSourceList_.end(); ++n)
     {
         (*n)->debugPrint();
     }
@@ -115,19 +115,19 @@ void vAudioManager::debugPrint ()
 
 
 // *****************************************************************************
-vSoundSource* vAudioManager::getOrCreateSoundSource(const std::string &id)
+SoundSource* vAudioManager::getOrCreateSoundSource(const std::string &id)
 {
     using std::tr1::shared_ptr;
     // check if it already exists:
-    vSoundSource *n = getSoundSource(id);
+    SoundSource *n = getSoundSource(id);
 
     if (n == 0)
     {
         // if not, create a new vSoundNode:
-        shared_ptr<vSoundSource> tmp(new vSoundSource(id));
+        shared_ptr<SoundSource> tmp(new SoundSource(id));
 
-        // add it to the vSoundSourceList:
-        vSoundSourceList_.push_back(tmp);
+        // add it to the SoundSourceList:
+        SoundSourceList_.push_back(tmp);
         n = tmp.get();
 
         if (autoConnect_)
@@ -162,7 +162,7 @@ vListener* vAudioManager::getOrCreateListener(const std::string &id)
         if (autoConnect_)
         {
             sourceIterator n;
-            for (n = vSoundSourceList_.begin(); n != vSoundSourceList_.end(); ++n)
+            for (n = SoundSourceList_.begin(); n != SoundSourceList_.end(); ++n)
             {
                 connect(n->get(), L);
             }
@@ -190,11 +190,11 @@ Node* vAudioManager::getNode(const std::string &id)
 }
 
 // *****************************************************************************
-// return a pointer to a vSoundNode in the vSoundSourceList, given an id:
-vSoundSource* vAudioManager::getSoundSource(const std::string &id)
+// return a pointer to a vSoundNode in the SoundSourceList, given an id:
+SoundSource* vAudioManager::getSoundSource(const std::string &id)
 {
     sourceIterator n;
-    for (n = vSoundSourceList_.begin(); n != vSoundSourceList_.end(); ++n)
+    for (n = SoundSourceList_.begin(); n != SoundSourceList_.end(); ++n)
     {
         if ((*n)->id_ == id)
         {

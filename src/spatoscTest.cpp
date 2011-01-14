@@ -36,13 +36,13 @@ int main(int /*argc*/, char ** /*argv*/)
     // Each scene needs to have at least one vListener:
     //vListener *listener = vAudioManager::Instance().getOrCreateListener("listener");
 
-    // A variable number of vSoundSource instances can then be generated. Note
+    // A variable number of SoundSource instances can then be generated. Note
     // that a bus number must be assigned to each source in order to render in
     // D-Mitri. Setting the bus to -1 will effectively disable computation for
     // that node:
-    vSoundSource *foo = vAudioManager::Instance().getOrCreateSoundSource("foo");
+    SoundSource *foo = vAudioManager::Instance().getOrCreateSoundSource("foo");
     foo->setChannelID(1);
-    vSoundSource *bar = vAudioManager::Instance().getOrCreateSoundSource("bar");
+    SoundSource *bar = vAudioManager::Instance().getOrCreateSoundSource("bar");
     bar->setChannelID(2);
 
     // In order to send OSC, some output plugin must be specified. In this case,

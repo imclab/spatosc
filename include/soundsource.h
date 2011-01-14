@@ -18,10 +18,10 @@
  */
 
 /** @file
- * The vSoundSource class.
+ * The SoundSource class.
  */
-#ifndef __vSoundSource_H
-#define __vSoundSource_H
+#ifndef __SoundSource_H
+#define __SoundSource_H
 
 #include "node.h"
 
@@ -32,13 +32,13 @@ namespace spatosc
 /**
  * Sound source node.
  */
-class vSoundSource : /*virtual*/ public Node
+class SoundSource : /*virtual*/ public Node
 {
 
     public:
 
-        vSoundSource(const std::string &nodeID);
-        ~vSoundSource();
+        SoundSource(const std::string &nodeID);
+        ~SoundSource();
 
         void debugPrint();
 

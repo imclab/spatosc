@@ -24,23 +24,23 @@ namespace spatosc
 {
 
 // *****************************************************************************
-vSoundSource::vSoundSource(const std::string &nodeID) : Node(nodeID), channelID_(-1)
+SoundSource::SoundSource(const std::string &nodeID) : Node(nodeID), channelID_(-1)
 {
 }
 
-vSoundSource::~vSoundSource()
+SoundSource::~SoundSource()
 {
     // destructor
 }
 
-void vSoundSource::debugPrint()
+void SoundSource::debugPrint()
 {
     Node::debugPrint();
     std::cout << "    channelID\t" << channelID_ << std::endl;
 }
 
 
-void vSoundSource::setChannelID(int channel)
+void SoundSource::setChannelID(int channel)
 {
     channelID_ = channel;
 }
