@@ -15,7 +15,6 @@ This source file is part of the
 -----------------------------------------------------------------------------
 */
 #include "TutorialApplication.h"
-#include <spatosc/spatosc.h>
 
 TutorialApplication::TutorialApplication()
 {
