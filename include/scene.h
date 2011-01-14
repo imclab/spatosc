@@ -35,7 +35,7 @@ namespace spatosc
 class Listener;
 class Node;
 class SoundSource;
-class vSoundConn;
+class Connection;
 class Translator;
 
 /**
@@ -49,7 +49,7 @@ class Scene
         typedef std::vector<std::tr1::shared_ptr<Listener> >::iterator listenerIterator;
         typedef std::vector<std::tr1::shared_ptr<Node> >::iterator nodeIterator;
         typedef std::vector<std::tr1::shared_ptr<SoundSource> >::iterator sourceIterator;
-        typedef std::vector<std::tr1::shared_ptr<vSoundConn> >::iterator connIterator;
+        typedef std::vector<std::tr1::shared_ptr<Connection> >::iterator connIterator;
 
         /**
          *  Singleton instance reference
@@ -96,13 +96,13 @@ class Scene
         /**
          * Returns all the audio connections in the scene.
          */
-        std::vector<vSoundConn*> getConnections(const std::string &id);
+        std::vector<Connection*> getConnections(const std::string &id);
 
         /**
          * Returns a connection in the scene identified by its identifier.
          */
-        vSoundConn* getConnection(const std::string &src, const std::string &snk);
-        vSoundConn* getConnection(const std::string &id);
+        Connection* getConnection(const std::string &src, const std::string &snk);
+        Connection* getConnection(const std::string &id);
 
         /**
          * Sets the audio filter to add to each audio connection.
@@ -125,17 +125,17 @@ class Scene
         /** 
          * Connects two nodes together, using their identifiers.
          */
-        vSoundConn* connect(const std::string &src, const std::string &snk);
+        Connection* connect(const std::string &src, const std::string &snk);
 
         /** 
          * Connects two nodes together.
          */
-        vSoundConn* connect(Node *src, Node *snk);
+        Connection* connect(Node *src, Node *snk);
 
         /** 
          * Disconnects two nodes.
          */
-        void disconnect(vSoundConn *conn);
+        void disconnect(Connection *conn);
 
         /**
          * Called by a node when it is changed so that the audio manager updates all its sibling nodes.
@@ -145,7 +145,7 @@ class Scene
         /**
          * Called by a connection when it is changed so that the audio manager updates all its sibling nodes.
          */
-        void update(vSoundConn *conn);
+        void update(Connection *conn);
 
     private:
 
@@ -166,7 +166,7 @@ class Scene
 
         std::vector<std::tr1::shared_ptr<Listener> >  ListenerList_;
         std::vector<std::tr1::shared_ptr<SoundSource> > SoundSourceList_;
-        std::vector<std::tr1::shared_ptr<vSoundConn> > vSoundConnList_;
+        std::vector<std::tr1::shared_ptr<Connection> > ConnectionList_;
 };
 };
 

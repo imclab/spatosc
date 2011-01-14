@@ -46,7 +46,7 @@ DmitriTranslator::~DmitriTranslator()
     lo_address_free(destAddr_);
 }
 
-void DmitriTranslator::update(vSoundConn *conn)
+void DmitriTranslator::update(Connection *conn)
 {
     std::string str;
     SoundSource *src = dynamic_cast<SoundSource*>(conn->src_);

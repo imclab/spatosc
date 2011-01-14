@@ -32,7 +32,7 @@
 
 namespace spatosc
 {
-class vSoundConn;
+class Connection;
 
 /**
  * Base class for a node in the scene.
@@ -45,7 +45,7 @@ class Node
         friend class Translator;
         friend class DmitriTranslator;
         friend class Scene;
-        friend class vSoundConn;
+        friend class Connection;
 
     public:
 
@@ -81,8 +81,8 @@ class Node
 
         bool active_;
 
-        std::vector<std::tr1::shared_ptr<vSoundConn> > connectTO_;
-        std::vector<std::tr1::shared_ptr<vSoundConn> > connectFROM_;
+        std::vector<std::tr1::shared_ptr<Connection> > connectTO_;
+        std::vector<std::tr1::shared_ptr<Connection> > connectFROM_;
 
         bool updateFlag_;
 };

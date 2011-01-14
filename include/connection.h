@@ -18,10 +18,10 @@
  */
 
 /** @file
- * The vSoundConn class.
+ * The Connection class.
  */
-#ifndef __vSoundConn_H
-#define __vSoundConn_H
+#ifndef __Connection_H
+#define __Connection_H
 
 #include <string>
 namespace spatosc
@@ -32,7 +32,7 @@ class Node;
 /**
  * Audio connection between two nodes.
  */
-class vSoundConn
+class Connection
 {
 private:
     // TODO: get rid of friend classes, and add proper getter methods:
@@ -43,7 +43,7 @@ private:
 
 public:
     
-    vSoundConn(Node *src, Node *snk);
+    Connection(Node *src, Node *snk);
     /**
      * Update distance, azimuth and elevation values
      */

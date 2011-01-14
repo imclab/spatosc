@@ -29,7 +29,7 @@
 
 namespace spatosc
 {
-class vSoundConn;
+class Connection;
 
 /**
  * Translator for the proprietary D-Mitri system.
@@ -39,7 +39,7 @@ class DmitriTranslator : public Translator
 public:
     DmitriTranslator(const std::string &ip);
     ~DmitriTranslator();
-    void update(vSoundConn *conn);
+    void update(Connection *conn);
     virtual std::string getTypeString() const;
 
 private:

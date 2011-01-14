@@ -26,7 +26,7 @@
 namespace spatosc
 {
 
-class vSoundConn;
+class Connection;
 
 /**
  * Base class for translator which send OSC messages to audio rendering engines.
@@ -50,7 +50,7 @@ class Translator
          * It should then make sure there is some audio rendering going, either by sending interprocess
          * messages to control some audio engine, or by rendering audio by itself.
          */
-        virtual void update(vSoundConn *conn);
+        virtual void update(Connection *conn);
 };
 };
 

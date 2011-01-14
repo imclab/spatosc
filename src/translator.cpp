@@ -31,7 +31,7 @@ std::string Translator::getTypeString() const
     return "CONSOLE";
 }
 
-void Translator::update(vSoundConn *conn)
+void Translator::update(Connection *conn)
 {
     std::cout << "Computation update for " << conn->src_->id_ << " -> " << conn->snk_->id_ << " :" <<std::endl;
 

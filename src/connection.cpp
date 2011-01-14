@@ -25,7 +25,7 @@ namespace spatosc
 
 // *****************************************************************************
 
-vSoundConn::vSoundConn(Node *src, Node *snk) : 
+Connection::Connection(Node *src, Node *snk) : 
     src_(src), 
     snk_(snk), 
     distance_(0.0),
@@ -45,7 +45,7 @@ vSoundConn::vSoundConn(Node *src, Node *snk) :
     update();
 }
 
-void vSoundConn::update()
+void Connection::update()
 {
     if (src_->updateFlag_ or snk_->updateFlag_)
     {

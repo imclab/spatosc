@@ -46,7 +46,7 @@ Scene::Scene ()
 {
     this->ListenerList_.clear();
     this->SoundSourceList_.clear();
-    this->vSoundConnList_.clear();
+    this->ConnectionList_.clear();
 
     // for now, create a basic (CONSOLE) translator:
     translator_.reset(new Translator());
@@ -102,8 +102,8 @@ void Scene::debugPrint ()
         (*n)->debugPrint();
     }
 
-    std::cout << "[Scene]:: " << vSoundConnList_.size() << " connections:" << std::endl;
-    for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
+    std::cout << "[Scene]:: " << ConnectionList_.size() << " connections:" << std::endl;
+    for (c = ConnectionList_.begin(); c != ConnectionList_.end(); ++c)
     {
         std::cout << "  " << (*c)->id_ << ":" << std::endl;
         std::cout << "    distanceEffect:\t" << (*c)->distanceEffect_ << "%" << std::endl;
@@ -222,12 +222,12 @@ Listener* Scene::getListener(const std::string &id)
 // *****************************************************************************
 // return a list of all connections that "directly involve" a node (ie, as the
 // source or the sink):
-std::vector<vSoundConn*> Scene::getConnections(const std::string &id)
+std::vector<Connection*> Scene::getConnections(const std::string &id)
 {
-    std::vector<vSoundConn*> foundConnections;
+    std::vector<Connection*> foundConnections;
     
     connIterator c;
-    for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
+    for (c = ConnectionList_.begin(); c != ConnectionList_.end(); ++c)
     {
         if (((*c)->src_->id_ == id) or ((*c)->snk_->id_ == id))
         {
@@ -238,11 +238,11 @@ std::vector<vSoundConn*> Scene::getConnections(const std::string &id)
 }
 
 // *****************************************************************************
-// return a pointer to a vSoundConn in the vSoundConnList:
-vSoundConn* Scene::getConnection(const std::string &src, const std::string &snk)
+// return a pointer to a Connection in the ConnectionList:
+Connection* Scene::getConnection(const std::string &src, const std::string &snk)
 {
     connIterator c;
-    for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
+    for (c = ConnectionList_.begin(); c != ConnectionList_.end(); ++c)
     {
         if (((*c)->src_->id_ == src) and ((*c)->snk_->id_ == snk))
         {
@@ -252,10 +252,10 @@ vSoundConn* Scene::getConnection(const std::string &src, const std::string &snk)
     return NULL;
 }
 
-vSoundConn* Scene::getConnection(const std::string &id)
+Connection* Scene::getConnection(const std::string &id)
 {
     connIterator c;
-    for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
+    for (c = ConnectionList_.begin(); c != ConnectionList_.end(); ++c)
     {
         if ((*c)->id_ == id)
         {
@@ -283,10 +283,10 @@ void Scene::setConnectFilter(std::string s)
     connectFilter_ = s;
 }
 
-vSoundConn* Scene::connect(const std::string &src, const std::string &snk)
+Connection* Scene::connect(const std::string &src, const std::string &snk)
 {
     // check if exists first:
-    vSoundConn* conn = getConnection(src, snk);
+    Connection* conn = getConnection(src, snk);
     if (!conn)
     {
         // check if both nodes exist
@@ -308,7 +308,7 @@ vSoundConn* Scene::connect(const std::string &src, const std::string &snk)
     return conn;
 }
 
-vSoundConn* Scene::connect(Node *src, Node *snk)
+Connection* Scene::connect(Node *src, Node *snk)
 {
     using std::tr1::shared_ptr;
     // if the node pointers are invalid for some reason, return:
@@ -323,11 +323,11 @@ vSoundConn* Scene::connect(Node *src, Node *snk)
     if (srcRegexStatus == 0 or snkRegexStatus == 0)
     {
         // create connection:
-        shared_ptr<vSoundConn> conn(new vSoundConn(src, snk));
+        shared_ptr<Connection> conn(new Connection(src, snk));
 
         // register the connection with both the Scene and the
         // sink node (for backwards connectivity computation):
-        vSoundConnList_.push_back(conn);
+        ConnectionList_.push_back(conn);
         src->connectTO_.push_back(conn);
         snk->connectFROM_.push_back(conn);
 
@@ -339,7 +339,7 @@ vSoundConn* Scene::connect(Node *src, Node *snk)
     else return NULL;
 }
 
-void Scene::disconnect(vSoundConn * /*conn*/)
+void Scene::disconnect(Connection * /*conn*/)
 {
     std::cout << "Scene::disconnect NOT IMPLEMENTED YET" << std::endl;
 }
@@ -357,7 +357,7 @@ void Scene::update(Node *n)
     }
 }
 
-void Scene::update(vSoundConn *conn)
+void Scene::update(Connection *conn)
 {
     // If one of the connected nodes has been deactivated, then there is no need
     // to compute anything. Enable the mute (and send the status change if this
