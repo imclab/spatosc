@@ -86,7 +86,7 @@ class Node
 
         bool updateFlag_;
 };
-};
 
+} // end namespace spatosc
 
 #endif

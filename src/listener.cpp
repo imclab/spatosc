@@ -29,11 +29,6 @@ Listener::Listener(const std::string &nodeID) : Node(nodeID)
 {
 }
 
-Listener::~Listener()
-{
-    // destructor
-}
-
 void Listener::debugPrint()
 {
     Node::debugPrint();
@@ -49,5 +44,5 @@ void Listener::debugPrint()
     std::cout << std::endl;
 }
 
-};
+} // end namespace spatosc
 

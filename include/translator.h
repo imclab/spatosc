@@ -52,6 +52,7 @@ class Translator
          */
         virtual void update(Connection *conn);
 };
-};
+
+} // end namespace spatosc
 
 #endif

@@ -47,6 +47,7 @@ private:
     lo_address destAddr_;
     lo_server lo_serv_;
 };
-};
+
+} // end namespace spatosc
 
 #endif

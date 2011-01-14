@@ -57,5 +57,6 @@ namespace OSCutil
 
     bool wildcardMatch(const char *pat, const char *str);
 };
-};
+
+} // end namespace spatosc
 #endif

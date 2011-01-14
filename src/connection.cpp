@@ -70,5 +70,4 @@ void Connection::update()
     }
 }
 
-};
-
+} // end namespace spatosc

@@ -162,6 +162,7 @@ class Scene
         // assign the singleton Scene to itself:
         Scene& operator=(Scene const&);
 
+        // TODO: Fri Jan 14 11:14:34 EST 2011: have mulitple translators
         std::tr1::shared_ptr<Translator> translator_;
 
         bool autoConnect_;
@@ -173,6 +174,7 @@ class Scene
         std::vector<std::tr1::shared_ptr<SoundSource> > SoundSourceList_;
         std::vector<std::tr1::shared_ptr<Connection> > ConnectionList_;
 };
-};
+
+} // end namespace spatosc
 
 #endif

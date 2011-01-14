@@ -435,6 +435,6 @@ Vector3 sphericalToCartesian(Vector3 aed);
 Vector3 rotateAroundAxis(Vector3 v, Vector3 axis, double angle);
 Matrix3 ComputeHomography(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4);
 
-};
+} // end namespace spatosc
 
 #endif

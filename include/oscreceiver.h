@@ -43,7 +43,7 @@ class OscReceiver
         static void error(int num, const char *msg, const char *path);
 };
 
-}
+} // end namespace spatosc
 
 #endif // _OSC_RECEIVER_H_
 

@@ -62,5 +62,5 @@ void Node::setRotation(double pitch, double roll, double yaw)
     Scene::Instance().update(this);
 }
 
-};
+} // end namespace spatosc
 

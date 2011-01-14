@@ -74,5 +74,5 @@ std::string DmitriTranslator::getTypeString() const
     return "DMITIRI";
 }
 
-};
+} // end namespace spatosc
 

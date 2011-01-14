@@ -72,6 +72,6 @@ protected:
     float diffractionEffect_;
 };
 
-};
+} // end namespace spatosc
 
 #endif

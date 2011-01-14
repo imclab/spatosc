@@ -274,6 +274,7 @@ void Scene::setConnectFilter(std::string s)
     if (s=="*")
         s = ".*";
 
+    // TODO: Fri Jan 14 11:14:11 EST 2011: connectRegex_ should belong to translator
     if (regcomp(&connectRegex_, s.c_str(), REG_EXTENDED|REG_NOSUB) != 0)
     {
         std::cout << "Scene error: bad regex pattern passed to setConnectFilter(): " << s << std::endl;
@@ -372,5 +373,5 @@ void Scene::update(Connection *conn)
     }
 }
 
-};
+} // end namespace spatosc
 

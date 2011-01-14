@@ -64,4 +64,4 @@ std::string OscReceiver::toString() const
     return "port:" + port_;
 }
 
-}
+} // end namespace spatosc

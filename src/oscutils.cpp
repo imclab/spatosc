@@ -202,4 +202,4 @@ bool OSCutil::wildcardMatch(const char *pat, const char *str)
     }
 }
 
-};
+} // end namespace spatosc

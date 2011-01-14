@@ -36,11 +36,10 @@ class Listener : public Node
 {
     public:
         Listener(const std::string &nodeID);
-        ~Listener();
-
         void debugPrint();
 };
-};
+
+} // end namespace spatosc
 
 #endif
 

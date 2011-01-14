@@ -51,6 +51,6 @@ class SoundSource : /*virtual*/ public Node
 
 };
 
-};
+} // end namespace spatosc
 
 #endif

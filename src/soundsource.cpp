@@ -45,4 +45,4 @@ void SoundSource::setChannelID(int channel)
     channelID_ = channel;
 }
 
-};
+} // end namespace spatosc

@@ -57,5 +57,5 @@ void Translator::update(Connection *conn)
     std::cout << "  gain:\t" << conn->gain() << " dB" << std::endl;
 }
 
-};
+} // end namespace spatosc
 

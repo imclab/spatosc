@@ -286,5 +286,5 @@ Matrix3 ComputeHomography(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4)
     return result;
 }
 
-};
+} // end namespace spatosc
 
