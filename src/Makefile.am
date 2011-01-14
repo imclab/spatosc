@@ -5,6 +5,7 @@ lib_LTLIBRARIES = libspatosc.la
 libspatosc_la_SOURCES = \
     oscutils.cpp \
     oscreceiver.cpp \
+    oscsender.cpp \
 	scene.cpp \
     node.cpp \
     listener.cpp \

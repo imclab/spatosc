@@ -17,7 +17,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
+/** @file
  * Single public header file for spatosc.
  * 
  * Includes the other header files.
@@ -27,6 +27,7 @@
 
 #include "oscutils.h"
 #include "oscreceiver.h"
+#include "oscsender.h"
 #include "scene.h"
 #include "node.h"
 #include "listener.h"
