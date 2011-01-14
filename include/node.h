@@ -44,7 +44,7 @@ class Node
 
         friend class Translator;
         friend class DmitriTranslator;
-        friend class vAudioManager;
+        friend class Scene;
         friend class vSoundConn;
 
     public:

@@ -52,14 +52,14 @@ void Node::setPosition(double x, double y, double z)
 {
     pos_ = Vector3(x,y,z);
     updateFlag_ = true;
-    vAudioManager::Instance().update(this);
+    Scene::Instance().update(this);
 }
 
 void Node::setRotation(double pitch, double roll, double yaw)
 {
     rot_ = Vector3(pitch, roll, yaw);
     updateFlag_ = true;
-    vAudioManager::Instance().update(this);
+    Scene::Instance().update(this);
 }
 
 };

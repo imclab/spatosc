@@ -42,7 +42,7 @@ static bool nodeSortFunction (Node *n1, Node *n2)
 
 // *****************************************************************************
 // constructor
-vAudioManager::vAudioManager ()
+Scene::Scene ()
 {
     this->ListenerList_.clear();
     this->SoundSourceList_.clear();
@@ -56,19 +56,19 @@ vAudioManager::vAudioManager ()
 
 // *****************************************************************************
 // destructor
-vAudioManager::~vAudioManager()
+Scene::~Scene()
 {
 }
 
-vAudioManager& vAudioManager::Instance()
+Scene& Scene::Instance()
 {
     // Meyers' singleton design pattern
-    static vAudioManager s;
+    static Scene s;
     return s;
 }
 
 // *****************************************************************************
-void vAudioManager::setTranslator(const std::tr1::shared_ptr<Translator> &p)
+void Scene::setTranslator(const std::tr1::shared_ptr<Translator> &p)
 {
     if (translator_ == p)
         return;
@@ -77,32 +77,32 @@ void vAudioManager::setTranslator(const std::tr1::shared_ptr<Translator> &p)
 }
 
 // *****************************************************************************
-void vAudioManager::debugPrint ()
+void Scene::debugPrint ()
 {
     listenerIterator L;
     sourceIterator n;
     connIterator c;
 
     std::cout << "\n=====================================================" << std::endl;
-    std::cout << "[vAudioManager]:: connectFilter = " << connectFilter_ << std::endl;
+    std::cout << "[Scene]:: connectFilter = " << connectFilter_ << std::endl;
 
     if (translator_)
-        std::cout << "[vAudioManager]:: using " << translator_->getTypeString() << " translator" << std::endl;
-    else std::cout << "[vAudioManager]:: NO translator specified" << std::endl;
+        std::cout << "[Scene]:: using " << translator_->getTypeString() << " translator" << std::endl;
+    else std::cout << "[Scene]:: NO translator specified" << std::endl;
 
-    std::cout << "[vAudioManager]:: " << ListenerList_.size() << " listeners:" << std::endl;
+    std::cout << "[Scene]:: " << ListenerList_.size() << " listeners:" << std::endl;
     for (L = ListenerList_.begin(); L != ListenerList_.end(); ++L)
     {
         (*L)->debugPrint();
     }
 
-    std::cout << "[vAudioManager]:: " << SoundSourceList_.size() << " sources:" << std::endl;
+    std::cout << "[Scene]:: " << SoundSourceList_.size() << " sources:" << std::endl;
     for (n = SoundSourceList_.begin(); n != SoundSourceList_.end(); ++n)
     {
         (*n)->debugPrint();
     }
 
-    std::cout << "[vAudioManager]:: " << vSoundConnList_.size() << " connections:" << std::endl;
+    std::cout << "[Scene]:: " << vSoundConnList_.size() << " connections:" << std::endl;
     for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
     {
         std::cout << "  " << (*c)->id_ << ":" << std::endl;
@@ -115,7 +115,7 @@ void vAudioManager::debugPrint ()
 
 
 // *****************************************************************************
-SoundSource* vAudioManager::getOrCreateSoundSource(const std::string &id)
+SoundSource* Scene::getOrCreateSoundSource(const std::string &id)
 {
     using std::tr1::shared_ptr;
     // check if it already exists:
@@ -144,7 +144,7 @@ SoundSource* vAudioManager::getOrCreateSoundSource(const std::string &id)
 }
 
 // *****************************************************************************
-Listener* vAudioManager::getOrCreateListener(const std::string &id)
+Listener* Scene::getOrCreateListener(const std::string &id)
 {
     using std::tr1::shared_ptr;
     // check if it already exists:
@@ -174,7 +174,7 @@ Listener* vAudioManager::getOrCreateListener(const std::string &id)
 
 // *****************************************************************************
 // return a Node reference by looking through all storage vectors:
-Node* vAudioManager::getNode(const std::string &id)
+Node* Scene::getNode(const std::string &id)
 {
     Node *n = 0;
 
@@ -191,7 +191,7 @@ Node* vAudioManager::getNode(const std::string &id)
 
 // *****************************************************************************
 // return a pointer to a vSoundNode in the SoundSourceList, given an id:
-SoundSource* vAudioManager::getSoundSource(const std::string &id)
+SoundSource* Scene::getSoundSource(const std::string &id)
 {
     sourceIterator n;
     for (n = SoundSourceList_.begin(); n != SoundSourceList_.end(); ++n)
@@ -206,7 +206,7 @@ SoundSource* vAudioManager::getSoundSource(const std::string &id)
 
 // *****************************************************************************
 // return a pointer to a Listener in the ListenerList, given an id:
-Listener* vAudioManager::getListener(const std::string &id)
+Listener* Scene::getListener(const std::string &id)
 {
     listenerIterator L;
     for (L = ListenerList_.begin(); L != ListenerList_.end(); ++L)
@@ -222,7 +222,7 @@ Listener* vAudioManager::getListener(const std::string &id)
 // *****************************************************************************
 // return a list of all connections that "directly involve" a node (ie, as the
 // source or the sink):
-std::vector<vSoundConn*> vAudioManager::getConnections(const std::string &id)
+std::vector<vSoundConn*> Scene::getConnections(const std::string &id)
 {
     std::vector<vSoundConn*> foundConnections;
     
@@ -239,7 +239,7 @@ std::vector<vSoundConn*> vAudioManager::getConnections(const std::string &id)
 
 // *****************************************************************************
 // return a pointer to a vSoundConn in the vSoundConnList:
-vSoundConn* vAudioManager::getConnection(const std::string &src, const std::string &snk)
+vSoundConn* Scene::getConnection(const std::string &src, const std::string &snk)
 {
     connIterator c;
     for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
@@ -252,7 +252,7 @@ vSoundConn* vAudioManager::getConnection(const std::string &src, const std::stri
     return NULL;
 }
 
-vSoundConn* vAudioManager::getConnection(const std::string &id)
+vSoundConn* Scene::getConnection(const std::string &id)
 {
     connIterator c;
     for (c = vSoundConnList_.begin(); c != vSoundConnList_.end(); ++c)
@@ -267,7 +267,7 @@ vSoundConn* vAudioManager::getConnection(const std::string &id)
 
 // *****************************************************************************
 
-void vAudioManager::setConnectFilter(std::string s)
+void Scene::setConnectFilter(std::string s)
 {
     // we like specifying just one asterisk ( * ), so we need to convert to a
     // regular expression:
@@ -276,14 +276,14 @@ void vAudioManager::setConnectFilter(std::string s)
 
     if (regcomp(&connectRegex_, s.c_str(), REG_EXTENDED|REG_NOSUB) != 0)
     {
-        std::cout << "vAudioManager error: bad regex pattern passed to setConnectFilter(): " << s << std::endl;
+        std::cout << "Scene error: bad regex pattern passed to setConnectFilter(): " << s << std::endl;
         return;
     }
 
     connectFilter_ = s;
 }
 
-vSoundConn* vAudioManager::connect(const std::string &src, const std::string &snk)
+vSoundConn* Scene::connect(const std::string &src, const std::string &snk)
 {
     // check if exists first:
     vSoundConn* conn = getConnection(src, snk);
@@ -308,7 +308,7 @@ vSoundConn* vAudioManager::connect(const std::string &src, const std::string &sn
     return conn;
 }
 
-vSoundConn* vAudioManager::connect(Node *src, Node *snk)
+vSoundConn* Scene::connect(Node *src, Node *snk)
 {
     using std::tr1::shared_ptr;
     // if the node pointers are invalid for some reason, return:
@@ -325,7 +325,7 @@ vSoundConn* vAudioManager::connect(Node *src, Node *snk)
         // create connection:
         shared_ptr<vSoundConn> conn(new vSoundConn(src, snk));
 
-        // register the connection with both the vAudioManager and the
+        // register the connection with both the Scene and the
         // sink node (for backwards connectivity computation):
         vSoundConnList_.push_back(conn);
         src->connectTO_.push_back(conn);
@@ -339,12 +339,12 @@ vSoundConn* vAudioManager::connect(Node *src, Node *snk)
     else return NULL;
 }
 
-void vAudioManager::disconnect(vSoundConn * /*conn*/)
+void Scene::disconnect(vSoundConn * /*conn*/)
 {
-    std::cout << "vAudioManager::disconnect NOT IMPLEMENTED YET" << std::endl;
+    std::cout << "Scene::disconnect NOT IMPLEMENTED YET" << std::endl;
 }
 
-void vAudioManager::update(Node *n)
+void Scene::update(Node *n)
 {
     connIterator c;
     for (c = n->connectTO_.begin(); c != n->connectTO_.end(); ++c)
@@ -357,7 +357,7 @@ void vAudioManager::update(Node *n)
     }
 }
 
-void vAudioManager::update(vSoundConn *conn)
+void Scene::update(vSoundConn *conn)
 {
     // If one of the connected nodes has been deactivated, then there is no need
     // to compute anything. Enable the mute (and send the status change if this

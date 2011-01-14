@@ -18,11 +18,11 @@
  */
 
 /** @file
- * The vAudioManager class.
+ * The Scene class.
  */
 
-#ifndef __vAudioManager_H
-#define __vAudioManager_H
+#ifndef __Scene_H
+#define __Scene_H
 
 #include <regex.h>
 #include <string>
@@ -42,7 +42,7 @@ class Translator;
  * The Audio Manager manages the nodes and their connections.
  * It also manages the plugin, that is a renderer.
  */
-class vAudioManager
+class Scene
 {
     public:
         // iterators:
@@ -54,7 +54,7 @@ class vAudioManager
         /**
          *  Singleton instance reference
          */
-        static vAudioManager& Instance();
+        static Scene& Instance();
 
         /**
          * Prints debug info to the console.
@@ -150,12 +150,12 @@ class vAudioManager
     private:
 
         // singleton constructors & desctructor (hidden):
-        vAudioManager();
-        ~vAudioManager();
-        vAudioManager(vAudioManager const&); // copy constructor
+        Scene();
+        ~Scene();
+        Scene(Scene const&); // copy constructor
         // hide the assignment operator, otherwise it would be possible to
-        // assign the singleton vAudioManager to itself:
-        vAudioManager& operator=(vAudioManager const&);
+        // assign the singleton Scene to itself:
+        Scene& operator=(Scene const&);
 
         std::tr1::shared_ptr<Translator> translator_;
 

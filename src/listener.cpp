@@ -38,7 +38,7 @@ void Listener::debugPrint()
 {
     Node::debugPrint();
 
-    vAudioManager::connIterator c;
+    Scene::connIterator c;
     std::cout << "    listen to:\t";
     for (c = connectFROM_.begin(); c != connectFROM_.end(); ++c)
     {
