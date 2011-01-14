@@ -1,4 +1,4 @@
-DEPS=clutter-1.0 spatosc openal freealut liblo
+DEPS=clutter-1.0 spatosc-0.1 openal freealut liblo
 CFLAGS=`pkg-config --cflags $(DEPS)`
 LIBS=`pkg-config --libs $(DEPS)`
 
