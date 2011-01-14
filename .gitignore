@@ -31,3 +31,5 @@ spatosc.pc
 examples/clutterspat/clutterspat
 examples/openalspat/openalspat
 *.pdf
+*.swp
+include/version.h
