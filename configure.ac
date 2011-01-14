@@ -74,6 +74,7 @@ AC_CONFIG_FILES([
         spatosc.pc 
         include/version.h
         src/Makefile 
+        tests/Makefile
         doxyfile 
         ])
 

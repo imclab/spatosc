@@ -31,13 +31,3 @@ libspatosc_la_include_HEADERS = \
 
 EXTRA_DIST=$(top_srcdir)/include/config.h
 
-# Build example programs:
-noinst_PROGRAMS = spatoscTest check_distance
-spatoscTest_SOURCES = spatoscTest.cpp
-spatoscTest_LDADD = libspatosc.la
-
-check_distance_SOURCES = check_distance.cpp
-check_distance_LDADD = libspatosc.la
-
-TESTS = $(noinst_PROGRAMS)
-
