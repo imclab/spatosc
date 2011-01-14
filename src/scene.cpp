@@ -44,7 +44,7 @@ static bool nodeSortFunction (Node *n1, Node *n2)
 // constructor
 vAudioManager::vAudioManager ()
 {
-    this->vListenerList_.clear();
+    this->ListenerList_.clear();
     this->SoundSourceList_.clear();
     this->vSoundConnList_.clear();
 
@@ -90,8 +90,8 @@ void vAudioManager::debugPrint ()
         std::cout << "[vAudioManager]:: using " << translator_->getTypeString() << " translator" << std::endl;
     else std::cout << "[vAudioManager]:: NO translator specified" << std::endl;
 
-    std::cout << "[vAudioManager]:: " << vListenerList_.size() << " listeners:" << std::endl;
-    for (L = vListenerList_.begin(); L != vListenerList_.end(); ++L)
+    std::cout << "[vAudioManager]:: " << ListenerList_.size() << " listeners:" << std::endl;
+    for (L = ListenerList_.begin(); L != ListenerList_.end(); ++L)
     {
         (*L)->debugPrint();
     }
@@ -133,7 +133,7 @@ SoundSource* vAudioManager::getOrCreateSoundSource(const std::string &id)
         if (autoConnect_)
         {
             listenerIterator L;
-            for (L = vListenerList_.begin(); L != vListenerList_.end(); ++L)
+            for (L = ListenerList_.begin(); L != ListenerList_.end(); ++L)
             {
                 connect(n, L->get());
             }
@@ -144,20 +144,20 @@ SoundSource* vAudioManager::getOrCreateSoundSource(const std::string &id)
 }
 
 // *****************************************************************************
-vListener* vAudioManager::getOrCreateListener(const std::string &id)
+Listener* vAudioManager::getOrCreateListener(const std::string &id)
 {
     using std::tr1::shared_ptr;
     // check if it already exists:
-    vListener *L = getListener(id);
+    Listener *L = getListener(id);
 
     if (!L)
     {
         // if not, create a new vSoundNode:
-        shared_ptr<vListener> tmp(new vListener(id));
+        shared_ptr<Listener> tmp(new Listener(id));
         L = tmp.get();
 
-        // add it to the vListenerList:
-        vListenerList_.push_back(tmp);
+        // add it to the ListenerList:
+        ListenerList_.push_back(tmp);
 
         if (autoConnect_)
         {
@@ -205,11 +205,11 @@ SoundSource* vAudioManager::getSoundSource(const std::string &id)
 }
 
 // *****************************************************************************
-// return a pointer to a vListener in the vListenerList, given an id:
-vListener* vAudioManager::getListener(const std::string &id)
+// return a pointer to a Listener in the ListenerList, given an id:
+Listener* vAudioManager::getListener(const std::string &id)
 {
     listenerIterator L;
-    for (L = vListenerList_.begin(); L != vListenerList_.end(); ++L)
+    for (L = ListenerList_.begin(); L != ListenerList_.end(); ++L)
     {
         if ((*L)->id_ == id)
         {
@@ -291,7 +291,7 @@ vSoundConn* vAudioManager::connect(const std::string &src, const std::string &sn
     {
         // check if both nodes exist
         Node *srcNode = getNode(src);
-        vListener *listener = getListener(snk);
+        Listener *listener = getListener(snk);
         Node *snkNode;
 
         bool isNormalConnection = true;

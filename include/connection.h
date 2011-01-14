@@ -39,7 +39,7 @@ private:
     friend class vAudioManager;
     friend class Translator;
     friend class DmitriTranslator;
-    friend class vListener;
+    friend class Listener;
 
 public:
     

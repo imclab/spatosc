@@ -33,8 +33,8 @@ int main(int /*argc*/, char ** /*argv*/)
     // sources, and provides methods to get and create instances of these items.
 
 
-    // Each scene needs to have at least one vListener:
-    //vListener *listener = vAudioManager::Instance().getOrCreateListener("listener");
+    // Each scene needs to have at least one Listener:
+    //Listener *listener = vAudioManager::Instance().getOrCreateListener("listener");
 
     // A variable number of SoundSource instances can then be generated. Note
     // that a bus number must be assigned to each source in order to render in

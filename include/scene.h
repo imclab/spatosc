@@ -32,7 +32,7 @@
 namespace spatosc
 {
 // forward declarations
-class vListener;
+class Listener;
 class Node;
 class SoundSource;
 class vSoundConn;
@@ -46,7 +46,7 @@ class vAudioManager
 {
     public:
         // iterators:
-        typedef std::vector<std::tr1::shared_ptr<vListener> >::iterator listenerIterator;
+        typedef std::vector<std::tr1::shared_ptr<Listener> >::iterator listenerIterator;
         typedef std::vector<std::tr1::shared_ptr<Node> >::iterator nodeIterator;
         typedef std::vector<std::tr1::shared_ptr<SoundSource> >::iterator sourceIterator;
         typedef std::vector<std::tr1::shared_ptr<vSoundConn> >::iterator connIterator;
@@ -76,7 +76,7 @@ class vAudioManager
         /**
          * Returns a node in the scene identified by its identifier.
          */
-        vListener* getOrCreateListener(const std::string &id);
+        Listener* getOrCreateListener(const std::string &id);
 
         /**
          * Returns a node in the scene identified by its identifier.
@@ -91,7 +91,7 @@ class vAudioManager
         /**
          * Returns a listener node in the scene identified by its identifier.
          */
-        vListener* getListener(const std::string &id);
+        Listener* getListener(const std::string &id);
 
         /**
          * Returns all the audio connections in the scene.
@@ -164,7 +164,7 @@ class vAudioManager
         std::string connectFilter_;
         regex_t connectRegex_;
 
-        std::vector<std::tr1::shared_ptr<vListener> >  vListenerList_;
+        std::vector<std::tr1::shared_ptr<Listener> >  ListenerList_;
         std::vector<std::tr1::shared_ptr<SoundSource> > SoundSourceList_;
         std::vector<std::tr1::shared_ptr<vSoundConn> > vSoundConnList_;
 };

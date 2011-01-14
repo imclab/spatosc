@@ -25,16 +25,16 @@ namespace spatosc
 {
 
 // *****************************************************************************
-vListener::vListener(const std::string &nodeID) : Node(nodeID)
+Listener::Listener(const std::string &nodeID) : Node(nodeID)
 {
 }
 
-vListener::~vListener()
+Listener::~Listener()
 {
     // destructor
 }
 
-void vListener::debugPrint()
+void Listener::debugPrint()
 {
     Node::debugPrint();
 

@@ -18,10 +18,10 @@
  */
 
 /** @file
- * The vListener class.
+ * The Listener class.
  */
-#ifndef __vListener_H
-#define __vListener_H
+#ifndef __Listener_H
+#define __Listener_H
 
 #include "node.h"
 
@@ -32,11 +32,11 @@ namespace spatosc
  * 
  * The listener represents a person that listens to an audio scene. There is usually only one listener in a scene.
  */
-class vListener : public Node
+class Listener : public Node
 {
     public:
-        vListener(const std::string &nodeID);
-        ~vListener();
+        Listener(const std::string &nodeID);
+        ~Listener();
 
         void debugPrint();
 };
