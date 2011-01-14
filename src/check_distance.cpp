@@ -17,6 +17,9 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/** @file
+ * This test checks that distances between two nodes are OK.
+ */
 #include <iostream>
 #include <tr1/memory>
 #include "spatosc.h"
