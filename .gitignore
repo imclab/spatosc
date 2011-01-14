@@ -16,8 +16,8 @@ install-sh
 libtool
 ltmain.sh
 missing
-src/.deps
-src/.libs
+*.deps
+*.libs
 src/spatoscTest
 src/check_distance
 *.lo
