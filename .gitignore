@@ -26,7 +26,7 @@ src/check_distance
 *~
 html/
 doxyfile
-spatosc.pc
+spatosc*.pc
 !examples/*/Makefile
 *.pdf
 *.gz

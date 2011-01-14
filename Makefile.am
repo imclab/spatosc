@@ -10,6 +10,8 @@ DISTCLEANFILES = spatosc.pc
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = spatosc.pc
 
+dist_noinst_SCRIPTS = autogen.sh
+
 html-local: doxygen
 doxygen:
 	@if [ -z `which doxygen` ]; then echo "No Doxygen!"; else doxygen; fi
