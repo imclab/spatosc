@@ -34,7 +34,7 @@ DmitriTranslator::DmitriTranslator(const std::string &ip) : Translator()
 {
     destAddr_ = lo_address_new(ip.c_str(), "18033");
     lo_serv_ = lo_server_new("18099", NULL);
-
+    // TODO: #ifdef ENABLE_DEBUG
     std::cout << "Sending to D-Mitri on: " << lo_address_get_url(destAddr_) << std::endl;
     std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
 }
