@@ -26,3 +26,5 @@ spatoscTest_LDADD = libspatosc.la
 check_distance_SOURCES = check_distance.cpp
 check_distance_LDADD = libspatosc.la
 
+TESTS = $(noinst_PROGRAMS)
+
