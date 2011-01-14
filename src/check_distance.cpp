@@ -32,14 +32,14 @@ int main(int /*argc*/, char ** /*argv*/)
     if (VERBOSE)
         std::cout << std::endl << "Running..." << std::endl;
     Scene& scene = Scene::Instance();
+    
+    shared_ptr<DmitriTranslator> translator(new DmitriTranslator("127.0.0.1"));
+    scene.setTranslator(translator);
 
     SoundSource *sound_a = scene.getOrCreateSoundSource("sound_a");
     sound_a->setChannelID(1);
 
     Listener *listener = scene.getOrCreateListener("listener");
-
-    shared_ptr<DmitriTranslator> translator(new DmitriTranslator("127.0.0.1"));
-    scene.setTranslator(translator);
 
     if (VERBOSE)
         scene.debugPrint();
