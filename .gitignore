@@ -43,7 +43,8 @@ examples/ogrespat/Ogre.log
 examples/ogrespat/OgreApp
 examples/ogrespat/config.h
 examples/ogrespat/config.h.in
-examples/ogrespat/ogre.cfg
+examples/ogrespat/COPYING
+examples/ogrespat/INSTALL
 examples/ogrespat/stamp-h1
 examples/clutterspat/clutterspat
 examples/openalspat/openalspat
