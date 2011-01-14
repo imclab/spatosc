@@ -35,14 +35,14 @@ class Translator
 {
     public:
         /**
-         * Returns the name of this vPlugin.
+         * Returns the name of this Translator.
          * 
-         * Each child of translator.has a unique string identifier.
+         * Each child of Translator has a unique string identifier.
          */
         virtual std::string getTypeString() const;
 
         /**
-         * The main work of the plugin is done by the update() method, which is
+         * The main work of the translator is done by the update() method, which is
          * called whenever there is a change to some parameters within a connection.
          * 
          * For each pair of nodes in the scene that are connected, it might calculate the 
