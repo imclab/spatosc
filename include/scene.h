@@ -39,8 +39,8 @@ class Connection;
 class Translator;
 
 /**
- * The Audio Manager manages the nodes and their connections.
- * It also manages the plugin, that is a renderer.
+ * Manages the nodes and their connections.
+ * It also manages the translator, who allow to render a scene with some audio engine.
  */
 class Scene
 {
