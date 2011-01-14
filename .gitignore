@@ -19,6 +19,7 @@ missing
 src/.deps
 src/.libs
 src/spatoscTest
+src/check_distance
 *.lo
 *.la
 *.o
