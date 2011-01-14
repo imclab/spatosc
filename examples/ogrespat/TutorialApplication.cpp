@@ -35,13 +35,15 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent &arg)
             std::cout << "left\n";
             currentPosition.x -= 5;
             headNode_->setPosition(currentPosition);
-            soundSource_->setPosition(currentPosition.x, currentPosition.y, currentPosition.z);
+            soundSource_->setPosition(currentPosition.x, 
+                    currentPosition.y, currentPosition.z);
             break;
         case OIS::KC_RIGHT:
             std::cout << "right\n";
             currentPosition.x += 5;
             headNode_->setPosition(currentPosition);
-            soundSource_->setPosition(currentPosition.x, currentPosition.y, currentPosition.z);
+            soundSource_->setPosition(currentPosition.x, 
+                    currentPosition.y, currentPosition.z);
             break;
         case OIS::KC_UP:
             std::cout << "up\n";

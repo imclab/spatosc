@@ -47,9 +47,18 @@ bool BaseApplication::configure()
     // Show the configuration dialog and initialise the system
     // You can skip this and use root.restoreConfig() to load configuration
     // settings if you were sure there are valid ones saved in ogre.cfg
+#if 0
     if(mRoot->showConfigDialog())
     {
         // If returned true, user clicked OK so initialise
+        // Here we choose to let the system create a default rendering window by passing 'true'
+        mWindow = mRoot->initialise(true, "TutorialApplication Render Window");
+
+        return true;
+    }
+#endif
+    if(mRoot->restoreConfig())
+    {
         // Here we choose to let the system create a default rendering window by passing 'true'
         mWindow = mRoot->initialise(true, "TutorialApplication Render Window");
 
@@ -266,7 +275,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
     {
         mWindow->writeContentsToTimestampedFile("screenshot", ".jpg");
     }
-    else if (arg.key == OIS::KC_ESCAPE)
+    else if (arg.key == OIS::KC_ESCAPE or arg.key == OIS::KC_Q)
     {
         mShutDown = true;
     }
