@@ -3,9 +3,10 @@ Spatosc TODO
 
  * remove non-public functions and typedefs from include/*.h
  * remove friend classes in vBaseNode
- * rename all files so that they are in small caps only
  * find from where vMath.h comes from. Maybe refactor it?
  * data member should have a trailing underscore in their name
  * use SPATOSC_API_VERSION in spatosc.pc.in and src/Makefile.am
  * move the example to examples/
+ * move the tests to tests/
+ * add and --enable-debug flag
 
