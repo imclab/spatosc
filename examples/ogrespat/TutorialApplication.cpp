@@ -75,6 +75,11 @@ void TutorialApplication::createScene()
 
     headNode_ = mSceneMgr->getRootSceneNode()->createChildSceneNode();
     headNode_->attachObject(ogreHead);
+    // FIXME: Fri Jan 14 20:00:09 EST 2011: should adjust mesh instead of 
+    // scaling and rotating here
+    headNode_->scale(20.0, 20.0, 20.0);
+    Ogre::Radian pitch(M_PI * 0.5);
+    headNode_->pitch(pitch);
 
     // set ambient light
     mSceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
