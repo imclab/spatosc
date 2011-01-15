@@ -4,7 +4,7 @@
  * This example is in the public domain.
  */
 
-#include <spatosc/spatosc.h>
+#include <spatosc.h>
 #include <ode/ode.h>
 #include <ctime>
 #include <string>

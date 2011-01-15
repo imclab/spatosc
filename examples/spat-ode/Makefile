@@ -1,4 +1,4 @@
-DEPS=spatosc liblo ode
+DEPS=spatosc-0.1 liblo ode
 CFLAGS=`pkg-config --cflags $(DEPS)`
 LIBS=`pkg-config --libs $(DEPS)`
 
