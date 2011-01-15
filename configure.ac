@@ -1,8 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT(spatosc, [0.1.0], [http://github.com/mikewoz/spatosc])
-# TODO: AC_DEFINE_UNQUOTED(SPATOSC_API_VERSION, "0.1", "The version of the API. Should be major.minor and not change until not backward-compatible")
+AC_INIT(spatosc, [0.1.0], [http://github.com/mikewoz/spatosc/issues], [spatosc], [http://github.com/mikewoz/spatosc])
 AC_MSG_NOTICE([Configuring spatosc])
 AM_INIT_AUTOMAKE([subdir-objects -Wno-portability])
 AC_CONFIG_HEADERS([include/config.h])
@@ -13,9 +12,9 @@ AC_CANONICAL_HOST # fills $host variable
 # For information on how to properly maintain the library version information,
 # refer to the libtool manual, section "Updating library version information":
 # http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
+# The version of the API. Should be major.minor and not change until not backward-compatible
 AC_SUBST([SPATOSC_SO_VERSION], [0:1:0])
 AC_SUBST([SPATOSC_API_VERSION], [0.1])
-
 
 # Special cases
 case "$host" in *-darwin* | *-macos10*)
