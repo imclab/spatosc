@@ -16,8 +16,8 @@ install-sh
 libtool
 ltmain.sh
 missing
-src/.deps
-src/.libs
+*.deps
+*.libs
 src/spatoscTest
 src/check_distance
 *.lo
@@ -26,10 +26,26 @@ src/check_distance
 *~
 html/
 doxyfile
-spatosc.pc
+spatosc*.pc
 !examples/*/Makefile
-examples/clutterspat/clutterspat
-examples/openalspat/openalspat
 *.pdf
+*.gz
 *.swp
 include/version.h
+
+###### TESTS: #######
+tests/check_*
+!tests/check_*.cpp
+
+####### Examples: #######
+examples/ogrespat/Makefile
+examples/ogrespat/Ogre.log
+examples/ogrespat/OgreApp
+examples/ogrespat/config.h
+examples/ogrespat/config.h.in
+examples/ogrespat/COPYING
+examples/ogrespat/INSTALL
+examples/ogrespat/stamp-h1
+examples/clutterspat/clutterspat
+examples/openalspat/openalspat
+

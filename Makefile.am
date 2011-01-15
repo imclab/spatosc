@@ -2,13 +2,15 @@
 AUTOMAKE_OPTIONS = foreign
 # ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = src
+SUBDIRS = src tests
 
 EXTRA_DIST = README LICENSE doxyfile.in spatosc.pc.in autogen.sh NEWS
 DISTCLEANFILES = spatosc.pc
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = spatosc.pc
+pkgconfig_DATA = spatosc-@SPATOSC_API_VERSION@.pc
+
+dist_noinst_SCRIPTS = autogen.sh
 
 html-local: doxygen
 doxygen:

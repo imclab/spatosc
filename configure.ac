@@ -9,6 +9,14 @@ AC_CONFIG_HEADERS([include/config.h])
 AC_CANONICAL_HOST # fills $host variable
 # AC_CONFIG_MACRO_DIR([m4])
 
+# Define these substitions here to keep all version information in one place.
+# For information on how to properly maintain the library version information,
+# refer to the libtool manual, section "Updating library version information":
+# http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
+AC_SUBST([SPATOSC_SO_VERSION], [0:1:0])
+AC_SUBST([SPATOSC_API_VERSION], [0.1])
+
+
 # Special cases
 case "$host" in *-darwin* | *-macos10*)
   CPPFLAGS="$CPPFLAGS -D__Darwin"
@@ -23,6 +31,7 @@ case "$host" in *-darwin* | *-macos10*)
   ;;
 esac
 
+#TODO: is this going to mess up with GNU/Linux systems?
 # OSX does not include /usr/local/lib/pkgconfig path, so we export it here
 # (for everyone, just in case)
 PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
@@ -69,12 +78,16 @@ else
     HELP2MAN=:
 fi
 
+# Override the template file name of the generated .pc file, so that there
+# is no need to rename the template file when the API version changes.
 AC_CONFIG_FILES([
         Makefile 
         spatosc.pc 
         include/version.h
         src/Makefile 
+        tests/Makefile
         doxyfile 
+        spatosc-${SPATOSC_API_VERSION}.pc:spatosc.pc.in
         ])
 
 AC_OUTPUT

@@ -5,6 +5,7 @@ includedir=@includedir@
 
 Name: spatosc
 Description: audio spatialization tool
+URL: @PACKAGE_URL@
 Version: @PACKAGE_VERSION@
-Libs: -L${libdir} -lspatosc
-Cflags: -I${includedir}/spatosc
+Libs: -L${libdir} -lspatosc-@SPATOSC_API_VERSION@
+Cflags: -I${includedir}/spatosc-@SPATOSC_API_VERSION@
