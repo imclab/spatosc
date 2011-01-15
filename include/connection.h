@@ -66,6 +66,7 @@ protected:
     double elev_;
     double gain_;
 //    double vdel_;
+//    FIXME:2010-01-15:aalex: Should thode effects be vector of shared_ptr to objects?
     float distanceEffect_;
     float rolloffEffect_;
     float dopplerEffect_;
