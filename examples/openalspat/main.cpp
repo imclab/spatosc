@@ -23,7 +23,7 @@ struct SourceData
 void paint_circle(ClutterActor *actor)
 {
     gfloat radius = std::min(clutter_actor_get_width(actor), 
-            clutter_actor_get_height(actor)) / 2.0f;
+            clutter_actor_get_height(actor)) * 0.5;
     cogl_set_source_color4ub(0x0, 0x0, 0x0, 0xff);
     cogl_path_arc(radius, radius, radius, radius, 0, 360);
     cogl_path_fill();
