@@ -81,7 +81,6 @@ namespace OSCutil
      */
     std::string stringify(float x);
 
-
     //FIXME:2011-01-17:aalex:Could not find the implement of this
     //std::string leadingSpaces(int n);
     
@@ -89,7 +88,6 @@ namespace OSCutil
      * Splits a string into tokens given a delimiter.
      */
     std::vector<std::string> tokenize(const std::string& str, const std::string& delimiters = " ");
-    //FIXME:2011-01-17:aalex:should tokenize() return vector of shared pointers to strings?
     
     /**
      * Takes a string and uses spaces to
