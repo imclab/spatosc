@@ -36,7 +36,7 @@ Node::Node(const std::string &nodeID, Scene &scene) :
 }
 
 
-void Node::debugPrint()
+void Node::debugPrint() const
 {
     std::cout << "  " << id_ << ":" << std::endl;
     std::cout << "    pos:\t" << pos_.x << "," << pos_.y << "," << pos_.z << std::endl;
