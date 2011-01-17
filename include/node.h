@@ -56,12 +56,12 @@ class Node
         /**
          * Returns the identifier of this node.
          */
-        std::string getID() { return id_; }
+        std::string getID() const { return id_; }
 
         /**
          * Prints debug info about this node to the console.
          */
-        virtual void debugPrint();
+        virtual void debugPrint() const;
 
         /**
          * Sets this node's position in the 3D cartesian space.
