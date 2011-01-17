@@ -94,14 +94,23 @@ class Scene
         Listener* getListener(const std::string &id);
 
         /**
-         * Returns all the audio connections in the scene.
+         * Returns a list of all connections that "directly involve" a node (ie, as the source or the sink): 
+         * \param id Identifier of the node for which we want its connections.
          */
         std::vector<Connection*> getConnections(const std::string &id);
 
         /**
-         * Returns a connection in the scene identified by its identifier.
+         * Returns a Connection in the scene identified by the identifiers of its source and sink nodes.
+         * \param src Identifier of the source node.
+         * \param sink Identifier of the sink node.
          */
+         
         Connection* getConnection(const std::string &src, const std::string &snk);
+
+        /**
+         * Returns a connection, given ts identifier.
+         * \param id Identifier of the Connection.
+         */
         Connection* getConnection(const std::string &id);
 
         /**
