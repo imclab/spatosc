@@ -7,29 +7,28 @@ namespace spatosc
 
 OscReceiver::OscReceiver(const std::string &port) :
     port_(port), 
-    server_(lo_server_thread_new(port_.c_str(), error))
+    server_(lo_server_new(port_.c_str(), error))
 {
 #ifdef CONFIG_DEBUG
     /* add method that will match any path and args */
-    lo_server_thread_add_method(server_, NULL, NULL, genericHandler, this);
+    lo_server_add_method(server_, NULL, NULL, genericHandler, this);
 #endif
 }
 
 OscReceiver::~OscReceiver()
 {
-//    std::cout << "Freeing OSC server thread\n";
-    lo_server_thread_free(server_);
+//    std::cout << "Freeing OSC server\n";
+    lo_server_free(server_);
+}
+
+int OscReceiver::receive()
+{
+    return lo_server_recv_noblock(server_, 0);
 }
 
 void OscReceiver::addHandler(const char *path, const char *types, lo_method_handler handler, void *userData)
 {
-    lo_server_thread_add_method(server_, path, types, handler, userData);
-}
-
-void OscReceiver::listen()
-{
-    std::cout << "Listening on port " << port_ << std::endl;
-    lo_server_thread_start(server_);
+    lo_server_add_method(server_, path, types, handler, userData);
 }
 
 void OscReceiver::error(int num, const char *msg, const char *path)

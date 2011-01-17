@@ -107,7 +107,8 @@ gboolean pointer_motion_cb(ClutterActor *actor, ClutterEvent *event,
     return TRUE;
 }
 
-static int on_ping_received(
+namespace {
+int on_ping_received(
         const char *path, 
         const char * /*types*/, lo_arg ** /*argv*/,
         int /*argc*/, void * /*data*/, void * /*user_data*/)
@@ -116,11 +117,23 @@ static int on_ping_received(
     return 0;
 }
 
+static gboolean pollOSC(gpointer data)
+{
+    using namespace spatosc;
+    OscReceiver *receiver = static_cast<OscReceiver*>(data);
+    int bytesReceived = receiver->receive();
+    if (bytesReceived > 0)
+        std::cout << "received " << bytesReceived << " bytes\n";
+    return TRUE;
+}
+} // end anonymous namespace
+
 int main(int argc, const char* argv[])
 {
-    spatosc::OscReceiver receiver("14444");
+    const char *PORT = "14444";
+    spatosc::OscReceiver receiver(PORT);
+    std::cout << "Listening on port " << PORT << std::endl;
     receiver.addHandler("/ping", "", on_ping_received, 0);
-    receiver.listen();
     
     alutInit(0, 0);
     clutter_init(0, 0);
@@ -183,6 +196,8 @@ int main(int argc, const char* argv[])
     // connect mouse event signals
     g_signal_connect(stage, "motion-event", G_CALLBACK(pointer_motion_cb), &data);
     g_signal_connect(stage, "scroll-event", G_CALLBACK(pointer_scroll_cb), &data);
+    static const int INTERVAL = 500; // ms
+    g_timeout_add(INTERVAL, pollOSC, &receiver);
 
     // main loop
     clutter_main();
