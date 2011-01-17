@@ -4,7 +4,7 @@
  * This example is in the public domain.
  */
 #include <clutter/clutter.h>
-#include <spatosc.h>
+#include <spatosc/spatosc.h>
 #include <algorithm>
 #include <tr1/memory>
 

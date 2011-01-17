@@ -48,4 +48,5 @@ examples/ogrespat/INSTALL
 examples/ogrespat/stamp-h1
 examples/clutterspat/clutterspat
 examples/openalspat/openalspat
-
+examples/ogrespat/ogrespat
+examples/spat-ode/spat-ode

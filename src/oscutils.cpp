@@ -168,10 +168,6 @@ std::vector<float> OSCutil::floatsFromString(const std::string &theString)
     using std::vector;
     using std::string;
 
-    // This function takes an std::string and uses spaces to
-    // tokenize the string into a vector of floats. If the
-    // tokens are symbolic instead of numeric, they are ignored.
-
     vector<string> in_Tokens = tokenize(theString);
     vector<float> out_Tokens;
     float num;
@@ -179,26 +175,26 @@ std::vector<float> OSCutil::floatsFromString(const std::string &theString)
     for (unsigned int i = 0; i < in_Tokens.size(); i++)
     {
         // only add to vector if token is a number:
-        if (fromString<float>(num, in_Tokens[i])) out_Tokens.push_back(num);
+        if (fromString<float>(num, in_Tokens[i]))
+            out_Tokens.push_back(num);
         //if (fromString(num, in_Tokens[i])) out_Tokens.push_back(num);
     }
-
     return out_Tokens;
 }
 
-bool OSCutil::wildcardMatch(const char *pat, const char *str)
+bool OSCutil::wildcardMatch(const char *path, const char *str)
 {
-    switch (*pat)
+    switch (*path)
     {
         // every case returns, no need for break statements
         case '\0':
             return *str == '\0';
         case '*':
-            return wildcardMatch(pat + 1, str) or (*str and wildcardMatch(pat, str + 1));
+            return wildcardMatch(path + 1, str) or (*str and wildcardMatch(path, str + 1));
         case '?':
-            return *str and wildcardMatch(pat + 1, str + 1);
+            return *str and wildcardMatch(path + 1, str + 1);
         default:
-            return *pat == *str and wildcardMatch(pat + 1, str + 1);
+            return (*path == *str) and (wildcardMatch(path + 1, str + 1));
     }
 }
 

@@ -28,12 +28,12 @@ namespace spatosc
 
 std::string Translator::getTypeString() const
 {
-    return "CONSOLE";
+    return "CONSOLE"; // the default translator prints the info to the console
 }
 
 void Translator::update(Connection *conn)
 {
-    std::cout << "Computation update for " << conn->src_->id_ << " -> " << conn->snk_->id_ << " :" <<std::endl;
+    std::cout << "Computation update for " << conn->src_->getID() << " -> " << conn->snk_->getID() << " :" <<std::endl;
 
     /*
     // SRC INCIDENCE:

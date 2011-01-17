@@ -34,29 +34,72 @@ namespace OSCutil
     // *****************************************************************************
     // networking functions
 
+    /**
+     * Returns this computer's host name. 
+     */
     std::string getHostname();
+    /**
+     * Tries to guess the IP address of one of this computer's network interfaces.
+     */
     std::string getMyIPaddress();
+
+    /**
+     * Returns the IP address for broadcasting UDP messages to this local area network.
+     */
     std::string getMyBroadcastAddress();
+
+    /**
+     * Checks whether this a given IP address is multicast or not.
+     */
     bool isMulticastAddress(const std::string &s);
+
+    /**
+     * Checks whether this a given IP address is broadcast or not.
+     */
     bool isBroadcastAddress(const std::string &s);
 
     // *****************************************************************************
     // string handling functions
-
+    
+    /**
+     * Casts a string to any type.
+     */
     template <class T> bool fromString(T& t, const std::string& s)
     {
+        // FIXME:2011-01-17:aalex: Can this throw an exception?
         std::istringstream iss(s);
-        return !(iss >> t).fail();
+        return ! (iss >> t).fail();
     }
 
+    /**
+     * Converts an int to a string.
+     */
     std::string stringify(int i);
+
+    /**
+     * Converts a float to a string.
+     */
     std::string stringify(float x);
-    std::string leadingSpaces(int n);
+
+    /**
+     * Splits a string into tokens given a delimiter.
+     */
     std::vector<std::string> tokenize(const std::string& str, const std::string& delimiters = " ");
+    
+    /**
+     * Takes a string and uses spaces to
+     * tokenize the string into a vector of floats. If the
+     * tokens are symbolic instead of numeric, they are ignored.
+     */
     std::vector<float> floatsFromString (const std::string &theString);
 
-    bool wildcardMatch(const char *pat, const char *str);
+    /**
+     * Returns whether a given path matches or not a given string.
+     */
+    bool wildcardMatch(const char *path, const char *str);
+    // TODO:2011-01-17:aalex:Please someone document wildcardMatch() well.
 };
 
 } // end namespace spatosc
 #endif
+

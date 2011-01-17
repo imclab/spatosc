@@ -24,16 +24,16 @@
 namespace spatosc
 {
 
-// *****************************************************************************
-Listener::Listener(const std::string &nodeID, Scene &scene) : Node(nodeID, scene)
+Listener::Listener(const std::string &nodeID, Scene &scene) :
+    Node(nodeID, scene)
 {
 }
 
-void Listener::debugPrint()
+void Listener::debugPrint() const
 {
     Node::debugPrint();
 
-    Scene::connIterator c;
+    Scene::connConstIterator c;
     std::cout << "    listen to:\t";
     for (c = connectFROM_.begin(); c != connectFROM_.end(); ++c)
     {

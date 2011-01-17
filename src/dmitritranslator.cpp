@@ -51,10 +51,12 @@ void DmitriTranslator::update(Connection *conn)
     std::string str;
     SoundSource *src = dynamic_cast<SoundSource*>(conn->src_);
 
-    if (!src) return;
-    if (src->getChannelID() < 0) return;
+    if (!src)
+        return;
+    if (src->getChannelID() < 0)
+        return;
 
-    float r = conn->elevation() / (M_PI/2);
+    float r = conn->elevation() / (M_PI / 2);
 
     float spacemapX = cos(conn->azimuth()) * r * SPACEMAP_RADIUS;
     float spacemapY = sin(conn->azimuth()) * r * SPACEMAP_RADIUS;

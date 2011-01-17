@@ -43,34 +43,57 @@ class Node
     private:
         // TODO: remove friend classes and provide real getter methods:
 
-        friend class Translator;
-        friend class DmitriTranslator;
         friend class Scene;
-        friend class Connection;
 
     public:
-
+        /**
+         * Constructor for a Node object.
+         * \param nodeID The identifier for this node.
+         * \param scene The Scene in which this node ought to be.
+         */
         Node(const std::string &nodeID, Scene& scene);
 
         /**
          * Returns the identifier of this node.
          */
-        std::string getID() { return id_; }
+        std::string getID() const { return id_; }
 
         /**
          * Prints debug info about this node to the console.
          */
-        virtual void debugPrint();
+        virtual void debugPrint() const;
 
         /**
-         * Sets this node's position in the 3D space.
+         * Sets this node's position in the 3D cartesian space.
+         * \param x Position on the X axis for this node.
+         * \param y Position on the Y axis for this node.
+         * \param z Position on the Z axis for this node.
          */
         virtual void setPosition(double x, double y, double z);
 
         /**
          * Sets this node's orientation.
+         * \param pitch Rotation on the lateral axis (saying "yes")
+         * \param roll Rotation on the longitudinal axis (saying "maybe")
+         * \param yaw Rotation on the vertical axis (saying "no")
          */
         virtual void setRotation(double pitch, double roll, double yaw);
+
+        /**
+         * Returns this node's position.
+         */
+        Vector3 getPosition() const { return pos_; } // TODO: 2010-01-17:aalex: is copying this object OK?
+        
+        /**
+         * Call this to make sure this node's position will be updated next time the scene nodes positions are calculated.
+         * \param should_be_updated Wheter or not it should be updated.
+         */
+        void setHasChanged(bool should_be_updated) { updateFlag_ = should_be_updated; }
+
+        /**
+         * Returns whether or not this node's position should be updated.
+         */
+        bool hasChanged() const { return updateFlag_; }
 
     protected:
 

@@ -28,7 +28,7 @@ libspatosc_@SPATOSC_API_VERSION@_la_SOURCES = \
 ## that all version information is kept in one place.
 libspatosc_@SPATOSC_API_VERSION@_la_LDFLAGS = $(LIBLO_LDFLAGS) -export-dynamic -version-info $(SPATOSC_SO_VERSION)
 
-libspatosc_@SPATOSC_API_VERSION@_la_includedir = $(includedir)/spatosc-$(SPATOSC_API_VERSION)
+libspatosc_@SPATOSC_API_VERSION@_la_includedir = $(includedir)/spatosc-$(SPATOSC_API_VERSION)/spatosc
 
 libspatosc_@SPATOSC_API_VERSION@_la_include_HEADERS = \
     $(top_srcdir)/include/oscutils.h \
