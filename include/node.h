@@ -63,7 +63,7 @@ class Node
         virtual void debugPrint();
 
         /**
-         * Sets this node's position in the 3D space.
+         * Sets this node's position in the 3D cartesian space.
          */
         virtual void setPosition(double x, double y, double z);
 

@@ -20,8 +20,8 @@
 /** @file
  * The Connection class.
  */
-#ifndef __Connection_H
-#define __Connection_H
+#ifndef __connection_h__
+#define __connection_h__
 
 #include <string>
 namespace spatosc
@@ -43,24 +43,41 @@ private:
 
 public:
     
-    Connection(Node *src, Node *snk);
+    Connection(Node *source, Node *sink);
     /**
-     * Update distance, azimuth and elevation values
+     * Update distance, azimuth and elevation values (usually called by Scene instance)
      */
     void update();
 
+    /**
+     * Returns the distance between the source and sink nodes.
+     * 
+     * A distance is always positive.
+     */
     double distance() const { return distance_; }
+
+    /**
+     * Returns the azimuth (horizontal rotation) between the source and the sink node.
+     */
     double azimuth() const { return azim_; }
+
+    /**
+     * Returns the elevation (vertical angle) between the source and the sink node.
+     */
     double elevation() const { return elev_; }
+
+    /**
+     * Returns the factor for the gain of the audio for the source as it should be heard by the sink node, 
+     * according to distance. 
+     * 
+     * Are distances in meters? Good question!
+     */
     double gain() const { return gain_; }
     
 protected:
-
     std::string id_;
-    
     Node *src_;
     Node *snk_;
-    
     double distance_;
     double azim_;
     double elev_;
@@ -76,3 +93,4 @@ protected:
 } // end namespace spatosc
 
 #endif
+
