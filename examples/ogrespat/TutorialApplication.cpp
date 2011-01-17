@@ -40,24 +40,28 @@ bool TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
     if (headNode_ == 0)
         return false;
     static double updateSoundSource = 0.0;
-    const static double move = 5.0;
+    const static double move = 10.0;
     std::cout << "processUnbufferd\n";
     Ogre::Vector3 transVector(Ogre::Vector3::ZERO);
-    if (mKeyboard->isKeyDown(OIS::KC_A)) // Forward
+    if (mKeyboard->isKeyDown(OIS::KC_A) or
+            mKeyboard->isKeyDown(OIS::KC_LEFT))
     {
         transVector.x -= move;
     }
-    if (mKeyboard->isKeyDown(OIS::KC_D)) // Backward
+    if (mKeyboard->isKeyDown(OIS::KC_D) or
+            mKeyboard->isKeyDown(OIS::KC_RIGHT))
     {
         transVector.x += move;
     }
-    if (mKeyboard->isKeyDown(OIS::KC_W)) // Up
-    {
-        transVector.y += move;
-    }
-    if (mKeyboard->isKeyDown(OIS::KC_S)) // Down
+    if (mKeyboard->isKeyDown(OIS::KC_W) or
+            mKeyboard->isKeyDown(OIS::KC_UP))
     {
         transVector.y -= move;
+    }
+    if (mKeyboard->isKeyDown(OIS::KC_S) or
+            mKeyboard->isKeyDown(OIS::KC_DOWN))
+    {
+        transVector.y += move;
     }
     // make sure that we scale the translation by the framerate, 
     // to avoid movement varying with the framerate
