@@ -21,8 +21,8 @@
  * The Scene class.
  */
 
-#ifndef __Scene_H
-#define __Scene_H
+#ifndef __SCENE_H__
+#define __SCENE_H__
 
 #include <regex.h>
 #include <string>
@@ -180,4 +180,4 @@ class Scene
 
 } // end namespace spatosc
 
-#endif
+#endif // __SCENE_H__

@@ -21,8 +21,8 @@
  * The Node class. 
  */
 
-#ifndef __Node_H
-#define __Node_H
+#ifndef __NODE_H__
+#define __NODE_H__
 
 #include <string>
 #include <vector>
@@ -113,4 +113,4 @@ class Node
 
 } // end namespace spatosc
 
-#endif
+#endif // __NODE_H__

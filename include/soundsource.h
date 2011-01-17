@@ -20,8 +20,8 @@
 /** @file
  * The SoundSource class.
  */
-#ifndef __SoundSource_H
-#define __SoundSource_H
+#ifndef __SOUNDSOURCE_H__
+#define __SOUNDSOURCE_H__
 
 #include "node.h"
 
@@ -56,4 +56,4 @@ class SoundSource : public Node
 
 } // end namespace spatosc
 
-#endif
+#endif // __SOUNDSOURCE_H__

@@ -20,8 +20,8 @@
 /** @file
  * The Connection class.
  */
-#ifndef __connection_h__
-#define __connection_h__
+#ifndef __CONNECTION_H__
+#define __CONNECTION_H__
 
 #include <string>
 namespace spatosc
@@ -92,5 +92,4 @@ protected:
 
 } // end namespace spatosc
 
-#endif
-
+#endif // __CONNECTION_H__

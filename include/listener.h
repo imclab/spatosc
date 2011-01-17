@@ -20,8 +20,8 @@
 /** @file
  * The Listener class.
  */
-#ifndef __Listener_H
-#define __Listener_H
+#ifndef __LISTENER_H__
+#define __LISTENER_H__
 
 #include "node.h"
 
@@ -36,11 +36,9 @@ class Listener : public Node
 {
     public:
         Listener(const std::string &nodeID, Scene &scene);
-        // FIXME:2011-01-17:aalex:should be virtual const
         virtual void debugPrint() const;
 };
 
 } // end namespace spatosc
 
-#endif
-
+#endif // __LISTENER_H__

@@ -20,8 +20,8 @@
 /** @file
  * OpenSoundControl utilities (networking and string handling utilities)
  */
-#ifndef __OSCutil_H
-#define __OSCutil_H
+#ifndef __OSCUTILS_H__
+#define __OSCUTILS_H__
 
 #include <vector>
 #include <string>
@@ -105,5 +105,5 @@ namespace OSCutil
 };
 
 } // end namespace spatosc
-#endif
 
+#endif // __OSCUTILS_H__
