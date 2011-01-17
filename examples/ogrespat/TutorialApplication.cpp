@@ -77,52 +77,6 @@ bool TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
     return true;
 }
 
-bool TutorialApplication::keyPressed(const OIS::KeyEvent &arg)
-{
-#if 0
-    Ogre::Vector3 currentPosition(headNode_->getPosition());
-    switch (arg.key)
-    {
-        case OIS::KC_LEFT:
-            std::cout << "left\n";
-            currentPosition.x -= 1;
-            headNode_->setPosition(currentPosition);
-            soundSource_->setPosition(currentPosition.x, 
-                    currentPosition.y, currentPosition.z);
-            break;
-        case OIS::KC_RIGHT:
-            std::cout << "right\n";
-            currentPosition.x += 1;
-            headNode_->setPosition(currentPosition);
-            soundSource_->setPosition(currentPosition.x, 
-                    currentPosition.y, currentPosition.z);
-            break;
-        case OIS::KC_UP:
-            std::cout << "up\n";
-            currentPosition.z += 1;
-            headNode_->setPosition(currentPosition);
-            soundSource_->setPosition(currentPosition.x, currentPosition.y, currentPosition.z);
-            break;
-        case OIS::KC_DOWN:
-            std::cout << "down\n";
-            currentPosition.z -= 1;
-            headNode_->setPosition(currentPosition);
-            soundSource_->setPosition(currentPosition.x, currentPosition.y, currentPosition.z);
-            break;
-        case OIS::KC_0:
-            std::cout << "return to origin\n";
-            currentPosition = Ogre::Vector3(0, 0, 0);
-            headNode_->setPosition(currentPosition);
-            soundSource_->setPosition(currentPosition.x, currentPosition.y, currentPosition.z);
-            break;
-        default:
-            break;
-    }
-#endif
-
-    return BaseApplication::keyPressed(arg);
-}
-
 void TutorialApplication::createScene()
 {
     std::cout << "createScene\n";

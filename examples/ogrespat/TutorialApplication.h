@@ -31,7 +31,6 @@ class TutorialApplication : public BaseApplication
     private:
         virtual bool processUnbufferedInput(const Ogre::FrameEvent& evt);
         virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
-        virtual bool keyPressed(const OIS::KeyEvent &arg);
         virtual void createScene();
         Ogre::SceneNode *headNode_;
         spatosc::Scene audioScene_;
