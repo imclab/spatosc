@@ -23,7 +23,7 @@
 #ifndef __TRANSLATOR_H__
 #define __TRANSLATOR_H__
 
-Namespace spatosc
+namespace spatosc
 {
 
 class Connection;
