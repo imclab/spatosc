@@ -24,7 +24,6 @@
 namespace spatosc
 {
 
-// *****************************************************************************
 Node::Node(const std::string &nodeID, Scene &scene) :
     id_(nodeID), 
     scene_(scene), 
@@ -34,7 +33,6 @@ Node::Node(const std::string &nodeID, Scene &scene) :
     connectTO_.clear();
     connectFROM_.clear();
 }
-
 
 void Node::debugPrint() const
 {

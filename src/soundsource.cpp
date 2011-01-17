@@ -19,7 +19,6 @@
 
 #include "soundsource.h"
 
-
 namespace spatosc
 {
 
@@ -35,7 +34,6 @@ void SoundSource::debugPrint()
     Node::debugPrint();
     std::cout << "    channelID\t" << channelID_ << std::endl;
 }
-
 
 void SoundSource::setChannelID(int channel)
 {

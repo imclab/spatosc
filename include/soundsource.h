@@ -32,22 +32,27 @@ namespace spatosc
 /**
  * Sound source node.
  */
-class SoundSource : /*virtual*/ public Node
+class SoundSource : public Node
 {
-
     public:
-
         SoundSource(const std::string &nodeID, Scene &scene);
 
+        // FIXME:2011-01-17:aalex:If it's const it doesn't compile
         void debugPrint();
-
+        /**
+         * Sets the input channel number - for when using live sound sources.
+         * \param channel The channel number.
+         */
         void setChannelID(int channel);
+
+        /**
+         * Returns the input channel number - for when using live sound sources.
+         */
         int getChannelID() const { return channelID_; }
 
     protected:
 
         int channelID_;
-
 };
 
 } // end namespace spatosc

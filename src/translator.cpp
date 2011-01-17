@@ -28,7 +28,7 @@ namespace spatosc
 
 std::string Translator::getTypeString() const
 {
-    return "CONSOLE";
+    return "CONSOLE"; // the default translator prints the info to the console
 }
 
 void Translator::update(Connection *conn)
