@@ -18,7 +18,7 @@
  */
 
 /** @file
- * OpenSoundControl utilities.
+ * OpenSoundControl utilities (networking and string handling utilities)
  */
 #ifndef __OSCutil_H
 #define __OSCutil_H
@@ -29,6 +29,10 @@
 
 namespace spatosc
 {
+
+/**
+ * OpenSoundControl utilities (networking and string handling utilities)
+ */
 namespace OSCutil 
 {
     // *****************************************************************************

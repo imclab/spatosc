@@ -40,7 +40,7 @@ class SoundSource : public Node
         virtual void debugPrint() const;
         /**
          * Sets the input channel number - for when using live sound sources.
-         * \param channel The channel number.
+         * @param channel The channel number.
          */
         void setChannelID(int channel);
 

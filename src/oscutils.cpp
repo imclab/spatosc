@@ -25,13 +25,11 @@
 
 #include "oscutils.h"
 
-
 namespace spatosc
 {
 
 // *****************************************************************************
 // networking functions
-
 
 std::string OSCutil::getMyIPaddress()
 {

@@ -91,27 +91,27 @@ class Scene
 
         /**
          * Returns a listener node in the scene, given its identifier.
-         * \param id Identifier for the Listener node.
+         * @param id Identifier for the Listener node.
          */
         Listener* getListener(const std::string &id);
 
         /**
          * Returns a list of all connections that "directly involve" a node (ie, as the source or the sink): 
-         * \param id Identifier of the node for which we want its connections.
+         * @param id Identifier of the node for which we want its connections.
          */
         std::vector<Connection*> getConnectionsForNode(const std::string &id);
 
         /**
          * Returns a Connection in the scene identified by the identifiers of its source and sink nodes.
-         * \param src Identifier of the source node.
-         * \param sink Identifier of the sink node.
+         * @param src Identifier of the source node.
+         * @param sink Identifier of the sink node.
          */
          
         Connection* getConnection(const std::string &src, const std::string &snk);
 
         /**
          * Returns a connection, given ts identifier.
-         * \param id Identifier of the Connection.
+         * @param id Identifier of the Connection.
          */
         Connection* getConnection(const std::string &id);
 
