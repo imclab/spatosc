@@ -40,8 +40,6 @@ static bool nodeSortFunction (Node *n1, Node *n2)
 #endif
 
 
-// *****************************************************************************
-// constructor
 Scene::Scene ()
 {
     this->ListenerList_.clear();
@@ -54,7 +52,6 @@ Scene::Scene ()
     setConnectFilter(".*"); // match everything
 }
 
-// *****************************************************************************
 void Scene::setTranslator(const std::tr1::shared_ptr<Translator> &p)
 {
     if (translator_ == p)
@@ -63,7 +60,6 @@ void Scene::setTranslator(const std::tr1::shared_ptr<Translator> &p)
     translator_ = p;
 }
 
-// *****************************************************************************
 void Scene::debugPrint ()
 {
     listenerIterator L;
@@ -100,8 +96,6 @@ void Scene::debugPrint ()
     }
 }
 
-
-// *****************************************************************************
 SoundSource* Scene::getOrCreateSoundSource(const std::string &id)
 {
     using std::tr1::shared_ptr;
@@ -130,7 +124,6 @@ SoundSource* Scene::getOrCreateSoundSource(const std::string &id)
     return n;
 }
 
-// *****************************************************************************
 Listener* Scene::getOrCreateListener(const std::string &id)
 {
     using std::tr1::shared_ptr;
@@ -159,8 +152,6 @@ Listener* Scene::getOrCreateListener(const std::string &id)
     return L;
 }
 
-// *****************************************************************************
-// return a Node reference by looking through all storage vectors:
 Node* Scene::getNode(const std::string &id)
 {
     Node *n = 0;
@@ -191,8 +182,6 @@ SoundSource* Scene::getSoundSource(const std::string &id)
     return NULL;
 }
 
-// *****************************************************************************
-// return a pointer to a Listener in the ListenerList, given an id:
 Listener* Scene::getListener(const std::string &id)
 {
     listenerIterator L;
@@ -206,10 +195,7 @@ Listener* Scene::getListener(const std::string &id)
     return NULL;
 }
 
-// *****************************************************************************
-// return a list of all connections that "directly involve" a node (ie, as the
-// source or the sink):
-std::vector<Connection*> Scene::getConnections(const std::string &id)
+std::vector<Connection*> Scene::getConnectionsForNode(const std::string &id)
 {
     std::vector<Connection*> foundConnections;
     
@@ -224,8 +210,6 @@ std::vector<Connection*> Scene::getConnections(const std::string &id)
     return foundConnections;
 }
 
-// *****************************************************************************
-// return a pointer to a Connection in the ConnectionList:
 Connection* Scene::getConnection(const std::string &src, const std::string &snk)
 {
     connIterator c;
@@ -251,8 +235,6 @@ Connection* Scene::getConnection(const std::string &id)
     }
     return NULL;
 }
-
-// *****************************************************************************
 
 void Scene::setConnectFilter(std::string s)
 {

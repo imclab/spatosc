@@ -79,7 +79,7 @@ class Scene
         Listener* getOrCreateListener(const std::string &id);
 
         /**
-         * Returns a node in the scene identified by its identifier.
+         * Returns a node in the scene, given its identifier.
          */
         Node* getNode(const std::string &id);
 
@@ -89,7 +89,8 @@ class Scene
         SoundSource* getSoundSource(const std::string &id);
 
         /**
-         * Returns a listener node in the scene identified by its identifier.
+         * Returns a listener node in the scene, given its identifier.
+         * \param id Identifier for the Listener node.
          */
         Listener* getListener(const std::string &id);
 
@@ -97,7 +98,7 @@ class Scene
          * Returns a list of all connections that "directly involve" a node (ie, as the source or the sink): 
          * \param id Identifier of the node for which we want its connections.
          */
-        std::vector<Connection*> getConnections(const std::string &id);
+        std::vector<Connection*> getConnectionsForNode(const std::string &id);
 
         /**
          * Returns a Connection in the scene identified by the identifiers of its source and sink nodes.
