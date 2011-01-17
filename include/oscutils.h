@@ -93,7 +93,11 @@ namespace OSCutil
      */
     std::vector<float> floatsFromString (const std::string &theString);
 
-    bool wildcardMatch(const char *pat, const char *str);
+    /**
+     * Returns whether a given path matches or not a given string.
+     */
+    bool wildcardMatch(const char *path, const char *str);
+    // TODO:2011-01-17:aalex:Please someone document wildcardMatch() well.
 };
 
 } // end namespace spatosc

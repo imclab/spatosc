@@ -182,19 +182,19 @@ std::vector<float> OSCutil::floatsFromString(const std::string &theString)
     return out_Tokens;
 }
 
-bool OSCutil::wildcardMatch(const char *pat, const char *str)
+bool OSCutil::wildcardMatch(const char *path, const char *str)
 {
-    switch (*pat)
+    switch (*path)
     {
         // every case returns, no need for break statements
         case '\0':
             return *str == '\0';
         case '*':
-            return wildcardMatch(pat + 1, str) or (*str and wildcardMatch(pat, str + 1));
+            return wildcardMatch(path + 1, str) or (*str and wildcardMatch(path, str + 1));
         case '?':
-            return *str and wildcardMatch(pat + 1, str + 1);
+            return *str and wildcardMatch(path + 1, str + 1);
         default:
-            return *pat == *str and wildcardMatch(pat + 1, str + 1);
+            return (*path == *str) and (wildcardMatch(path + 1, str + 1));
     }
 }
 
