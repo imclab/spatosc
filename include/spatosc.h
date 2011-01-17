@@ -17,13 +17,18 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
+/** @file
  * Single public header file for spatosc.
  * 
  * Includes the other header files.
  */
 #ifndef __SPATOSC_H__
 #define __SPATOSC_H__
+
+/**
+ * @namespace spatosc
+ * The spatosc library provides a set of classes and functions to control different audio spatialization systems via the OpenSoundControl protocol with a single unified interface.
+ */
 
 #include "oscutils.h"
 #include "oscreceiver.h"

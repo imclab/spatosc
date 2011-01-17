@@ -28,7 +28,7 @@
 namespace spatosc
 {
 /**
- * Listener nodes can listen to sound sources.
+ * Node that can listen to sound sources.
  * 
  * The listener represents a person that listens to an audio scene. There is usually only one listener in a scene.
  */

@@ -33,139 +33,192 @@
 // 340m/s = .340 m/ms
 #define SPEED_OF_SOUND 0.340
 
-
 // Below are a bunch of helper classes/functions for 2D/3D math:
 namespace spatosc
 {
 /**
  * 2D vector
  */
-class Vector2 {
-
+class Vector2 
+{
 public:
+    double x;
+    double y;
 
-    double x, y;
-
-    Vector2() {
-        x=0.0f;
-        y=0.0f;
+    /**
+     * Default constructor: sets x and y to 0.
+     */
+    Vector2() 
+    {
+        x = 0.0f;
+        y = 0.0f;
     }
-    Vector2(const Vector2 &a) {
-        x=a.x;
-        y=a.y;
+    /**
+     * Copy constructor
+     */
+    Vector2(const Vector2 &a)
+    {
+        x = a.x;
+        y = a.y;
     }
-    Vector2 (double _x, double _y) {
-        x=_x;
-        y=_y;
+    /**
+     * Constructor with x and y set as arguments. 
+     */
+    Vector2(double x, double y)
+    {
+        this->x = x;
+        this->y = y;
     }
-    double Mag() {
-        return (double)sqrt(x*x+y*y);
+    /**
+     * Returns the magnitude (length) of this vector.
+     */
+    double Mag()
+    {
+        return (double) sqrt(x * x + y * y);
     } 
-    double Mag2(){
-        return x*x+y*y;
+    double Mag2()
+    {
+        return x * x + y * y;
     }
-    void Normalize() {
-        double mag=Mag();
-        double rmag=(mag>0.0f)?(1.0f/mag):0.0f;
-        x*=rmag;
-        y*=rmag;
+    /**
+     * Normalizes this Vector2 so that its magnitude is 1.0
+     */
+    void Normalize()
+    {
+        double mag = Mag();
+        double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
+        x *= rmag;
+        y *= rmag;
     }
-    Vector2 Norm() {
-        double mag=Mag();
-        double rmag=(mag>0.0f)?(1.0f/mag):0.0f;
-        return Vector2(x*rmag, y*rmag);
+    Vector2 Norm()
+    {
+        double mag = Mag();
+        double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
+        return Vector2(x * rmag, y * rmag);
     }
-    void operator=(const Vector2 &a) {
-        x=a.x;
-        y=a.y;
+    void operator=(const Vector2 &a)
+    {
+        x = a.x;
+        y = a.y;
     }
-    double operator*(Vector2 &v) {
-        return x*v.x+y*v.y; // dot product
+    /**
+     * Dot product
+     */
+    double operator*(Vector2 &v)
+    {
+        return x * v.x + y * v.y; // dot product
     }
-    Vector2 operator+(Vector2 v) {
+    Vector2 operator+(Vector2 v)
+    {
         return Vector2(v.x + x, v.y + y);
     }
-    Vector2 operator-(Vector2 v) {
+    Vector2 operator-(Vector2 v)
+    {
         return Vector2(x - v.x, y - v.y);
     }
-    Vector2 operator*(double num) {
+    Vector2 operator*(double num)
+    {
         return Vector2(x * num, y * num);
     }
-    Vector2 operator/(double num) {
+    Vector2 operator/(double num)
+    {
         return Vector2(x / num, y / num);
-    }    
+    }
 };
-
 
 /**
  * 3D vector
  */
-class Vector3 {
-    
+class Vector3
+{
 public:
-    
-    double x, y, z;
+    double x;
+    double y;
+    double z;
 
-    Vector3() {
-        x=0.0f;
-        y=0.0f;
-        z=0.0f;
+    Vector3()
+    {
+        x = 0.0f;
+        y = 0.0f;
+        z = 0.0f;
     }
-    Vector3(const Vector3 &a) {
-        x=a.x;
-        y=a.y;
-        z=a.z;
+    Vector3(const Vector3 &a)
+    {
+        x = a.x;
+        y = a.y;
+        z = a.z;
     }
-    Vector3(double _x, double _y, double _z) {
-        x=_x;
-        y=_y;
-        z=_z;
+    Vector3(double x, double y, double z)
+    {
+        this->x = x;
+        this->y = y;
+        this->z = z;
     }
-    double Mag() {
-        return (double)sqrt(x*x+y*y+z*z);
+    /**
+     * Returns the magnitude (length) of this vector.
+     */
+    double Mag()
+    {
+        return (double) sqrt(x * x + y * y + z * z);
     }
-    double Mag2() {
-        return x*x+y*y+z*z;
+    double Mag2()
+    {
+        return x * x + y * y + z * z;
     }
-    void Normalize(){
-        double mag=Mag();
-        double rmag=(mag>0.0f)?(1.0f/mag):0.0f;
-        x*=rmag;
-        y*=rmag;
-        z*=rmag;
+    /**
+     * Normalizes this Vector2 so that its magnitude is 1.0
+     */
+    void Normalize()
+    {
+        double mag = Mag();
+        double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
+        x *= rmag;
+        y *= rmag;
+        z *= rmag;
     }
-    Vector3 Norm(){
-        double mag=Mag();
-        double rmag=(mag>0.0f)?(1.0f/mag):0.0f;
-        return Vector3(x*rmag, y*rmag, z*rmag);
+    Vector3 Norm()
+    {
+        double mag = Mag();
+        double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
+        return Vector3(x * rmag, y * rmag, z * rmag);
     }
-    void operator=(const Vector3 &a){
-        x=a.x;
-        y=a.y;
-        z=a.z;
+    void operator=(const Vector3 &a)
+    {
+        x = a.x;
+        y = a.y;
+        z = a.z;
     }
 
-    Vector3 operator+(Vector3 v) {
+    Vector3 operator+(Vector3 v)
+    {
         return Vector3(v.x + x, v.y + y, v.z + z);
     }
-    Vector3 operator-(Vector3 v) {
+    Vector3 operator-(Vector3 v)
+    {
         return Vector3(x - v.x, y - v.y, z - v.z);
     }
-    Vector3 operator*(double num) {
+    Vector3 operator*(double num)
+    {
         return Vector3(x * num, y * num, z * num);
     }
-    Vector3 operator/(double num) {
+    Vector3 operator/(double num)
+    {
         return Vector3(x / num, y / num, z / num);
     }
-    
-    double operator*(Vector3 &v) { // dot product
+    /**
+     * Dot product
+     */
+    double operator*(Vector3 &v)
+    {
         return x*v.x+y*v.y+z*v.z; 
     }
-    Vector3 operator^ (Vector3 &v) // cross product
+    /**
+     * Cross product
+     */
+    Vector3 operator^ (Vector3 &v)
     {
-        return Vector3(y*v.z-z*v.y, z*v.x-x*v.z, x*v.y-y*v.x);
+        return Vector3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
     }
-    
 };
 
 /*
@@ -205,7 +258,6 @@ inline Vector3 operator%(Vector3 &a, Vector3 &b){
         a.x*b.y-a.y*b.x);
 }
 */
-
 
 /**
  * 3x3 matrix
@@ -249,7 +301,6 @@ inline Matrix3 Matrix3Identity(){
     r._11=r._22=r._33=1.0f;
     return r;
 }
-
 
 /**
  * 4x4 matrix
@@ -410,28 +461,56 @@ inline Quaternion operator*(Quaternion &a, Quaternion &b){
         a.w*b.w-a.x*b.x-a.y*b.y-a.z*b.z).Norm();
 }
 
-
 inline Quaternion QuatFromAxis(Vector3 &axis, double angle){
     double sa=sinf(angle*0.5f*TO_RADIANS);
     double ca=cosf(angle*0.5f*TO_RADIANS);
     return Quaternion(axis.x*sa, axis.y*sa, axis.z*sa, ca).Norm();
 }
 
-
 double distance2(Vector2 v1, Vector2 v2);
 Vector2 midpoint2(Vector2 v1, Vector2 v2);
 Vector2 centroid2(Vector2 v1, Vector2 v2, Vector2 v3);
 Vector2 centroid2(Vector2 v1, Vector2 v2, Vector2 v3, Vector2 v4);
+
+/**
+ * Returns the distance between two 3D points.
+ * @param v1 First point
+ * @param v2 Second point
+ */
 double distance3(Vector3 v1, Vector3 v2);
 
-
 double computeAngle(double dx, double dy);
+
+/**
+ * Returns the angle between two 3D vectors.
+ * @param v1 First vector
+ * @param v2 Second vector
+ */
 double AngleBetweenVectors(Vector3 v1, Vector3 v2);
+
+/**
+ * Returns the rotation between two 3D vectors.
+ * @param v1 First vector
+ * @param v2 Second vector
+ */
 Quaternion RotationBetweenVectors(Vector3 v1, Vector3 v2);
+
+/**
+ * Converts Euler angles to a Quaternion. 
+ */
 Quaternion EulerToQuat (Vector3 eulerAngles);
 //Quaternion EulerToQuat (double r, double p, double y);
 Vector3 QuatToEuler(Quaternion q);
+/**
+ * Converts spherical coordinates to 3D cartesian coordinates.
+ * @param aed Angle-elevation-distance coordinates.
+ */
 Vector3 sphericalToCartesian(Vector3 aed);
+
+/**
+ * Rotates a cartesian (?) 3D coordinate around a 3D axis. 
+ * The axis is between (0, 0, 0) and the given 3D point.
+ */
 Vector3 rotateAroundAxis(Vector3 v, Vector3 axis, double angle);
 Matrix3 ComputeHomography(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4);
 

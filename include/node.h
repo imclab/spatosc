@@ -48,8 +48,8 @@ class Node
     public:
         /**
          * Constructor for a Node object.
-         * \param nodeID The identifier for this node.
-         * \param scene The Scene in which this node ought to be.
+         * @param nodeID The identifier for this node.
+         * @param scene The Scene in which this node ought to be.
          */
         Node(const std::string &nodeID, Scene& scene);
 
@@ -65,17 +65,17 @@ class Node
 
         /**
          * Sets this node's position in the 3D cartesian space.
-         * \param x Position on the X axis for this node.
-         * \param y Position on the Y axis for this node.
-         * \param z Position on the Z axis for this node.
+         * @param x Position on the X axis for this node.
+         * @param y Position on the Y axis for this node.
+         * @param z Position on the Z axis for this node.
          */
         virtual void setPosition(double x, double y, double z);
 
         /**
          * Sets this node's orientation.
-         * \param pitch Rotation on the lateral axis (saying "yes")
-         * \param roll Rotation on the longitudinal axis (saying "maybe")
-         * \param yaw Rotation on the vertical axis (saying "no")
+         * @param pitch Rotation on the lateral axis (saying "yes")
+         * @param roll Rotation on the longitudinal axis (saying "maybe")
+         * @param yaw Rotation on the vertical axis (saying "no")
          */
         virtual void setRotation(double pitch, double roll, double yaw);
 
@@ -86,7 +86,7 @@ class Node
         
         /**
          * Call this to make sure this node's position will be updated next time the scene nodes positions are calculated.
-         * \param should_be_updated Wheter or not it should be updated.
+         * @param should_be_updated Wheter or not it should be updated.
          */
         void setHasChanged(bool should_be_updated) { updateFlag_ = should_be_updated; }
 
