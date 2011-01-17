@@ -3,7 +3,7 @@
 #include <clutter/clutter.h>
 #include <cmath>
 #include <iostream>
-#include <spatosc.h>
+#include <spatosc/spatosc.h>
 
 struct SourceData 
 {

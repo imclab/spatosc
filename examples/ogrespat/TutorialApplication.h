@@ -18,7 +18,7 @@ This source file is part of the
 #define __TutorialApplication_h_
 
 #include "BaseApplication.h"
-#include <spatosc.h>
+#include <spatosc/spatosc.h>
 
 namespace Ogre {
     class SceneNode;
