@@ -43,7 +43,6 @@ class Node
     private:
         // TODO: remove friend classes and provide real getter methods:
 
-        friend class DmitriTranslator;
         friend class Scene;
 
     public:
