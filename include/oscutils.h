@@ -81,9 +81,6 @@ namespace OSCutil
      */
     std::string stringify(float x);
 
-    //FIXME:2011-01-17:aalex:Could not find the implement of this
-    //std::string leadingSpaces(int n);
-    
     /**
      * Splits a string into tokens given a delimiter.
      */
