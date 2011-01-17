@@ -20,8 +20,8 @@
 /** @file
  * Vectors, matrices and quaternions.
  */
-#ifndef _VMATH_H
-#define _VMATH_H
+#ifndef __MATHS_H__
+#define __MATHS_H__
 
 #include <cmath>
 #include <cstring>
@@ -437,4 +437,4 @@ Matrix3 ComputeHomography(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4);
 
 } // end namespace spatosc
 
-#endif
+#endif // __MATHS_H__

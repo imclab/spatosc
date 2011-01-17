@@ -20,10 +20,10 @@
 /** @file
  * The Translator class.
  */
-#ifndef __translator_h__
-#define __translator_h__
+#ifndef __TRANSLATOR_H__
+#define __TRANSLATOR_H__
 
-namespace spatosc
+Namespace spatosc
 {
 
 class Connection;
@@ -55,4 +55,4 @@ class Translator
 
 } // end namespace spatosc
 
-#endif
+#endif // __TRANSLATOR_H__

@@ -1,5 +1,5 @@
-#ifndef _OSC_RECEIVER_H_
-#define _OSC_RECEIVER_H_
+#ifndef __OSC_RECEIVER_H__
+#define __OSC_RECEIVER_H__
 
 #include <lo/lo.h>
 #include <string>
@@ -45,5 +45,5 @@ class OscReceiver
 
 } // end namespace spatosc
 
-#endif // _OSC_RECEIVER_H_
+#endif // __OSC_RECEIVER_H__
 

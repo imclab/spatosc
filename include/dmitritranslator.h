@@ -20,8 +20,8 @@
 /** @file
  * The D-Mitri translator class.
  */
-#ifndef __vPlugin_dmitri_H
-#define __vPlugin_dmitri_H
+#ifndef __DMITRI_TRANSLATOR_H__
+#define __DMITRI_TRANSLATOR_H__
 
 #include <lo/lo.h>
 #include <string>
@@ -50,4 +50,4 @@ private:
 
 } // end namespace spatosc
 
-#endif
+#endif // __DMITRI_TRANSLATOR_H__

@@ -36,5 +36,4 @@
 #include "connection.h"
 #include "soundsource.h"
 
-#endif
-
+#endif // __SPATOSC_H__
