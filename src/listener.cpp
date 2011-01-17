@@ -24,8 +24,8 @@
 namespace spatosc
 {
 
-// *****************************************************************************
-Listener::Listener(const std::string &nodeID, Scene &scene) : Node(nodeID, scene)
+Listener::Listener(const std::string &nodeID, Scene &scene) :
+    Node(nodeID, scene)
 {
 }
 
