@@ -37,8 +37,7 @@ class SoundSource : public Node
     public:
         SoundSource(const std::string &nodeID, Scene &scene);
 
-        // FIXME:2011-01-17:aalex:If it's const it doesn't compile
-        void debugPrint();
+        virtual void debugPrint() const;
         /**
          * Sets the input channel number - for when using live sound sources.
          * \param channel The channel number.

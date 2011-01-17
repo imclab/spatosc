@@ -37,7 +37,7 @@ class Listener : public Node
     public:
         Listener(const std::string &nodeID, Scene &scene);
         // FIXME:2011-01-17:aalex:should be virtual const
-        void debugPrint();
+        virtual void debugPrint() const;
 };
 
 } // end namespace spatosc
