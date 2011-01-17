@@ -1,12 +1,13 @@
 Spatosc TODO
 ------------
 
+ * Cleanup the public interface of the public classes.
  * remove non-public functions and typedefs from include/*.h
  * remove friend classes in vBaseNode
- * find from where vMath.h comes from. Maybe refactor it?
- * data member should have a trailing underscore in their name
- * use SPATOSC_API_VERSION in spatosc.pc.in and src/Makefile.am
- * move the example to examples/
- * move the tests to tests/
- * add and --enable-debug flag
+ * Make OscReceiver in the main thread
+ * Implement SpatdifReceiver
+ * Implement SpatdifTranslator
+ * Progress in the Ogre example
+ * Update the openal rendering example
+ * add an --enable-debug flag
 
