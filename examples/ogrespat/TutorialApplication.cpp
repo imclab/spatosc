@@ -15,8 +15,8 @@ This source file is part of the
 -----------------------------------------------------------------------------
 */
 #include "TutorialApplication.h"
-
-TutorialApplication::TutorialApplication()
+ 
+TutorialApplication::TutorialApplication() : headNode_(0)
 {
     audioScene_.setTranslator(translator_);
     soundSource_ = audioScene_.getOrCreateSoundSource("sound_a");
@@ -25,8 +25,61 @@ TutorialApplication::TutorialApplication()
     listener_ = audioScene_.getOrCreateListener("listener");
 }
 
+bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
+{
+    bool ret = BaseApplication::frameRenderingQueued(evt);
+    if (not processUnbufferedInput(evt)) 
+        return false;
+
+    return ret;
+}
+
+
+bool TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
+{
+    if (headNode_ == 0)
+        return false;
+    static double updateSoundSource = 0.0;
+    const static double move = 10.0;
+    std::cout << "processUnbufferd\n";
+    Ogre::Vector3 transVector(Ogre::Vector3::ZERO);
+    if (mKeyboard->isKeyDown(OIS::KC_A) or
+            mKeyboard->isKeyDown(OIS::KC_LEFT))
+    {
+        transVector.x -= move;
+    }
+    if (mKeyboard->isKeyDown(OIS::KC_D) or
+            mKeyboard->isKeyDown(OIS::KC_RIGHT))
+    {
+        transVector.x += move;
+    }
+    if (mKeyboard->isKeyDown(OIS::KC_W) or
+            mKeyboard->isKeyDown(OIS::KC_UP))
+    {
+        transVector.y -= move;
+    }
+    if (mKeyboard->isKeyDown(OIS::KC_S) or
+            mKeyboard->isKeyDown(OIS::KC_DOWN))
+    {
+        transVector.y += move;
+    }
+    // make sure that we scale the translation by the framerate, 
+    // to avoid movement varying with the framerate
+    transVector *= evt.timeSinceLastFrame;
+    headNode_->translate(transVector, Ogre::Node::TS_LOCAL);
+    updateSoundSource -= evt.timeSinceLastFrame;
+    if (updateSoundSource < 0.0)
+    {
+        soundSource_->setPosition(transVector.x, 
+                transVector.y, transVector.z);
+        updateSoundSource = 0.5; // update every 0.5 seconds
+    }
+    return true;
+}
+
 bool TutorialApplication::keyPressed(const OIS::KeyEvent &arg)
 {
+#if 0
     Ogre::Vector3 currentPosition(headNode_->getPosition());
     switch (arg.key)
     {
@@ -65,13 +118,15 @@ bool TutorialApplication::keyPressed(const OIS::KeyEvent &arg)
         default:
             break;
     }
+#endif
 
     return BaseApplication::keyPressed(arg);
 }
 
 void TutorialApplication::createScene()
 {
-    Ogre::Entity *ogreHead = mSceneMgr->createEntity("Head", "suzanne.mesh");
+    std::cout << "createScene\n";
+    Ogre::Entity *ogreHead = mSceneMgr->createEntity("Suzanne", "suzanne.mesh");
 
     headNode_ = mSceneMgr->getRootSceneNode()->createChildSceneNode();
     headNode_->attachObject(ogreHead);
