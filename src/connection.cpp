@@ -38,14 +38,14 @@ Connection::Connection(Node *source, Node *sink) :
 {
     id_ = source->getID() + "-" + sink->getID() + ".conn";
     // set updateFlag on at least one of the nodes for initial computation:
-    source->setHasChanged(true);
+    source->setUpdateFlag(true);
     // calculate and store distance, azimuth and elevation
     update();
 }
 
 void Connection::update()
 {
-    if (src_->hasChanged() or snk_->hasChanged())
+    if (src_->updateFlag() or snk_->updateFlag())
     {
         Vector3 vect = snk_->getPosition() - src_->getPosition();
         distance_ = static_cast<double>(vect.Mag());
@@ -63,8 +63,8 @@ void Connection::update()
         // FIXME:Thu Jan 13 14:52:26 EST 2011:tmatth:
         // is this the only place that needs to update its state when src 
         // or sink change?
-        src_->setHasChanged(false);
-        snk_->setHasChanged(false);
+        src_->setUpdateFlag(false);
+        snk_->setUpdateFlag(false);
     }
 }
 

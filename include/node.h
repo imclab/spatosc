@@ -88,12 +88,12 @@ class Node
          * Call this to make sure this node's position will be updated next time the scene nodes positions are calculated.
          * @param should_be_updated Wheter or not it should be updated.
          */
-        void setHasChanged(bool should_be_updated) { updateFlag_ = should_be_updated; }
+        void setUpdateFlag(bool should_be_updated) { updateFlag_ = should_be_updated; }
 
         /**
          * Returns whether or not this node's position should be updated.
          */
-        bool hasChanged() const { return updateFlag_; }
+        bool updateFlag() const { return updateFlag_; }
 
     protected:
 

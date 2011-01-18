@@ -43,6 +43,7 @@ namespace
         return circle;
     }
 } // end anonymous namespace
+
 void GUI::clutterInit()
 {
     clutter_init(0, 0);
@@ -65,12 +66,18 @@ void GUI::connectMouseCallbacks()
 
 void GUI::connectKeyCallbacks()
 {
-    GObjectClass *stageClass = reinterpret_cast<GObjectClass*>(CLUTTER_STAGE_GET_CLASS(stage_));
-    ClutterBindingPool *bindingPool = clutter_binding_pool_get_for_class (stageClass);
+    ClutterBindingPool *bindingPool = clutter_binding_pool_get_for_class(CLUTTER_STAGE_GET_CLASS(stage_));
 
-    clutter_binding_pool_install_action (bindingPool,
+    clutter_binding_pool_install_action(bindingPool,
             "quit",      /* identifier */
-            CLUTTER_KEY_Q, /* up arrow pressed */
+            CLUTTER_KEY_Q, /* up key pressed */
+            CLUTTER_SHIFT_MASK,              /* no modifiers pressed */
+            G_CALLBACK (keyQuitCb),
+            NULL,           /* no user data passed */
+            NULL);
+    clutter_binding_pool_install_action(bindingPool,
+            "quit",      /* identifier */
+            CLUTTER_KEY_Escape, /* up key pressed */
             CLUTTER_RELEASE_MASK,              /* no modifiers pressed */
             G_CALLBACK (keyQuitCb),
             NULL,           /* no user data passed */
@@ -87,6 +94,7 @@ void GUI::keyQuitCb(GObject *instance,
         ClutterModifierType modifiers, 
         gpointer user_data)
 {
+    g_print("Q\n");
     clutter_main_quit();
 }
 
@@ -104,9 +112,10 @@ gboolean GUI::keyPressCb(ClutterActor *actor,
         ClutterEvent *event,
         gpointer user_data)
 {
+    g_print("%s\n", __FUNCTION__);
     ClutterBindingPool *pool;
 
-    pool = clutter_binding_pool_find (G_OBJECT_TYPE_NAME (actor));
+    pool = clutter_binding_pool_find(G_OBJECT_TYPE_NAME(actor));
 
     return clutter_binding_pool_activate(pool,
             clutter_event_get_key_symbol(event),
@@ -132,13 +141,13 @@ gboolean GUI::pointerScrollCb(ClutterActor *actor, ClutterEvent *event,
     direction = clutter_event_get_scroll_direction (event);
     gfloat circleWidth;
     gfloat circleHeight;
+    clutter_actor_get_size(context->sourceActor_, &circleWidth,
+            &circleHeight);
 
     switch (direction)
     {
         case CLUTTER_SCROLL_UP:
             // increase circle radius
-            clutter_actor_get_size(context->sourceActor_, &circleWidth,
-                    &circleHeight);
             clutter_actor_set_size(context->sourceActor_, circleWidth + 1,
                     circleHeight + 1);
             // increase sound source's position in z
@@ -150,8 +159,6 @@ gboolean GUI::pointerScrollCb(ClutterActor *actor, ClutterEvent *event,
 
         case CLUTTER_SCROLL_DOWN:
             // decrease circle radius
-            clutter_actor_get_size(context->sourceActor_, &circleWidth,
-                    &circleHeight);
             clutter_actor_set_size(context->sourceActor_, circleWidth - 1,
                     circleHeight - 1);
             // decrease sound source's position in z
