@@ -71,11 +71,13 @@ class Scene
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
+         * Do not free the returned pointer, the Scene owns it and will deallocate it internally.
          */
         SoundSource* getOrCreateSoundSource(const std::string &id);
 
         /**
          * Returns a node in the scene identified by its identifier.
+         * Do not free the returned pointer, the Scene owns it and will deallocate it internally.
          */
         Listener* getOrCreateListener(const std::string &id);
 
