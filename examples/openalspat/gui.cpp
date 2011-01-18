@@ -66,36 +66,10 @@ void GUI::connectMouseCallbacks()
 
 void GUI::connectKeyCallbacks()
 {
-    ClutterBindingPool *bindingPool = clutter_binding_pool_get_for_class(CLUTTER_STAGE_GET_CLASS(stage_));
-
-    clutter_binding_pool_install_action(bindingPool,
-            "quit",      /* identifier */
-            CLUTTER_KEY_Q, /* up key pressed */
-            CLUTTER_SHIFT_MASK,              /* no modifiers pressed */
-            G_CALLBACK (keyQuitCb),
-            NULL,           /* no user data passed */
-            NULL);
-    clutter_binding_pool_install_action(bindingPool,
-            "quit",      /* identifier */
-            CLUTTER_KEY_Escape, /* up key pressed */
-            CLUTTER_RELEASE_MASK,              /* no modifiers pressed */
-            G_CALLBACK (keyQuitCb),
-            NULL,           /* no user data passed */
-            NULL);
     g_signal_connect(stage_,
             "key-press-event",
             G_CALLBACK(keyPressCb),
             NULL);
-}
-
-void GUI::keyQuitCb(GObject *instance, 
-        const gchar *action_name,
-        guint key_val,
-        ClutterModifierType modifiers, 
-        gpointer user_data)
-{
-    g_print("Q\n");
-    clutter_main_quit();
 }
 
 void GUI::createStage()
@@ -112,15 +86,28 @@ gboolean GUI::keyPressCb(ClutterActor *actor,
         ClutterEvent *event,
         gpointer user_data)
 {
-    g_print("%s\n", __FUNCTION__);
-    ClutterBindingPool *pool;
+    guint keyval = clutter_event_get_key_symbol(event);
 
-    pool = clutter_binding_pool_find(G_OBJECT_TYPE_NAME(actor));
+    //ClutterModifierType state = clutter_event_get_state(event);
+    //gboolean shift_pressed = (state & CLUTTER_SHIFT_MASK ? TRUE : FALSE);
+    //gboolean ctrl_pressed = (state & CLUTTER_CONTROL_MASK ? TRUE : FALSE);
+    gboolean handled = FALSE;
 
-    return clutter_binding_pool_activate(pool,
-            clutter_event_get_key_symbol(event),
-            clutter_event_get_state(event),
-            G_OBJECT (actor));
+    switch (keyval)
+    {
+        case CLUTTER_KEY_q:
+        case CLUTTER_KEY_Q:
+        case CLUTTER_KEY_Escape:
+            clutter_main_quit();
+            handled = TRUE;
+            break;
+
+        default:
+            break;
+    }
+
+    /* The event was not handled, and the emission should continue */
+    return handled;
 }
 
 // main loop
@@ -152,9 +139,9 @@ gboolean GUI::pointerScrollCb(ClutterActor *actor, ClutterEvent *event,
                     circleHeight + 1);
             // increase sound source's position in z
             /*context->sourcePos_[2] += 0.1;
-            alSourcefv(context->source_, AL_POSITION, 
-                    context->sourcePos_);
-                    */
+              alSourcefv(context->source_, AL_POSITION, 
+              context->sourcePos_);
+             */
             break;
 
         case CLUTTER_SCROLL_DOWN:
@@ -163,8 +150,8 @@ gboolean GUI::pointerScrollCb(ClutterActor *actor, ClutterEvent *event,
                     circleHeight - 1);
             // decrease sound source's position in z
             /*context->soundSourcePos[2] -= 0.1;
-            alSourcefv(context->soundSource_, AL_POSITION,
-                    context->sourcePos_);*/
+              alSourcefv(context->soundSource_, AL_POSITION,
+              context->sourcePos_);*/
             break;
         default:
             break;
@@ -189,10 +176,10 @@ gboolean GUI::pointerMotionCb(ClutterActor *actor, ClutterEvent *event,
     distanceFromSourceY = stageY / stageHeight;
 
     /*
-    context->soundSourcePos[0] = distanceFromSourceX;
-    context->soundSourcePos[1] = distanceFromSourceY;
-    alSourcefv(context->soundSource, AL_POSITION, context->soundSourcePos);
-    */
+       context->soundSourcePos[0] = distanceFromSourceX;
+       context->soundSourcePos[1] = distanceFromSourceY;
+       alSourcefv(context->soundSource, AL_POSITION, context->soundSourcePos);
+     */
 
     clutter_actor_set_position(CLUTTER_ACTOR(context->sourceActor_), stageX, 
             stageY);
