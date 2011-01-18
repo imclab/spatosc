@@ -33,6 +33,12 @@ AudioScene::AudioScene() : step_(1.0)
     createListener();
 }
 
+void AudioScene::start()
+{
+    // begin the source playing
+    alSourcePlay(source_);
+}
+
 void AudioScene::createSource()
 {
     // position of source sound
@@ -60,14 +66,19 @@ void AudioScene::createSource()
 void AudioScene::createListener()
 {
     // position of listener
-    //ALfloat listenerPos[] = {0.0, 0.0, 0.0};
+    ALfloat listenerPos[] = {0.0, 0.0, 0.0};
     // listener velocity
-    //ALfloat listenerVel[] = {0.0, 0.0, 0.0};
+    ALfloat listenerVel[] = {0.0, 0.0, 0.0};
     // orientation of the listener (first 3 elements are "at", second 3 are "up"
-    //ALfloat listenerOri[] = {0.0, 0.0, -1.0, 0.0, 1.0, 0.0};
+    ALfloat listenerOri[] = {0.0, 0.0, -1.0, 0.0, 1.0, 0.0};
     
     if (alGetError() != AL_NO_ERROR)
         throw(std::runtime_error("OpenAL error")); 
+    
+    // set listener values
+    alListenerfv(AL_POSITION, listenerPos);
+    alListenerfv(AL_VELOCITY, listenerVel);
+    alListenerfv(AL_ORIENTATION, listenerOri);
 }
 
 AudioScene::~AudioScene()

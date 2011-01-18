@@ -16,6 +16,8 @@ Application::Application() :
 
 void Application::start()
 {
+    audioScene_->start();
+    // this is the main loop
     gui_->run();
 }
 

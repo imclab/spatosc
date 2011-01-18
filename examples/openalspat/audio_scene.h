@@ -36,6 +36,7 @@ class AudioScene {
     public:
         AudioScene();
         ~AudioScene();
+        void start();
         /// Initialize openal subsystem
         static void init();
         void moveSourceLeft();
