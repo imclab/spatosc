@@ -28,6 +28,7 @@ class Application;
 class GUI {
     private:
         Application &owner_;
+        float radius_;
         ClutterActor *sourceActor_;
         ClutterActor *stage_;
         void createStage();

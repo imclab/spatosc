@@ -53,7 +53,8 @@ void GUI::clutterInit()
 
 GUI::GUI(Application &owner) : 
     owner_(owner),
-    sourceActor_(createCircle(20))
+    radius_(20.0),
+    sourceActor_(createCircle(radius_))
 {
     createStage();
     connectMouseCallbacks();
@@ -68,6 +69,7 @@ void GUI::moveSourceToOrigin()
     // move sourceActor to middle
     clutter_actor_set_position(sourceActor_, windowWidth * 0.5f,
             windowHeight * 0.5f);
+    clutter_actor_set_size(sourceActor_, 2 * radius_, 2 * radius_);
     owner_.getAudio().moveSourceToOrigin();
 }
 
