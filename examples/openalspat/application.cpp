@@ -9,8 +9,8 @@ void Application::initSubsystems()
 }
 
 Application::Application() : 
-    gui_(new GUI), 
-    audioScene_(new AudioScene)
+    audioScene_(new AudioScene),
+    gui_(new GUI(*this))
 {
 }
 

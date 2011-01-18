@@ -19,6 +19,8 @@
 // along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "gui.h"
+#include "application.h"
+#include "audio_scene.h"
 #include <algorithm>
 
 namespace 
@@ -49,7 +51,8 @@ void GUI::clutterInit()
     clutter_init(0, 0);
 }
 
-GUI::GUI() : 
+GUI::GUI(Application &owner) : 
+    owner_(owner),
     sourceActor_(createCircle(20))
 {
     createStage();
@@ -69,7 +72,7 @@ void GUI::connectKeyCallbacks()
     g_signal_connect(stage_,
             "key-press-event",
             G_CALLBACK(keyPressCb),
-            NULL);
+            this);
 }
 
 void GUI::createStage()
@@ -84,8 +87,9 @@ void GUI::createStage()
 
 gboolean GUI::keyPressCb(ClutterActor *actor,
         ClutterEvent *event,
-        gpointer user_data)
+        gpointer data)
 {
+    GUI *context = static_cast<GUI*>(data);
     guint keyval = clutter_event_get_key_symbol(event);
 
     //ClutterModifierType state = clutter_event_get_state(event);
@@ -99,6 +103,22 @@ gboolean GUI::keyPressCb(ClutterActor *actor,
         case CLUTTER_KEY_Q:
         case CLUTTER_KEY_Escape:
             clutter_main_quit();
+            handled = TRUE;
+            break;
+        case CLUTTER_KEY_Up:
+            context->owner_.getAudio().moveSourceUp();
+            handled = TRUE;
+            break;
+        case CLUTTER_KEY_Down:
+            context->owner_.getAudio().moveSourceDown();
+            handled = TRUE;
+            break;
+        case CLUTTER_KEY_Left:
+            context->owner_.getAudio().moveSourceLeft();
+            handled = TRUE;
+            break;
+        case CLUTTER_KEY_Right:
+            context->owner_.getAudio().moveSourceLeft();
             handled = TRUE;
             break;
 
@@ -138,20 +158,14 @@ gboolean GUI::pointerScrollCb(ClutterActor *actor, ClutterEvent *event,
             clutter_actor_set_size(context->sourceActor_, circleWidth + 1,
                     circleHeight + 1);
             // increase sound source's position in z
-            /*context->sourcePos_[2] += 0.1;
-              alSourcefv(context->source_, AL_POSITION, 
-              context->sourcePos_);
-             */
+            context->owner_.getAudio().moveSourceRaise();
             break;
 
         case CLUTTER_SCROLL_DOWN:
             // decrease circle radius
             clutter_actor_set_size(context->sourceActor_, circleWidth - 1,
                     circleHeight - 1);
-            // decrease sound source's position in z
-            /*context->soundSourcePos[2] -= 0.1;
-              alSourcefv(context->soundSource_, AL_POSITION,
-              context->sourcePos_);*/
+            context->owner_.getAudio().moveSourceLower();
             break;
         default:
             break;

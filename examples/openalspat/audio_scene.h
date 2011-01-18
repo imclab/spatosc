@@ -28,13 +28,22 @@ class AudioScene {
     private:
         void createSource();
         void createListener();
+        void updatePosition();
 
         ALfloat sourcePos_[3];
         ALuint source_;
+        double step_;
     public:
         AudioScene();
         ~AudioScene();
+        /// Initialize openal subsystem
         static void init();
+        void moveSourceLeft();
+        void moveSourceRight();
+        void moveSourceUp();
+        void moveSourceDown();
+        void moveSourceRaise();
+        void moveSourceLower();
 };
 
 #endif // _ALSCENE_H_

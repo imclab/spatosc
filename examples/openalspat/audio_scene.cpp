@@ -27,7 +27,7 @@ void AudioScene::init()
     alGetError(); // clear the error bit
 }
 
-AudioScene::AudioScene()
+AudioScene::AudioScene() : step_(1.0)
 {
     createSource();
     createListener();
@@ -73,4 +73,47 @@ void AudioScene::createListener()
 AudioScene::~AudioScene()
 {
     alDeleteSources(1, &source_);
+    alutExit();
+}
+
+void AudioScene::updatePosition()
+{
+    alSourcefv(source_, AL_POSITION,
+            sourcePos_);
+}
+
+void AudioScene::moveSourceRaise()
+{
+    sourcePos_[2] += step_;
+    updatePosition();
+}
+
+void AudioScene::moveSourceLower()
+{
+    sourcePos_[2] -= step_;
+    updatePosition();
+}
+
+void AudioScene::moveSourceUp()
+{
+    sourcePos_[1] += step_;
+    updatePosition();
+}
+
+void AudioScene::moveSourceDown()
+{
+    sourcePos_[1] -= step_;
+    updatePosition();
+}
+
+void AudioScene::moveSourceLeft()
+{
+    sourcePos_[0] -= step_;
+    updatePosition();
+}
+
+void AudioScene::moveSourceRight()
+{
+    sourcePos_[0] += step_;
+    updatePosition();
 }

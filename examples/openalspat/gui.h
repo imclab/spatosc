@@ -23,8 +23,11 @@
 
 #include <clutter/clutter.h>
 
+class Application;
+
 class GUI {
     private:
+        Application &owner_;
         ClutterActor *sourceActor_;
         ClutterActor *stage_;
         void createStage();
@@ -42,17 +45,17 @@ class GUI {
 
         static gboolean keyPressCb(ClutterActor *actor,
                 ClutterEvent *event,
-                gpointer user_data);
+                gpointer data);
 
         static void keyQuitCb(GObject *instance, 
                 const gchar *action_name,
                 guint key_val,
                 ClutterModifierType modifiers, 
-                gpointer user_data);
+                gpointer data);
     public:
         /// Initialize clutter subsystem
         static void clutterInit();
-        GUI();
+        GUI(Application &owner);
         void run();
 };
 
