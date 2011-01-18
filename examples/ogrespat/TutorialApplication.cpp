@@ -41,7 +41,6 @@ bool TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
         return false;
     static double updateSoundSource = 0.0;
     const static double move = 10.0;
-    std::cout << "processUnbufferd\n";
     Ogre::Vector3 transVector(Ogre::Vector3::ZERO);
     if (mKeyboard->isKeyDown(OIS::KC_A) or
             mKeyboard->isKeyDown(OIS::KC_LEFT))
