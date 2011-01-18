@@ -18,10 +18,14 @@ This source file is part of the
  
 TutorialApplication::TutorialApplication() : headNode_(0)
 {
+    createAudioScene();
+}
+
+void TutorialApplication::createAudioScene()
+{
     audioScene_.setTranslator(translator_);
     soundSource_ = audioScene_.getOrCreateSoundSource("sound_a");
     soundSource_->setChannelID(1);
-
     listener_ = audioScene_.getOrCreateListener("listener");
 }
 
@@ -78,7 +82,6 @@ bool TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
 
 void TutorialApplication::createScene()
 {
-    std::cout << "createScene\n";
     Ogre::Entity *ogreHead = mSceneMgr->createEntity("Suzanne", "suzanne.mesh");
 
     headNode_ = mSceneMgr->getRootSceneNode()->createChildSceneNode();

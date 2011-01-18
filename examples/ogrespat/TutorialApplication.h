@@ -29,6 +29,7 @@ class TutorialApplication : public BaseApplication
     public: 
         TutorialApplication();
     private:
+        void createAudioScene();
         virtual bool processUnbufferedInput(const Ogre::FrameEvent& evt);
         virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
         virtual void createScene();
