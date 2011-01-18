@@ -33,6 +33,7 @@ class GUI {
         void createStage();
         void connectMouseCallbacks();
         void connectKeyCallbacks();
+        void moveSourceToOrigin();
 
         // callbacks
         static gboolean pointerMotionCb(ClutterActor *actor, 
@@ -52,6 +53,11 @@ class GUI {
                 guint key_val,
                 ClutterModifierType modifiers, 
                 gpointer data);
+#if CLUTTER_CHECK_VERSION(1, 4, 0)
+        static void on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
+                gfloat delta_x, gfloat delta_y, gpointer data);
+#endif
+
     public:
         /// Initialize clutter subsystem
         static void clutterInit();

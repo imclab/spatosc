@@ -58,13 +58,81 @@ GUI::GUI(Application &owner) :
     createStage();
     connectMouseCallbacks();
     connectKeyCallbacks();
+    moveSourceToOrigin();
 }
+
+void GUI::moveSourceToOrigin()
+{
+    float windowWidth = clutter_actor_get_width(stage_);
+    float windowHeight = clutter_actor_get_height(stage_);
+    // move sourceActor to middle
+    clutter_actor_set_position(sourceActor_, windowWidth * 0.5f,
+            windowHeight * 0.5f);
+    owner_.getAudio().moveSourceToOrigin();
+}
+
+#if CLUTTER_CHECK_VERSION(1, 4, 0)
+void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
+    gfloat delta_x, gfloat delta_y, gpointer data)
+{
+    GUI *context = static_cast<GUI*>(data);
+    float xPos = clutter_actor_get_x(actor) + delta_x;
+    float yPos = clutter_actor_get_y(actor) + delta_y;
+    bool stopDrag = false;
+    float windowWidth = clutter_actor_get_width(context->stage_);
+    float windowHeight = clutter_actor_get_height(context->stage_);
+
+    if (xPos >= windowWidth)
+    {
+        stopDrag = true;
+        clutter_actor_set_x(actor, windowWidth);
+    }
+    else if (xPos <= 0.0f)
+    {
+        stopDrag = true;
+        clutter_actor_set_x(actor, 0.0f);
+    }
+    else if (yPos >= windowHeight)
+    {
+        stopDrag = true;
+        clutter_actor_set_y(actor, windowHeight);
+    }
+    else if (yPos <= 0.0f)
+    {
+        stopDrag = true;
+        clutter_actor_set_y(actor, 0.0);
+    }
+
+    if (delta_x > 0.0)
+        context->owner_.getAudio().moveSourceRight();
+    else if (delta_x < 0.0)
+        context->owner_.getAudio().moveSourceLeft();
+
+    if (delta_y > 0.0)
+        context->owner_.getAudio().moveSourceUp();
+    else if (delta_y < 0.0)
+        context->owner_.getAudio().moveSourceDown();
+
+    // in Clutter 2.0 we will be able to simply return FALSE instead of calling g_signal_stop_emission_by_name
+    if (stopDrag)
+        g_signal_stop_emission_by_name(action, "drag-motion");
+}
+#endif
 
 void GUI::connectMouseCallbacks()
 {
     // connect mouse event signals
-    g_signal_connect(stage_, "motion-event", G_CALLBACK(pointerMotionCb), this);
+   // g_signal_connect(stage_, "motion-event", G_CALLBACK(pointerMotionCb), this);
     g_signal_connect(stage_, "scroll-event", G_CALLBACK(pointerScrollCb), this);
+    
+    // Make it draggable
+#if CLUTTER_CHECK_VERSION(1, 4, 0)
+    ClutterAction *dragAction = clutter_drag_action_new();
+    g_signal_connect(dragAction, "drag-motion", G_CALLBACK(on_drag_motion), 
+            this);
+    clutter_actor_set_reactive(sourceActor_, TRUE);
+    clutter_actor_add_action(sourceActor_, dragAction);
+#endif
 }
 
 void GUI::connectKeyCallbacks()
@@ -103,24 +171,32 @@ gboolean GUI::keyPressCb(ClutterActor *actor,
         case CLUTTER_KEY_Q:
         case CLUTTER_KEY_Escape:
             clutter_main_quit();
-            handled = TRUE;
-            break;
+            return TRUE;
+
         case CLUTTER_KEY_Up:
             context->owner_.getAudio().moveSourceUp();
-            handled = TRUE;
-            break;
+            clutter_actor_move_by(context->sourceActor_, 0.0f, -1.0f);
+            return TRUE;
+
         case CLUTTER_KEY_Down:
             context->owner_.getAudio().moveSourceDown();
-            handled = TRUE;
-            break;
+            clutter_actor_move_by(context->sourceActor_, 0.0f, 1.0f);
+            return TRUE;
+
         case CLUTTER_KEY_Left:
             context->owner_.getAudio().moveSourceLeft();
-            handled = TRUE;
-            break;
+            clutter_actor_move_by(context->sourceActor_, -1.0f, 0.0f);
+            return TRUE;
+
         case CLUTTER_KEY_Right:
-            context->owner_.getAudio().moveSourceLeft();
-            handled = TRUE;
-            break;
+            context->owner_.getAudio().moveSourceRight();
+            clutter_actor_move_by(context->sourceActor_, 1.0f, 0.0f);
+            return TRUE;
+
+        case CLUTTER_KEY_o:
+        case CLUTTER_KEY_O:
+            context->moveSourceToOrigin();
+            return TRUE;
 
         default:
             break;

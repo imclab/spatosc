@@ -39,12 +39,15 @@ class AudioScene {
         void start();
         /// Initialize openal subsystem
         static void init();
+        
+        // movement API
         void moveSourceLeft();
         void moveSourceRight();
         void moveSourceUp();
         void moveSourceDown();
         void moveSourceRaise();
         void moveSourceLower();
+        void moveSourceToOrigin();
 };
 
 #endif // _ALSCENE_H_

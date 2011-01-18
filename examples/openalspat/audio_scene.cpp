@@ -20,6 +20,7 @@
 
 #include "audio_scene.h"
 #include <stdexcept>
+#include <iostream>
 
 void AudioScene::init()
 {
@@ -27,7 +28,7 @@ void AudioScene::init()
     alGetError(); // clear the error bit
 }
 
-AudioScene::AudioScene() : step_(1.0)
+AudioScene::AudioScene() : step_(0.5)
 {
     createSource();
     createListener();
@@ -107,24 +108,35 @@ void AudioScene::moveSourceLower()
 
 void AudioScene::moveSourceUp()
 {
+    std::cout << "UP\n";
     sourcePos_[1] += step_;
     updatePosition();
 }
 
 void AudioScene::moveSourceDown()
 {
+    std::cout << "DOWN\n";
     sourcePos_[1] -= step_;
     updatePosition();
 }
 
 void AudioScene::moveSourceLeft()
 {
+    std::cout << "LEFT\n";
     sourcePos_[0] -= step_;
     updatePosition();
 }
 
 void AudioScene::moveSourceRight()
 {
+    std::cout << "RIGHT\n";
     sourcePos_[0] += step_;
+    updatePosition();
+}
+
+void AudioScene::moveSourceToOrigin()
+{
+    for (int i = 0; i != 3; ++i)
+        sourcePos_[i] = 0.0;
     updatePosition();
 }
