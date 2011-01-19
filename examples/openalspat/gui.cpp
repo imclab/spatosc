@@ -21,6 +21,7 @@
 #include "application.h"
 #include "audio_scene.h"
 #include <algorithm>
+#include <sstream>
 
 namespace 
 {
@@ -127,6 +128,7 @@ GUI::GUI(Application &owner) :
     default_stage_height_(768.0f)
 {
     createStage();
+    sendSourcePosition();
     connectMouseCallbacks();
     connectKeyCallbacks();
     moveSourceToOrigin();
@@ -142,6 +144,7 @@ void GUI::moveSourceToOrigin()
     clutter_actor_set_depth(sourceActor_, 0.0f);
     clutter_actor_set_size(sourceActor_, 2 * radius_, 2 * radius_);
     owner_.getAudio().moveSourceToOrigin();
+    sendSourcePosition();
 }
 
 #if CLUTTER_CHECK_VERSION(1, 4, 0)
@@ -175,8 +178,10 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
         stopDrag = true;
         clutter_actor_set_y(actor, 0.0);
     }
+    else
+        context->owner_.getAudio().moveSourceBy(delta_x, delta_y, 0.0f);
 
-    context->owner_.getAudio().moveSourceBy(delta_x, delta_y, 0.0f);
+    context->sendSourcePosition();
 
     // in Clutter 2.0 we will be able to simply return FALSE instead of calling g_signal_stop_emission_by_name
     if (stopDrag)
@@ -216,11 +221,15 @@ void GUI::createStage()
     clutter_stage_set_title(CLUTTER_STAGE(stage_), "Moving Noise");
     ClutterColor black = { 0x00, 0x00, 0x00, 0xff };
     clutter_stage_set_color(CLUTTER_STAGE(stage_), &black);
-    clutter_container_add(CLUTTER_CONTAINER(stage_), sourceActor_, NULL);
+    clutter_container_add_actor(CLUTTER_CONTAINER(stage_), sourceActor_);
     ClutterColor grid_color = { 0xff, 0xff, 0xff, 0x33 };
     create_grid(CLUTTER_CONTAINER(stage_), 10.0f, 10.0f, &grid_color);
     ClutterColor origin_color = { 0xff, 0xff, 0xff, 0xcc };
     create_origin_axis(CLUTTER_CONTAINER(stage_), &origin_color);
+    ClutterColor text_color = { 0xff, 0xff, 0xff, 0xcc };
+    sourcePosLabel_ = clutter_text_new_full("Sans semibold 10px", "", &text_color);
+    clutter_container_add_actor(CLUTTER_CONTAINER(stage_), sourcePosLabel_);
+    clutter_actor_set_position(sourcePosLabel_, 10.0f, 10.0f);
     clutter_actor_show(stage_);
 }
 
@@ -247,21 +256,25 @@ gboolean GUI::keyPressCb(ClutterActor *actor,
         case CLUTTER_KEY_Up:
             context->owner_.getAudio().moveSourceBy(0.0f, -1.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 0.0f, -1.0f);
+            context->sendSourcePosition();
             return TRUE;
 
         case CLUTTER_KEY_Down:
             context->owner_.getAudio().moveSourceBy(0.0f, 1.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 0.0f, 1.0f);
+            context->sendSourcePosition();
             return TRUE;
 
         case CLUTTER_KEY_Left:
             context->owner_.getAudio().moveSourceBy(-1.0f, 0.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, -1.0f, 0.0f);
+            context->sendSourcePosition();
             return TRUE;
 
         case CLUTTER_KEY_Right:
             context->owner_.getAudio().moveSourceBy(1.0f, 0.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 1.0f, 0.0f);
+            context->sendSourcePosition();
             return TRUE;
 
         case CLUTTER_KEY_o:
@@ -275,6 +288,21 @@ gboolean GUI::keyPressCb(ClutterActor *actor,
 
     /* The event was not handled, and the emission should continue */
     return handled;
+}
+
+void GUI::sendSourcePosition()
+{
+    std::ostringstream os;
+    float actor_x;
+    float actor_y;
+    float actor_depth = clutter_actor_get_depth(sourceActor_);
+
+    gfloat stage_w = clutter_actor_get_width(CLUTTER_ACTOR(stage_));
+    gfloat stage_h = clutter_actor_get_height(CLUTTER_ACTOR(stage_));
+    clutter_actor_get_position(sourceActor_, &actor_x, &actor_y);
+    os << "Source: (" << (actor_x - stage_w) << ", " << (actor_y - stage_h) << ", " << actor_depth << ")";
+    g_print("%s\n", os.str().c_str());
+    clutter_text_set_text(CLUTTER_TEXT(sourcePosLabel_), os.str().c_str());
 }
 
 // main loop
@@ -305,11 +333,13 @@ gboolean GUI::pointerScrollCb(ClutterActor *actor, ClutterEvent *event,
         case CLUTTER_SCROLL_UP:
             clutter_actor_set_depth(context->sourceActor_, actor_depth + 10.0f);
             context->owner_.getAudio().moveSourceBy(0.0f, 0.0f, 10.0f);
+            context->sendSourcePosition();
             break;
 
         case CLUTTER_SCROLL_DOWN:
             clutter_actor_set_depth(context->sourceActor_, actor_depth - 10.0f);
             context->owner_.getAudio().moveSourceBy(0.0f, 0.0f, -10.0f);
+            context->sendSourcePosition();
             break;
         default:
             break;
