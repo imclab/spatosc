@@ -16,12 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef _ALSCENE_H_
-#define _ALSCENE_H_
+#ifndef _AudioScene_H_
+#define _AudioScene_H_
 
 #include <AL/al.h>
 #include <AL/alut.h>
 #include <tr1/memory>
+#include "lo/lo.h"
+
 
 namespace spatosc {
     class OscReceiver;
@@ -43,6 +45,9 @@ class AudioScene {
         AudioScene();
         ~AudioScene();
         void start();
+        void bindCallbacks();
+        static int onSourcePositionChanged(const char *path, const char *types, 
+                lo_arg ** argv, int argc, void *user_data, void *data);
         /// Initialize openal subsystem
         static void init();
         
@@ -57,4 +62,4 @@ class AudioScene {
         void moveSourceToOrigin();
 };
 
-#endif // _ALSCENE_H_
+#endif // _AUDIO_SCENE_H_
