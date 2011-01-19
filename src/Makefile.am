@@ -14,7 +14,8 @@ lib_LTLIBRARIES = libspatosc-@SPATOSC_API_VERSION@.la
 libspatosc_@SPATOSC_API_VERSION@_la_SOURCES = \
     oscutils.cpp \
     oscreceiver.cpp \
-    scene.cpp \
+    oscsender.cpp \
+	scene.cpp \
     node.cpp \
     listener.cpp \
     maths.cpp \

@@ -32,6 +32,7 @@
 
 #include "oscutils.h"
 #include "oscreceiver.h"
+#include "oscsender.h"
 #include "scene.h"
 #include "node.h"
 #include "listener.h"
