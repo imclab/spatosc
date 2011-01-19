@@ -85,7 +85,7 @@ class Node
         /**
          * Returns this node's position.
          */
-        Vector3 getPosition() const { return pos_; } // TODO: 2010-01-17:aalex: is copying this object OK?
+        Vector3 getPosition() const { return pos_; }
         
         /**
          * Call this to make sure this node's position will be updated next time the scene nodes positions are calculated.
