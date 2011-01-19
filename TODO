@@ -10,4 +10,8 @@ Spatosc TODO
  * Progress in the Ogre example
  * Update the openal rendering example
  * add an --enable-debug flag
+ * can we split Scene::getOrCreate methods into get and create?
+ * can we raise exception if a given node is not found? (instead of returning a null pointer)
+ * can we remove the Scene::getNode method? (there are already getListener and getSoundSource)
+ * Scene::setConnectFilter(std::string s)
 
