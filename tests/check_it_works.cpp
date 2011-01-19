@@ -36,7 +36,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
 
     // Each scene needs to have at least one Listener:
-    Listener *listener = scene.getOrCreateListener("listener");
+    //Listener *listener = scene.getOrCreateListener("listener");
 
     // A variable number of SoundSource instances can then be generated. Note
     // that a bus number must be assigned to each source in order to render in

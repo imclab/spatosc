@@ -46,6 +46,9 @@ private:
     static const double SPACEMAP_RADIUS;
     lo_address destAddr_;
     lo_server lo_serv_;
+    // not implemented
+    DmitriTranslator(const DmitriTranslator&);
+    const DmitriTranslator& operator=(const DmitriTranslator&);
 };
 
 } // end namespace spatosc

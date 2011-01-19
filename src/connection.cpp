@@ -24,6 +24,7 @@ namespace spatosc
 {
 
 Connection::Connection(Node *source, Node *sink) : 
+    id_(source->getID() + "-" + sink->getID() + ".conn"),
     src_(source), 
     snk_(sink), 
     distance_(0.0),
@@ -36,7 +37,6 @@ Connection::Connection(Node *source, Node *sink) :
     dopplerEffect_(100.0),
     diffractionEffect_(100.0)
 {
-    id_ = source->getID() + "-" + sink->getID() + ".conn";
     // set updateFlag on at least one of the nodes for initial computation:
     source->setUpdateFlag(true);
     // calculate and store distance, azimuth and elevation

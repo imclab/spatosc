@@ -41,6 +41,10 @@ private:
     friend class DmitriTranslator;
     friend class Listener;
 
+    // not implemented
+    Connection(const Connection&);
+    const Connection& operator=(const Connection&);
+
 public:
     
     Connection(Node *source, Node *sink);
