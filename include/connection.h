@@ -74,7 +74,7 @@ public:
      * Returns the factor for the gain of the audio for the source as it should be heard by the sink node, 
      * according to distance. 
      * 
-     * Are distances in meters? Good question!
+     * Distances are in meters.
      */
     double gain() const { return gain_; }
     
