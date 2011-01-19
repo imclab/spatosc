@@ -123,8 +123,8 @@ GUI::GUI(Application &owner) :
     owner_(owner),
     radius_(20.0),
     sourceActor_(createCircle(radius_)),
-    default_stage_width_(480.0f), 
-    default_stage_height_(480.0f)
+    default_stage_width_(1024.0f), 
+    default_stage_height_(768.0f)
 {
     createStage();
     connectMouseCallbacks();
@@ -139,6 +139,7 @@ void GUI::moveSourceToOrigin()
     // move sourceActor to middle
     clutter_actor_set_position(sourceActor_, windowWidth * 0.5f,
             windowHeight * 0.5f);
+    clutter_actor_set_depth(sourceActor_, 0.0f);
     clutter_actor_set_size(sourceActor_, 2 * radius_, 2 * radius_);
     owner_.getAudio().moveSourceToOrigin();
 }
@@ -175,15 +176,7 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
         clutter_actor_set_y(actor, 0.0);
     }
 
-    if (delta_x > 0.0)
-        context->owner_.getAudio().moveSourceRight();
-    else if (delta_x < 0.0)
-        context->owner_.getAudio().moveSourceLeft();
-
-    if (delta_y > 0.0)
-        context->owner_.getAudio().moveSourceUp();
-    else if (delta_y < 0.0)
-        context->owner_.getAudio().moveSourceDown();
+    context->owner_.getAudio().moveSourceBy(delta_x, delta_y, 0.0f);
 
     // in Clutter 2.0 we will be able to simply return FALSE instead of calling g_signal_stop_emission_by_name
     if (stopDrag)
@@ -224,9 +217,9 @@ void GUI::createStage()
     ClutterColor black = { 0x00, 0x00, 0x00, 0xff };
     clutter_stage_set_color(CLUTTER_STAGE(stage_), &black);
     clutter_container_add(CLUTTER_CONTAINER(stage_), sourceActor_, NULL);
-    ClutterColor grid_color = { 0xff, 0xff, 0xff, 0x66 };
+    ClutterColor grid_color = { 0xff, 0xff, 0xff, 0x33 };
     create_grid(CLUTTER_CONTAINER(stage_), 10.0f, 10.0f, &grid_color);
-    ClutterColor origin_color = { 0xff, 0xff, 0xff, 0xff };
+    ClutterColor origin_color = { 0xff, 0xff, 0xff, 0xcc };
     create_origin_axis(CLUTTER_CONTAINER(stage_), &origin_color);
     clutter_actor_show(stage_);
 }
@@ -252,22 +245,22 @@ gboolean GUI::keyPressCb(ClutterActor *actor,
             return TRUE;
 
         case CLUTTER_KEY_Up:
-            context->owner_.getAudio().moveSourceUp();
+            context->owner_.getAudio().moveSourceBy(0.0f, -1.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 0.0f, -1.0f);
             return TRUE;
 
         case CLUTTER_KEY_Down:
-            context->owner_.getAudio().moveSourceDown();
+            context->owner_.getAudio().moveSourceBy(0.0f, 1.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 0.0f, 1.0f);
             return TRUE;
 
         case CLUTTER_KEY_Left:
-            context->owner_.getAudio().moveSourceLeft();
+            context->owner_.getAudio().moveSourceBy(-1.0f, 0.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, -1.0f, 0.0f);
             return TRUE;
 
         case CLUTTER_KEY_Right:
-            context->owner_.getAudio().moveSourceRight();
+            context->owner_.getAudio().moveSourceBy(1.0f, 0.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 1.0f, 0.0f);
             return TRUE;
 
@@ -302,24 +295,21 @@ gboolean GUI::pointerScrollCb(ClutterActor *actor, ClutterEvent *event,
     direction = clutter_event_get_scroll_direction (event);
     gfloat actor_width;
     gfloat actor_height;
+    gfloat actor_depth;
     clutter_actor_get_size(context->sourceActor_, &actor_width,
             &actor_height);
+
+    actor_depth = clutter_actor_get_depth(context->sourceActor_);
     switch (direction)
     {
         case CLUTTER_SCROLL_UP:
-            // increase circle radius
-            clutter_actor_set_size(context->sourceActor_, actor_width * 1.1,
-                    actor_height * 1.1);
-            // increase sound source's position in z
-            context->owner_.getAudio().moveSourceRaise();
+            clutter_actor_set_depth(context->sourceActor_, actor_depth + 10.0f);
+            context->owner_.getAudio().moveSourceBy(0.0f, 0.0f, 10.0f);
             break;
 
         case CLUTTER_SCROLL_DOWN:
-            // decrease circle radius
-            clutter_actor_set_size(context->sourceActor_, actor_width * 0.9,
-                    actor_height * 0.9);
-            // decrease sound source's position in z
-            context->owner_.getAudio().moveSourceLower();
+            clutter_actor_set_depth(context->sourceActor_, actor_depth - 10.0f);
+            context->owner_.getAudio().moveSourceBy(0.0f, 0.0f, -10.0f);
             break;
         default:
             break;

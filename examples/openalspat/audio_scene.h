@@ -47,6 +47,7 @@ class AudioScene {
         static void init();
         
         // movement API
+        void moveSourceBy(float x, float y, float z);
         void moveSourceLeft();
         void moveSourceRight();
         void moveSourceUp();
