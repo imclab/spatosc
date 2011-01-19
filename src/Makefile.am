@@ -15,7 +15,7 @@ libspatosc_@SPATOSC_API_VERSION@_la_SOURCES = \
     oscutils.cpp \
     oscreceiver.cpp \
     oscsender.cpp \
-	scene.cpp \
+    scene.cpp \
     node.cpp \
     listener.cpp \
     maths.cpp \
