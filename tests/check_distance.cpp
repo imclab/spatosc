@@ -40,8 +40,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
     Scene scene;
 
-    shared_ptr<DmitriTranslator> translator(new DmitriTranslator("127.0.0.1"));
-    scene.setTranslator(translator);
+    scene.setTranslator<DmitriTranslator>("127.0.0.1");
 
     SoundSource *sound_a = scene.getOrCreateSoundSource("sound_a");
     sound_a->setChannelID(1);

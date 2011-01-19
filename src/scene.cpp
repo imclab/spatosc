@@ -57,14 +57,6 @@ Scene::Scene() :
     setConnectFilter(".*"); // match everything
 }
 
-void Scene::setTranslator(const std::tr1::shared_ptr<Translator> &p)
-{
-    if (translator_ == p)
-        return;
-    // replace old translator:
-    translator_ = p;
-}
-
 void Scene::debugPrint ()
 {
     listenerIterator L;

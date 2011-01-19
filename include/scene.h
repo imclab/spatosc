@@ -65,9 +65,13 @@ class Scene
         /**
          * Sets the renderer plugin.
          *
-         * Accepts a child class of Translator.
+         * Template argument must be a child of Translator
          */
-        void setTranslator(const std::tr1::shared_ptr<Translator> &p);
+        template <typename T>
+        void setTranslator(const std::string &address)
+        {
+            translator_.reset(new T(address));
+        }
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
@@ -108,7 +112,7 @@ class Scene
          * @param src Identifier of the source node.
          * @param sink Identifier of the sink node.
          */
-         
+
         Connection* getConnection(const std::string &src, const std::string &snk);
 
         /**

@@ -51,8 +51,7 @@ int main(int /*argc*/, char ** /*argv*/)
     // we choose D-Mitri, and provide the IP address of the server on the
     // control network. Note that D-Mitri uses 2 interfaces, a control network
     // (typically IPv4) and an audio network (AVB):
-    shared_ptr<DmitriTranslator> translator(new DmitriTranslator("192.168.2.26"));
-    scene.setTranslator(translator);
+    scene.setTranslator<DmitriTranslator>("127.0.0.1");
 
     // The Scene class can print out everything to the console:
     scene.debugPrint();
