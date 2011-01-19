@@ -34,6 +34,7 @@ libspatosc_@SPATOSC_API_VERSION@_la_includedir = $(includedir)/spatosc-$(SPATOSC
 libspatosc_@SPATOSC_API_VERSION@_la_include_HEADERS = \
     $(top_srcdir)/include/oscutils.h \
     $(top_srcdir)/include/oscreceiver.h \
+    $(top_srcdir)/include/oscsender.h \
     $(top_srcdir)/include/scene.h \
     $(top_srcdir)/include/node.h \
     $(top_srcdir)/include/listener.h \
