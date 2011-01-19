@@ -41,5 +41,6 @@
 #include "translator.h"
 #include "connection.h"
 #include "soundsource.h"
+#include "version.h"
 
 #endif // __SPATOSC_H__
