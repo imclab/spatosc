@@ -47,4 +47,3 @@ class OscReceiver
 } // end namespace spatosc
 
 #endif // __OSC_RECEIVER_H__
-
