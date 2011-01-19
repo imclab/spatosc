@@ -49,6 +49,7 @@ namespace
             clutter_actor_set_width(rect, 1.0);
             clutter_actor_set_position(rect, x, 0.0);
         }
+        // horizontal lines:
         for (y = 0.0; y < parent_h; y += interval_y)
         {
             rect = clutter_rectangle_new_with_color(color);
@@ -57,6 +58,37 @@ namespace
             clutter_actor_set_width(rect, parent_w);
             clutter_actor_set_position(rect, 0.0, y);
         }
+        return group;
+    }
+
+    /**
+     * Draws a cross for the origin of a cartesian diagram. (in the center)
+     *
+     * The parent must have a size.
+     * Note that it adds it to its parent.
+     */
+    ClutterActor *create_origin_axis(ClutterContainer *parent, ClutterColor *color)
+    {
+        // group
+        ClutterActor *group = clutter_group_new();
+        clutter_container_add_actor(CLUTTER_CONTAINER(parent), CLUTTER_ACTOR(group));
+        gfloat parent_w = clutter_actor_get_width(CLUTTER_ACTOR(parent));
+        gfloat parent_h = clutter_actor_get_height(CLUTTER_ACTOR(parent));
+        g_print("w: %f h: %f\n", parent_w, parent_h);
+
+        ClutterActor *rect = NULL;
+        // vertical line:
+        rect = clutter_rectangle_new_with_color(color);
+        clutter_container_add_actor(CLUTTER_CONTAINER(group), CLUTTER_ACTOR(rect));
+        clutter_actor_set_height(rect, parent_h);
+        clutter_actor_set_width(rect, 1.0);
+        clutter_actor_set_position(rect, parent_w / 2.0, 0.0);
+        // horizontal line:
+        rect = clutter_rectangle_new_with_color(color);
+        clutter_container_add_actor(CLUTTER_CONTAINER(group), CLUTTER_ACTOR(rect));
+        clutter_actor_set_height(rect, 1.0);
+        clutter_actor_set_width(rect, parent_w);
+        clutter_actor_set_position(rect, 0.0, parent_h / 2.0);
         return group;
     }
 
@@ -188,13 +220,15 @@ void GUI::createStage()
 {
     // create the clutter gui
     stage_ = clutter_stage_get_default();
+    clutter_actor_set_size(stage_, default_stage_width_, default_stage_height_);
     clutter_stage_set_title(CLUTTER_STAGE(stage_), "Moving Noise");
     ClutterColor black = { 0x00, 0x00, 0x00, 0xff };
     clutter_stage_set_color(CLUTTER_STAGE(stage_), &black);
     clutter_container_add(CLUTTER_CONTAINER(stage_), sourceActor_, NULL);
     ClutterColor grid_color = { 0xff, 0xff, 0xff, 0x66 };
     create_grid(CLUTTER_CONTAINER(stage_), 10.0f, 10.0f, &grid_color);
-    clutter_actor_set_size(stage_, default_stage_width_, default_stage_height_);
+    ClutterColor origin_color = { 0xff, 0xff, 0xff, 0xff };
+    create_origin_axis(CLUTTER_CONTAINER(stage_), &origin_color);
     clutter_actor_show(stage_);
 }
 
