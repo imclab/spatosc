@@ -74,7 +74,6 @@ namespace
         clutter_container_add_actor(CLUTTER_CONTAINER(parent), CLUTTER_ACTOR(group));
         gfloat parent_w = clutter_actor_get_width(CLUTTER_ACTOR(parent));
         gfloat parent_h = clutter_actor_get_height(CLUTTER_ACTOR(parent));
-        g_print("w: %f h: %f\n", parent_w, parent_h);
 
         ClutterActor *rect = NULL;
         // vertical line:

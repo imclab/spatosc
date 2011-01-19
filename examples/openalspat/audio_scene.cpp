@@ -20,6 +20,9 @@
 #include "audio_scene.h"
 #include <stdexcept>
 #include <iostream>
+#include "oscreceiver.h"
+
+const char* AudioScene::RX_PORT = "11111";
 
 void AudioScene::init()
 {
@@ -27,7 +30,7 @@ void AudioScene::init()
     alGetError(); // clear the error bit
 }
 
-AudioScene::AudioScene() : step_(0.5)
+AudioScene::AudioScene() : step_(0.1), oscReceiver_(new spatosc::OscReceiver(RX_PORT))
 {
     createSource();
     createListener();
@@ -106,28 +109,24 @@ void AudioScene::moveSourceLower()
 
 void AudioScene::moveSourceUp()
 {
-    std::cout << "UP\n";
     sourcePos_[1] += step_;
     updatePosition();
 }
 
 void AudioScene::moveSourceDown()
 {
-    std::cout << "DOWN\n";
     sourcePos_[1] -= step_;
     updatePosition();
 }
 
 void AudioScene::moveSourceLeft()
 {
-    std::cout << "LEFT\n";
     sourcePos_[0] -= step_;
     updatePosition();
 }
 
 void AudioScene::moveSourceRight()
 {
-    std::cout << "RIGHT\n";
     sourcePos_[0] += step_;
     updatePosition();
 }

@@ -21,6 +21,11 @@
 
 #include <AL/al.h>
 #include <AL/alut.h>
+#include <tr1/memory>
+
+namespace spatosc {
+    class OscReceiver;
+}
 
 class AudioScene {
     private:
@@ -31,6 +36,9 @@ class AudioScene {
         ALfloat sourcePos_[3];
         ALuint source_;
         double step_;
+        std::tr1::shared_ptr<spatosc::OscReceiver> oscReceiver_;
+        static const char* RX_PORT;
+
     public:
         AudioScene();
         ~AudioScene();

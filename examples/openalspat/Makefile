@@ -5,7 +5,7 @@ OBJS=main.o gui.o audio_scene.o application.o
 
 all: openalspat
 
-%.o : %.cpp
+%.o : %.cpp %.h
 	$(CC) -c $(CXXFLAGS) $< -o $@
 
 openalspat: $(OBJS)
