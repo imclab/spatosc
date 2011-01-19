@@ -32,4 +32,5 @@ Refactoring
  * Can we remove connect (Node *src, Node *snk) ?
  * disconnect should be disconnect (const std::string &src, const std::string &snk)
  * Scene::update methods should be renamed to something more meaningful
+ * convert aed-style orientation into quaternions. (or at least support also quaternions)
 
