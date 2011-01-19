@@ -63,9 +63,14 @@ class Scene
         void debugPrint();
 
         /**
-         * Sets the renderer plugin.
+         * Template method that sets the renderer plugin.
          *
-         * Template argument must be a child of Translator
+         * The template argument must be a child of Translator. 
+         * Here is an example: 
+         * \code
+         * Scene scene();
+         * scene.setTranslator<SpatdifTranslator>("127.0.0.1");
+         * \endcode
          */
         template <typename T>
         void setTranslator(const std::string &address)
