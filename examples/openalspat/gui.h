@@ -21,21 +21,28 @@
 
 #include <clutter/clutter.h>
 
-class Application;
+#include <tr1/memory>
+
+namespace spatosc {
+class Scene;
+class SoundSource;
+}
 
 class GUI 
 {
     private:
-        Application &owner_;
+        std::tr1::shared_ptr<spatosc::Scene> scene_;
         float radius_;
         ClutterActor *sourceActor_;
         gfloat default_stage_width_;
         gfloat default_stage_height_;
         ClutterActor *stage_;
+        spatosc::SoundSource *sound_;
         void createStage();
         void connectMouseCallbacks();
         void connectKeyCallbacks();
         void moveSourceToOrigin();
+        void sendNewPosition();
 
         // callbacks
         static gboolean pointerMotionCb(ClutterActor *actor, 
@@ -63,7 +70,7 @@ class GUI
     public:
         /// Initialize clutter subsystem
         static void clutterInit();
-        GUI(Application &owner);
+        GUI();
         void run();
 };
 

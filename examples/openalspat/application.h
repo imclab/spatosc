@@ -35,7 +35,6 @@ class Application
         /// Initialize clutter and openal systems
         static void initSubsystems();
         Application();
-        AudioScene &getAudio() { return *audioScene_; }
         void start();
 };
 

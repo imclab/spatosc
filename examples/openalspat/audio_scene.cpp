@@ -20,9 +20,11 @@
 #include "audio_scene.h"
 #include <stdexcept>
 #include <iostream>
+#include <spatosc/translator.h>
 #include <spatosc/oscreceiver.h>
 
-const char* AudioScene::RX_PORT = "11111";
+// receive messages from the spatosc plugin
+const char* AudioScene::RX_PORT = spatosc::Translator::DEFAULT_SEND_PORT;
 
 void AudioScene::init()
 {

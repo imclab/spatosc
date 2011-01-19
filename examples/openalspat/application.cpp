@@ -29,7 +29,7 @@ void Application::initSubsystems()
 
 Application::Application() : 
     audioScene_(new AudioScene),
-    gui_(new GUI(*this))
+    gui_(new GUI)
 {
 }
 

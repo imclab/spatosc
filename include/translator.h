@@ -49,7 +49,7 @@ class Translator
          * Virtual classes should have virtual destructors.
          */
         virtual ~Translator() {}
-    protected:
+
         static const char *DEFAULT_SEND_PORT;
         static const char *DEFAULT_RECEIVER_PORT;
 };

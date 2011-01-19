@@ -42,7 +42,6 @@ void SpatdifTranslator::sendPosition(const std::string &prefix, Node *node)
     std::string path = prefix +  "/position";
     Vector3 vect(node->getPosition());
     oscSender_.sendMessage(path, "fff", vect.x, vect.y, vect.z);
-    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "fff", vect.x, vect.y, vect.z);
 }
 
 void SpatdifTranslator::update(Connection * conn)
