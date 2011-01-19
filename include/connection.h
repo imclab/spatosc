@@ -77,6 +77,9 @@ public:
      * Distances are in meters.
      */
     double gain() const { return gain_; }
+
+    Node& getSource() const { return *src_; }
+    Node& getSink() const { return *snk_; }
     
 protected:
     std::string id_;

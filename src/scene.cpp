@@ -302,8 +302,8 @@ Connection* Scene::connect(Node *src, Node *snk)
 
         return conn.get();
     }
-
-    else return NULL;
+    else
+        return NULL;
 }
 
 void Scene::disconnect(Connection * /*conn*/)
