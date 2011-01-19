@@ -25,11 +25,11 @@ namespace spatosc
 {
 
 Node::Node(const std::string &nodeID, Scene &scene) :
-    id_(nodeID), 
-    scene_(scene), 
+    id_(nodeID),
+    scene_(scene),
     pos_(),
     rot_(),
-    active_(true), 
+    active_(true),
     connectTO_(),
     connectFROM_(),
     updateFlag_(true)

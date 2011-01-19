@@ -41,7 +41,7 @@ static bool nodeSortFunction (Node *n1, Node *n2)
 
 
 // for now, create a basic (CONSOLE) translator:
-Scene::Scene() : 
+Scene::Scene() :
     translator_(new Translator()),
     autoConnect_(true),
     connectFilter_(),

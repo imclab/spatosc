@@ -257,13 +257,13 @@ public:
     double _31, _32, _33;
 
     Matrix3() :
-        _11(0.0), _12(0.0), _13(0.0), 
+        _11(0.0), _12(0.0), _13(0.0),
         _21(0.0), _22(0.0), _23(0.0),
         _31(0.0), _32(0.0), _33(0.0)
     {}
 
     Matrix3(Matrix3 &a) :
-        _11(a._11), _12(a._12), _13(a._13), 
+        _11(a._11), _12(a._12), _13(a._13),
         _21(a._21), _22(a._22), _23(a._23),
         _31(a._31), _32(a._32), _33(a._33)
     {}
@@ -294,9 +294,9 @@ inline Matrix3 operator*(Matrix3 &a, Matrix3 &b){
 
 inline Vector3 operator*(Matrix3 &a, Vector3 &b){
     return Vector3(
-            a._11*b.x+a._21*b.y+a._31*b.z,
-            a._12*b.x+a._22*b.y+a._32*b.z,
-            a._13*b.x+a._23*b.y+a._33*b.z);
+        a._11*b.x+a._21*b.y+a._31*b.z,
+        a._12*b.x+a._22*b.y+a._32*b.z,
+        a._13*b.x+a._23*b.y+a._33*b.z);
 }
 
 inline Matrix3 Matrix3Identity(){
@@ -311,33 +311,33 @@ inline Matrix3 Matrix3Identity(){
  */
 class Matrix4
 {
-    public:
-        double _11, _12, _13, _14;
-        double _21, _22, _23, _24;
-        double _31, _32, _33, _34;
-        double _41, _42, _43, _44;
-    public:
-        Matrix4() :
-            _11(0.0), _12(0.0), _13(0.0), _14(0.0),
-            _21(0.0), _22(0.0), _23(0.0), _24(0.0),
-            _31(0.0), _32(0.0), _33(0.0), _34(0.0),
-            _41(0.0), _42(0.0), _43(0.0), _44(0.0)
+public:
+    double _11, _12, _13, _14;
+    double _21, _22, _23, _24;
+    double _31, _32, _33, _34;
+    double _41, _42, _43, _44;
+public:
+    Matrix4() :
+        _11(0.0), _12(0.0), _13(0.0), _14(0.0),
+        _21(0.0), _22(0.0), _23(0.0), _24(0.0),
+        _31(0.0), _32(0.0), _33(0.0), _34(0.0),
+        _41(0.0), _42(0.0), _43(0.0), _44(0.0)
+{}
+    Matrix4(const Matrix4 &a) :
+        _11(a._11), _12(a._12), _13(a._13), _14(a._14),
+        _21(a._21), _22(a._22), _23(a._23), _24(a._24),
+        _31(a._31), _32(a._32), _33(a._33), _34(a._34),
+        _41(a._41), _42(a._42), _43(a._43), _44(a._44)
     {}
-        Matrix4(const Matrix4 &a) :
-            _11(a._11), _12(a._12), _13(a._13), _14(a._14),
-            _21(a._21), _22(a._22), _23(a._23), _24(a._24),
-            _31(a._31), _32(a._32), _33(a._33), _34(a._34),
-            _41(a._41), _42(a._42), _43(a._43), _44(a._44)
-        {}
-        Matrix4 Inverse();
-        Matrix4& operator=(const Matrix4 &a)
-        { 
-            if (this != &a)
-            {
-                memcpy(this, &a, sizeof(Matrix4));
-            }
-            return *this;
+    Matrix4 Inverse();
+    Matrix4& operator=(const Matrix4 &a)
+    {
+        if (this != &a)
+        {
+            memcpy(this, &a, sizeof(Matrix4));
         }
+        return *this;
+    }
 };
 
 inline Matrix4 Matrix4::Inverse(){
@@ -371,9 +371,9 @@ inline Matrix4 operator*(Matrix4 &a, Matrix4 &b){
 
 inline Vector3 operator*(Matrix4 &a, Vector3 &b){
     return Vector3(
-            a._11*b.x+a._21*b.y+a._31*b.z+a._41,
-            a._12*b.x+a._22*b.y+a._32*b.z+a._42,
-            a._13*b.x+a._23*b.y+a._33*b.z+a._43);
+        a._11*b.x+a._21*b.y+a._31*b.z+a._41,
+        a._12*b.x+a._22*b.y+a._32*b.z+a._42,
+        a._13*b.x+a._23*b.y+a._33*b.z+a._43);
 }
 
 inline Matrix4 Matrix4Identity(){
@@ -397,89 +397,89 @@ inline Matrix4 Matrix4Translation(double x, double y, double z){
  * A quaternion represents an orientation in the 3D space.
  */
 class Quaternion{
-    public:
-        double x, y, z, w;
-    public:
-        Quaternion() : 
-            x(0.0), y(0.0), z(0.0), w(0.0)
+public:
+    double x, y, z, w;
+
+    Quaternion() :
+        x(0.0), y(0.0), z(0.0), w(0.0)
+    {}
+    Quaternion(const Quaternion &q) :
+        x(q.x), y(q.y), z(q.z), w(q.w)
         {}
-        Quaternion(const Quaternion &q) : 
-            x(q.x), y(q.y), z(q.z), w(q.w)
-            {}
-        Quaternion(double _x, double _y, double _z, double _w) :
-            x(_x), y(_y), z(_z), w(_w)
-            {}
-        void ToAxis(Vector3 &axis, double angle){
-            Quaternion q=(*this).Norm();
-            angle=acosf(q.w)*2.0f /*TO_RADIANS*/;
-            double sa=1.0f/sqrtf(1.0f-q.w*q.w);
-            axis.x=q.x*sa;
-            axis.y=q.y*sa;
-            axis.z=q.z*sa;
-        }
-        Matrix4 ToMatrix4(){
-            double x2=x*x;
-            double y2=y*y;
-            double z2=z*z;
-            Matrix4 r=Matrix4Identity();
-            r._11=1.0f-2.0f*y2-2.0f*z2;
-            r._12=2.0f*x*y+2.0f*z*w;
-            r._13=2.0f*x*z-2.0f*y*w;
-            r._21=2.0f*x*y-2.0f*z*w;
-            r._22=1.0f-2.0f*x2-2.0f*z2;
-            r._23=2.0f*y*z+2.0f*x*w;
-            r._31=2.0f*x*z+2.0f*y*w;
-            r._32=2.0f*y*z-2.0f*x*w;
-            r._33=1.0f-2.0f*x2-2.0f*y2;
-            return r;
-        }
-        double Mag(){
-            return sqrtf(x*x+y*y+z*z+w*w);
-        }
-        Quaternion operator*(double s){
-            return Quaternion(x*s, y*s, z*s, w*s);
-        }
-        Quaternion& operator=(const Quaternion &a)
+    Quaternion(double _x, double _y, double _z, double _w) :
+        x(_x), y(_y), z(_z), w(_w)
+        {}
+    void ToAxis(Vector3 &axis, double angle){
+        Quaternion q=(*this).Norm();
+        angle=acosf(q.w)*2.0f /*TO_RADIANS*/;
+        double sa=1.0f/sqrtf(1.0f-q.w*q.w);
+        axis.x=q.x*sa;
+        axis.y=q.y*sa;
+        axis.z=q.z*sa;
+    }
+    Matrix4 ToMatrix4(){
+        double x2=x*x;
+        double y2=y*y;
+        double z2=z*z;
+        Matrix4 r=Matrix4Identity();
+        r._11=1.0f-2.0f*y2-2.0f*z2;
+        r._12=2.0f*x*y+2.0f*z*w;
+        r._13=2.0f*x*z-2.0f*y*w;
+        r._21=2.0f*x*y-2.0f*z*w;
+        r._22=1.0f-2.0f*x2-2.0f*z2;
+        r._23=2.0f*y*z+2.0f*x*w;
+        r._31=2.0f*x*z+2.0f*y*w;
+        r._32=2.0f*y*z-2.0f*x*w;
+        r._33=1.0f-2.0f*x2-2.0f*y2;
+        return r;
+    }
+    double Mag(){
+        return sqrtf(x*x+y*y+z*z+w*w);
+    }
+    Quaternion operator*(double s){
+        return Quaternion(x*s, y*s, z*s, w*s);
+    }
+    Quaternion& operator=(const Quaternion &a)
+    {
+        if (this != &a)
         {
-            if (this != &a)
-            {
-                memcpy(this, &a, sizeof(Quaternion));
-            }
-            return *this;
+            memcpy(this, &a, sizeof(Quaternion));
         }
-        void operator*=(const double s){
-            x*=s;
-            y*=s;
-            z*=s;
-            w*=s;
-        }
+        return *this;
+    }
+    void operator*=(const double s){
+        x*=s;
+        y*=s;
+        z*=s;
+        w*=s;
+    }
 
-        Vector3 operator*(Vector3 v)
-        {
-            // nVidia SDK implementation (taken from OSG)
-            Vector3 uv, uuv;
-            Vector3 qvec(this->x, this->y, this->z);
-            uv = qvec ^ v;
-            uuv = qvec ^ uv;
-            uv = uv * ( 2.0f * this->w );
-            uuv = uuv * 2.0f;
-            return v + uv + uuv;
-        }
+    Vector3 operator*(Vector3 v)
+    {
+        // nVidia SDK implementation (taken from OSG)
+        Vector3 uv, uuv;
+        Vector3 qvec(this->x, this->y, this->z);
+        uv = qvec ^ v;
+        uuv = qvec ^ uv;
+        uv = uv * ( 2.0f * this->w );
+        uuv = uuv * 2.0f;
+        return v + uv + uuv;
+    }
 
-        void Normalize(){
-            (*this)*=1.0f/Mag();
-        }
-        Quaternion Norm(){
-            return (*this)*(1.0f/Mag());
-        }
+    void Normalize(){
+        (*this)*=1.0f/Mag();
+    }
+    Quaternion Norm(){
+        return (*this)*(1.0f/Mag());
+    }
 };
 
 inline Quaternion operator*(Quaternion &a, Quaternion &b){
     return Quaternion(
-            a.y*b.z-a.z*b.y+a.w*b.x+a.x*b.w,
-            a.z*b.x-a.x*b.z+a.w*b.y+a.y*b.w,
-            a.x*b.y-a.y*b.x+a.w*b.z+a.z*b.w,
-            a.w*b.w-a.x*b.x-a.y*b.y-a.z*b.z).Norm();
+        a.y*b.z-a.z*b.y+a.w*b.x+a.x*b.w,
+        a.z*b.x-a.x*b.z+a.w*b.y+a.y*b.w,
+        a.x*b.y-a.y*b.x+a.w*b.z+a.z*b.w,
+        a.w*b.w-a.x*b.x-a.y*b.y-a.z*b.z).Norm();
 }
 
 inline Quaternion QuatFromAxis(Vector3 &axis, double angle){

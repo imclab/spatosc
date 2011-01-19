@@ -23,16 +23,16 @@
 namespace spatosc
 {
 
-Connection::Connection(Node *source, Node *sink) : 
+Connection::Connection(Node *source, Node *sink) :
     id_(source->getID() + "-" + sink->getID() + ".conn"),
-    src_(source), 
-    snk_(sink), 
+    src_(source),
+    snk_(sink),
     distance_(0.0),
     azim_(0.0),
     elev_(0.0),
     gain_(0.0),
     //vdel_(0.0),
-    distanceEffect_(100.0), 
+    distanceEffect_(100.0),
     rolloffEffect_(100.0),
     dopplerEffect_(100.0),
     diffractionEffect_(100.0)

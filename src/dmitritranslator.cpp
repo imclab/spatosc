@@ -30,9 +30,9 @@ namespace spatosc
 const double DmitriTranslator::SPACEMAP_RADIUS = 750.0;
 
 // *****************************************************************************
-DmitriTranslator::DmitriTranslator(const std::string &ip) : 
-    Translator(), 
-    destAddr_(lo_address_new(ip.c_str(), "18033")), 
+DmitriTranslator::DmitriTranslator(const std::string &ip) :
+    Translator(),
+    destAddr_(lo_address_new(ip.c_str(), "18033")),
     lo_serv_(lo_server_new("18099", NULL))
     {
 
