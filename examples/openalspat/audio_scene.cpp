@@ -92,6 +92,14 @@ void AudioScene::updatePosition()
     alSourcefv(source_, AL_POSITION, sourcePos_);
 }
 
+void AudioScene::moveSourceBy(float x, float y, float z)
+{
+    sourcePos_[0] += x;
+    sourcePos_[1] += y;
+    sourcePos_[2] += z;
+    updatePosition();
+}
+
 void AudioScene::moveSourceRaise()
 {
     sourcePos_[2] += step_;
