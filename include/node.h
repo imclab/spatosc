@@ -40,9 +40,7 @@ class Scene;
  */
 class Node
 {
-    private:
         // TODO: remove friend classes and provide real getter methods:
-
         friend class Scene;
 
     public:
@@ -52,6 +50,11 @@ class Node
          * @param scene The Scene in which this node ought to be.
          */
         Node(const std::string &nodeID, Scene& scene);
+
+        /**
+         * Virtual classes should have virtual destructors.
+         */
+        virtual ~Node() {}
 
         /**
          * Returns the identifier of this node.
