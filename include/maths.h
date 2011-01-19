@@ -41,84 +41,84 @@ namespace spatosc
  */
 class Vector2 
 {
-public:
-    double x;
-    double y;
+    public:
+        double x;
+        double y;
 
-    /**
-     * Default constructor: sets x and y to 0.
-     */
-    Vector2() : x(0.0f), y(0.0f)
-    {}
-    /**
-     * Copy constructor
-     */
-    Vector2(const Vector2 &a) : x(a.x), y(a.y)
-    {}
-    /**
-     * Constructor with x and y set as arguments. 
-     */
-    Vector2(double xVal, double yVal) : x(xVal), y(yVal)
-    {}
-    /**
-     * Returns the magnitude (length) of this vector.
-     */
-    double Mag()
-    {
-        return (double) sqrt(x * x + y * y);
-    } 
-    double Mag2()
-    {
-        return x * x + y * y;
-    }
-    /**
-     * Normalizes this Vector2 so that its magnitude is 1.0
-     */
-    void Normalize()
-    {
-        double mag = Mag();
-        double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
-        x *= rmag;
-        y *= rmag;
-    }
-    Vector2 Norm()
-    {
-        double mag = Mag();
-        double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
-        return Vector2(x * rmag, y * rmag);
-    }
-    Vector2& operator=(const Vector2 &a)
-    {
-        if (this != &a)
+        /**
+         * Default constructor: sets x and y to 0.
+         */
+        Vector2() : x(0.0f), y(0.0f)
+        {}
+        /**
+         * Copy constructor
+         */
+        Vector2(const Vector2 &a) : x(a.x), y(a.y)
+        {}
+        /**
+         * Constructor with x and y set as arguments. 
+         */
+        Vector2(double xVal, double yVal) : x(xVal), y(yVal)
+        {}
+        /**
+         * Returns the magnitude (length) of this vector.
+         */
+        double Mag()
         {
-            x = a.x;
-            y = a.y;
+            return (double) sqrt(x * x + y * y);
+        } 
+        double Mag2()
+        {
+            return x * x + y * y;
         }
-        return *this;
-    }
-    /**
-     * Dot product
-     */
-    double operator*(Vector2 &v)
-    {
-        return x * v.x + y * v.y; // dot product
-    }
-    Vector2 operator+(Vector2 v)
-    {
-        return Vector2(v.x + x, v.y + y);
-    }
-    Vector2 operator-(Vector2 v)
-    {
-        return Vector2(x - v.x, y - v.y);
-    }
-    Vector2 operator*(double num)
-    {
-        return Vector2(x * num, y * num);
-    }
-    Vector2 operator/(double num)
-    {
-        return Vector2(x / num, y / num);
-    }
+        /**
+         * Normalizes this Vector2 so that its magnitude is 1.0
+         */
+        void Normalize()
+        {
+            double mag = Mag();
+            double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
+            x *= rmag;
+            y *= rmag;
+        }
+        Vector2 Norm()
+        {
+            double mag = Mag();
+            double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
+            return Vector2(x * rmag, y * rmag);
+        }
+        Vector2& operator=(const Vector2 &a)
+        {
+            if (this != &a)
+            {
+                x = a.x;
+                y = a.y;
+            }
+            return *this;
+        }
+        /**
+         * Dot product
+         */
+        double operator*(Vector2 &v)
+        {
+            return x * v.x + y * v.y; // dot product
+        }
+        Vector2 operator+(Vector2 v)
+        {
+            return Vector2(v.x + x, v.y + y);
+        }
+        Vector2 operator-(Vector2 v)
+        {
+            return Vector2(x - v.x, y - v.y);
+        }
+        Vector2 operator*(double num)
+        {
+            return Vector2(x * num, y * num);
+        }
+        Vector2 operator/(double num)
+        {
+            return Vector2(x / num, y / num);
+        }
 };
 
 /**
@@ -126,86 +126,86 @@ public:
  */
 class Vector3
 {
-public:
-    double x;
-    double y;
-    double z;
+    public:
+        double x;
+        double y;
+        double z;
 
-    Vector3() : x(0.0f), y(0.0f), z(0.0f)
-    {}
-    Vector3(const Vector3 &a) : x(a.x), y(a.y), z(a.z)
-    {}
-    Vector3(double x, double y, double z) : x(x), y(y), z(z)
-    {}
-    /**
-     * Returns the magnitude (length) of this vector.
-     */
-    double Mag() const
-    {
-        return (double) sqrt(x * x + y * y + z * z);
-    }
-    double Mag2() const
-    {
-        return x * x + y * y + z * z;
-    }
-    /**
-     * Normalizes this Vector2 so that its magnitude is 1.0
-     */
-    void Normalize()
-    {
-        double mag = Mag();
-        double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
-        x *= rmag;
-        y *= rmag;
-        z *= rmag;
-    }
-    Vector3 Norm() const
-    {
-        double mag = Mag();
-        double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
-        return Vector3(x * rmag, y * rmag, z * rmag);
-    }
-    Vector3& operator=(const Vector3 &a)
-    {
-        if (this != &a)
+        Vector3() : x(0.0f), y(0.0f), z(0.0f)
+        {}
+        Vector3(const Vector3 &a) : x(a.x), y(a.y), z(a.z)
+        {}
+        Vector3(double x, double y, double z) : x(x), y(y), z(z)
+        {}
+        /**
+         * Returns the magnitude (length) of this vector.
+         */
+        double Mag() const
         {
-            x = a.x;
-            y = a.y;
-            z = a.z;
+            return (double) sqrt(x * x + y * y + z * z);
         }
-        return *this;
-    }
+        double Mag2() const
+        {
+            return x * x + y * y + z * z;
+        }
+        /**
+         * Normalizes this Vector2 so that its magnitude is 1.0
+         */
+        void Normalize()
+        {
+            double mag = Mag();
+            double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
+            x *= rmag;
+            y *= rmag;
+            z *= rmag;
+        }
+        Vector3 Norm() const
+        {
+            double mag = Mag();
+            double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
+            return Vector3(x * rmag, y * rmag, z * rmag);
+        }
+        Vector3& operator=(const Vector3 &a)
+        {
+            if (this != &a)
+            {
+                x = a.x;
+                y = a.y;
+                z = a.z;
+            }
+            return *this;
+        }
 
-    Vector3 operator+(Vector3 v)
-    {
-        return Vector3(v.x + x, v.y + y, v.z + z);
-    }
-    Vector3 operator-(Vector3 v)
-    {
-        return Vector3(x - v.x, y - v.y, z - v.z);
-    }
-    Vector3 operator*(double num)
-    {
-        return Vector3(x * num, y * num, z * num);
-    }
-    Vector3 operator/(double num)
-    {
-        return Vector3(x / num, y / num, z / num);
-    }
-    /**
-     * Dot product
-     */
-    double operator*(Vector3 &v)
-    {
-        return x*v.x+y*v.y+z*v.z;
-    }
-    /**
-     * Cross product
-     */
-    Vector3 operator^ (Vector3 &v)
-    {
-        return Vector3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
-    }
+        Vector3 operator+(Vector3 v)
+        {
+            return Vector3(v.x + x, v.y + y, v.z + z);
+        }
+        Vector3 operator-(Vector3 v)
+        {
+            return Vector3(x - v.x, y - v.y, z - v.z);
+        }
+        Vector3 operator*(double num)
+        {
+            return Vector3(x * num, y * num, z * num);
+        }
+        Vector3 operator/(double num)
+        {
+            return Vector3(x / num, y / num, z / num);
+        }
+        /**
+         * Dot product
+         */
+        double operator*(Vector3 &v)
+        {
+            return x*v.x+y*v.y+z*v.z;
+        }
+        /**
+         * Cross product
+         */
+        Vector3 operator^ (Vector3 &v)
+        {
+            return Vector3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
+        }
 };
 
 /*
@@ -251,34 +251,35 @@ public:
  */
 class Matrix3
 {
-public:
-    double _11, _12, _13;
-    double _21, _22, _23;
-    double _31, _32, _33;
+    public:
+        double _11, _12, _13;
+        double _21, _22, _23;
+        double _31, _32, _33;
 
-    Matrix3() :
-        _11(0.0), _12(0.0), _13(0.0),
-        _21(0.0), _22(0.0), _23(0.0),
-        _31(0.0), _32(0.0), _33(0.0)
-    {}
+        Matrix3() :
+            _11(0.0), _12(0.0), _13(0.0),
+            _21(0.0), _22(0.0), _23(0.0),
+            _31(0.0), _32(0.0), _33(0.0)
+        {}
 
-    Matrix3(Matrix3 &a) :
-        _11(a._11), _12(a._12), _13(a._13),
-        _21(a._21), _22(a._22), _23(a._23),
-        _31(a._31), _32(a._32), _33(a._33)
-    {}
-    
-    Matrix3& operator=(const Matrix3 &a)
-    {
-        if (this != &a)
+        Matrix3(Matrix3 &a) :
+            _11(a._11), _12(a._12), _13(a._13),
+            _21(a._21), _22(a._22), _23(a._23),
+            _31(a._31), _32(a._32), _33(a._33)
+        {}
+        
+        Matrix3& operator=(const Matrix3 &a)
         {
-            memcpy(this, &a, sizeof(Matrix3));
+            if (this != &a)
+            {
+                memcpy(this, &a, sizeof(Matrix3));
+            }
+            return *this;
         }
-        return *this;
-    }
 };
 
-inline Matrix3 operator*(Matrix3 &a, Matrix3 &b){
+inline Matrix3 operator*(Matrix3 &a, Matrix3 &b)
+{
     Matrix3 r;
     double *d=(double*)&r._11;
     double *s1=(double*)&a._11;
@@ -292,14 +293,16 @@ inline Matrix3 operator*(Matrix3 &a, Matrix3 &b){
     return r;
 }
 
-inline Vector3 operator*(Matrix3 &a, Vector3 &b){
+inline Vector3 operator*(Matrix3 &a, Vector3 &b)
+{
     return Vector3(
         a._11*b.x+a._21*b.y+a._31*b.z,
         a._12*b.x+a._22*b.y+a._32*b.z,
         a._13*b.x+a._23*b.y+a._33*b.z);
 }
 
-inline Matrix3 Matrix3Identity(){
+inline Matrix3 Matrix3Identity()
+{
     Matrix3 r;
     memset(&r, 0, sizeof(r));
     r._11=r._22=r._33=1.0f;
@@ -311,36 +314,36 @@ inline Matrix3 Matrix3Identity(){
  */
 class Matrix4
 {
-public:
-    double _11, _12, _13, _14;
-    double _21, _22, _23, _24;
-    double _31, _32, _33, _34;
-    double _41, _42, _43, _44;
-public:
-    Matrix4() :
-        _11(0.0), _12(0.0), _13(0.0), _14(0.0),
-        _21(0.0), _22(0.0), _23(0.0), _24(0.0),
-        _31(0.0), _32(0.0), _33(0.0), _34(0.0),
-        _41(0.0), _42(0.0), _43(0.0), _44(0.0)
-{}
-    Matrix4(const Matrix4 &a) :
-        _11(a._11), _12(a._12), _13(a._13), _14(a._14),
-        _21(a._21), _22(a._22), _23(a._23), _24(a._24),
-        _31(a._31), _32(a._32), _33(a._33), _34(a._34),
-        _41(a._41), _42(a._42), _43(a._43), _44(a._44)
-    {}
-    Matrix4 Inverse();
-    Matrix4& operator=(const Matrix4 &a)
-    {
-        if (this != &a)
+    public:
+        double _11, _12, _13, _14;
+        double _21, _22, _23, _24;
+        double _31, _32, _33, _34;
+        double _41, _42, _43, _44;
+        Matrix4() :
+            _11(0.0), _12(0.0), _13(0.0), _14(0.0),
+            _21(0.0), _22(0.0), _23(0.0), _24(0.0),
+            _31(0.0), _32(0.0), _33(0.0), _34(0.0),
+            _41(0.0), _42(0.0), _43(0.0), _44(0.0)
+        {}
+        Matrix4(const Matrix4 &a) :
+            _11(a._11), _12(a._12), _13(a._13), _14(a._14),
+            _21(a._21), _22(a._22), _23(a._23), _24(a._24),
+            _31(a._31), _32(a._32), _33(a._33), _34(a._34),
+            _41(a._41), _42(a._42), _43(a._43), _44(a._44)
+        {}
+        Matrix4 Inverse();
+        Matrix4& operator=(const Matrix4 &a)
         {
-            memcpy(this, &a, sizeof(Matrix4));
+            if (this != &a)
+            {
+                memcpy(this, &a, sizeof(Matrix4));
+            }
+            return *this;
         }
-        return *this;
-    }
 };
 
-inline Matrix4 Matrix4::Inverse(){
+inline Matrix4 Matrix4::Inverse()
+{
     // transpose upper 3x3 Matrix4
     Matrix4 r;
     memset(&r, 0, sizeof(r));
@@ -354,7 +357,8 @@ inline Matrix4 Matrix4::Inverse(){
     return r;
 }
 
-inline Matrix4 operator*(Matrix4 &a, Matrix4 &b){
+inline Matrix4 operator*(Matrix4 &a, Matrix4 &b)
+{
     Matrix4 r;
     double *d=(double*)&r._11;
     double *s1=(double*)&a._11;
@@ -369,21 +373,24 @@ inline Matrix4 operator*(Matrix4 &a, Matrix4 &b){
     return r;
 }
 
-inline Vector3 operator*(Matrix4 &a, Vector3 &b){
+inline Vector3 operator*(Matrix4 &a, Vector3 &b)
+{
     return Vector3(
         a._11*b.x+a._21*b.y+a._31*b.z+a._41,
         a._12*b.x+a._22*b.y+a._32*b.z+a._42,
         a._13*b.x+a._23*b.y+a._33*b.z+a._43);
 }
 
-inline Matrix4 Matrix4Identity(){
+inline Matrix4 Matrix4Identity()
+{
     Matrix4 r;
     memset(&r, 0, sizeof(r));
     r._11=r._22=r._33=r._44=1.0f;
     return r;
 }
 
-inline Matrix4 Matrix4Translation(double x, double y, double z){
+inline Matrix4 Matrix4Translation(double x, double y, double z)
+{
     Matrix4 r;
     memset(&r, 0, sizeof(r));
     r._11=r._22=r._33=r._44=1.0f;
@@ -396,85 +403,96 @@ inline Matrix4 Matrix4Translation(double x, double y, double z){
 /**
  * A quaternion represents an orientation in the 3D space.
  */
-class Quaternion{
-public:
-    double x, y, z, w;
+class Quaternion
+{
+    public:
+        double x;
+        double y;
+        double z;
+        double w;
 
-    Quaternion() :
-        x(0.0), y(0.0), z(0.0), w(0.0)
-    {}
-    Quaternion(const Quaternion &q) :
-        x(q.x), y(q.y), z(q.z), w(q.w)
+        Quaternion() :
+            x(0.0), y(0.0), z(0.0), w(0.0)
         {}
-    Quaternion(double _x, double _y, double _z, double _w) :
-        x(_x), y(_y), z(_z), w(_w)
-        {}
-    void ToAxis(Vector3 &axis, double angle){
-        Quaternion q=(*this).Norm();
-        angle=acosf(q.w)*2.0f /*TO_RADIANS*/;
-        double sa=1.0f/sqrtf(1.0f-q.w*q.w);
-        axis.x=q.x*sa;
-        axis.y=q.y*sa;
-        axis.z=q.z*sa;
-    }
-    Matrix4 ToMatrix4(){
-        double x2=x*x;
-        double y2=y*y;
-        double z2=z*z;
-        Matrix4 r=Matrix4Identity();
-        r._11=1.0f-2.0f*y2-2.0f*z2;
-        r._12=2.0f*x*y+2.0f*z*w;
-        r._13=2.0f*x*z-2.0f*y*w;
-        r._21=2.0f*x*y-2.0f*z*w;
-        r._22=1.0f-2.0f*x2-2.0f*z2;
-        r._23=2.0f*y*z+2.0f*x*w;
-        r._31=2.0f*x*z+2.0f*y*w;
-        r._32=2.0f*y*z-2.0f*x*w;
-        r._33=1.0f-2.0f*x2-2.0f*y2;
-        return r;
-    }
-    double Mag(){
-        return sqrtf(x*x+y*y+z*z+w*w);
-    }
-    Quaternion operator*(double s){
-        return Quaternion(x*s, y*s, z*s, w*s);
-    }
-    Quaternion& operator=(const Quaternion &a)
-    {
-        if (this != &a)
-        {
-            memcpy(this, &a, sizeof(Quaternion));
+        Quaternion(const Quaternion &q) :
+            x(q.x), y(q.y), z(q.z), w(q.w)
+            {}
+        Quaternion(double _x, double _y, double _z, double _w) :
+            x(_x), y(_y), z(_z), w(_w)
+            {}
+        void ToAxis(Vector3 &axis, double angle){
+            Quaternion q=(*this).Norm();
+            angle=acosf(q.w)*2.0f /*TO_RADIANS*/;
+            double sa=1.0f/sqrtf(1.0f-q.w*q.w);
+            axis.x=q.x*sa;
+            axis.y=q.y*sa;
+            axis.z=q.z*sa;
         }
-        return *this;
-    }
-    void operator*=(const double s){
-        x*=s;
-        y*=s;
-        z*=s;
-        w*=s;
-    }
+        Matrix4 ToMatrix4()
+        {
+            double x2=x*x;
+            double y2=y*y;
+            double z2=z*z;
+            Matrix4 r=Matrix4Identity();
+            r._11=1.0f-2.0f*y2-2.0f*z2;
+            r._12=2.0f*x*y+2.0f*z*w;
+            r._13=2.0f*x*z-2.0f*y*w;
+            r._21=2.0f*x*y-2.0f*z*w;
+            r._22=1.0f-2.0f*x2-2.0f*z2;
+            r._23=2.0f*y*z+2.0f*x*w;
+            r._31=2.0f*x*z+2.0f*y*w;
+            r._32=2.0f*y*z-2.0f*x*w;
+            r._33=1.0f-2.0f*x2-2.0f*y2;
+            return r;
+        }
+        double Mag()
+        {
+            return sqrtf(x*x+y*y+z*z+w*w);
+        }
+        Quaternion operator*(double s)
+        {
+            return Quaternion(x*s, y*s, z*s, w*s);
+        }
+        Quaternion& operator=(const Quaternion &a)
+        {
+            if (this != &a)
+            {
+                memcpy(this, &a, sizeof(Quaternion));
+            }
+            return *this;
+        }
+        void operator*=(const double s)
+        {
+            x*=s;
+            y*=s;
+            z*=s;
+            w*=s;
+        }
 
-    Vector3 operator*(Vector3 v)
-    {
-        // nVidia SDK implementation (taken from OSG)
-        Vector3 uv, uuv;
-        Vector3 qvec(this->x, this->y, this->z);
-        uv = qvec ^ v;
-        uuv = qvec ^ uv;
-        uv = uv * ( 2.0f * this->w );
-        uuv = uuv * 2.0f;
-        return v + uv + uuv;
-    }
+        Vector3 operator*(Vector3 v)
+        {
+            // nVidia SDK implementation (taken from OSG)
+            Vector3 uv, uuv;
+            Vector3 qvec(this->x, this->y, this->z);
+            uv = qvec ^ v;
+            uuv = qvec ^ uv;
+            uv = uv * ( 2.0f * this->w );
+            uuv = uuv * 2.0f;
+            return v + uv + uuv;
+        }
 
-    void Normalize(){
-        (*this)*=1.0f/Mag();
-    }
-    Quaternion Norm(){
-        return (*this)*(1.0f/Mag());
-    }
+        void Normalize()
+        {
+            (*this)*=1.0f/Mag();
+        }
+        Quaternion Norm()
+        {
+            return (*this)*(1.0f/Mag());
+        }
 };
 
-inline Quaternion operator*(Quaternion &a, Quaternion &b){
+inline Quaternion operator*(Quaternion &a, Quaternion &b)
+{
     return Quaternion(
         a.y*b.z-a.z*b.y+a.w*b.x+a.x*b.w,
         a.z*b.x-a.x*b.z+a.w*b.y+a.y*b.w,
@@ -482,7 +500,8 @@ inline Quaternion operator*(Quaternion &a, Quaternion &b){
         a.w*b.w-a.x*b.x-a.y*b.y-a.z*b.z).Norm();
 }
 
-inline Quaternion QuatFromAxis(Vector3 &axis, double angle){
+inline Quaternion QuatFromAxis(Vector3 &axis, double angle)
+{
     double sa=sinf(angle*0.5f*TO_RADIANS);
     double ca=cosf(angle*0.5f*TO_RADIANS);
     return Quaternion(axis.x*sa, axis.y*sa, axis.z*sa, ca).Norm();
