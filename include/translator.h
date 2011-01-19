@@ -51,6 +51,11 @@ class Translator
          * messages to control some audio engine, or by rendering audio by itself.
          */
         virtual void update(Connection *conn);
+
+        /**
+         * Virtual classes should have virtual destructors.
+         */
+        virtual ~Translator() {}
 };
 
 } // end namespace spatosc
