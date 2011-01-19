@@ -251,29 +251,31 @@ public:
  */
 class Matrix3
 {
-    public:
-        double _11, _12, _13;
-        double _21, _22, _23;
-        double _31, _32, _33;
-    public:
-        Matrix3() :
-            _11(0.0), _12(0.0), _13(0.0), 
-            _21(0.0), _22(0.0), _23(0.0),
-            _31(0.0), _32(0.0), _33(0.0)
+public:
+    double _11, _12, _13;
+    double _21, _22, _23;
+    double _31, _32, _33;
+
+    Matrix3() :
+        _11(0.0), _12(0.0), _13(0.0), 
+        _21(0.0), _22(0.0), _23(0.0),
+        _31(0.0), _32(0.0), _33(0.0)
     {}
-        Matrix3(Matrix3 &a) :
-            _11(a._11), _12(a._12), _13(a._13), 
-            _21(a._21), _22(a._22), _23(a._23),
-            _31(a._31), _32(a._32), _33(a._33)
-        {}
-        Matrix3& operator=(const Matrix3 &a)
-        { 
-            if (this != &a)
-            {
-                memcpy(this, &a, sizeof(Matrix3)); 
-            }
-            return *this;
+
+    Matrix3(Matrix3 &a) :
+        _11(a._11), _12(a._12), _13(a._13), 
+        _21(a._21), _22(a._22), _23(a._23),
+        _31(a._31), _32(a._32), _33(a._33)
+    {}
+    
+    Matrix3& operator=(const Matrix3 &a)
+    {
+        if (this != &a)
+        {
+            memcpy(this, &a, sizeof(Matrix3));
         }
+        return *this;
+    }
 };
 
 inline Matrix3 operator*(Matrix3 &a, Matrix3 &b){
