@@ -1,4 +1,6 @@
-/*
+/* 
+ * spatdif_translator.h
+ *
  * This file is part of Spatosc.
  * 
  * Copyright (c) 2010 Society for Arts and Technologies <info@sat.qc.ca>
@@ -18,38 +20,36 @@
  */
 
 /** @file
- * The D-Mitri translator class.
+ * The Spatdif translator class.
  */
-#ifndef __DMITRI_TRANSLATOR_H__
-#define __DMITRI_TRANSLATOR_H__
 
+#ifndef _SPATDIF_TRANSLATOR_H_
+#define _SPATDIF_TRANSLATOR_H_
+
+#include "translator.h"
 #include <lo/lo.h>
 #include <string>
-#include "translator.h"
 
 namespace spatosc
 {
-class Connection;
 
 /**
- * Translator for the proprietary D-Mitri system.
+ * Translator for the SpatDIF protocol
  */
-class DmitriTranslator : public Translator
+class SpatdifTranslator : public Translator
 {
-public:
-    explicit DmitriTranslator(const std::string &ip);
-    virtual ~DmitriTranslator();
-    virtual void update(Connection *conn);
+    public:
+        explicit SpatdifTranslator(const std::string &ip);
+        virtual ~SpatdifTranslator();
+        virtual void update(Connection *conn);
 
-private:
-    static const double SPACEMAP_RADIUS;
-    lo_address destAddr_;
-    lo_server lo_serv_;
-    // not implemented
-    DmitriTranslator(const DmitriTranslator&);
-    const DmitriTranslator& operator=(const DmitriTranslator&);
+    private:
+        lo_address destAddr_;
+        lo_server lo_serv_;
+        // not implemented
+        SpatdifTranslator(const SpatdifTranslator&);
+        const SpatdifTranslator& operator=(const SpatdifTranslator&);
 };
 
 } // end namespace spatosc
-
-#endif // __DMITRI_TRANSLATOR_H__
+#endif // _SPATDIF_TRANSLATOR_H_

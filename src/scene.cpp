@@ -66,9 +66,8 @@ void Scene::debugPrint ()
     std::cout << "\n=====================================================" << std::endl;
     std::cout << "[Scene]:: connectFilter = " << connectFilter_ << std::endl;
 
-    if (translator_)
-        std::cout << "[Scene]:: using " << translator_->getTypeString() << " translator" << std::endl;
-    else std::cout << "[Scene]:: NO translator specified" << std::endl;
+    if (translator_ == 0)
+        std::cout << "[Scene]:: NO translator specified" << std::endl;
 
     std::cout << "[Scene]:: " << ListenerList_.size() << " listeners:" << std::endl;
     for (L = ListenerList_.begin(); L != ListenerList_.end(); ++L)

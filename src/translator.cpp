@@ -25,11 +25,9 @@
 
 namespace spatosc
 {
-
-std::string Translator::getTypeString() const
-{
-    return "CONSOLE"; // the default translator prints the info to the console
-}
+        
+const char *Translator::DEFAULT_SEND_PORT = "18033";
+const char *Translator::DEFAULT_RECEIVER_PORT = "18099";
 
 void Translator::update(Connection *conn)
 {
