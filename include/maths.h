@@ -126,86 +126,86 @@ public:
  */
 class Vector3
 {
-    public:
-        double x;
-        double y;
-        double z;
+public:
+    double x;
+    double y;
+    double z;
 
-        Vector3() : x(0.0f), y(0.0f), z(0.0f)
-        {}
-        Vector3(const Vector3 &a) : x(a.x), y(a.y), z(a.z)
-        {}
-        Vector3(double x, double y, double z) : x(x), y(y), z(z)
-        {}
-        /**
-         * Returns the magnitude (length) of this vector.
-         */
-        double Mag() const
+    Vector3() : x(0.0f), y(0.0f), z(0.0f)
+    {}
+    Vector3(const Vector3 &a) : x(a.x), y(a.y), z(a.z)
+    {}
+    Vector3(double x, double y, double z) : x(x), y(y), z(z)
+    {}
+    /**
+     * Returns the magnitude (length) of this vector.
+     */
+    double Mag() const
+    {
+        return (double) sqrt(x * x + y * y + z * z);
+    }
+    double Mag2() const
+    {
+        return x * x + y * y + z * z;
+    }
+    /**
+     * Normalizes this Vector2 so that its magnitude is 1.0
+     */
+    void Normalize()
+    {
+        double mag = Mag();
+        double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
+        x *= rmag;
+        y *= rmag;
+        z *= rmag;
+    }
+    Vector3 Norm() const
+    {
+        double mag = Mag();
+        double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
+        return Vector3(x * rmag, y * rmag, z * rmag);
+    }
+    Vector3& operator=(const Vector3 &a)
+    {
+        if (this != &a)
         {
-            return (double) sqrt(x * x + y * y + z * z);
+            x = a.x;
+            y = a.y;
+            z = a.z;
         }
-        double Mag2() const
-        {
-            return x * x + y * y + z * z;
-        }
-        /**
-         * Normalizes this Vector2 so that its magnitude is 1.0
-         */
-        void Normalize()
-        {
-            double mag = Mag();
-            double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
-            x *= rmag;
-            y *= rmag;
-            z *= rmag;
-        }
-        Vector3 Norm() const
-        {
-            double mag = Mag();
-            double rmag = (mag > 0.0f) ? (1.0f / mag) : 0.0f;
-            return Vector3(x * rmag, y * rmag, z * rmag);
-        }
-        Vector3& operator=(const Vector3 &a)
-        {
-            if (this != &a)
-            {
-                x = a.x;
-                y = a.y;
-                z = a.z;
-            }
-            return *this;
-        }
+        return *this;
+    }
 
-        Vector3 operator+(Vector3 v)
-        {
-            return Vector3(v.x + x, v.y + y, v.z + z);
-        }
-        Vector3 operator-(Vector3 v)
-        {
-            return Vector3(x - v.x, y - v.y, z - v.z);
-        }
-        Vector3 operator*(double num)
-        {
-            return Vector3(x * num, y * num, z * num);
-        }
-        Vector3 operator/(double num)
-        {
-            return Vector3(x / num, y / num, z / num);
-        }
-        /**
-         * Dot product
-         */
-        double operator*(Vector3 &v)
-        {
-            return x*v.x+y*v.y+z*v.z;
-        }
-        /**
-         * Cross product
-         */
-        Vector3 operator^ (Vector3 &v)
-        {
-            return Vector3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
-        }
+    Vector3 operator+(Vector3 v)
+    {
+        return Vector3(v.x + x, v.y + y, v.z + z);
+    }
+    Vector3 operator-(Vector3 v)
+    {
+        return Vector3(x - v.x, y - v.y, z - v.z);
+    }
+    Vector3 operator*(double num)
+    {
+        return Vector3(x * num, y * num, z * num);
+    }
+    Vector3 operator/(double num)
+    {
+        return Vector3(x / num, y / num, z / num);
+    }
+    /**
+     * Dot product
+     */
+    double operator*(Vector3 &v)
+    {
+        return x*v.x+y*v.y+z*v.z;
+    }
+    /**
+     * Cross product
+     */
+    Vector3 operator^ (Vector3 &v)
+    {
+        return Vector3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
+    }
 };
 
 /*
