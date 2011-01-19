@@ -23,11 +23,14 @@
 
 class Application;
 
-class GUI {
+class GUI 
+{
     private:
         Application &owner_;
         float radius_;
         ClutterActor *sourceActor_;
+        gfloat default_stage_width_;
+        gfloat default_stage_height_;
         ClutterActor *stage_;
         void createStage();
         void connectMouseCallbacks();
