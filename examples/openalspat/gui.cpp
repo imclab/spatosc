@@ -74,7 +74,6 @@ namespace
         clutter_container_add_actor(CLUTTER_CONTAINER(parent), CLUTTER_ACTOR(group));
         gfloat parent_w = clutter_actor_get_width(CLUTTER_ACTOR(parent));
         gfloat parent_h = clutter_actor_get_height(CLUTTER_ACTOR(parent));
-        g_print("w: %f h: %f\n", parent_w, parent_h);
 
         ClutterActor *rect = NULL;
         // vertical line:
@@ -124,8 +123,8 @@ GUI::GUI(Application &owner) :
     owner_(owner),
     radius_(20.0),
     sourceActor_(createCircle(radius_)),
-    default_stage_width_(480.0f), 
-    default_stage_height_(480.0f)
+    default_stage_width_(1024.0f), 
+    default_stage_height_(768.0f)
 {
     createStage();
     connectMouseCallbacks();
@@ -225,9 +224,9 @@ void GUI::createStage()
     ClutterColor black = { 0x00, 0x00, 0x00, 0xff };
     clutter_stage_set_color(CLUTTER_STAGE(stage_), &black);
     clutter_container_add(CLUTTER_CONTAINER(stage_), sourceActor_, NULL);
-    ClutterColor grid_color = { 0xff, 0xff, 0xff, 0x66 };
+    ClutterColor grid_color = { 0xff, 0xff, 0xff, 0x33 };
     create_grid(CLUTTER_CONTAINER(stage_), 10.0f, 10.0f, &grid_color);
-    ClutterColor origin_color = { 0xff, 0xff, 0xff, 0xff };
+    ClutterColor origin_color = { 0xff, 0xff, 0xff, 0xcc };
     create_origin_axis(CLUTTER_CONTAINER(stage_), &origin_color);
     clutter_actor_show(stage_);
 }
