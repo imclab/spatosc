@@ -20,7 +20,7 @@
 #include "audio_scene.h"
 #include <stdexcept>
 #include <iostream>
-#include "oscreceiver.h"
+#include <spatosc/oscreceiver.h>
 
 const char* AudioScene::RX_PORT = "11111";
 
