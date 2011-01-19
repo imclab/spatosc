@@ -38,6 +38,7 @@ private:
     // TODO: get rid of friend classes, and add proper getter methods:
     friend class Scene;
     friend class Translator;
+    friend class SpatdifTranslator;
     friend class DmitriTranslator;
     friend class Listener;
 

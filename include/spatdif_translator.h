@@ -32,6 +32,7 @@
 
 namespace spatosc
 {
+    class Node;
 
 /**
  * Translator for the SpatDIF protocol
@@ -44,6 +45,7 @@ class SpatdifTranslator : public Translator
         virtual void update(Connection *conn);
 
     private:
+        void sendPosition(const std::string &prefix, Node *node);
         lo_address destAddr_;
         lo_server lo_serv_;
         // not implemented
