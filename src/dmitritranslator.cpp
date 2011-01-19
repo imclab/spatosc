@@ -29,13 +29,14 @@ namespace spatosc
 
 const double DmitriTranslator::SPACEMAP_RADIUS = 750.0;
 
-// *****************************************************************************
+// ************************************************ 
+// FIXME: Wed Jan 19 14:12:24 EST 2011: tmatth
+// could these port values be defined in translator.h/cpp? 
 DmitriTranslator::DmitriTranslator(const std::string &ip) :
     Translator(),
-    destAddr_(lo_address_new(ip.c_str(), "18033")),
-    lo_serv_(lo_server_new("18099", NULL))
+    destAddr_(lo_address_new(ip.c_str(), DEFAULT_SEND_PORT)),
+    lo_serv_(lo_server_new(DEFAULT_RECEIVER_PORT, NULL))
     {
-
         // TODO: #ifdef ENABLE_DEBUG
         std::cout << "Sending to D-Mitri on: " << lo_address_get_url(destAddr_) << std::endl;
         std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
@@ -71,11 +72,6 @@ void DmitriTranslator::update(Connection *conn)
 
     str = "Input " + OSCutil::stringify(src->getChannelID()) + " Level";
     lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
-}
-
-std::string DmitriTranslator::getTypeString() const
-{
-    return "DMITIRI";
 }
 
 } // end namespace spatosc

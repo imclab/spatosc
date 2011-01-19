@@ -21,6 +21,7 @@ libspatosc_@SPATOSC_API_VERSION@_la_SOURCES = \
     maths.cpp \
     translator.cpp \
     dmitritranslator.cpp \
+    spatdif_translator.cpp \
     connection.cpp \
     soundsource.cpp
 
@@ -41,6 +42,7 @@ libspatosc_@SPATOSC_API_VERSION@_la_include_HEADERS = \
     $(top_srcdir)/include/maths.h \
     $(top_srcdir)/include/translator.h \
     $(top_srcdir)/include/dmitritranslator.h \
+    $(top_srcdir)/include/spatdif_translator.h \
     $(top_srcdir)/include/connection.h \
     $(top_srcdir)/include/soundsource.h \
     $(top_srcdir)/include/spatosc.h

@@ -35,13 +35,6 @@ class Translator
 {
     public:
         /**
-         * Returns the name of this Translator.
-         * 
-         * Each child of Translator has a unique string identifier.
-         */
-        virtual std::string getTypeString() const;
-
-        /**
          * The main work of the translator is done by the update() method, which is
          * called whenever there is a change to some parameters within a connection.
          * 
@@ -56,6 +49,9 @@ class Translator
          * Virtual classes should have virtual destructors.
          */
         virtual ~Translator() {}
+    protected:
+        static const char *DEFAULT_SEND_PORT;
+        static const char *DEFAULT_RECEIVER_PORT;
 };
 
 } // end namespace spatosc
