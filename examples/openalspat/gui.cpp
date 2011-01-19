@@ -300,25 +300,25 @@ gboolean GUI::pointerScrollCb(ClutterActor *actor, ClutterEvent *event,
     /* determine the direction the mouse was scrolled */
     ClutterScrollDirection direction;
     direction = clutter_event_get_scroll_direction (event);
-    gfloat circleWidth;
-    gfloat circleHeight;
-    clutter_actor_get_size(context->sourceActor_, &circleWidth,
-            &circleHeight);
-
+    gfloat actor_width;
+    gfloat actor_height;
+    clutter_actor_get_size(context->sourceActor_, &actor_width,
+            &actor_height);
     switch (direction)
     {
         case CLUTTER_SCROLL_UP:
             // increase circle radius
-            clutter_actor_set_size(context->sourceActor_, circleWidth + 1,
-                    circleHeight + 1);
+            clutter_actor_set_size(context->sourceActor_, actor_width * 1.1,
+                    actor_height * 1.1);
             // increase sound source's position in z
             context->owner_.getAudio().moveSourceRaise();
             break;
 
         case CLUTTER_SCROLL_DOWN:
             // decrease circle radius
-            clutter_actor_set_size(context->sourceActor_, circleWidth - 1,
-                    circleHeight - 1);
+            clutter_actor_set_size(context->sourceActor_, actor_width * 0.9,
+                    actor_height * 0.9);
+            // decrease sound source's position in z
             context->owner_.getAudio().moveSourceLower();
             break;
         default:

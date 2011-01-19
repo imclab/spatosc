@@ -27,15 +27,17 @@
 #define _SPATDIF_TRANSLATOR_H_
 
 #include "translator.h"
+#include "oscsender.h"
 #include <lo/lo.h>
 #include <string>
 
 namespace spatosc
 {
-    class Node;
+
+class Node;
 
 /**
- * Translator for the SpatDIF protocol
+ * Translator for the SpatDIF protocol.
  */
 class SpatdifTranslator : public Translator
 {
@@ -45,9 +47,8 @@ class SpatdifTranslator : public Translator
         virtual void update(Connection *conn);
 
     private:
+        OscSender oscSender_;
         void sendPosition(const std::string &prefix, Node *node);
-        lo_address destAddr_;
-        lo_server lo_serv_;
         // not implemented
         SpatdifTranslator(const SpatdifTranslator&);
         const SpatdifTranslator& operator=(const SpatdifTranslator&);

@@ -22,29 +22,27 @@
 #include "spatdif_translator.h"
 #include <string>
 #include "oscutils.h"
+#include "oscsender.h"
 #include "connection.h"
 #include "soundsource.h"
 
 namespace spatosc
 {
-
+// TODO:2011-01-19:aalex:Allow to specify the sending port
 SpatdifTranslator::SpatdifTranslator(const std::string &ip) :
-    destAddr_(lo_address_new(ip.c_str(), DEFAULT_SEND_PORT)),
-    lo_serv_(lo_server_new(DEFAULT_RECEIVER_PORT, NULL))
+    oscSender_(ip, DEFAULT_SEND_PORT)
     {}
 
 SpatdifTranslator::~SpatdifTranslator()
 {
-    // destructor
-    lo_server_free(lo_serv_);
-    lo_address_free(destAddr_);
 }
 
 void SpatdifTranslator::sendPosition(const std::string &prefix, Node *node)
 {
-    std::string str = prefix +  "/position";
+    std::string path = prefix +  "/position";
     Vector3 vect(node->getPosition());
-    lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "fff", vect.x, vect.y, vect.z);
+    oscSender_.sendMessage(path, "fff", vect.x, vect.y, vect.z);
+    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "fff", vect.x, vect.y, vect.z);
 }
 
 void SpatdifTranslator::update(Connection * conn)
