@@ -55,7 +55,11 @@
  *
  * This library uses the GNU Autotools. It is documented using the syntax of Doxygen.
  *
- * @section Packaging your project to use it
+ * @section Dependencies
+ *
+ * It requires liblo.
+ *
+ * @section Packaging
  *
  * Include the header:
  *
