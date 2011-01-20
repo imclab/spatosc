@@ -204,7 +204,6 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
 void GUI::connectMouseCallbacks()
 {
     // connect mouse event signals
-   // g_signal_connect(stage_, "motion-event", G_CALLBACK(pointerMotionCb), this);
     g_signal_connect(stage_, "scroll-event", G_CALLBACK(pointerScrollCb), this);
     
     // Make it draggable
@@ -358,29 +357,3 @@ gboolean GUI::pointerScrollCb(ClutterActor *actor, ClutterEvent *event,
     return TRUE; /* event has been handled */
 }
 
-gboolean GUI::pointerMotionCb(ClutterActor *actor, ClutterEvent *event,
-        gpointer data)
-{ 
-    GUI *context = static_cast<GUI*>(data);
-
-    /* get the coordinates where the pointer crossed into the actor */
-    gfloat stageX, stageY, stageWidth, stageHeight,
-           distanceFromSourceX, distanceFromSourceY;
-
-    stageWidth = clutter_actor_get_width(actor);
-    stageHeight = clutter_actor_get_height(actor);
-    clutter_event_get_coords(event, &stageX, &stageY);
-    distanceFromSourceX = stageX / stageWidth;
-    distanceFromSourceY = stageY / stageHeight;
-
-    /*
-       context->soundSourcePos[0] = distanceFromSourceX;
-       context->soundSourcePos[1] = distanceFromSourceY;
-       alSourcefv(context->soundSource, AL_POSITION, context->soundSourcePos);
-     */
-
-    clutter_actor_set_position(CLUTTER_ACTOR(context->sourceActor_), stageX, 
-            stageY);
-
-    return TRUE;
-}
