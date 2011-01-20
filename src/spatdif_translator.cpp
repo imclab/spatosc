@@ -58,7 +58,7 @@ void SpatdifTranslator::update(Connection * conn)
     }
     if (snk == 0)
     {
-        std::cerr << "Sound source is NULL!\n";
+        std::cerr << "Sound sink is NULL!\n";
         return;
     }
     if (src->getChannelID() < 0)

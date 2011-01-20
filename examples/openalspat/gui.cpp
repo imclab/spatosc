@@ -108,7 +108,7 @@ namespace
     /// FIXME: use clutter_cairo, it looks much nicer
     ClutterActor *createCircle(gfloat radius)
     {
-        const ClutterColor transp = {0};
+        const ClutterColor transp = {0, 0, 0, 0};
         /// HACK: create a rectangle, then override its paint method to draw a circle
         ClutterActor *circle = clutter_rectangle_new_with_color(&transp);
         clutter_actor_set_anchor_point_from_gravity(circle,
@@ -163,7 +163,7 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
     GUI *context = static_cast<GUI*>(data);
     float xPos = clutter_actor_get_x(actor) + delta_x;
     float yPos = clutter_actor_get_y(actor) + delta_y;
-    float zPos = clutter_actor_get_depth(actor);
+    //float zPos = clutter_actor_get_depth(actor);
     bool stopDrag = false;
     float windowWidth = clutter_actor_get_width(context->stage_);
     float windowHeight = clutter_actor_get_height(context->stage_);
@@ -190,7 +190,8 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
     }
         
     assert(context->sound_);
-    context->sound_->setPosition(xPos, yPos, zPos); // FIXME: change depth!
+    context->sound_->setPosition(fabs(xPos - (windowWidth * 0.5)),
+            fabs(yPos - (windowHeight * 0.5)), 0); // FIXME: change depth!
 
     context->setPositionLabel();
 
@@ -243,7 +244,7 @@ void GUI::createStage()
     clutter_actor_show(stage_);
 }
 
-gboolean GUI::keyPressCb(ClutterActor *actor,
+gboolean GUI::keyPressCb(ClutterActor * /*actor*/,
         ClutterEvent *event,
         gpointer data)
 {
@@ -325,7 +326,7 @@ void GUI::run()
 }
 
 // scrolling causes the sound source to move in the z direction
-gboolean GUI::pointerScrollCb(ClutterActor *actor, ClutterEvent *event,
+gboolean GUI::pointerScrollCb(ClutterActor * /*actor*/, ClutterEvent *event,
         gpointer data)
 {
     GUI *context = static_cast<GUI*>(data);
@@ -352,6 +353,7 @@ gboolean GUI::pointerScrollCb(ClutterActor *actor, ClutterEvent *event,
         default:
             break;
     }
+    std::cout << "Depth " << actor_depth << std::endl;
 
     return TRUE; /* event has been handled */
 }
