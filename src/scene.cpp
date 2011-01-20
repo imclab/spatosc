@@ -92,11 +92,11 @@ void Scene::debugPrint ()
     }
 }
 
-SoundSource* Scene::getOrCreateSoundSource(const std::string &id)
+SoundSource* Scene::createSoundSource(const std::string &id)
 {
     using std::tr1::shared_ptr;
     // check if it already exists:
-    SoundSource *n = getSoundSource(id);
+    Node *n = getNode(id);
 
     if (n == 0)
     {
@@ -105,7 +105,7 @@ SoundSource* Scene::getOrCreateSoundSource(const std::string &id)
 
         // add it to the SoundSourceList:
         SoundSourceList_.push_back(tmp);
-        n = tmp.get();
+        n = dynamic_cast<Node *>(tmp.get());
 
         if (autoConnect_)
         {
@@ -115,9 +115,13 @@ SoundSource* Scene::getOrCreateSoundSource(const std::string &id)
                 connect(n, L->get());
             }
         }
+        return dynamic_cast<SoundSource *>(n);
     }
-
-    return n;
+    else
+    {
+        std::cerr << "A node named " << id << " of type " << typeid(n).name() << "already exists." << std::endl;
+        return 0;
+    }
 }
 
 Listener* Scene::getOrCreateListener(const std::string &id)

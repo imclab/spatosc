@@ -84,9 +84,8 @@ class Scene
          * 
          * If a node wih this name already exists, it returns a null pointer and prints an error message.
          * @return A SoundSource pointer. Never free this pointer.
-         * @deprecated We be renamed to createSoundSound
          */
-        SoundSource* getOrCreateSoundSource(const std::string &id);
+        SoundSource* createSoundSource(const std::string &id);
 
         /**
          * Returns a node in the scene identified by its identifier.
