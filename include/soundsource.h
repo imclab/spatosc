@@ -38,6 +38,7 @@ class SoundSource : public Node
         SoundSource(const std::string &nodeID, Scene &scene);
 
         virtual void debugPrint() const;
+
         /**
          * Sets the input channel number - for when using live sound sources.
          * @param channel The channel number.
@@ -46,6 +47,7 @@ class SoundSource : public Node
 
         /**
          * Returns the input channel number - for when using live sound sources.
+         * @return An audio channel number which can be used to represent the actual audio channel of an audio interface.
          */
         int getChannelID() const { return channelID_; }
 

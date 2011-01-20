@@ -58,16 +58,19 @@ public:
      * Returns the distance between the source and sink nodes.
      * 
      * A distance is always positive.
+     * @return Distance in meters between its two nodes.
      */
     double distance() const { return distance_; }
 
     /**
      * Returns the azimuth (horizontal rotation) between the source and the sink node.
+     * @return Angle value.
      */
     double azimuth() const { return azim_; }
 
     /**
      * Returns the elevation (vertical angle) between the source and the sink node.
+     * @return Angle value.
      */
     double elevation() const { return elev_; }
 
@@ -76,10 +79,20 @@ public:
      * according to distance. 
      * 
      * Distances are in meters.
+     * @return Linear gain between 0 and 1.
      */
     double gain() const { return gain_; }
 
+    /**
+     * Returns a reference to its source Node.
+     * @return A Node.
+     */
     Node& getSource() const { return *src_; }
+
+    /**
+     * Returns a reference to its sink Node.
+     * @return A Node.
+     */
     Node& getSink() const { return *snk_; }
     
 protected:
