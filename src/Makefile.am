@@ -45,7 +45,8 @@ libspatosc_@SPATOSC_API_VERSION@_la_include_HEADERS = \
     $(top_srcdir)/include/spatdif_translator.h \
     $(top_srcdir)/include/connection.h \
     $(top_srcdir)/include/soundsource.h \
-    $(top_srcdir)/include/spatosc.h
+    $(top_srcdir)/include/spatosc.h \
+    $(top_srcdir)/include/version.h
 
 EXTRA_DIST=$(top_srcdir)/include/config.h
 
