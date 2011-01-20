@@ -167,7 +167,7 @@ Node* Scene::getNode(const std::string &id)
     n = getListener(id);
     if (n) 
         return n;
-
+    std::cerr << "No such node: " << id << std::endl;
     return 0;
 }
 
@@ -183,7 +183,7 @@ SoundSource* Scene::getSoundSource(const std::string &id)
             return n->get();
         }
     }
-    return NULL;
+    return 0;
 }
 
 Listener* Scene::getListener(const std::string &id)
@@ -196,7 +196,7 @@ Listener* Scene::getListener(const std::string &id)
             return L->get();
         }
     }
-    return NULL;
+    return 0;
 }
 
 std::vector<Connection*> Scene::getConnectionsForNode(const std::string &id)
@@ -214,30 +214,17 @@ std::vector<Connection*> Scene::getConnectionsForNode(const std::string &id)
     return foundConnections;
 }
 
-Connection* Scene::getConnection(const std::string &src, const std::string &snk)
+Connection* Scene::getConnection(const Node *source, const Node *sink)
 {
     connIterator c;
     for (c = ConnectionList_.begin(); c != ConnectionList_.end(); ++c)
     {
-        if (((*c)->src_->id_ == src) and ((*c)->snk_->id_ == snk))
+        if (((*c)->src_ == source) and ((*c)->snk_ == sink))
         {
             return c->get();
         }
     }
-    return NULL;
-}
-
-Connection* Scene::getConnection(const std::string &id)
-{
-    connIterator c;
-    for (c = ConnectionList_.begin(); c != ConnectionList_.end(); ++c)
-    {
-        if ((*c)->id_ == id)
-        {
-            return c->get();
-        }
-    }
-    return NULL;
+    return 0;
 }
 
 void Scene::setConnectFilter(std::string s)
@@ -253,33 +240,7 @@ void Scene::setConnectFilter(std::string s)
         std::cout << "Scene error: bad regex pattern passed to setConnectFilter(): " << s << std::endl;
         return;
     }
-
     connectFilter_ = s;
-}
-
-Connection* Scene::connect(const std::string &src, const std::string &snk)
-{
-    // check if exists first:
-    Connection* conn = getConnection(src, snk);
-    if (!conn)
-    {
-        // check if both nodes exist
-        Node *srcNode = getNode(src);
-        Listener *listener = getListener(snk);
-        Node *snkNode;
-
-        bool isNormalConnection = true;
-        if (listener)
-        {
-            snkNode = listener;
-            isNormalConnection = false;
-        }
-        else snkNode = getNode(snk);
-
-        conn = connect(srcNode, snkNode);
-    }
-
-    return conn;
 }
 
 Connection* Scene::connect(Node *src, Node *snk)
@@ -287,30 +248,33 @@ Connection* Scene::connect(Node *src, Node *snk)
     using std::tr1::shared_ptr;
     // if the node pointers are invalid for some reason, return:
     if (!src or !snk) 
-        return NULL;
+        return 0;
+    Connection* conn = getConnection(src, snk);
+    if (conn)
+    {
+        std::cerr << "Nodes " << src->getID() << " and " << snk->getID() << " are already connected." << std::endl;
+        return conn;
+    }
 
     // Check src and snk id's against the connectFilter. If either match, then
     // proceed with the connection:
-    int srcRegexStatus = regexec(&connectRegex_, src->id_.c_str(), (size_t)0, NULL, 0);
-    int snkRegexStatus = regexec(&connectRegex_, snk->id_.c_str(), (size_t)0, NULL, 0);
+    int srcRegexStatus = regexec(&connectRegex_, src->id_.c_str(), (size_t)0, 0, 0);
+    int snkRegexStatus = regexec(&connectRegex_, snk->id_.c_str(), (size_t)0, 0, 0);
 
     if (srcRegexStatus == 0 or snkRegexStatus == 0)
     {
         // create connection:
         shared_ptr<Connection> conn(new Connection(src, snk));
-
         // register the connection with both the Scene and the
         // sink node (for backwards connectivity computation):
         ConnectionList_.push_back(conn);
         src->connectTO_.push_back(conn);
         snk->connectFROM_.push_back(conn);
-
         update(conn.get());
-
         return conn.get();
     }
     else
-        return NULL;
+        return 0;
 }
 
 void Scene::disconnect(Connection * /*conn*/)
