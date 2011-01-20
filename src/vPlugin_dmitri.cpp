@@ -56,6 +56,8 @@ void vPlugin_dmitri::update(vSoundConn *conn)
 	float spacemapX = cos(conn->azimuth()) * r * SPACEMAP_RADIUS;
 	float spacemapY = sin(conn->azimuth()) * r * SPACEMAP_RADIUS;
 
+    //std::cout << "Bus#"<<src->getChannelID()<<" x,y,z="<<src->pos_.x<<","<<src->pos_.y<<","<<src->pos_.z<<", aed="<<conn->azimuth()<<","<<conn->elevation()<<","<<conn->distance()<<", spacemap="<<spacemapX<<","<<spacemapY<<std::endl;
+
 	str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/x";
 	lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
 

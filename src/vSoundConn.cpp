@@ -46,7 +46,7 @@ void vSoundConn::update()
 {
     if (src_->updateFlag_ or snk_->updateFlag_)
     {
-        Vector3 vect = snk_->pos_ - src_->pos_;
+        Vector3 vect = src_->pos_ - snk_->pos_;
         distance_ = static_cast<double>(vect.Mag());
         double distanceScalar = 1 / (1.0 + pow(distance_, static_cast<double>(distanceEffect_) * 0.01));
         azim_ = atan2(vect.y, vect.x);

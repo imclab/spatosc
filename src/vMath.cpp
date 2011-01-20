@@ -109,7 +109,7 @@ double AngleBetweenVectors(Vector3 v1, Vector3 v2)
 		
 	// Here we make sure that the angle is not a -1.#IND0000000 number,
 	// which means indefinite
-	if (isnan(angle))  //__isnand(x)
+	if (std::isnan(angle))  //__isnand(x)
 		return 0;
 		
 	// Return the angle in radians

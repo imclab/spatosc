@@ -33,7 +33,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
 
 	// Each scene needs to have at least one vListener:
-	//vListener *listener = vAudioManager::Instance().getOrCreateListener("listener");
+	vListener *listener = vAudioManager::Instance().getOrCreateListener("listener");
 
 	// A variable number of vSoundSource instances can then be generated. Note
 	// that a bus number must be assigned to each source in order to render in
@@ -48,20 +48,33 @@ int main(int /*argc*/, char ** /*argv*/)
 	// we choose D-Mitri, and provide the IP address of the server on the
 	// control network. Note that D-Mitri uses 2 interfaces, a control network
 	// (typically IPv4) and an audio network (AVB):
-	vAudioManager::Instance().setPlugin(new vPlugin_dmitri("192.168.2.26"));
+	vAudioManager::Instance().setPlugin(new vPlugin_dmitri("192.168.2.202"));
 
 	// The vAudioManager class can print out everything to the console:
 	vAudioManager::Instance().debugPrint();
 
 	// Now we just move nodes around and updates should be sent to D-Mitri:
 
-	foo->setPosition(0,10,0);
-	bar->setPosition(5,5,0);
+    float orbitRadius = 5.0;
+    float orbitDuration = 10.0;
+    int numSamples = 100;
 
-	sleep(1);
+    while (1)
+    {
+        for (int i=0; i<numSamples; i++)
+        {
+            float angle = i * 2.0 * M_PI / (numSamples-1);
 
-	foo->setPosition(0,5,0);
-	bar->setPosition(-5,5,0);
+            foo->setPosition(sinf(angle)*orbitRadius,
+                             cosf(angle)*orbitRadius,
+                             1.0);
+            bar->setPosition(sinf(-angle)*orbitRadius/2.0,
+                             cosf(angle)*orbitRadius/2.0,
+                             1.0);
+
+	        usleep(1000000 * orbitDuration / numSamples);
+        }
+    }
 
 	vAudioManager::Instance().debugPrint();
 
