@@ -134,14 +134,13 @@ GUI::GUI() :
 {
     scene_->setTranslator<spatosc::SpatdifTranslator>("127.0.0.1");
     createStage();
-    sendSourcePosition();
     connectMouseCallbacks();
     connectKeyCallbacks();
     sound_ = scene_->getOrCreateSoundSource("sound_a");
     sound_->setChannelID(1);
     moveSourceToOrigin();
-    //spatosc::Listener *listener = scene_->getOrCreateListener("listener");
-
+    scene_->getOrCreateListener("listener");
+    setPositionLabel();
 }
 
 void GUI::moveSourceToOrigin()
@@ -155,7 +154,6 @@ void GUI::moveSourceToOrigin()
     clutter_actor_set_size(sourceActor_, 2 * radius_, 2 * radius_);
     assert(sound_);
     sound_->setPosition(0.0, 0.0, 0.0);
-    sendSourcePosition();
 }
 
 #if CLUTTER_CHECK_VERSION(1, 4, 0)
@@ -192,8 +190,9 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
     else
         ;//context->owner_.getAudio().moveSourceBy(delta_x, delta_y, 0.0f);
 
-    context->sound_->setPosition(delta_x, delta_y, 0.0f);
-    context->sendSourcePosition();
+    // FIXME: tmatth:wrong!!! needs depth!
+    context->sound_->setPosition(xPos, yPos, 0.0f);
+    context->setPositionLabel();
 
     // in Clutter 2.0 we will be able to simply return FALSE instead of calling g_signal_stop_emission_by_name
     if (stopDrag)
@@ -267,25 +266,25 @@ gboolean GUI::keyPressCb(ClutterActor *actor,
         case CLUTTER_KEY_Up:
             //context->owner_.getAudio().moveSourceBy(0.0f, -1.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 0.0f, -1.0f);
-            context->sendSourcePosition();
+            context->setPositionLabel();
             return TRUE;
 
         case CLUTTER_KEY_Down:
             //context->owner_.getAudio().moveSourceBy(0.0f, 1.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 0.0f, 1.0f);
-            context->sendSourcePosition();
+            context->setPositionLabel();
             return TRUE;
 
         case CLUTTER_KEY_Left:
             //context->owner_.getAudio().moveSourceBy(-1.0f, 0.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, -1.0f, 0.0f);
-            context->sendSourcePosition();
+            context->setPositionLabel();
             return TRUE;
 
         case CLUTTER_KEY_Right:
             //context->owner_.getAudio().moveSourceBy(1.0f, 0.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 1.0f, 0.0f);
-            context->sendSourcePosition();
+            context->setPositionLabel();
             return TRUE;
 
         case CLUTTER_KEY_o:
@@ -301,7 +300,7 @@ gboolean GUI::keyPressCb(ClutterActor *actor,
     return handled;
 }
 
-void GUI::sendSourcePosition()
+void GUI::setPositionLabel()
 {
     std::ostringstream os;
     float actor_x;

@@ -22,6 +22,7 @@
 #include <iostream>
 #include <spatosc/translator.h>
 #include <spatosc/oscreceiver.h>
+#include <glib/gmain.h> // for gtimeout
 
 // receive messages from the spatosc plugin
 const char* AudioScene::RX_PORT = spatosc::Translator::DEFAULT_SEND_PORT;
@@ -33,6 +34,13 @@ void AudioScene::init()
 }
 
 
+int AudioScene::genericHandler(const char *path, const char *types,
+        lo_arg ** argv, int argc, void *user_data, void *data)
+{
+    std::cout << "Generic handler\n";
+    return 1; // handoff
+}
+
 int AudioScene::onSourcePositionChanged(const char *path, const char *types,
         lo_arg ** argv, int argc, void *user_data, void *data)
 {
@@ -43,9 +51,22 @@ int AudioScene::onSourcePositionChanged(const char *path, const char *types,
     return 0;
 }
 
+gboolean AudioScene::pollOscReceiver(gpointer data)
+{
+    AudioScene* context = static_cast<AudioScene*>(data);
+    int bytes = context->oscReceiver_->receive();
+    if (bytes > 0)
+        std::cout << "received " << bytes << std::endl;
+
+    return TRUE;
+}
+
 void AudioScene::bindCallbacks()
 {
     oscReceiver_->addHandler("SpatDIF/core/source/1/position", "fff", onSourcePositionChanged, this);
+    oscReceiver_->addHandler(NULL, NULL, genericHandler, NULL);
+    // add a timeout to poll our oscreceiver
+    g_timeout_add(1000 /*ms*/, pollOscReceiver, this);
 }
 
 AudioScene::AudioScene() : step_(0.1), oscReceiver_(new spatosc::OscReceiver(RX_PORT))
@@ -114,53 +135,3 @@ void AudioScene::updatePosition()
     alSourcefv(source_, AL_POSITION, sourcePos_);
 }
 
-void AudioScene::moveSourceBy(float x, float y, float z)
-{
-    sourcePos_[0] += x;
-    sourcePos_[1] += y;
-    sourcePos_[2] += z;
-    updatePosition();
-}
-
-void AudioScene::moveSourceRaise()
-{
-    sourcePos_[2] += step_;
-    updatePosition();
-}
-
-void AudioScene::moveSourceLower()
-{
-    sourcePos_[2] -= step_;
-    updatePosition();
-}
-
-void AudioScene::moveSourceUp()
-{
-    sourcePos_[1] += step_;
-    updatePosition();
-}
-
-void AudioScene::moveSourceDown()
-{
-    sourcePos_[1] -= step_;
-    updatePosition();
-}
-
-void AudioScene::moveSourceLeft()
-{
-    sourcePos_[0] -= step_;
-    updatePosition();
-}
-
-void AudioScene::moveSourceRight()
-{
-    sourcePos_[0] += step_;
-    updatePosition();
-}
-
-void AudioScene::moveSourceToOrigin()
-{
-    for (int i = 0; i != 3; ++i)
-        sourcePos_[i] = 0.0;
-    updatePosition();
-}
