@@ -1,0 +1,15 @@
+SpatDIF
+-------
+
+Here is the spatosc flavour of spatdif. It's inrpired by it, but not quite the same.
+
+ * /spatosc/core/<s:channel>/xyz f:x f:y f:z
+ * /spatosc/core/<s:channel>/aed f:a f:e f:d
+ * /spatosc/core/
+
+
+D-Mitri
+-------
+
+[TODO]
+

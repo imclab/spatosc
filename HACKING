@@ -84,14 +84,13 @@ The README File
 The installations instructions are one level higher, in the README file.
 
 
-
 Historic
 --------
 
 Let's talk about the choices made in this library and software.
 
-[todo]
-
+We chose not to raise an exception if a given node is not found. We return a null pointer instead.
+We need a generic Scene::getNode method, since node identifiers are unique.
 
 
 Libraries we use

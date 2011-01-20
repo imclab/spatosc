@@ -25,13 +25,18 @@ Refactoring
 -----------
  * remove friend classes in vBaseNode
  * Cleanup the public interface of the public classes.
- * can we split Scene::getOrCreate methods into get and create?
- * can we raise exception if a given node is not found? (instead of returning a null pointer)
- * can we remove the Scene::getNode method? (there are already getListener and getSoundSource)
- * Can we remove Scene::getConnection (const std::string &id) ?
- * Can we remove connect (Node *src, Node *snk) ?
- * disconnect should be disconnect (const std::string &src, const std::string &snk)
  * Scene::update methods should be renamed to something more meaningful
  * convert aed-style orientation into quaternions. (or at least support also quaternions)
  * rename dmitri_translator.h like that.
+ * rename Node.setPosition to setPositionXYZ(x,y,z)
+ * add setPositionAED(a, e, d)
+ * split Scene::getOrCreate* methods into get* and create*
+ * remove Scene::getConnection (const std::string &id) (there is already getConnection(src_id, snk_id))
+ * remove Scene::connect (src_id, sink_id), the Node* version is faster.
+ * Scene::disconnect should be disconnect(Node*, Node*), (not disconnect(string conn_id))
+
+Error handling
+--------------
+ * Node id need to be unique. (either Listener or Sources)
+
 

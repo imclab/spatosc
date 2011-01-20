@@ -53,7 +53,7 @@ void Node::setPosition(double x, double y, double z)
     scene_.update(this);
 }
 
-void Node::setRotation(double pitch, double roll, double yaw)
+void Node::setOrientation(double pitch, double roll, double yaw)
 {
     rot_ = Vector3(pitch, roll, yaw);
     updateFlag_ = true;

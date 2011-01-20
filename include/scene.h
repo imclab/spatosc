@@ -81,41 +81,45 @@ class Scene
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
-         * @return Do not free the returned pointer, the Scene owns it and will deallocate it internally.
-         * @deprecated We will either create of get, not not getOrCreate.
+         * 
+         * If a node wih this name already exists, it returns a null pointer and prints an error message.
+         * @return A SoundSource pointer. Never free this pointer.
+         * @deprecated We be renamed to createSoundSound
          */
         SoundSource* getOrCreateSoundSource(const std::string &id);
 
         /**
          * Returns a node in the scene identified by its identifier.
-         * @return Do not free the returned pointer, the Scene owns it and will deallocate it internally.
-         * @deprecated We will either create of get, not not getOrCreate.
+         * 
+         * If a node wih this name already exists, it returns a null pointer and prints an error message.
+         * @return A Listener pointer. Never free this pointer.
+         * @deprecated We be renamed to createListener
          */
         Listener* getOrCreateListener(const std::string &id);
 
         /**
          * Returns a node in the scene, given its identifier.
-         * @return A Node* that is null if not found. Never free that pointer.
+         * @return A Node pointer. Null if not found. Never free this pointer.
          */
         Node* getNode(const std::string &id);
 
         /**
          * Returns a sound source node in the scene identified by its identifier.
-         * @return A SoundSource* that is null if not found. Never free that pointer.
+         * @return A SoundSource pointer. Null if not found. Never free this pointer.
          */
         SoundSource* getSoundSource(const std::string &id);
 
         /**
          * Returns a listener node in the scene, given its identifier.
          * @param id Identifier for the Listener node.
-         * @return A Listener* that is null if not found. Never free that pointer.
+         * @return A Listener pointer. Null if not found. Never free this pointer.
          */
         Listener* getListener(const std::string &id);
 
         /**
          * Returns a list of all connections that "directly involve" a node (ie, as the source or the sink): 
          * @param id Identifier of the node for which we want its connections.
-         * @return A vector of pointers to Connection objects. Never free those pointers.
+         * @return A vector of Connection pointers. Never free these pointers.
          */
         std::vector<Connection*> getConnectionsForNode(const std::string &id);
 
@@ -123,15 +127,14 @@ class Scene
          * Returns a Connection in the scene identified by the identifiers of its source and sink nodes.
          * @param src Identifier of the source node.
          * @param sink Identifier of the sink node.
-         * @return A Connection* that is null if not found. Never free that pointer.
+         * @return A Connection pointer. Null if not found. Never free this pointer.
          */
-
         Connection* getConnection(const std::string &src, const std::string &snk);
 
         /**
          * Returns a connection, given ts identifier.
          * @param id Identifier of the Connection.
-         * @return A Connection* that is null if not found. Never free that pointer.
+         * @return A Connection pointer. Null if not found. Never free this pointer.
          * @deprecated The same overloaded version with two strings is the right one to use.
          */
         Connection* getConnection(const std::string &id);
@@ -161,19 +164,20 @@ class Scene
 
         /** 
          * Connects two nodes together, using their identifiers.
-         * @return A Connection* that is null if not found. Never free that pointer.
+         * @return A Connection pointer. Null if not found. Never free this pointer.
          */
         Connection* connect(const std::string &src, const std::string &snk);
 
         /** 
          * Connects two nodes together.
-         * @return A Connection* that is null if not found. Never free that pointer.
+         * @return A Connection pointer. Null if not found. Never free this pointer.
          */
         Connection* connect(Node *src, Node *snk);
 
         /** 
          * Disconnects two nodes.
-         * @deprecated Not even implemented and its signature will change. (maybe using two identifiers)
+         * @deprecated Will change to disconnect(Node*, Node*)
+         * @warning Not implemented yet.
          */
         void disconnect(Connection *conn);
 
@@ -189,7 +193,6 @@ class Scene
 
     private:
 
-        // TODO: Fri Jan 14 11:14:34 EST 2011: have mulitple translators
         std::tr1::shared_ptr<Translator> translator_;
 
         bool autoConnect_;

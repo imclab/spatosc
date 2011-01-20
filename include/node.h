@@ -77,11 +77,14 @@ class Node
 
         /**
          * Sets this node's orientation.
+         * 
+         * Angles are in degrees.
+         * 0 degrees is in front of you. 90 is on your right.
          * @param pitch Rotation on the lateral axis (saying "yes")
          * @param roll Rotation on the longitudinal axis (saying "maybe")
          * @param yaw Rotation on the vertical axis (saying "no")
          */
-        virtual void setRotation(double pitch, double roll, double yaw);
+        virtual void setOrientation(double pitch, double roll, double yaw);
 
         /**
          * Returns this node's position.
