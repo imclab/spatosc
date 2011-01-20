@@ -312,8 +312,10 @@ void GUI::sendSourcePosition()
     gfloat stage_w = clutter_actor_get_width(CLUTTER_ACTOR(stage_));
     gfloat stage_h = clutter_actor_get_height(CLUTTER_ACTOR(stage_));
     clutter_actor_get_position(sourceActor_, &actor_x, &actor_y);
-    os << "Source: (" << (actor_x - stage_w) << ", " << (actor_y - stage_h) << ", " << actor_depth << ")";
-    g_print("%s\n", os.str().c_str());
+    os << "Source: (" << (actor_x - stage_w) << ", " << (actor_y - stage_h) << ", " << actor_depth << ")\n";
+#ifdef DEBUG
+    std::cout << os.str();
+#endif
     clutter_text_set_text(CLUTTER_TEXT(sourcePosLabel_), os.str().c_str());
 }
 
