@@ -22,6 +22,7 @@
 #include <AL/al.h>
 #include <AL/alut.h>
 #include <tr1/memory>
+#include <glib/gtypes.h>
 #include "lo/lo.h"
 
 
@@ -34,6 +35,12 @@ class AudioScene {
         void createSource();
         void createListener();
         void updatePosition();
+        void bindCallbacks();
+        static gboolean pollOscReceiver(gpointer data);
+        static int onSourcePositionChanged(const char *path, const char *types, 
+                lo_arg ** argv, int argc, void *user_data, void *data);
+        static int genericHandler(const char *path, const char *types,
+        lo_arg ** argv, int argc, void *user_data, void *data);
 
         ALfloat sourcePos_[3];
         ALuint source_;
@@ -45,21 +52,8 @@ class AudioScene {
         AudioScene();
         ~AudioScene();
         void start();
-        void bindCallbacks();
-        static int onSourcePositionChanged(const char *path, const char *types, 
-                lo_arg ** argv, int argc, void *user_data, void *data);
         /// Initialize openal subsystem
         static void init();
-        
-        // movement API
-        void moveSourceBy(float x, float y, float z);
-        void moveSourceLeft();
-        void moveSourceRight();
-        void moveSourceUp();
-        void moveSourceDown();
-        void moveSourceRaise();
-        void moveSourceLower();
-        void moveSourceToOrigin();
 };
 
 #endif // _AUDIO_SCENE_H_

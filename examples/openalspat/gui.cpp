@@ -134,14 +134,13 @@ GUI::GUI() :
 {
     scene_->setTranslator<spatosc::SpatdifTranslator>("127.0.0.1");
     createStage();
-    sendSourcePosition();
     connectMouseCallbacks();
     connectKeyCallbacks();
     sound_ = scene_->getOrCreateSoundSource("sound_a");
     sound_->setChannelID(1);
     moveSourceToOrigin();
-    //spatosc::Listener *listener = scene_->getOrCreateListener("listener");
-
+    scene_->getOrCreateListener("listener");
+    setPositionLabel();
 }
 
 void GUI::moveSourceToOrigin()
@@ -155,7 +154,6 @@ void GUI::moveSourceToOrigin()
     clutter_actor_set_size(sourceActor_, 2 * radius_, 2 * radius_);
     assert(sound_);
     sound_->setPosition(0.0, 0.0, 0.0);
-    sendSourcePosition();
 }
 
 #if CLUTTER_CHECK_VERSION(1, 4, 0)
@@ -189,11 +187,10 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
         stopDrag = true;
         clutter_actor_set_y(actor, 0.0);
     }
-    else
-        ;//context->owner_.getAudio().moveSourceBy(delta_x, delta_y, 0.0f);
+        
+    context->sound_->setPosition(xPos, yPos, 0.0f); // FIXME: change depth!
 
-    context->sound_->setPosition(delta_x, delta_y, 0.0f);
-    context->sendSourcePosition();
+    context->setPositionLabel();
 
     // in Clutter 2.0 we will be able to simply return FALSE instead of calling g_signal_stop_emission_by_name
     if (stopDrag)
@@ -204,7 +201,6 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
 void GUI::connectMouseCallbacks()
 {
     // connect mouse event signals
-   // g_signal_connect(stage_, "motion-event", G_CALLBACK(pointerMotionCb), this);
     g_signal_connect(stage_, "scroll-event", G_CALLBACK(pointerScrollCb), this);
     
     // Make it draggable
@@ -268,25 +264,25 @@ gboolean GUI::keyPressCb(ClutterActor *actor,
         case CLUTTER_KEY_Up:
             //context->owner_.getAudio().moveSourceBy(0.0f, -1.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 0.0f, -1.0f);
-            context->sendSourcePosition();
+            context->setPositionLabel();
             return TRUE;
 
         case CLUTTER_KEY_Down:
             //context->owner_.getAudio().moveSourceBy(0.0f, 1.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 0.0f, 1.0f);
-            context->sendSourcePosition();
+            context->setPositionLabel();
             return TRUE;
 
         case CLUTTER_KEY_Left:
             //context->owner_.getAudio().moveSourceBy(-1.0f, 0.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, -1.0f, 0.0f);
-            context->sendSourcePosition();
+            context->setPositionLabel();
             return TRUE;
 
         case CLUTTER_KEY_Right:
             //context->owner_.getAudio().moveSourceBy(1.0f, 0.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 1.0f, 0.0f);
-            context->sendSourcePosition();
+            context->setPositionLabel();
             return TRUE;
 
         case CLUTTER_KEY_o:
@@ -302,7 +298,7 @@ gboolean GUI::keyPressCb(ClutterActor *actor,
     return handled;
 }
 
-void GUI::sendSourcePosition()
+void GUI::setPositionLabel()
 {
     std::ostringstream os;
     float actor_x;
@@ -358,29 +354,3 @@ gboolean GUI::pointerScrollCb(ClutterActor *actor, ClutterEvent *event,
     return TRUE; /* event has been handled */
 }
 
-gboolean GUI::pointerMotionCb(ClutterActor *actor, ClutterEvent *event,
-        gpointer data)
-{ 
-    GUI *context = static_cast<GUI*>(data);
-
-    /* get the coordinates where the pointer crossed into the actor */
-    gfloat stageX, stageY, stageWidth, stageHeight,
-           distanceFromSourceX, distanceFromSourceY;
-
-    stageWidth = clutter_actor_get_width(actor);
-    stageHeight = clutter_actor_get_height(actor);
-    clutter_event_get_coords(event, &stageX, &stageY);
-    distanceFromSourceX = stageX / stageWidth;
-    distanceFromSourceY = stageY / stageHeight;
-
-    /*
-       context->soundSourcePos[0] = distanceFromSourceX;
-       context->soundSourcePos[1] = distanceFromSourceY;
-       alSourcefv(context->soundSource, AL_POSITION, context->soundSourcePos);
-     */
-
-    clutter_actor_set_position(CLUTTER_ACTOR(context->sourceActor_), stageX, 
-            stageY);
-
-    return TRUE;
-}

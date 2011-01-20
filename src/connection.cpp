@@ -31,6 +31,7 @@ Connection::Connection(Node *source, Node *sink) :
     azim_(0.0),
     elev_(0.0),
     gain_(0.0),
+    gainDB_(0.0),
     //vdel_(0.0),
     distanceEffect_(100.0),
     rolloffEffect_(100.0),
@@ -58,7 +59,7 @@ void Connection::update()
         // now from distance, compute gain and variable delay:
 
         //vdel_ = distance_ * (1/SPEED_OF_SOUND) * .01 * dopplerEffect_; 
-        gain_ = 20 * log10(distanceScalar);
+        gainDB_ = 20 * log10(distanceScalar);
 
         // FIXME:Thu Jan 13 14:52:26 EST 2011:tmatth:
         // is this the only place that needs to update its state when src 

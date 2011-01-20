@@ -19,6 +19,13 @@ class OscSender
         std::string toString() const;
         const char * host() { return host_.c_str(); }
         const char * port() { return port_.c_str(); }
+         /**
+          * Send a message with one or more string, float and/or int args.
+          * Here is an example: 
+          * \code
+          * sendMessage("/oscpath", "fsi", 5.5, "foo", 4);
+          * \endcode
+          */
         void sendMessage(const std::string &OSCpath, const char *types, ...) const;
     private:
         void sendMessage(const std::string &OSCpath, const char *types, va_list ap) const;
