@@ -42,10 +42,10 @@ int main(int /*argc*/, char ** /*argv*/)
 
     scene.setTranslator<DmitriTranslator>("127.0.0.1");
 
-    SoundSource *sound_a = scene.getOrCreateSoundSource("sound_a");
+    SoundSource *sound_a = scene.createSoundSource("sound_a");
     sound_a->setChannelID(1);
 
-    Listener *listener = scene.getOrCreateListener("listener");
+    Listener *listener = scene.createListener("listener");
 
     if (VERBOSE)
         scene.debugPrint();

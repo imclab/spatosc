@@ -36,15 +36,15 @@ int main(int /*argc*/, char ** /*argv*/)
 
 
     // Each scene needs to have at least one Listener:
-    //Listener *listener = scene.getOrCreateListener("listener");
+    //Listener *listener = scene.createListener("listener");
 
     // A variable number of SoundSource instances can then be generated. Note
     // that a bus number must be assigned to each source in order to render in
     // D-Mitri. Setting the bus to -1 will effectively disable computation for
     // that node:
-    SoundSource *foo = scene.getOrCreateSoundSource("foo");
+    SoundSource *foo = scene.createSoundSource("foo");
     foo->setChannelID(1);
-    SoundSource *bar = scene.getOrCreateSoundSource("bar");
+    SoundSource *bar = scene.createSoundSource("bar");
     bar->setChannelID(2);
 
     // In order to send OSC, some output plugin must be specified. In this case,
