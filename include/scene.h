@@ -92,9 +92,8 @@ class Scene
          * 
          * If a node wih this name already exists, it returns a null pointer and prints an error message.
          * @return A Listener pointer. Never free this pointer.
-         * @deprecated We be renamed to createListener
          */
-        Listener* getOrCreateListener(const std::string &id);
+        Listener* createListener(const std::string &id);
 
         /**
          * Returns a node in the scene, given its identifier.

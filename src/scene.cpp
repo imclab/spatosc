@@ -96,60 +96,64 @@ SoundSource* Scene::createSoundSource(const std::string &id)
 {
     using std::tr1::shared_ptr;
     // check if it already exists:
-    Node *n = getNode(id);
+    Node *node = getNode(id);
 
-    if (n == 0)
+    if (node == 0)
     {
         // if not, create a new vSoundNode:
         shared_ptr<SoundSource> tmp(new SoundSource(id, *this));
 
         // add it to the SoundSourceList:
         SoundSourceList_.push_back(tmp);
-        n = dynamic_cast<Node *>(tmp.get());
+        node = dynamic_cast<Node *>(tmp.get());
 
         if (autoConnect_)
         {
-            listenerIterator L;
-            for (L = ListenerList_.begin(); L != ListenerList_.end(); ++L)
+            listenerIterator iter;
+            for (iter = ListenerList_.begin(); iter != ListenerList_.end(); ++iter)
             {
-                connect(n, L->get());
+                connect(node, iter->get());
             }
         }
-        return dynamic_cast<SoundSource *>(n);
+        return dynamic_cast<SoundSource *>(node);
     }
     else
     {
-        std::cerr << "A node named " << id << " of type " << typeid(n).name() << "already exists." << std::endl;
+        std::cerr << "A node named " << id << " of type " << typeid(node).name() << "already exists." << std::endl;
         return 0;
     }
 }
 
-Listener* Scene::getOrCreateListener(const std::string &id)
+Listener* Scene::createListener(const std::string &id)
 {
     using std::tr1::shared_ptr;
     // check if it already exists:
-    Listener *L = getListener(id);
+    Node *node = getNode(id);
 
-    if (!L)
+    if (! node)
     {
         // if not, create a new vSoundNode:
         shared_ptr<Listener> tmp(new Listener(id, *this));
-        L = tmp.get();
+        node = dynamic_cast<Node *>(tmp.get());
 
         // add it to the ListenerList:
         ListenerList_.push_back(tmp);
 
         if (autoConnect_)
         {
-            sourceIterator n;
-            for (n = SoundSourceList_.begin(); n != SoundSourceList_.end(); ++n)
+            sourceIterator iter;
+            for (iter = SoundSourceList_.begin(); iter != SoundSourceList_.end(); ++iter)
             {
-                connect(n->get(), L);
+                connect(iter->get(), node);
             }
         }
+        return dynamic_cast<Listener *>(node);
     }
-
-    return L;
+    else
+    {
+        std::cerr << "A node named " << id << " of type " << typeid(node).name() << "already exists." << std::endl;
+        return 0;
+    }
 }
 
 Node* Scene::getNode(const std::string &id)
