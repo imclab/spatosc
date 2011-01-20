@@ -26,6 +26,8 @@
 #include "soundsource.h"
 #include "connection.h"
 
+#define UNUSED(x) ((void) (x))
+
 namespace spatosc
 {
 
@@ -276,8 +278,10 @@ Connection* Scene::connect(Node *src, Node *snk)
         return 0;
 }
 
-void Scene::disconnect(Connection * /*conn*/)
+void Scene::disconnect(Node *source, Node *sink)
 {
+    UNUSED(source);
+    UNUSED(sink);
     std::cout << "Scene::disconnect NOT IMPLEMENTED YET" << std::endl;
 }
 

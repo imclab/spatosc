@@ -161,10 +161,9 @@ class Scene
 
         /** 
          * Disconnects two nodes.
-         * @deprecated Will change to disconnect(Node*, Node*)
          * @warning Not implemented yet.
          */
-        void disconnect(Connection *conn);
+        void disconnect(Node *source, Node* sink);
 
         /**
          * Called by a node when it is changed so that the scene updates all its sibling nodes.
