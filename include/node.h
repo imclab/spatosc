@@ -58,6 +58,7 @@ class Node
 
         /**
          * Returns the identifier of this node.
+         * @return A string to identify this Node.
          */
         std::string getID() const { return id_; }
 
@@ -84,6 +85,7 @@ class Node
 
         /**
          * Returns this node's position.
+         * @return A Vector3 with its position as x, y and z coordinates.
          */
         Vector3 getPosition() const { return pos_; }
         
@@ -95,6 +97,7 @@ class Node
 
         /**
          * Returns whether or not this node's position should be updated.
+         * @return Either true if it needs to be computed by the Scene, of false if it's OK.
          */
         bool updateFlag() const { return updateFlag_; }
 

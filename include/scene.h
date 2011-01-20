@@ -31,6 +31,7 @@
 
 namespace spatosc
 {
+
 // forward declarations
 class Listener;
 class Node;
@@ -80,35 +81,41 @@ class Scene
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
-         * Do not free the returned pointer, the Scene owns it and will deallocate it internally.
+         * @return Do not free the returned pointer, the Scene owns it and will deallocate it internally.
+         * @deprecated We will either create of get, not not getOrCreate.
          */
         SoundSource* getOrCreateSoundSource(const std::string &id);
 
         /**
          * Returns a node in the scene identified by its identifier.
-         * Do not free the returned pointer, the Scene owns it and will deallocate it internally.
+         * @return Do not free the returned pointer, the Scene owns it and will deallocate it internally.
+         * @deprecated We will either create of get, not not getOrCreate.
          */
         Listener* getOrCreateListener(const std::string &id);
 
         /**
          * Returns a node in the scene, given its identifier.
+         * @return A Node* that is null if not found. Never free that pointer.
          */
         Node* getNode(const std::string &id);
 
         /**
          * Returns a sound source node in the scene identified by its identifier.
+         * @return A SoundSource* that is null if not found. Never free that pointer.
          */
         SoundSource* getSoundSource(const std::string &id);
 
         /**
          * Returns a listener node in the scene, given its identifier.
          * @param id Identifier for the Listener node.
+         * @return A Listener* that is null if not found. Never free that pointer.
          */
         Listener* getListener(const std::string &id);
 
         /**
          * Returns a list of all connections that "directly involve" a node (ie, as the source or the sink): 
          * @param id Identifier of the node for which we want its connections.
+         * @return A vector of pointers to Connection objects. Never free those pointers.
          */
         std::vector<Connection*> getConnectionsForNode(const std::string &id);
 
@@ -116,6 +123,7 @@ class Scene
          * Returns a Connection in the scene identified by the identifiers of its source and sink nodes.
          * @param src Identifier of the source node.
          * @param sink Identifier of the sink node.
+         * @return A Connection* that is null if not found. Never free that pointer.
          */
 
         Connection* getConnection(const std::string &src, const std::string &snk);
@@ -123,6 +131,8 @@ class Scene
         /**
          * Returns a connection, given ts identifier.
          * @param id Identifier of the Connection.
+         * @return A Connection* that is null if not found. Never free that pointer.
+         * @deprecated The same overloaded version with two strings is the right one to use.
          */
         Connection* getConnection(const std::string &id);
 
@@ -151,16 +161,19 @@ class Scene
 
         /** 
          * Connects two nodes together, using their identifiers.
+         * @return A Connection* that is null if not found. Never free that pointer.
          */
         Connection* connect(const std::string &src, const std::string &snk);
 
         /** 
          * Connects two nodes together.
+         * @return A Connection* that is null if not found. Never free that pointer.
          */
         Connection* connect(Node *src, Node *snk);
 
         /** 
          * Disconnects two nodes.
+         * @deprecated Not even implemented and its signature will change. (maybe using two identifiers)
          */
         void disconnect(Connection *conn);
 

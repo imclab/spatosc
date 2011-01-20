@@ -38,11 +38,12 @@ class GUI
         gfloat default_stage_height_;
         ClutterActor *stage_;
         spatosc::SoundSource *sound_;
+        ClutterActor *sourcePosLabel_;
         void createStage();
         void connectMouseCallbacks();
         void connectKeyCallbacks();
         void moveSourceToOrigin();
-        void sendNewPosition();
+        void sendSourcePosition();
 
         // callbacks
         static gboolean pointerMotionCb(ClutterActor *actor, 
