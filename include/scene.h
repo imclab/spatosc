@@ -54,7 +54,11 @@ class Scene
         typedef std::vector<std::tr1::shared_ptr<Connection> >::const_iterator connConstIterator;
 
         /** 
-         * Constructor
+         * Constructor.
+         * 
+         * Your next steps should be to set the translator and create a listener node. 
+         * 
+         * When you create a scene, there is not a single node in the scene and you must create some if you want to do anything.
          */
         Scene();
 
@@ -83,7 +87,7 @@ class Scene
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
          * 
          * If a node wih this name already exists, it returns a null pointer and prints an error message.
-         * @return A SoundSource pointer. Never free this pointer.
+         * @return A SoundSource pointer. Null if a node with this name already exists. Never free this pointer.
          */
         SoundSource* createSoundSource(const std::string &id);
 
@@ -91,7 +95,7 @@ class Scene
          * Returns a node in the scene identified by its identifier.
          * 
          * If a node wih this name already exists, it returns a null pointer and prints an error message.
-         * @return A Listener pointer. Never free this pointer.
+         * @return A Listener pointer. Null if a node with this name already exists. Never free this pointer.
          */
         Listener* createListener(const std::string &id);
 
