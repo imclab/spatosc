@@ -42,6 +42,7 @@ int main(int /*argc*/, char ** /*argv*/)
     // that a bus number must be assigned to each source in order to render in
     // D-Mitri. Setting the bus to -1 will effectively disable computation for
     // that node:
+    scene.createListener("listener");
     SoundSource *foo = scene.createSoundSource("foo");
     foo->setChannelID(1);
     SoundSource *bar = scene.createSoundSource("bar");
