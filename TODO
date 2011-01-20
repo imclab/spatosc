@@ -20,6 +20,7 @@ Packaging
 ---------
  * add an --enable-debug flag
  * remove non-public functions and typedefs from include/*.h
+ * Use pkg-config for liblo, like in the kurt branch
 
 Refactoring
 -----------
