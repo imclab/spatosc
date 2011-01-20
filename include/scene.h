@@ -82,12 +82,14 @@ class Scene
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
          * @return Do not free the returned pointer, the Scene owns it and will deallocate it internally.
+         * @deprecated We will either create of get, not not getOrCreate.
          */
         SoundSource* getOrCreateSoundSource(const std::string &id);
 
         /**
          * Returns a node in the scene identified by its identifier.
          * @return Do not free the returned pointer, the Scene owns it and will deallocate it internally.
+         * @deprecated We will either create of get, not not getOrCreate.
          */
         Listener* getOrCreateListener(const std::string &id);
 
@@ -130,6 +132,7 @@ class Scene
          * Returns a connection, given ts identifier.
          * @param id Identifier of the Connection.
          * @return A Connection* that is null if not found. Never free that pointer.
+         * @deprecated The same overloaded version with two strings is the right one to use.
          */
         Connection* getConnection(const std::string &id);
 
@@ -170,6 +173,7 @@ class Scene
 
         /** 
          * Disconnects two nodes.
+         * @deprecated Not even implemented and its signature will change. (maybe using two identifiers)
          */
         void disconnect(Connection *conn);
 
