@@ -64,11 +64,20 @@ class Scene
         void debugPrint();
 
         /**
-         * Sets the renderer plugin.
+         * Template method that sets the renderer plugin.
          *
-         * Accepts a child class of Translator.
+         * The template argument must be a child of Translator. 
+         * Here is an example: 
+         * \code
+         * Scene scene();
+         * scene.setTranslator<SpatdifTranslator>("127.0.0.1");
+         * \endcode
          */
-        void setTranslator(const std::tr1::shared_ptr<Translator> &p);
+        template <typename T>
+        void setTranslator(const std::string &address)
+        {
+            translator_.reset(new T(address));
+        }
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
@@ -114,7 +123,7 @@ class Scene
          * @param sink Identifier of the sink node.
          * @return A Connection* that is null if not found. Never free that pointer.
          */
-         
+
         Connection* getConnection(const std::string &src, const std::string &snk);
 
         /**

@@ -29,6 +29,10 @@ class OscReceiver
                 void *user_data);
         int receive();
     private:
+        // not implemented
+        OscReceiver(const OscReceiver&);
+        const OscReceiver& operator=(const OscReceiver&);
+
         std::string toString() const;
         std::string port_;
         lo_server server_;
@@ -43,4 +47,3 @@ class OscReceiver
 } // end namespace spatosc
 
 #endif // __OSC_RECEIVER_H__
-

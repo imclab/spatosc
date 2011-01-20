@@ -1,13 +1,36 @@
 Spatosc TODO
-------------
+============
 
- * Cleanup the public interface of the public classes.
- * remove non-public functions and typedefs from include/*.h
- * remove friend classes in vBaseNode
- * Make OscReceiver in the main thread
+Implementations
+---------------
  * Implement SpatdifReceiver
  * Implement SpatdifTranslator
+
+OSC
+---
+ * support lo_send_from in OscSender
+
+Examples
+--------
  * Progress in the Ogre example
+ * Make the clutter / openal example use meters in its GUI
  * Update the openal rendering example
+
+Packaging
+---------
  * add an --enable-debug flag
+ * remove non-public functions and typedefs from include/*.h
+
+Refactoring
+-----------
+ * remove friend classes in vBaseNode
+ * Cleanup the public interface of the public classes.
+ * can we split Scene::getOrCreate methods into get and create?
+ * can we raise exception if a given node is not found? (instead of returning a null pointer)
+ * can we remove the Scene::getNode method? (there are already getListener and getSoundSource)
+ * Can we remove Scene::getConnection (const std::string &id) ?
+ * Can we remove connect (Node *src, Node *snk) ?
+ * disconnect should be disconnect (const std::string &src, const std::string &snk)
+ * Scene::update methods should be renamed to something more meaningful
+ * convert aed-style orientation into quaternions. (or at least support also quaternions)
 

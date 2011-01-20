@@ -40,24 +40,21 @@ static bool nodeSortFunction (Node *n1, Node *n2)
 #endif
 
 
-Scene::Scene ()
+// for now, create a basic (CONSOLE) translator:
+Scene::Scene() :
+    translator_(new Translator()),
+    autoConnect_(true),
+    connectFilter_(),
+    connectRegex_(),
+    ListenerList_(),
+    SoundSourceList_(),
+    ConnectionList_()
 {
     this->ListenerList_.clear();
     this->SoundSourceList_.clear();
     this->ConnectionList_.clear();
 
-    // for now, create a basic (CONSOLE) translator:
-    translator_.reset(new Translator());
-    autoConnect_ = true;
     setConnectFilter(".*"); // match everything
-}
-
-void Scene::setTranslator(const std::tr1::shared_ptr<Translator> &p)
-{
-    if (translator_ == p)
-        return;
-    // replace old translator:
-    translator_ = p;
 }
 
 void Scene::debugPrint ()
@@ -69,9 +66,8 @@ void Scene::debugPrint ()
     std::cout << "\n=====================================================" << std::endl;
     std::cout << "[Scene]:: connectFilter = " << connectFilter_ << std::endl;
 
-    if (translator_)
-        std::cout << "[Scene]:: using " << translator_->getTypeString() << " translator" << std::endl;
-    else std::cout << "[Scene]:: NO translator specified" << std::endl;
+    if (translator_ == 0)
+        std::cout << "[Scene]:: NO translator specified" << std::endl;
 
     std::cout << "[Scene]:: " << ListenerList_.size() << " listeners:" << std::endl;
     for (L = ListenerList_.begin(); L != ListenerList_.end(); ++L)
@@ -305,8 +301,8 @@ Connection* Scene::connect(Node *src, Node *snk)
 
         return conn.get();
     }
-
-    else return NULL;
+    else
+        return NULL;
 }
 
 void Scene::disconnect(Connection * /*conn*/)

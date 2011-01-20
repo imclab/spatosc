@@ -1,25 +1,25 @@
-
-// AudioScene.cpp
-//
-// Copyright (c) 2010 Tristan Matthews <le.businessman@gmail.com>
-//
-// This file is part of spatosc.
-//
-// spatosc is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// spatosc is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with spatosc.  If not, see <http://www.gnu.org/licenses/>.
+/**
+ * This file is part of spatosc.
+ *
+ * Copyright (c) 2010 Society for Arts and Technology <info@sat.qc.ca>
+ *
+ * spatosc is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * spatosc is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with spatosc.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "audio_scene.h"
 #include <stdexcept>
+#include <iostream>
 
 void AudioScene::init()
 {
@@ -27,7 +27,7 @@ void AudioScene::init()
     alGetError(); // clear the error bit
 }
 
-AudioScene::AudioScene() : step_(1.0)
+AudioScene::AudioScene() : step_(0.5)
 {
     createSource();
     createListener();
@@ -89,8 +89,15 @@ AudioScene::~AudioScene()
 
 void AudioScene::updatePosition()
 {
-    alSourcefv(source_, AL_POSITION,
-            sourcePos_);
+    alSourcefv(source_, AL_POSITION, sourcePos_);
+}
+
+void AudioScene::moveSourceBy(float x, float y, float z)
+{
+    sourcePos_[0] += x;
+    sourcePos_[1] += y;
+    sourcePos_[2] += z;
+    updatePosition();
 }
 
 void AudioScene::moveSourceRaise()
@@ -107,24 +114,35 @@ void AudioScene::moveSourceLower()
 
 void AudioScene::moveSourceUp()
 {
+    std::cout << "UP\n";
     sourcePos_[1] += step_;
     updatePosition();
 }
 
 void AudioScene::moveSourceDown()
 {
+    std::cout << "DOWN\n";
     sourcePos_[1] -= step_;
     updatePosition();
 }
 
 void AudioScene::moveSourceLeft()
 {
+    std::cout << "LEFT\n";
     sourcePos_[0] -= step_;
     updatePosition();
 }
 
 void AudioScene::moveSourceRight()
 {
+    std::cout << "RIGHT\n";
     sourcePos_[0] += step_;
+    updatePosition();
+}
+
+void AudioScene::moveSourceToOrigin()
+{
+    for (int i = 0; i != 3; ++i)
+        sourcePos_[i] = 0.0;
     updatePosition();
 }

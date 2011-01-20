@@ -38,8 +38,13 @@ private:
     // TODO: get rid of friend classes, and add proper getter methods:
     friend class Scene;
     friend class Translator;
+    friend class SpatdifTranslator;
     friend class DmitriTranslator;
     friend class Listener;
+
+    // not implemented
+    Connection(const Connection&);
+    const Connection& operator=(const Connection&);
 
 public:
     
@@ -70,9 +75,12 @@ public:
      * Returns the factor for the gain of the audio for the source as it should be heard by the sink node, 
      * according to distance. 
      * 
-     * Are distances in meters? Good question!
+     * Distances are in meters.
      */
     double gain() const { return gain_; }
+
+    Node& getSource() const { return *src_; }
+    Node& getSink() const { return *snk_; }
     
 protected:
     std::string id_;

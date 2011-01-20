@@ -32,6 +32,7 @@
 
 #include "oscutils.h"
 #include "oscreceiver.h"
+#include "oscsender.h"
 #include "scene.h"
 #include "node.h"
 #include "listener.h"
@@ -40,5 +41,6 @@
 #include "translator.h"
 #include "connection.h"
 #include "soundsource.h"
+#include "version.h"
 
 #endif // __SPATOSC_H__
