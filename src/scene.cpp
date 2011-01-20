@@ -167,7 +167,6 @@ Node* Scene::getNode(const std::string &id)
     n = getListener(id);
     if (n) 
         return n;
-    std::cerr << "No such node: " << id << std::endl;
     return 0;
 }
 
