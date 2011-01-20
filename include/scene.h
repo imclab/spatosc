@@ -81,15 +81,19 @@ class Scene
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
+         * 
+         * If a node wih this name already exists, it returns a null pointer and prints an error message.
          * @return A SoundSource pointer. Never free this pointer.
-         * @deprecated We will either create of get, not not getOrCreate.
+         * @deprecated We be renamed to createSoundSound
          */
         SoundSource* getOrCreateSoundSource(const std::string &id);
 
         /**
          * Returns a node in the scene identified by its identifier.
+         * 
+         * If a node wih this name already exists, it returns a null pointer and prints an error message.
          * @return A Listener pointer. Never free this pointer.
-         * @deprecated We will either create of get, not not getOrCreate.
+         * @deprecated We be renamed to createListener
          */
         Listener* getOrCreateListener(const std::string &id);
 
@@ -125,7 +129,6 @@ class Scene
          * @param sink Identifier of the sink node.
          * @return A Connection pointer. Null if not found. Never free this pointer.
          */
-
         Connection* getConnection(const std::string &src, const std::string &snk);
 
         /**
@@ -173,7 +176,8 @@ class Scene
 
         /** 
          * Disconnects two nodes.
-         * @deprecated Not even implemented and its signature will change. (maybe using two identifiers)
+         * @deprecated Will change to disconnect(Node*, Node*)
+         * @warning Not implemented yet.
          */
         void disconnect(Connection *conn);
 
