@@ -30,10 +30,6 @@ Refactoring
  * rename dmitri_translator.h like that.
  * rename Node.setPosition to setPositionXYZ(x,y,z)
  * add setPositionAED(a, e, d)
- * split Scene::getOrCreate* methods into get* and create*
- * remove Scene::getConnection (const std::string &id) (there is already getConnection(src_id, snk_id))
- * remove Scene::connect (src_id, sink_id), the Node* version is faster.
- * Scene::disconnect should be disconnect(Node*, Node*), (not disconnect(string conn_id))
 
 Error handling
 --------------
