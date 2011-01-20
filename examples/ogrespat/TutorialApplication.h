@@ -35,7 +35,6 @@ class TutorialApplication : public BaseApplication
         virtual void createScene();
         Ogre::SceneNode *headNode_;
         spatosc::Scene audioScene_;
-        std::tr1::shared_ptr<spatosc::Translator> translator_;
         spatosc::SoundSource *soundSource_;
         spatosc::Listener *listener_;
 };
