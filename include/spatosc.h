@@ -28,7 +28,7 @@
 
 /**
  * @namespace spatosc
- * The spatosc library provides a set of classes and functions to control different audio spatialization systems via the OpenSoundControl protocol with a single unified interface.
+ * The whole library is within this single namespace.
  */
 
 #include "oscutils.h"
@@ -47,7 +47,15 @@
 /**
  * @mainpage The spatosc library.
  *
+ * @section About
+ *
+ * The spatosc library provides a set of classes and functions to control different audio spatialization systems via the OpenSoundControl protocol with a single unified C++ interface.
+ *
  * @section Installation
+ *
+ * This library uses the GNU Autotools. It is documented using the syntax of Doxygen.
+ *
+ * @section Packaging your project to use it
  *
  * Include the header:
  *
