@@ -187,11 +187,9 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
         stopDrag = true;
         clutter_actor_set_y(actor, 0.0);
     }
-    else
-        ;//context->owner_.getAudio().moveSourceBy(delta_x, delta_y, 0.0f);
+        
+    context->sound_->setPosition(xPos, yPos, 0.0f); // FIXME: change depth!
 
-    // FIXME: tmatth:wrong!!! needs depth!
-    context->sound_->setPosition(xPos, yPos, 0.0f);
     context->setPositionLabel();
 
     // in Clutter 2.0 we will be able to simply return FALSE instead of calling g_signal_stop_emission_by_name

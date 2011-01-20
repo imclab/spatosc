@@ -328,7 +328,7 @@ void Scene::update(Connection *conn)
     // If one of the connected nodes has been deactivated, then there is no need
     // to compute anything. Enable the mute (and send the status change if this
     // has just happened)
-    if ((conn->src_->active_) and (conn->snk_->active_))
+    if (conn->src_->active_ and conn->snk_->active_)
     {
         if (translator_)
         {
