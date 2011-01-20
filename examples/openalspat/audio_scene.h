@@ -38,9 +38,9 @@ class AudioScene {
         void bindCallbacks();
         static gboolean pollOscReceiver(gpointer data);
         static int onSourcePositionChanged(const char *path, const char *types, 
-                lo_arg ** argv, int argc, void *user_data, void *data);
+                lo_arg ** argv, int argc, void *data, void *user_data);
         static int genericHandler(const char *path, const char *types,
-        lo_arg ** argv, int argc, void *user_data, void *data);
+        lo_arg ** argv, int argc, void *data, void *user_data);
 
         ALfloat sourcePos_[3];
         ALuint source_;

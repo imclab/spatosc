@@ -66,11 +66,11 @@ void SpatdifTranslator::update(Connection * conn)
 
     // update source position
     sendPosition("/SpatDIF/core/source/" + 
-            OSCutil::stringify(src->getChannelID()) + "/position", src);
+            OSCutil::stringify(src->getChannelID()), src);
 
     // FIXME:Wed Jan 19 16:22:42 EST 2011:tmatth should listener have channel ID? SpatDIF thinks so.
     // update sink position
-    sendPosition("/SpatDIF/core/listener/1/position", snk);
+    sendPosition("/SpatDIF/core/listener/1", snk);
 }
 
 } // end namespace spatosc

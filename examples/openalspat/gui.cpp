@@ -138,9 +138,9 @@ GUI::GUI() :
     connectKeyCallbacks();
     sound_ = scene_->getOrCreateSoundSource("sound_a");
     sound_->setChannelID(1);
-    moveSourceToOrigin();
     scene_->getOrCreateListener("listener");
     setPositionLabel();
+    moveSourceToOrigin();
 }
 
 void GUI::moveSourceToOrigin()
@@ -163,6 +163,7 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
     GUI *context = static_cast<GUI*>(data);
     float xPos = clutter_actor_get_x(actor) + delta_x;
     float yPos = clutter_actor_get_y(actor) + delta_y;
+    float zPos = clutter_actor_get_depth(actor);
     bool stopDrag = false;
     float windowWidth = clutter_actor_get_width(context->stage_);
     float windowHeight = clutter_actor_get_height(context->stage_);
@@ -188,7 +189,8 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
         clutter_actor_set_y(actor, 0.0);
     }
         
-    context->sound_->setPosition(xPos, yPos, 0.0f); // FIXME: change depth!
+    assert(context->sound_);
+    context->sound_->setPosition(xPos, yPos, zPos); // FIXME: change depth!
 
     context->setPositionLabel();
 

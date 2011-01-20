@@ -35,13 +35,14 @@ void AudioScene::init()
 
 
 int AudioScene::genericHandler(const char *path, const char *types,
-        lo_arg ** argv, int argc, void *user_data, void *data)
+        lo_arg ** argv, int argc, void *data, void *user_data)
 {
+    std::cout << __FUNCTION__ << path << std::endl;
     return 1; // handoff
 }
 
 int AudioScene::onSourcePositionChanged(const char *path, const char *types,
-        lo_arg ** argv, int argc, void *user_data, void *data)
+        lo_arg ** argv, int argc, void *data, void *user_data)
 {
     std::cout << __FUNCTION__ << std::endl;
     AudioScene *context = static_cast<AudioScene*>(user_data);
@@ -66,7 +67,7 @@ void AudioScene::bindCallbacks()
     oscReceiver_->addHandler("/SpatDIF/core/source/1/position", "fff", onSourcePositionChanged, this);
     //oscReceiver_->addHandler(NULL, NULL, genericHandler, NULL);
     // add a timeout to poll our oscreceiver
-    g_timeout_add(1000 /*ms*/, pollOscReceiver, this);
+    g_timeout_add(50 /*ms*/, pollOscReceiver, this);
 }
 
 AudioScene::AudioScene() : step_(0.1), oscReceiver_(new spatosc::OscReceiver(RX_PORT))
