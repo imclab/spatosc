@@ -11,14 +11,14 @@ AC_CANONICAL_HOST # fills $host variable
 
 # Special cases
 case "$host" in *-darwin* | *-macos10*)
-  CPPFLAGS="$CPPFLAGS -D__Darwin"
-  LDFLAGS="-undefined dynamic_lookup -Wl,-headerpad_max_install_names"
+  CXXFLAGS+=" -D__Darwin"
+  LDFLAGS+=" -fPIC -undefined dynamic_lookup -Wl,-headerpad_max_install_names"
   if test -d /opt/local ; then
-    CPPFLAGS="$CPPFLAGS -I/usr/local/include -I/opt/local/include"
-    LDFLAGS="$LDFLAGS -L/usr/local/lib -L/opt/local/lib"
+    CXXFLAGS+=" -I/usr/local/include -I/opt/local/include"
+    LDFLAGS+=" -L/usr/local/lib -L/opt/local/lib"
   elif test -d /sw ; then
-    CPPFLAGS="$CPPFLAGS -I/sw/include"
-    LDFLAGS="$LDFLAGS -L/sw/lib"
+    CXXFLAGS+=" -I/sw/include"
+    LDFLAGS+=" -L/sw/lib"
   fi
   ;;
 esac
@@ -30,7 +30,7 @@ export PKG_CONFIG_PATH
 
 #CXXFLAGS+=" -g3 -ggdb -Wall -Wextra -Wfatal-errors"
 CXXFLAGS+=" -Wall -Wextra -Wfatal-errors"
-LDFLAGS="$LDFLAGS -L/usr/local/lib -L/usr/local/lib64"
+LDFLAGS+=" -L/usr/local/lib -L/usr/local/lib64"
 
 # Checks for programs.
 AC_PROG_CXX
@@ -54,9 +54,12 @@ AC_CHECK_HEADERS([arpa/inet.h stddef.h stdlib.h string.h sys/time.h])
 AC_FUNC_ERROR_AT_LINE
 AC_CHECK_FUNCS([gettimeofday memmove mkdir setenv sqrt strchr strpbrk uname])
 
-# check for liblo:
-AC_CHECK_LIB(lo, lo_send_internal, LIBLO_LDFLAGS="-llo", AC_MSG_ERROR([missing liblo OSC library]),)
-AC_SUBST([LIBLO_LDFLAGS])
+#Set LIBLO with pkg-config
+PKG_CHECK_MODULES(LIBLO, liblo, have_liblo=true, have_liblo=false)
+if test "x${have_liblo}" = "xfalse" ; then
+    AC_MSG_ERROR([Missing liblo])
+fi
+
 
 # GNU help2man creates man pages from --help output; in many cases, this
 # is sufficient, and obviates the need to maintain man pages separately.
