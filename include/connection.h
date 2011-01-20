@@ -82,6 +82,13 @@ public:
      * @return Linear gain between 0 and 1.
      */
     double gain() const { return gain_; }
+    
+    /**
+     * Returns the logarithmic gain in dB.
+     * 
+     * @return Gain in dB.
+     */
+    double gainDB() const { return gainDB_; }
 
     /**
      * Returns a reference to its source Node.
@@ -103,6 +110,7 @@ protected:
     double azim_;
     double elev_;
     double gain_;
+    double gainDB_;
 //    double vdel_;
 //    FIXME:2010-01-15:aalex: Should thode effects be vector of shared_ptr to objects?
     float distanceEffect_;

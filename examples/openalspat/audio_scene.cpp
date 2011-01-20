@@ -37,7 +37,6 @@ void AudioScene::init()
 int AudioScene::genericHandler(const char *path, const char *types,
         lo_arg ** argv, int argc, void *user_data, void *data)
 {
-    std::cout << "Generic handler\n";
     return 1; // handoff
 }
 
@@ -57,7 +56,7 @@ gboolean AudioScene::pollOscReceiver(gpointer data)
     AudioScene* context = static_cast<AudioScene*>(data);
     int bytes = context->oscReceiver_->receive();
     if (bytes > 0)
-        std::cout << "received " << bytes << std::endl;
+        std::cout << "received " << bytes << " bytes" << std::endl;
 
     return TRUE;
 }
@@ -65,7 +64,7 @@ gboolean AudioScene::pollOscReceiver(gpointer data)
 void AudioScene::bindCallbacks()
 {
     oscReceiver_->addHandler("/SpatDIF/core/source/1/position", "fff", onSourcePositionChanged, this);
-    oscReceiver_->addHandler(NULL, NULL, genericHandler, NULL);
+    //oscReceiver_->addHandler(NULL, NULL, genericHandler, NULL);
     // add a timeout to poll our oscreceiver
     g_timeout_add(1000 /*ms*/, pollOscReceiver, this);
 }

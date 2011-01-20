@@ -25,6 +25,7 @@
 #include "oscsender.h"
 #include "connection.h"
 #include "soundsource.h"
+#include "listener.h"
 
 namespace spatosc
 {
@@ -41,17 +42,25 @@ void SpatdifTranslator::sendPosition(const std::string &prefix, Node *node)
 {
     std::string path = prefix +  "/position";
     Vector3 vect(node->getPosition());
-    oscSender_.sendMessage(path, "fff", vect.x, vect.y, vect.z);
-    std::cout << "Send message " << path << "," << vect.x << "," << vect.y << "," << vect.z << std::endl;
+    oscSender_.sendMessage(path, "fff", vect.x, vect.y, vect.z, LO_ARGS_END);
 }
 
 void SpatdifTranslator::update(Connection * conn)
 {
+    // FIXME: Downcasts are evil
     SoundSource *src = dynamic_cast<SoundSource*>(conn->src_);
-    SoundSource *snk = dynamic_cast<SoundSource*>(conn->snk_);
+    Listener *snk = dynamic_cast<Listener*>(conn->snk_);
     // TODO:Wed Jan 19 14:47:57 EST 2011:tmatth: set positions, gains as needed!
-    if (src == 0 or snk == 0)
+    if (src == 0)
+    {
+        std::cerr << "Sound source is NULL!\n";
         return;
+    }
+    if (snk == 0)
+    {
+        std::cerr << "Sound source is NULL!\n";
+        return;
+    }
     if (src->getChannelID() < 0)
         return;
 
