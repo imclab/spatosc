@@ -68,7 +68,8 @@ class GUI
                 gfloat delta_x, gfloat delta_y, gpointer data);
 #endif
         void updatePositionLabel();
-        void updateSoundPosition(float x, float y, float z);
+        void updateSoundPosition();
+        void updatePosition();
 
     public:
         /// Initialize clutter subsystem

@@ -139,7 +139,6 @@ GUI::GUI() :
     sound_ = scene_->getOrCreateSoundSource("sound_a");
     sound_->setChannelID(1);
     scene_->getOrCreateListener("listener");
-    updatePositionLabel();
     moveSourceToOrigin();
 }
 
@@ -152,8 +151,7 @@ void GUI::moveSourceToOrigin()
             windowHeight * 0.5f);
     clutter_actor_set_depth(sourceActor_, 0.0f);
     clutter_actor_set_size(sourceActor_, 2 * radius_, 2 * radius_);
-    assert(sound_);
-    sound_->setPosition(0.0, 0.0, 0.0);
+    updatePosition();
 }
 
 #if CLUTTER_CHECK_VERSION(1, 4, 0)
@@ -163,7 +161,6 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
     GUI *context = static_cast<GUI*>(data);
     float xPos = clutter_actor_get_x(actor) + delta_x;
     float yPos = clutter_actor_get_y(actor) + delta_y;
-    float zPos = clutter_actor_get_depth(actor);
     bool stopDrag = false;
     float windowWidth = clutter_actor_get_width(context->stage_);
     float windowHeight = clutter_actor_get_height(context->stage_);
@@ -189,8 +186,7 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
         clutter_actor_set_y(actor, 0.0);
     }
         
-    context->updatePositionLabel();
-    context->updateSoundPosition(xPos, yPos, zPos);
+    context->updatePosition();
 
     // in Clutter 2.0 we will be able to simply return FALSE instead of calling g_signal_stop_emission_by_name
     if (stopDrag)
@@ -264,25 +260,25 @@ gboolean GUI::keyPressCb(ClutterActor * /*actor*/,
         case CLUTTER_KEY_Up:
             //context->owner_.getAudio().moveSourceBy(0.0f, -1.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 0.0f, -1.0f);
-            context->updatePositionLabel();
+            context->updatePosition();
             return TRUE;
 
         case CLUTTER_KEY_Down:
             //context->owner_.getAudio().moveSourceBy(0.0f, 1.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 0.0f, 1.0f);
-            context->updatePositionLabel();
+            context->updatePosition();
             return TRUE;
 
         case CLUTTER_KEY_Left:
             //context->owner_.getAudio().moveSourceBy(-1.0f, 0.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, -1.0f, 0.0f);
-            context->updatePositionLabel();
+            context->updatePosition();
             return TRUE;
 
         case CLUTTER_KEY_Right:
             //context->owner_.getAudio().moveSourceBy(1.0f, 0.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 1.0f, 0.0f);
-            context->updatePositionLabel();
+            context->updatePosition();
             return TRUE;
 
         case CLUTTER_KEY_o:
@@ -336,8 +332,6 @@ gboolean GUI::pointerScrollCb(ClutterActor * /*actor*/, ClutterEvent *event,
     gfloat actor_depth;
     clutter_actor_get_size(context->sourceActor_, &actor_width,
             &actor_height);
-    float xPos = clutter_actor_get_x(context->sourceActor_);
-    float yPos = clutter_actor_get_y(context->sourceActor_);
     float zPos = clutter_actor_get_depth(context->sourceActor_);
 
     actor_depth = clutter_actor_get_depth(context->sourceActor_);
@@ -355,18 +349,26 @@ gboolean GUI::pointerScrollCb(ClutterActor * /*actor*/, ClutterEvent *event,
         default:
             break;
     }
-    context->updatePositionLabel();
-    context->updateSoundPosition(xPos, yPos, zPos);
+    context->updatePosition();
 
     return TRUE; /* event has been handled */
 }
 
-void GUI::updateSoundPosition(float x, float y, float z)
+void GUI::updatePosition()
+{
+    updatePositionLabel();
+    updateSoundPosition();
+}
+
+void GUI::updateSoundPosition()
 {
     assert(sound_);
     float windowWidth = clutter_actor_get_width(stage_);
     float windowHeight = clutter_actor_get_height(stage_);
     // FIXME: position is considered distance from origin
+    float x = clutter_actor_get_x(sourceActor_);
+    float y = clutter_actor_get_y(sourceActor_);
+    float z = clutter_actor_get_depth(sourceActor_);
     sound_->setPosition(fabs(x - (windowWidth * 0.5)),
             fabs(y - (windowHeight * 0.5)), z);
 }
