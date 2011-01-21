@@ -20,9 +20,9 @@
 #include "gui.h"
 #include "audio_scene.h"
 #include <algorithm>
-#include <scene.h>
+#include <spatosc/scene.h>
 #include <spatosc/spatdif_translator.h>
-#include <spastosc/soundsource.h>
+#include <spatosc/soundsource.h>
 #include <spatosc/listener.h>
 #include <cassert>
 #include <sstream>
