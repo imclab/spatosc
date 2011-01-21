@@ -27,6 +27,8 @@
 #include <cassert>
 #include <sstream>
 
+const float GUI::PIXELS_PER_METER = 100.0; // 1 pixel = 1 cm
+
 namespace 
 {
     /**
@@ -108,7 +110,7 @@ namespace
     /// FIXME: use clutter_cairo, it looks much nicer
     ClutterActor *createCircle(gfloat radius)
     {
-        const ClutterColor transp = {0};
+        const ClutterColor transp = {0, 0, 0, 0};
         /// HACK: create a rectangle, then override its paint method to draw a circle
         ClutterActor *circle = clutter_rectangle_new_with_color(&transp);
         clutter_actor_set_anchor_point_from_gravity(circle,
@@ -128,19 +130,18 @@ GUI::GUI() :
     scene_(new spatosc::Scene),
     radius_(20.0),
     sourceActor_(createCircle(radius_)),
-    default_stage_width_(1024.0f), 
-    default_stage_height_(768.0f),
+    default_stage_width_(600.0f), 
+    default_stage_height_(600.0f),
     sound_(0)
 {
     scene_->setTranslator<spatosc::SpatdifTranslator>("127.0.0.1");
     createStage();
     connectMouseCallbacks();
     connectKeyCallbacks();
-    sound_ = scene_->getOrCreateSoundSource("sound_a");
+    sound_ = scene_->createSoundSource("sound_a");
     sound_->setChannelID(1);
+    scene_->createListener("listener");
     moveSourceToOrigin();
-    scene_->getOrCreateListener("listener");
-    setPositionLabel();
 }
 
 void GUI::moveSourceToOrigin()
@@ -152,8 +153,7 @@ void GUI::moveSourceToOrigin()
             windowHeight * 0.5f);
     clutter_actor_set_depth(sourceActor_, 0.0f);
     clutter_actor_set_size(sourceActor_, 2 * radius_, 2 * radius_);
-    assert(sound_);
-    sound_->setPosition(0.0, 0.0, 0.0);
+    updatePosition();
 }
 
 #if CLUTTER_CHECK_VERSION(1, 4, 0)
@@ -188,9 +188,7 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
         clutter_actor_set_y(actor, 0.0);
     }
         
-    context->sound_->setPosition(xPos, yPos, 0.0f); // FIXME: change depth!
-
-    context->setPositionLabel();
+    context->updatePosition();
 
     // in Clutter 2.0 we will be able to simply return FALSE instead of calling g_signal_stop_emission_by_name
     if (stopDrag)
@@ -231,7 +229,7 @@ void GUI::createStage()
     clutter_stage_set_color(CLUTTER_STAGE(stage_), &black);
     clutter_container_add_actor(CLUTTER_CONTAINER(stage_), sourceActor_);
     ClutterColor grid_color = { 0xff, 0xff, 0xff, 0x33 };
-    create_grid(CLUTTER_CONTAINER(stage_), 10.0f, 10.0f, &grid_color);
+    create_grid(CLUTTER_CONTAINER(stage_), PIXELS_PER_METER, PIXELS_PER_METER, &grid_color);
     ClutterColor origin_color = { 0xff, 0xff, 0xff, 0xcc };
     create_origin_axis(CLUTTER_CONTAINER(stage_), &origin_color);
     ClutterColor text_color = { 0xff, 0xff, 0xff, 0xcc };
@@ -241,7 +239,7 @@ void GUI::createStage()
     clutter_actor_show(stage_);
 }
 
-gboolean GUI::keyPressCb(ClutterActor *actor,
+gboolean GUI::keyPressCb(ClutterActor * /*actor*/,
         ClutterEvent *event,
         gpointer data)
 {
@@ -264,25 +262,25 @@ gboolean GUI::keyPressCb(ClutterActor *actor,
         case CLUTTER_KEY_Up:
             //context->owner_.getAudio().moveSourceBy(0.0f, -1.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 0.0f, -1.0f);
-            context->setPositionLabel();
+            context->updatePosition();
             return TRUE;
 
         case CLUTTER_KEY_Down:
             //context->owner_.getAudio().moveSourceBy(0.0f, 1.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 0.0f, 1.0f);
-            context->setPositionLabel();
+            context->updatePosition();
             return TRUE;
 
         case CLUTTER_KEY_Left:
             //context->owner_.getAudio().moveSourceBy(-1.0f, 0.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, -1.0f, 0.0f);
-            context->setPositionLabel();
+            context->updatePosition();
             return TRUE;
 
         case CLUTTER_KEY_Right:
             //context->owner_.getAudio().moveSourceBy(1.0f, 0.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 1.0f, 0.0f);
-            context->setPositionLabel();
+            context->updatePosition();
             return TRUE;
 
         case CLUTTER_KEY_o:
@@ -298,17 +296,13 @@ gboolean GUI::keyPressCb(ClutterActor *actor,
     return handled;
 }
 
-void GUI::setPositionLabel()
+void GUI::updatePositionLabel()
 {
     std::ostringstream os;
-    float actor_x;
-    float actor_y;
-    float actor_depth = clutter_actor_get_depth(sourceActor_);
 
-    gfloat stage_w = clutter_actor_get_width(CLUTTER_ACTOR(stage_));
-    gfloat stage_h = clutter_actor_get_height(CLUTTER_ACTOR(stage_));
-    clutter_actor_get_position(sourceActor_, &actor_x, &actor_y);
-    os << "Source: (" << (actor_x - stage_w) << ", " << (actor_y - stage_h) << ", " << actor_depth << ")\n";
+    float x, y, z;
+    actorPosToSpatPos(x, y, z);
+    os << "Source: (" << x << ", " << y << ", " << z << ")\n";
 #ifdef DEBUG
     std::cout << os.str();
 #endif
@@ -323,7 +317,7 @@ void GUI::run()
 }
 
 // scrolling causes the sound source to move in the z direction
-gboolean GUI::pointerScrollCb(ClutterActor *actor, ClutterEvent *event,
+gboolean GUI::pointerScrollCb(ClutterActor * /*actor*/, ClutterEvent *event,
         gpointer data)
 {
     GUI *context = static_cast<GUI*>(data);
@@ -336,21 +330,51 @@ gboolean GUI::pointerScrollCb(ClutterActor *actor, ClutterEvent *event,
     gfloat actor_depth;
     clutter_actor_get_size(context->sourceActor_, &actor_width,
             &actor_height);
+    float zPos = clutter_actor_get_depth(context->sourceActor_);
 
     actor_depth = clutter_actor_get_depth(context->sourceActor_);
     switch (direction)
     {
         case CLUTTER_SCROLL_UP:
-            clutter_actor_set_depth(context->sourceActor_, actor_depth + 10.0f);
+            zPos += 10.0f;
+            clutter_actor_set_depth(context->sourceActor_, zPos);
             break;
 
         case CLUTTER_SCROLL_DOWN:
-            clutter_actor_set_depth(context->sourceActor_, actor_depth - 10.0f);
+            zPos -= 10.0f;
+            clutter_actor_set_depth(context->sourceActor_, zPos);
             break;
         default:
             break;
     }
+    context->updatePosition();
 
     return TRUE; /* event has been handled */
 }
 
+void GUI::updatePosition()
+{
+    updatePositionLabel();
+    updateSoundPosition();
+}
+
+void GUI::actorPosToSpatPos(float &x, float &y, float &z)
+{
+    float halfWindowWidth = clutter_actor_get_width(stage_) / 2.0;
+    float halfWindowHeight = clutter_actor_get_height(stage_) / 2.0;
+    x = clutter_actor_get_x(sourceActor_) - halfWindowWidth;
+    y = clutter_actor_get_y(sourceActor_) - halfWindowHeight;
+    z = clutter_actor_get_depth(sourceActor_);
+    x /= PIXELS_PER_METER;
+    y /= PIXELS_PER_METER;
+    z /= PIXELS_PER_METER;
+}
+
+void GUI::updateSoundPosition()
+{
+    assert(sound_);
+    // FIXME: position is considered distance from origin
+    float x, y, z;
+    actorPosToSpatPos(x, y, z);
+    sound_->setPosition(x, y, z); 
+}

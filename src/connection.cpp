@@ -48,7 +48,7 @@ void Connection::update()
 {
     if (src_->updateFlag() or snk_->updateFlag())
     {
-        Vector3 vect = snk_->getPosition() - src_->getPosition();
+        Vector3 vect = src_->getPosition() - snk_->getPosition();
         distance_ = static_cast<double>(vect.Mag());
         double distanceScalar = 1 / (1.0 + pow(distance_, static_cast<double>(distanceEffect_) * 0.01));
         azim_ = atan2(vect.y, vect.x);

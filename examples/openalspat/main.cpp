@@ -19,7 +19,7 @@
 
 #include "application.h"
 
-int main(int argc, const char* argv[])
+int main(int /*argc*/, char ** /*argv[]*/)
 {
     Application::initSubsystems();
     Application app;

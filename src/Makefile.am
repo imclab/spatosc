@@ -1,4 +1,5 @@
-AM_CPPFLAGS = -I$(top_srcdir)/include
+#AM_CPPFLAGS = -I$(top_srcdir)/include
+AM_CXXFLAGS = -I$(top_srcdir)/include $(LIBLO_CFLAGS)
 
 # use lib_LTLIBRARIES to build a shared lib:
 lib_LTLIBRARIES = libspatosc-@SPATOSC_API_VERSION@.la
@@ -28,7 +29,7 @@ libspatosc_@SPATOSC_API_VERSION@_la_SOURCES = \
 ## Instruct libtool to include ABI version information in the generated shared
 ## library file (.so).  The library ABI version is defined in configure.ac, so
 ## that all version information is kept in one place.
-libspatosc_@SPATOSC_API_VERSION@_la_LDFLAGS = $(LIBLO_LDFLAGS) -export-dynamic -version-info $(SPATOSC_SO_VERSION)
+libspatosc_@SPATOSC_API_VERSION@_la_LDFLAGS = $(LIBLO_LIBS) -export-dynamic -version-info $(SPATOSC_SO_VERSION)
 
 libspatosc_@SPATOSC_API_VERSION@_la_includedir = $(includedir)/spatosc-$(SPATOSC_API_VERSION)/spatosc
 
