@@ -3,8 +3,10 @@ SpatDIF
 
 Here is the spatosc flavour of spatdif. It's inrpired by it, but not quite the same.
 
- * /spatosc/core/<s:channel>/xyz f:x f:y f:z
- * /spatosc/core/<s:channel>/aed f:a f:e f:d
+The <node_id> can be any ASCII alpha-numeric string. Underscores and hyphens are OK.
+
+ * /spatosc/core/<s:node_id>/xyz f:x f:y f:z
+ * /spatosc/core/<s:node_id>/aed f:azimuth f:elevation f:distance
  * /spatosc/core/
 
 

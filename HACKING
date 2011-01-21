@@ -15,7 +15,7 @@ Let's now describe a bit the C++ coding style in this project.
  * variables should camelcase. Like "eggSpam".
  * Class attributes should camelcase, with a trailing underscore. Like "eggSpam_".
  * Class/type names should be camel case with the first letter capital. Like "EggSpam".
- * File names should be lowercase, and the words should be stuck together. Like "eggspam.cpp" and "eggspam.h".
+ * File names should be lowercase, and the words should be spearated by underscores. Like "egg_spam.cpp" and "egg_spam.h".
  * The file name should be named after the single class it contents, if possible. 
  * Avoid global functions, they should be enclosed in a namespace.
  * Try to comment the methods, attributes and classes you write. Use inline comments, plus the Doxygen-style headers.
@@ -35,6 +35,10 @@ The micro version indicates the origin of the release: even micro numbers are on
 
 The version number is located in configure.ac and must always be one micro number ahead, unless this is a tag. That means that if we have released 0.1.0, the version number in configure.ac must be 0.1.1 until we release 0.1.2, and so forth.
 
+
+API Version Nnumber
+-------------------
+It's made of the major.minor version numbers. In stable branches, the API and the ABI should be stable.
 
 The ChangeLog File
 ------------------
@@ -57,6 +61,9 @@ Commit any pending changes.
  $ make distcheck
 
 Create the tag in git.
+
+ $ git tag 0.2.0
+
 Update the version number in configure.ac to the next release to come. Make a new commit. 
 
 
