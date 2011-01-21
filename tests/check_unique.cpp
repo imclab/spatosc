@@ -17,12 +17,16 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * Tests that there can only be unique node names.
+ */
+
 #include <iostream>
 #include "spatosc.h"
 
 using namespace spatosc;
 
-int main(int /*argc*/, char ** /*argv*/)
+bool test_unique_source()
 {
     Scene scene;
     scene.createSoundSource("foo");
@@ -30,13 +34,45 @@ int main(int /*argc*/, char ** /*argv*/)
     if (foo_source != 0)
     {
         std::cout << "duplicate foo SoundSource" << std::endl;
-        return 1;
+        return false;
     }
+    return true;
+}
+
+bool test_unique_listener()
+{
+    Scene scene;
+    scene.createListener("foo");
     Listener *foo_listener = scene.createListener("foo");
     if (foo_listener != 0)
     {
         std::cout << "duplicate foo Listener" << std::endl;
-        return 1;
+        return false;
     }
+    return true;
+}
+
+bool test_unique_mixed_node_types()
+{
+    Scene scene;
+    scene.createListener("foo");
+    SoundSource *foo_listener = scene.createSoundSource("foo");
+    if (foo_listener != 0)
+    {
+        std::cout << "duplicate node named foo" << std::endl;
+        return false;
+    }
+    return true;
+}
+
+int main(int /*argc*/, char ** /*argv*/)
+{
+    if (! test_unique_listener())
+        return 1;
+    if (! test_unique_source())
+        return 1;
+    if (! test_unique_mixed_node_types())
+        return 1;
     return 0;
 }
+
