@@ -19,6 +19,8 @@
 
 #include "scene.h"
 #include <iostream>
+#include <algorithm>
+#include <tr1/memory>
 
 #include "translator.h"
 #include "listener.h"
@@ -27,6 +29,29 @@
 #include "connection.h"
 
 #define UNUSED(x) ((void) (x))
+
+namespace
+{
+    // useful to search and delete in a vector of shared_ptr
+    template <typename T>
+    class CustomPredicate
+    {
+        public:
+            CustomPredicate(T *a) : a_(a) {}
+            bool operator() (std::tr1::shared_ptr<T> b)
+            {
+                return a_ == b.get();
+            }
+        private:
+            const T *a_;
+    };
+    template <typename T>
+    void eraseFromVector(std::vector<std::tr1::shared_ptr<T> >& vec, T *a)
+    {
+        CustomPredicate<T> predicate(a);
+        vec.erase(std::remove_if(vec.begin(), vec.end(), predicate), vec.end());
+    }
+} // end of anonymous namespace
 
 namespace spatosc
 {
@@ -50,11 +75,11 @@ Scene::Scene() :
     connectRegex_(),
     ListenerList_(),
     SoundSourceList_(),
-    ConnectionList_()
+    connections_()
 {
     this->ListenerList_.clear();
     this->SoundSourceList_.clear();
-    this->ConnectionList_.clear();
+    this->connections_.clear();
 
     setConnectFilter(".*"); // match everything
 }
@@ -93,8 +118,8 @@ void Scene::debugPrint ()
         (*n)->debugPrint();
     }
 
-    std::cout << "[Scene]:: " << ConnectionList_.size() << " connections:" << std::endl;
-    for (c = ConnectionList_.begin(); c != ConnectionList_.end(); ++c)
+    std::cout << "[Scene]:: " << connections_.size() << " connections:" << std::endl;
+    for (c = connections_.begin(); c != connections_.end(); ++c)
     {
         std::cout << "  " << (*c)->id_ << ":" << std::endl;
         std::cout << "    distanceEffect:\t" << (*c)->distanceEffect_ << "%" << std::endl;
@@ -220,7 +245,7 @@ std::vector<Connection*> Scene::getConnectionsForNode(const std::string &id)
     std::vector<Connection*> foundConnections;
     
     connIterator c;
-    for (c = ConnectionList_.begin(); c != ConnectionList_.end(); ++c)
+    for (c = connections_.begin(); c != connections_.end(); ++c)
     {
         if (((*c)->src_->id_ == id) or ((*c)->snk_->id_ == id))
         {
@@ -233,7 +258,7 @@ std::vector<Connection*> Scene::getConnectionsForNode(const std::string &id)
 Connection* Scene::getConnection(const Node *source, const Node *sink)
 {
     connIterator c;
-    for (c = ConnectionList_.begin(); c != ConnectionList_.end(); ++c)
+    for (c = connections_.begin(); c != connections_.end(); ++c)
     {
         if (((*c)->src_ == source) and ((*c)->snk_ == sink))
         {
@@ -283,7 +308,7 @@ Connection* Scene::connect(Node *src, Node *snk)
         shared_ptr<Connection> conn(new Connection(src, snk));
         // register the connection with both the Scene and the
         // sink node (for backwards connectivity computation):
-        ConnectionList_.push_back(conn);
+        connections_.push_back(conn);
         src->connectTO_.push_back(conn);
         snk->connectFROM_.push_back(conn);
         update(conn.get());
@@ -295,10 +320,26 @@ Connection* Scene::connect(Node *src, Node *snk)
 
 bool Scene::disconnect(Node *source, Node *sink)
 {
-    UNUSED(source);
-    UNUSED(sink);
-    std::cout << "Scene::disconnect NOT IMPLEMENTED YET" << std::endl;
-    return false;
+    if (! source)
+    {
+        std::cerr << "Invalid source node." << std::endl;
+        return false;
+    }
+    if  (! sink) 
+    {
+        std::cerr << "Invalid sink node." << std::endl;
+        return false;
+    }
+    Connection* conn = getConnection(source, sink);
+    if (! conn)
+    {
+        std::cerr << "Cannot disconnect nodes " << source->getID() << " and " << sink->getID() << ": They are not connected." << std::endl;
+        return false;
+    }
+    eraseFromVector<Connection>(connections_, conn);
+    eraseFromVector<Connection>(source->connectTO_, conn);
+    eraseFromVector<Connection>(sink->connectFROM_, conn);
+    return true;
 }
 
 void Scene::update(Node *n)

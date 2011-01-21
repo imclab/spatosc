@@ -38,6 +38,12 @@ bool test_connect()
         std::cout << "Could not connect a source to a listener" << std::endl;
         return false;
     }
+    Connection *connection2 = scene.getConnection(source, listener);
+    if (connection != connection2)
+    {
+        std::cout << "Connection pointer got with getConnection dont match." << std::endl;
+        return false;
+    }
     connection = scene.connect(source, listener);
     if (connection != 0)
     {
@@ -47,9 +53,33 @@ bool test_connect()
     return true;
 }
 
+bool test_disconnect()
+{
+    Scene scene;
+    scene.setAutoConnect(false);
+    Node *source = dynamic_cast<Node*>(scene.createSoundSource("source"));
+    Node *listener = dynamic_cast<Node*>(scene.createListener("listener"));
+    Connection *connection = scene.connect(source, listener);
+    bool success = scene.disconnect(source, listener);
+    if (! success)
+    {
+        std::cout << "Could not disconnect" << std::endl;
+        return false;
+    }
+    connection = scene.getConnection(source, listener);
+    if (connection != 0)
+    {
+        std::cout << "Connection was not deleted." << std::endl;
+        return false;
+    }
+    return true;
+}
+
 int main(int /*argc*/, char ** /*argv*/)
 {
     if (! test_connect())
+        return 1;
+    if (! test_disconnect())
         return 1;
     return 0;
 }

@@ -172,7 +172,6 @@ class Scene
 
         /** 
          * Disconnects two nodes.
-         * @warning Not implemented yet.
          * @return True if it successfully disconnected the nodes. False if they were not connected or if the nodes are invalid.
          */
         bool disconnect(Node *source, Node* sink);
@@ -212,7 +211,7 @@ class Scene
 
         std::vector<std::tr1::shared_ptr<Listener> >  ListenerList_;
         std::vector<std::tr1::shared_ptr<SoundSource> > SoundSourceList_;
-        std::vector<std::tr1::shared_ptr<Connection> > ConnectionList_;
+        std::vector<std::tr1::shared_ptr<Connection> > connections_;
 };
 
 } // end namespace spatosc
