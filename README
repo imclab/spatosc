@@ -23,3 +23,23 @@ The micro version indicates the origin of the release: even micro numbers are on
 A stable series means that the command-line options and the interactive keyboard controls should not change much for all tags whose version number start with the same major-minor numbers. Some new features might be developped in that branch, but each release should be backward-compatible with their ancestor. Releases from a stable series should be use for production. 
 
 In contrast, unstable branches consist of tags which are developer snapshots. They are not expected to be compatible with any other version. Some features might change between different stable branches.
+
+Installing
+----------
+
+This library uses the GNU Autotools. It should be easy to build and install it like this:
+
+ $ ./configure
+ $ make
+ $ sudo make install
+
+On GNU/Linux, you need to install the following software: 
+ * The GNU Autotools
+ * liblo-dev
+
+
+On Mac OS X, you should use MacPorts. Next, install liblo:
+ $ sudo port install liblo +universal
+
+On Windows, you must install MinGW and MSYS. Next, build liblo.
+We didn't go to go further yet.
