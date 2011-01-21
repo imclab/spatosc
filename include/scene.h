@@ -166,7 +166,7 @@ class Scene
 
         /** 
          * Connects two nodes together.
-         * @return A Connection pointer. Null if not found. Never free this pointer. It will become invalid if this connection is deleted.
+         * @return A Connection pointer. Null if either of the two nodes are not found, or if they are already connected. Never free this pointer. It will become invalid if this connection is deleted.
          */
         Connection* connect(Node *src, Node *snk);
 
@@ -186,6 +186,20 @@ class Scene
          * Called by a connection when it is changed so that the scene updates all its sibling nodes.
          */
         void update(Connection *conn);
+
+        /**
+         * Sets whether source and sink nodes should be automatically connected as soon as they are created.
+         * Default is true.
+         * @param enabled Enabled or not.
+         */
+        void setAutoConnect(bool enabled);
+
+        /**
+         * Returns whether source and sink nodes should be automatically connected as soon as they are created.
+         * Default is true.
+         * @return Enabled or not.
+         */
+        bool getAutoConnect() const;
 
     private:
 
