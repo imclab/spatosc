@@ -240,14 +240,14 @@ Listener* Scene::getListener(const std::string &id)
     return 0;
 }
 
-std::vector<Connection*> Scene::getConnectionsForNode(const std::string &id)
+std::vector<Connection*> Scene::getConnectionsForNode(const Node *node)
 {
     std::vector<Connection*> foundConnections;
     
     connIterator c;
     for (c = connections_.begin(); c != connections_.end(); ++c)
     {
-        if (((*c)->src_->id_ == id) or ((*c)->snk_->id_ == id))
+        if (((*c)->src_ == node) or ((*c)->snk_ == node))
         {
             foundConnections.push_back(c->get());
         }
@@ -370,5 +370,35 @@ void Scene::update(Connection *conn)
     }
 }
 
+void Scene::disconnectNodeConnections(Node *node)
+{
+    std::vector<Connection*> nodeConnections = getConnectionsForNode(node);
+    std::vector<Connection*>::iterator iter;
+    for (iter = nodeConnections.begin(); iter != nodeConnections.end(); ++iter)
+    {
+        Connection* conn = (*iter);
+        disconnect(&conn->getSource(), &conn->getSink());
+    }
+}
+
+void Scene::deleteNode(SoundSource *node)
+{
+    if (! node)
+    {
+        std::cerr << "Invalid source node." << std::endl;
+    }
+    disconnectNodeConnections(node);
+    eraseFromVector(SoundSourceList_, node);
+}
+
+void Scene::deleteNode(Listener *node)
+{
+    if (! node)
+    {
+        std::cerr << "Invalid listener node." << std::endl;
+    }
+    disconnectNodeConnections(node);
+    eraseFromVector(ListenerList_, node);
+}
 } // end namespace spatosc
 

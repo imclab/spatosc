@@ -81,11 +81,33 @@ bool test_disconnect()
     return true;
 }
 
+bool test_delete_node()
+{
+    Scene scene;
+    SoundSource *source = scene.createSoundSource("source");
+    Listener *listener = scene.createListener("listener");
+    scene.deleteNode(source);
+    if (scene.getConnection(source, listener))
+    {
+        std::cout << "Should not be able to find connection anymore." << std::endl;
+        return false;
+    }
+    SoundSource *orig = scene.getSoundSource("source");
+    if (orig != 0)
+    {
+        std::cout << "Should not be able to find source anymore." << std::endl;
+        return false;
+    }
+    return true;
+}
+
 int main(int /*argc*/, char ** /*argv*/)
 {
     if (! test_connect())
         return 1;
     if (! test_disconnect())
+        return 1;
+    if (! test_delete_node())
         return 1;
     return 0;
 }

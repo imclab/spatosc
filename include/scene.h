@@ -126,13 +126,6 @@ class Scene
         Listener* getListener(const std::string &id);
 
         /**
-         * Returns a list of all connections that "directly involve" a node (ie, as the source or the sink): 
-         * @param id Identifier of the node for which we want its connections.
-         * @return A vector of Connection pointers. Never free these pointers. They will become invalid if these connections are deleted.
-         */
-        std::vector<Connection*> getConnectionsForNode(const std::string &id);
-
-        /**
          * Returns a Connection between two node in the scene.
          * 
          * @param source The source node.
@@ -200,7 +193,26 @@ class Scene
          */
         bool getAutoConnect() const;
 
+        /**
+         * Deletes a Listener node
+         * @param node Listener pointer.
+         */
+        void deleteNode(Listener *node);
+
+        /**
+         * Deletes a SoundSource node
+         * @param node SoundSource pointer.
+         */
+        void deleteNode(SoundSource *node);
+
     private:
+        /**
+         * Returns a list of all connections that "directly involve" a node (ie, as the source or the sink): 
+         * @param Node pointer for which we want its connections.
+         * @return A vector of Connection pointers. Never free these pointers. They will become invalid if these connections are deleted.
+         */
+        std::vector<Connection*> getConnectionsForNode(const Node *node);
+        void disconnectNodeConnections(Node *node);
 
         std::tr1::shared_ptr<Translator> translator_;
 
