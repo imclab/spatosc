@@ -27,6 +27,8 @@
 #include <cassert>
 #include <sstream>
 
+const float GUI::PIXELS_PER_METER = 100.0; // 1 pixel = 1 cm
+
 namespace 
 {
     /**
@@ -128,8 +130,8 @@ GUI::GUI() :
     scene_(new spatosc::Scene),
     radius_(20.0),
     sourceActor_(createCircle(radius_)),
-    default_stage_width_(1024.0f), 
-    default_stage_height_(768.0f),
+    default_stage_width_(600.0f), 
+    default_stage_height_(600.0f),
     sound_(0)
 {
     scene_->setTranslator<spatosc::SpatdifTranslator>("127.0.0.1");
@@ -227,7 +229,7 @@ void GUI::createStage()
     clutter_stage_set_color(CLUTTER_STAGE(stage_), &black);
     clutter_container_add_actor(CLUTTER_CONTAINER(stage_), sourceActor_);
     ClutterColor grid_color = { 0xff, 0xff, 0xff, 0x33 };
-    create_grid(CLUTTER_CONTAINER(stage_), 10.0f, 10.0f, &grid_color);
+    create_grid(CLUTTER_CONTAINER(stage_), PIXELS_PER_METER, PIXELS_PER_METER, &grid_color);
     ClutterColor origin_color = { 0xff, 0xff, 0xff, 0xcc };
     create_origin_axis(CLUTTER_CONTAINER(stage_), &origin_color);
     ClutterColor text_color = { 0xff, 0xff, 0xff, 0xcc };
@@ -363,6 +365,9 @@ void GUI::actorPosToSpatPos(float &x, float &y, float &z)
     x = clutter_actor_get_x(sourceActor_) - halfWindowWidth;
     y = clutter_actor_get_y(sourceActor_) - halfWindowHeight;
     z = clutter_actor_get_depth(sourceActor_);
+    x /= PIXELS_PER_METER;
+    y /= PIXELS_PER_METER;
+    z /= PIXELS_PER_METER;
 }
 
 void GUI::updateSoundPosition()
