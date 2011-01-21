@@ -126,7 +126,7 @@ SoundSource* Scene::createSoundSource(const std::string &id)
     }
     else
     {
-        std::cerr << "A node named " << id << " of type " << typeid(node).name() << "already exists." << std::endl;
+        std::cerr << "A node named " << id << " of type " << typeid(node).name() << " already exists." << std::endl;
         return 0;
     }
 }
@@ -158,7 +158,7 @@ Listener* Scene::createListener(const std::string &id)
     }
     else
     {
-        std::cerr << "A node named " << id << " of type " << typeid(node).name() << "already exists." << std::endl;
+        std::cerr << "A node named " << id << " of type " << typeid(node).name() << " already exists." << std::endl;
         return 0;
     }
 }
