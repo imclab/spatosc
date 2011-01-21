@@ -34,11 +34,11 @@ namespace
 {
     // useful to search and delete in a vector of shared_ptr
     template <typename T>
-    class CustomPredicate
+    class IsEqual
     {
         public:
-            CustomPredicate(T *a) : a_(a) {}
-            bool operator() (std::tr1::shared_ptr<T> b)
+            IsEqual(T *a) : a_(a) {}
+            bool operator() (const std::tr1::shared_ptr<T> &b)
             {
                 return a_ == b.get();
             }
@@ -48,7 +48,7 @@ namespace
     template <typename T>
     void eraseFromVector(std::vector<std::tr1::shared_ptr<T> >& vec, T *a)
     {
-        CustomPredicate<T> predicate(a);
+        IsEqual<T> predicate(a);
         vec.erase(std::remove_if(vec.begin(), vec.end(), predicate), vec.end());
     }
 } // end of anonymous namespace
@@ -336,9 +336,9 @@ bool Scene::disconnect(Node *source, Node *sink)
         std::cerr << "Cannot disconnect nodes " << source->getID() << " and " << sink->getID() << ": They are not connected." << std::endl;
         return false;
     }
-    eraseFromVector<Connection>(connections_, conn);
-    eraseFromVector<Connection>(source->connectTO_, conn);
-    eraseFromVector<Connection>(sink->connectFROM_, conn);
+    eraseFromVector(connections_, conn);
+    eraseFromVector(source->connectTO_, conn);
+    eraseFromVector(sink->connectFROM_, conn);
     return true;
 }
 
