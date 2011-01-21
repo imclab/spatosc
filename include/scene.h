@@ -87,7 +87,7 @@ class Scene
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
          * 
          * If a node wih this name already exists, it returns a null pointer and prints an error message.
-         * @return A SoundSource pointer. Null if a node with this name already exists. Never free this pointer.
+         * @return A SoundSource pointer. Null if a node with this name already exists. Never free this pointer. It will become invalid if this node is deleted.
          */
         SoundSource* createSoundSource(const std::string &id);
 
@@ -95,33 +95,33 @@ class Scene
          * Returns a node in the scene identified by its identifier.
          * 
          * If a node wih this name already exists, it returns a null pointer and prints an error message.
-         * @return A Listener pointer. Null if a node with this name already exists. Never free this pointer.
+         * @return A Listener pointer. Null if a node with this name already exists. Never free this pointer. It will become invalid if this node is deleted.
          */
         Listener* createListener(const std::string &id);
 
         /**
          * Returns a node in the scene, given its identifier.
-         * @return A Node pointer. Null if not found. Never free this pointer.
+         * @return A Node pointer. Null if not found. Never free this pointer. It will become invalid if this node is deleted.
          */
         Node* getNode(const std::string &id);
 
         /**
          * Returns a sound source node in the scene identified by its identifier.
-         * @return A SoundSource pointer. Null if not found. Never free this pointer.
+         * @return A SoundSource pointer. Null if not found. Never free this pointer. It will become invalid if this node is deleted.
          */
         SoundSource* getSoundSource(const std::string &id);
 
         /**
          * Returns a listener node in the scene, given its identifier.
          * @param id Identifier for the Listener node.
-         * @return A Listener pointer. Null if not found. Never free this pointer.
+         * @return A Listener pointer. Null if not found. Never free this pointer. It will become invalid if this node is deleted.
          */
         Listener* getListener(const std::string &id);
 
         /**
          * Returns a list of all connections that "directly involve" a node (ie, as the source or the sink): 
          * @param id Identifier of the node for which we want its connections.
-         * @return A vector of Connection pointers. Never free these pointers.
+         * @return A vector of Connection pointers. Never free these pointers. They will become invalid if these connections are deleted.
          */
         std::vector<Connection*> getConnectionsForNode(const std::string &id);
 
@@ -130,7 +130,7 @@ class Scene
          * 
          * @param source The source node.
          * @param sink The sink node.
-         * @return A Connection pointer. Null if not found. Never free this pointer.
+         * @return A Connection pointer. Null if not found. Never free this pointer. It will become invalid if this connection is deleted.
          */
         Connection* getConnection(const Node *source, const Node *sink);
 
@@ -159,15 +159,16 @@ class Scene
 
         /** 
          * Connects two nodes together.
-         * @return A Connection pointer. Null if not found. Never free this pointer.
+         * @return A Connection pointer. Null if not found. Never free this pointer. It will become invalid if this connection is deleted.
          */
         Connection* connect(Node *src, Node *snk);
 
         /** 
          * Disconnects two nodes.
          * @warning Not implemented yet.
+         * @return True if it successfully disconnected the nodes. False if they were not connected or if the nodes are invalid.
          */
-        void disconnect(Node *source, Node* sink);
+        bool disconnect(Node *source, Node* sink);
 
         /**
          * Called by a node when it is changed so that the scene updates all its sibling nodes.

@@ -278,11 +278,12 @@ Connection* Scene::connect(Node *src, Node *snk)
         return 0;
 }
 
-void Scene::disconnect(Node *source, Node *sink)
+bool Scene::disconnect(Node *source, Node *sink)
 {
     UNUSED(source);
     UNUSED(sink);
     std::cout << "Scene::disconnect NOT IMPLEMENTED YET" << std::endl;
+    return false;
 }
 
 void Scene::update(Node *n)
