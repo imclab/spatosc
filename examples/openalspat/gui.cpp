@@ -138,9 +138,9 @@ GUI::GUI() :
     createStage();
     connectMouseCallbacks();
     connectKeyCallbacks();
-    sound_ = scene_->getOrCreateSoundSource("sound_a");
+    sound_ = scene_->createSoundSource("sound_a");
     sound_->setChannelID(1);
-    scene_->getOrCreateListener("listener");
+    scene_->createListener("listener");
     moveSourceToOrigin();
 }
 
