@@ -59,6 +59,16 @@ Scene::Scene() :
     setConnectFilter(".*"); // match everything
 }
 
+void Scene::setAutoConnect(bool enabled)
+{
+    autoConnect_ = enabled;
+}
+
+bool Scene::getAutoConnect() const
+{
+    return autoConnect_;
+}
+
 void Scene::debugPrint ()
 {
     listenerIterator L;
@@ -259,14 +269,14 @@ Connection* Scene::connect(Node *src, Node *snk)
     if (conn)
     {
         std::cerr << "Nodes " << src->getID() << " and " << snk->getID() << " are already connected." << std::endl;
-        return conn;
+        return 0;
     }
 
     // Check src and snk id's against the connectFilter. If either match, then
     // proceed with the connection:
     int srcRegexStatus = regexec(&connectRegex_, src->id_.c_str(), (size_t)0, 0, 0);
     int snkRegexStatus = regexec(&connectRegex_, snk->id_.c_str(), (size_t)0, 0, 0);
-
+    //TODO:2011-01-21:aalex:we should also check the type of the two nodes in connect().
     if (srcRegexStatus == 0 or snkRegexStatus == 0)
     {
         // create connection:

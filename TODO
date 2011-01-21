@@ -36,5 +36,6 @@ Refactoring
 Error handling
 --------------
  * Node id need to be unique. (either Listener or Sources)
+ * We should also check the type of the two nodes in connect(). We should implement bool Node::isSource() and bool Node::isSink()
 
 
