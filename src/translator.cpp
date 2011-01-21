@@ -29,7 +29,7 @@ namespace spatosc
 const char *Translator::DEFAULT_SEND_PORT = "18033";
 const char *Translator::DEFAULT_RECEIVER_PORT = "18099";
 
-Translator::Translator(bool verbose)
+Translator::Translator(bool verbose = false)
 {
     verbose_ = verbose;
 }
