@@ -21,12 +21,15 @@
 #include <tr1/memory>
 #include "spatosc.h"
 
-using namespace spatosc;
+
+static const bool VERBOSE = false;
 
 int main(int /*argc*/, char ** /*argv*/)
 {
     using std::tr1::shared_ptr;
-    std::cout << "\nRunning spatoscTest ...\n" << std::endl;
+    using namespace spatosc;
+    if (VERBOSE)
+        std::cout << "\nRunning spatoscTest ...\n" << std::endl;
     // create the scene
     Scene scene;
 
@@ -55,20 +58,23 @@ int main(int /*argc*/, char ** /*argv*/)
     scene.setTranslator<DmitriTranslator>("127.0.0.1");
 
     // The Scene class can print out everything to the console:
-    scene.debugPrint();
+    if (VERBOSE)
+        scene.debugPrint();
 
     // Now we just move nodes around and updates should be sent to D-Mitri:
 
     foo->setPosition(0,10,0);
     bar->setPosition(5,5,0);
 
-    sleep(0.1);
+    //sleep(0.1);
 
     foo->setPosition(0,5,0);
     bar->setPosition(-5,5,0);
 
-    scene.debugPrint();
+    if (VERBOSE)
+        scene.debugPrint();
 
-    std::cout << "Exitting...\n";
+    if (VERBOSE)
+        std::cout << "Exitting...\n";
     return 0;
 }
