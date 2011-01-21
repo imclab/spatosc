@@ -67,7 +67,8 @@ class GUI
         static void on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
                 gfloat delta_x, gfloat delta_y, gpointer data);
 #endif
-        void setPositionLabel();
+        void updatePositionLabel();
+        void updateSoundPosition(float x, float y, float z);
 
     public:
         /// Initialize clutter subsystem

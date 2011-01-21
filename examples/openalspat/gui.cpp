@@ -139,7 +139,7 @@ GUI::GUI() :
     sound_ = scene_->getOrCreateSoundSource("sound_a");
     sound_->setChannelID(1);
     scene_->getOrCreateListener("listener");
-    setPositionLabel();
+    updatePositionLabel();
     moveSourceToOrigin();
 }
 
@@ -163,7 +163,7 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
     GUI *context = static_cast<GUI*>(data);
     float xPos = clutter_actor_get_x(actor) + delta_x;
     float yPos = clutter_actor_get_y(actor) + delta_y;
-    //float zPos = clutter_actor_get_depth(actor);
+    float zPos = clutter_actor_get_depth(actor);
     bool stopDrag = false;
     float windowWidth = clutter_actor_get_width(context->stage_);
     float windowHeight = clutter_actor_get_height(context->stage_);
@@ -189,11 +189,8 @@ void GUI::on_drag_motion(ClutterDragAction *action, ClutterActor *actor,
         clutter_actor_set_y(actor, 0.0);
     }
         
-    assert(context->sound_);
-    context->sound_->setPosition(fabs(xPos - (windowWidth * 0.5)),
-            fabs(yPos - (windowHeight * 0.5)), 0); // FIXME: change depth!
-
-    context->setPositionLabel();
+    context->updatePositionLabel();
+    context->updateSoundPosition(xPos, yPos, zPos);
 
     // in Clutter 2.0 we will be able to simply return FALSE instead of calling g_signal_stop_emission_by_name
     if (stopDrag)
@@ -267,25 +264,25 @@ gboolean GUI::keyPressCb(ClutterActor * /*actor*/,
         case CLUTTER_KEY_Up:
             //context->owner_.getAudio().moveSourceBy(0.0f, -1.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 0.0f, -1.0f);
-            context->setPositionLabel();
+            context->updatePositionLabel();
             return TRUE;
 
         case CLUTTER_KEY_Down:
             //context->owner_.getAudio().moveSourceBy(0.0f, 1.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 0.0f, 1.0f);
-            context->setPositionLabel();
+            context->updatePositionLabel();
             return TRUE;
 
         case CLUTTER_KEY_Left:
             //context->owner_.getAudio().moveSourceBy(-1.0f, 0.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, -1.0f, 0.0f);
-            context->setPositionLabel();
+            context->updatePositionLabel();
             return TRUE;
 
         case CLUTTER_KEY_Right:
             //context->owner_.getAudio().moveSourceBy(1.0f, 0.0f, 0.0f);
             clutter_actor_move_by(context->sourceActor_, 1.0f, 0.0f);
-            context->setPositionLabel();
+            context->updatePositionLabel();
             return TRUE;
 
         case CLUTTER_KEY_o:
@@ -301,7 +298,7 @@ gboolean GUI::keyPressCb(ClutterActor * /*actor*/,
     return handled;
 }
 
-void GUI::setPositionLabel()
+void GUI::updatePositionLabel()
 {
     std::ostringstream os;
     float actor_x;
@@ -339,22 +336,37 @@ gboolean GUI::pointerScrollCb(ClutterActor * /*actor*/, ClutterEvent *event,
     gfloat actor_depth;
     clutter_actor_get_size(context->sourceActor_, &actor_width,
             &actor_height);
+    float xPos = clutter_actor_get_x(context->sourceActor_);
+    float yPos = clutter_actor_get_y(context->sourceActor_);
+    float zPos = clutter_actor_get_depth(context->sourceActor_);
 
     actor_depth = clutter_actor_get_depth(context->sourceActor_);
     switch (direction)
     {
         case CLUTTER_SCROLL_UP:
-            clutter_actor_set_depth(context->sourceActor_, actor_depth + 10.0f);
+            zPos += 10.0f;
+            clutter_actor_set_depth(context->sourceActor_, zPos);
             break;
 
         case CLUTTER_SCROLL_DOWN:
-            clutter_actor_set_depth(context->sourceActor_, actor_depth - 10.0f);
+            zPos -= 10.0f;
+            clutter_actor_set_depth(context->sourceActor_, zPos);
             break;
         default:
             break;
     }
-    std::cout << "Depth " << actor_depth << std::endl;
+    context->updatePositionLabel();
+    context->updateSoundPosition(xPos, yPos, zPos);
 
     return TRUE; /* event has been handled */
 }
 
+void GUI::updateSoundPosition(float x, float y, float z)
+{
+    assert(sound_);
+    float windowWidth = clutter_actor_get_width(stage_);
+    float windowHeight = clutter_actor_get_height(stage_);
+    // FIXME: position is considered distance from origin
+    sound_->setPosition(fabs(x - (windowWidth * 0.5)),
+            fabs(y - (windowHeight * 0.5)), z);
+}
