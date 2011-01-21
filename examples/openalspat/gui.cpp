@@ -297,14 +297,10 @@ gboolean GUI::keyPressCb(ClutterActor * /*actor*/,
 void GUI::updatePositionLabel()
 {
     std::ostringstream os;
-    float actor_x;
-    float actor_y;
-    float actor_depth = clutter_actor_get_depth(sourceActor_);
 
-    gfloat stage_w = clutter_actor_get_width(CLUTTER_ACTOR(stage_));
-    gfloat stage_h = clutter_actor_get_height(CLUTTER_ACTOR(stage_));
-    clutter_actor_get_position(sourceActor_, &actor_x, &actor_y);
-    os << "Source: (" << (actor_x - stage_w) << ", " << (actor_y - stage_h) << ", " << actor_depth << ")\n";
+    float x, y, z;
+    actorPosToSpatPos(x, y, z);
+    os << "Source: (" << x << ", " << y << ", " << z << ")\n";
 #ifdef DEBUG
     std::cout << os.str();
 #endif
@@ -360,15 +356,20 @@ void GUI::updatePosition()
     updateSoundPosition();
 }
 
+void GUI::actorPosToSpatPos(float &x, float &y, float &z)
+{
+    float halfWindowWidth = clutter_actor_get_width(stage_) / 2.0;
+    float halfWindowHeight = clutter_actor_get_height(stage_) / 2.0;
+    x = clutter_actor_get_x(sourceActor_) - halfWindowWidth;
+    y = clutter_actor_get_y(sourceActor_) - halfWindowHeight;
+    z = clutter_actor_get_depth(sourceActor_);
+}
+
 void GUI::updateSoundPosition()
 {
     assert(sound_);
-    float windowWidth = clutter_actor_get_width(stage_);
-    float windowHeight = clutter_actor_get_height(stage_);
     // FIXME: position is considered distance from origin
-    float x = clutter_actor_get_x(sourceActor_);
-    float y = clutter_actor_get_y(sourceActor_);
-    float z = clutter_actor_get_depth(sourceActor_);
-    sound_->setPosition(fabs(x - (windowWidth * 0.5)),
-            fabs(y - (windowHeight * 0.5)), z);
+    float x, y, z;
+    actorPosToSpatPos(x, y, z);
+    sound_->setPosition(x, y, z); 
 }

@@ -70,6 +70,7 @@ class GUI
         void updatePositionLabel();
         void updateSoundPosition();
         void updatePosition();
+        void actorPosToSpatPos(float &x, float &y, float &z);
 
     public:
         /// Initialize clutter subsystem
