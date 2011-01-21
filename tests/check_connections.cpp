@@ -72,6 +72,12 @@ bool test_disconnect()
         std::cout << "Connection was not deleted." << std::endl;
         return false;
     }
+    success = scene.disconnect(source, listener);
+    if (success)
+    {
+        std::cout << "Should not be able to disconnect twice" << std::endl;
+        return false;
+    }
     return true;
 }
 
