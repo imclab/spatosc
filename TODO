@@ -32,6 +32,7 @@ Refactoring
  * rename dmitri_translator.h like that.
  * rename Node.setPosition to setPositionXYZ(x,y,z)
  * add setPositionAED(a, e, d)
+ * add Scene::deleteNode(SoundSource*) and deleteNode(Listener*)
 
 Error handling
 --------------
