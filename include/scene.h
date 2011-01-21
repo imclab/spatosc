@@ -54,7 +54,11 @@ class Scene
         typedef std::vector<std::tr1::shared_ptr<Connection> >::const_iterator connConstIterator;
 
         /** 
-         * Constructor
+         * Constructor.
+         * 
+         * Your next steps should be to set the translator and create a listener node. 
+         * 
+         * When you create a scene, there is not a single node in the scene and you must create some if you want to do anything.
          */
         Scene();
 
@@ -76,68 +80,66 @@ class Scene
         template <typename T>
         void setTranslator(const std::string &address)
         {
-            translator_.reset(new T(address));
+            bool verbose = false;
+            translator_.reset(new T(address, verbose));
         }
+
+        /**
+         * Returns the current translator.
+         * @return A Translator pointer. Never free this pointer. It will become invalid if ever you switch to a different Translator.
+         */
+        Translator *getTranslator() const;
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
          * 
          * If a node wih this name already exists, it returns a null pointer and prints an error message.
-         * @return A SoundSource pointer. Never free this pointer.
-         * @deprecated We be renamed to createSoundSound
+         * @return A SoundSource pointer. Null if a node with this name already exists. Never free this pointer. It will become invalid if this node is deleted.
          */
-        SoundSource* getOrCreateSoundSource(const std::string &id);
+        SoundSource* createSoundSource(const std::string &id);
 
         /**
          * Returns a node in the scene identified by its identifier.
          * 
          * If a node wih this name already exists, it returns a null pointer and prints an error message.
-         * @return A Listener pointer. Never free this pointer.
-         * @deprecated We be renamed to createListener
+         * @return A Listener pointer. Null if a node with this name already exists. Never free this pointer. It will become invalid if this node is deleted.
          */
-        Listener* getOrCreateListener(const std::string &id);
+        Listener* createListener(const std::string &id);
 
         /**
          * Returns a node in the scene, given its identifier.
-         * @return A Node pointer. Null if not found. Never free this pointer.
+         * @return A Node pointer. Null if not found. Never free this pointer. It will become invalid if this node is deleted.
          */
         Node* getNode(const std::string &id);
 
         /**
          * Returns a sound source node in the scene identified by its identifier.
-         * @return A SoundSource pointer. Null if not found. Never free this pointer.
+         * @return A SoundSource pointer. Null if not found. Never free this pointer. It will become invalid if this node is deleted.
          */
         SoundSource* getSoundSource(const std::string &id);
 
         /**
          * Returns a listener node in the scene, given its identifier.
          * @param id Identifier for the Listener node.
-         * @return A Listener pointer. Null if not found. Never free this pointer.
+         * @return A Listener pointer. Null if not found. Never free this pointer. It will become invalid if this node is deleted.
          */
         Listener* getListener(const std::string &id);
 
         /**
          * Returns a list of all connections that "directly involve" a node (ie, as the source or the sink): 
          * @param id Identifier of the node for which we want its connections.
-         * @return A vector of Connection pointers. Never free these pointers.
+         * @return A vector of Connection pointers. Never free these pointers. They will become invalid if these connections are deleted.
          */
         std::vector<Connection*> getConnectionsForNode(const std::string &id);
 
         /**
-         * Returns a Connection in the scene identified by the identifiers of its source and sink nodes.
-         * @param src Identifier of the source node.
-         * @param sink Identifier of the sink node.
-         * @return A Connection pointer. Null if not found. Never free this pointer.
+         * Returns a Connection between two node in the scene.
+         * 
+         * @param source The source node.
+         * @param sink The sink node.
+         * @return A Connection pointer. Null if not found. Never free this pointer. It will become invalid if this connection is deleted.
          */
-        Connection* getConnection(const std::string &src, const std::string &snk);
-
-        /**
-         * Returns a connection, given ts identifier.
-         * @param id Identifier of the Connection.
-         * @return A Connection pointer. Null if not found. Never free this pointer.
-         * @deprecated The same overloaded version with two strings is the right one to use.
-         */
-        Connection* getConnection(const std::string &id);
+        Connection* getConnection(const Node *source, const Node *sink);
 
         /**
          * Sets the audio filter to add to each audio connection.
@@ -163,23 +165,17 @@ class Scene
         void setConnectFilter(std::string s);
 
         /** 
-         * Connects two nodes together, using their identifiers.
-         * @return A Connection pointer. Null if not found. Never free this pointer.
-         */
-        Connection* connect(const std::string &src, const std::string &snk);
-
-        /** 
          * Connects two nodes together.
-         * @return A Connection pointer. Null if not found. Never free this pointer.
+         * @return A Connection pointer. Null if not found. Never free this pointer. It will become invalid if this connection is deleted.
          */
         Connection* connect(Node *src, Node *snk);
 
         /** 
          * Disconnects two nodes.
-         * @deprecated Will change to disconnect(Node*, Node*)
          * @warning Not implemented yet.
+         * @return True if it successfully disconnected the nodes. False if they were not connected or if the nodes are invalid.
          */
-        void disconnect(Connection *conn);
+        bool disconnect(Node *source, Node* sink);
 
         /**
          * Called by a node when it is changed so that the scene updates all its sibling nodes.

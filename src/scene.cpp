@@ -26,6 +26,8 @@
 #include "soundsource.h"
 #include "connection.h"
 
+#define UNUSED(x) ((void) (x))
+
 namespace spatosc
 {
 
@@ -42,7 +44,7 @@ static bool nodeSortFunction (Node *n1, Node *n2)
 
 // for now, create a basic (CONSOLE) translator:
 Scene::Scene() :
-    translator_(new Translator()),
+    translator_(new Translator(false)),
     autoConnect_(true),
     connectFilter_(),
     connectRegex_(),
@@ -92,60 +94,73 @@ void Scene::debugPrint ()
     }
 }
 
-SoundSource* Scene::getOrCreateSoundSource(const std::string &id)
+Translator *Scene::getTranslator() const
+{
+    return translator_.get();
+}
+
+SoundSource* Scene::createSoundSource(const std::string &id)
 {
     using std::tr1::shared_ptr;
     // check if it already exists:
-    SoundSource *n = getSoundSource(id);
+    Node *node = getNode(id);
 
-    if (n == 0)
+    if (node == 0)
     {
         // if not, create a new vSoundNode:
         shared_ptr<SoundSource> tmp(new SoundSource(id, *this));
 
         // add it to the SoundSourceList:
         SoundSourceList_.push_back(tmp);
-        n = tmp.get();
+        node = dynamic_cast<Node *>(tmp.get());
 
         if (autoConnect_)
         {
-            listenerIterator L;
-            for (L = ListenerList_.begin(); L != ListenerList_.end(); ++L)
+            listenerIterator iter;
+            for (iter = ListenerList_.begin(); iter != ListenerList_.end(); ++iter)
             {
-                connect(n, L->get());
+                connect(node, iter->get());
             }
         }
+        return dynamic_cast<SoundSource *>(node);
     }
-
-    return n;
+    else
+    {
+        std::cerr << "A node named " << id << " of type " << typeid(node).name() << " already exists." << std::endl;
+        return 0;
+    }
 }
 
-Listener* Scene::getOrCreateListener(const std::string &id)
+Listener* Scene::createListener(const std::string &id)
 {
     using std::tr1::shared_ptr;
     // check if it already exists:
-    Listener *L = getListener(id);
+    Node *node = getNode(id);
 
-    if (!L)
+    if (! node)
     {
         // if not, create a new vSoundNode:
         shared_ptr<Listener> tmp(new Listener(id, *this));
-        L = tmp.get();
+        node = dynamic_cast<Node *>(tmp.get());
 
         // add it to the ListenerList:
         ListenerList_.push_back(tmp);
 
         if (autoConnect_)
         {
-            sourceIterator n;
-            for (n = SoundSourceList_.begin(); n != SoundSourceList_.end(); ++n)
+            sourceIterator iter;
+            for (iter = SoundSourceList_.begin(); iter != SoundSourceList_.end(); ++iter)
             {
-                connect(n->get(), L);
+                connect(iter->get(), node);
             }
         }
+        return dynamic_cast<Listener *>(node);
     }
-
-    return L;
+    else
+    {
+        std::cerr << "A node named " << id << " of type " << typeid(node).name() << " already exists." << std::endl;
+        return 0;
+    }
 }
 
 Node* Scene::getNode(const std::string &id)
@@ -159,7 +174,6 @@ Node* Scene::getNode(const std::string &id)
     n = getListener(id);
     if (n) 
         return n;
-
     return 0;
 }
 
@@ -175,7 +189,7 @@ SoundSource* Scene::getSoundSource(const std::string &id)
             return n->get();
         }
     }
-    return NULL;
+    return 0;
 }
 
 Listener* Scene::getListener(const std::string &id)
@@ -188,7 +202,7 @@ Listener* Scene::getListener(const std::string &id)
             return L->get();
         }
     }
-    return NULL;
+    return 0;
 }
 
 std::vector<Connection*> Scene::getConnectionsForNode(const std::string &id)
@@ -206,30 +220,17 @@ std::vector<Connection*> Scene::getConnectionsForNode(const std::string &id)
     return foundConnections;
 }
 
-Connection* Scene::getConnection(const std::string &src, const std::string &snk)
+Connection* Scene::getConnection(const Node *source, const Node *sink)
 {
     connIterator c;
     for (c = ConnectionList_.begin(); c != ConnectionList_.end(); ++c)
     {
-        if (((*c)->src_->id_ == src) and ((*c)->snk_->id_ == snk))
+        if (((*c)->src_ == source) and ((*c)->snk_ == sink))
         {
             return c->get();
         }
     }
-    return NULL;
-}
-
-Connection* Scene::getConnection(const std::string &id)
-{
-    connIterator c;
-    for (c = ConnectionList_.begin(); c != ConnectionList_.end(); ++c)
-    {
-        if ((*c)->id_ == id)
-        {
-            return c->get();
-        }
-    }
-    return NULL;
+    return 0;
 }
 
 void Scene::setConnectFilter(std::string s)
@@ -245,33 +246,7 @@ void Scene::setConnectFilter(std::string s)
         std::cout << "Scene error: bad regex pattern passed to setConnectFilter(): " << s << std::endl;
         return;
     }
-
     connectFilter_ = s;
-}
-
-Connection* Scene::connect(const std::string &src, const std::string &snk)
-{
-    // check if exists first:
-    Connection* conn = getConnection(src, snk);
-    if (!conn)
-    {
-        // check if both nodes exist
-        Node *srcNode = getNode(src);
-        Listener *listener = getListener(snk);
-        Node *snkNode;
-
-        bool isNormalConnection = true;
-        if (listener)
-        {
-            snkNode = listener;
-            isNormalConnection = false;
-        }
-        else snkNode = getNode(snk);
-
-        conn = connect(srcNode, snkNode);
-    }
-
-    return conn;
 }
 
 Connection* Scene::connect(Node *src, Node *snk)
@@ -279,35 +254,41 @@ Connection* Scene::connect(Node *src, Node *snk)
     using std::tr1::shared_ptr;
     // if the node pointers are invalid for some reason, return:
     if (!src or !snk) 
-        return NULL;
+        return 0;
+    Connection* conn = getConnection(src, snk);
+    if (conn)
+    {
+        std::cerr << "Nodes " << src->getID() << " and " << snk->getID() << " are already connected." << std::endl;
+        return conn;
+    }
 
     // Check src and snk id's against the connectFilter. If either match, then
     // proceed with the connection:
-    int srcRegexStatus = regexec(&connectRegex_, src->id_.c_str(), (size_t)0, NULL, 0);
-    int snkRegexStatus = regexec(&connectRegex_, snk->id_.c_str(), (size_t)0, NULL, 0);
+    int srcRegexStatus = regexec(&connectRegex_, src->id_.c_str(), (size_t)0, 0, 0);
+    int snkRegexStatus = regexec(&connectRegex_, snk->id_.c_str(), (size_t)0, 0, 0);
 
     if (srcRegexStatus == 0 or snkRegexStatus == 0)
     {
         // create connection:
         shared_ptr<Connection> conn(new Connection(src, snk));
-
         // register the connection with both the Scene and the
         // sink node (for backwards connectivity computation):
         ConnectionList_.push_back(conn);
         src->connectTO_.push_back(conn);
         snk->connectFROM_.push_back(conn);
-
         update(conn.get());
-
         return conn.get();
     }
     else
-        return NULL;
+        return 0;
 }
 
-void Scene::disconnect(Connection * /*conn*/)
+bool Scene::disconnect(Node *source, Node *sink)
 {
+    UNUSED(source);
+    UNUSED(sink);
     std::cout << "Scene::disconnect NOT IMPLEMENTED YET" << std::endl;
+    return false;
 }
 
 void Scene::update(Node *n)

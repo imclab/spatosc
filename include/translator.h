@@ -35,6 +35,12 @@ class Translator
 {
     public:
         /**
+         * Constructor.
+         * @param verbose Whether it should print info to the console or not.
+         */
+        Translator(bool verbose);
+
+        /**
          * The main work of the translator is done by the update() method, which is
          * called whenever there is a change to some parameters within a connection.
          * 
@@ -42,6 +48,8 @@ class Translator
          * distance between those two, their relative position, gain and other attributes.
          * It should then make sure there is some audio rendering going, either by sending interprocess
          * messages to control some audio engine, or by rendering audio by itself.
+         * 
+         * @deprecated Should have a better name.
          */
         virtual void update(Connection *conn);
 
@@ -50,8 +58,23 @@ class Translator
          */
         virtual ~Translator() {}
 
+        /**
+         * Returns if it should be print info to the console or not.
+         * @return Verbose or not.
+         */
+        bool getVerbose() const;
+
+        /**
+         * Sets if it should be print info to the console or not.
+         * @param verbose Verbose or not.
+         */
+        void setVerbose(bool verbose);
+
         static const char *DEFAULT_SEND_PORT;
         static const char *DEFAULT_RECEIVER_PORT;
+
+    private:
+        bool verbose_;
 };
 
 } // end namespace spatosc

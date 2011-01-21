@@ -37,7 +37,7 @@ class Connection;
 class DmitriTranslator : public Translator
 {
 public:
-    explicit DmitriTranslator(const std::string &ip);
+    explicit DmitriTranslator(const std::string &ip, bool verbose);
     virtual ~DmitriTranslator();
     virtual void update(Connection *conn);
 
@@ -48,6 +48,7 @@ private:
     // not implemented
     DmitriTranslator(const DmitriTranslator&);
     const DmitriTranslator& operator=(const DmitriTranslator&);
+    bool verbose;
 };
 
 } // end namespace spatosc

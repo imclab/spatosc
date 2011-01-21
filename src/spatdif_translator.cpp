@@ -30,7 +30,8 @@
 namespace spatosc
 {
 // TODO:2011-01-19:aalex:Allow to specify the sending port
-SpatdifTranslator::SpatdifTranslator(const std::string &ip) :
+SpatdifTranslator::SpatdifTranslator(const std::string &ip, bool verbose = false) :
+    Translator(verbose),
     oscSender_(ip, DEFAULT_SEND_PORT)
     {}
 

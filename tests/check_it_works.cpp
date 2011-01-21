@@ -21,12 +21,15 @@
 #include <tr1/memory>
 #include "spatosc.h"
 
-using namespace spatosc;
+
+static const bool VERBOSE = false;
 
 int main(int /*argc*/, char ** /*argv*/)
 {
     using std::tr1::shared_ptr;
-    std::cout << "\nRunning spatoscTest ...\n" << std::endl;
+    using namespace spatosc;
+    if (VERBOSE)
+        std::cout << "\nRunning spatoscTest ...\n" << std::endl;
     // create the scene
     Scene scene;
 
@@ -36,15 +39,16 @@ int main(int /*argc*/, char ** /*argv*/)
 
 
     // Each scene needs to have at least one Listener:
-    //Listener *listener = scene.getOrCreateListener("listener");
+    //Listener *listener = scene.createListener("listener");
 
     // A variable number of SoundSource instances can then be generated. Note
     // that a bus number must be assigned to each source in order to render in
     // D-Mitri. Setting the bus to -1 will effectively disable computation for
     // that node:
-    SoundSource *foo = scene.getOrCreateSoundSource("foo");
+    scene.createListener("listener");
+    SoundSource *foo = scene.createSoundSource("foo");
     foo->setChannelID(1);
-    SoundSource *bar = scene.getOrCreateSoundSource("bar");
+    SoundSource *bar = scene.createSoundSource("bar");
     bar->setChannelID(2);
 
     // In order to send OSC, some output plugin must be specified. In this case,
@@ -54,20 +58,23 @@ int main(int /*argc*/, char ** /*argv*/)
     scene.setTranslator<DmitriTranslator>("127.0.0.1");
 
     // The Scene class can print out everything to the console:
-    scene.debugPrint();
+    if (VERBOSE)
+        scene.debugPrint();
 
     // Now we just move nodes around and updates should be sent to D-Mitri:
 
     foo->setPosition(0,10,0);
     bar->setPosition(5,5,0);
 
-    sleep(0.1);
+    //sleep(0.1);
 
     foo->setPosition(0,5,0);
     bar->setPosition(-5,5,0);
 
-    scene.debugPrint();
+    if (VERBOSE)
+        scene.debugPrint();
 
-    std::cout << "Exitting...\n";
+    if (VERBOSE)
+        std::cout << "Exitting...\n";
     return 0;
 }

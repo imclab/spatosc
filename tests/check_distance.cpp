@@ -29,23 +29,19 @@
 
 static const bool VERBOSE = false;
 
-using namespace spatosc;
-
 int main(int /*argc*/, char ** /*argv*/)
 {
     using std::tr1::shared_ptr;
+    using namespace spatosc;
 
     if (VERBOSE)
         std::cout << std::endl << "Running..." << std::endl;
 
     Scene scene;
-
     scene.setTranslator<DmitriTranslator>("127.0.0.1");
-
-    SoundSource *sound_a = scene.getOrCreateSoundSource("sound_a");
+    SoundSource *sound_a = scene.createSoundSource("sound_a");
     sound_a->setChannelID(1);
-
-    Listener *listener = scene.getOrCreateListener("listener");
+    Listener *listener = scene.createListener("listener");
 
     if (VERBOSE)
         scene.debugPrint();
@@ -54,7 +50,7 @@ int main(int /*argc*/, char ** /*argv*/)
     {
         sound_a->setPosition(  x, 0.0, 0.0);
         listener->setPosition(- x, 0.0, 0.0);
-        Connection *conn = scene.getConnection(sound_a->getID(), listener->getID());
+        Connection *conn = scene.getConnection(sound_a, listener);
         if (! conn)
         {
             std::cout << "Could not find a connection between the two nodes." << std::endl;
