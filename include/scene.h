@@ -80,8 +80,15 @@ class Scene
         template <typename T>
         void setTranslator(const std::string &address)
         {
-            translator_.reset(new T(address));
+            bool verbose = false;
+            translator_.reset(new T(address, verbose));
         }
+
+        /**
+         * Returns the current translator.
+         * @return A Translator pointer. Never free this pointer. It will become invalid if ever you switch to a different Translator.
+         */
+        Translator *getTranslator() const;
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.

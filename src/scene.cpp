@@ -44,7 +44,7 @@ static bool nodeSortFunction (Node *n1, Node *n2)
 
 // for now, create a basic (CONSOLE) translator:
 Scene::Scene() :
-    translator_(new Translator()),
+    translator_(new Translator(false)),
     autoConnect_(true),
     connectFilter_(),
     connectRegex_(),
@@ -92,6 +92,11 @@ void Scene::debugPrint ()
         std::cout << "    dopplerEffect:\t" << (*c)->dopplerEffect_ << "%" << std::endl;
         std::cout << "    diffractionEffect:\t" << (*c)->diffractionEffect_ << "%" << std::endl;
     }
+}
+
+Translator *Scene::getTranslator() const
+{
+    return translator_.get();
 }
 
 SoundSource* Scene::createSoundSource(const std::string &id)
