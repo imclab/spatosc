@@ -33,6 +33,7 @@ Refactoring
  * rename Node.setPosition to setPositionXYZ(x,y,z)
  * add setPositionAED(a, e, d)
  * add Scene::deleteNode(SoundSource*) and deleteNode(Listener*)
+ * Should we warn clients that we disconnected some nodes?
 
 Error handling
 --------------
