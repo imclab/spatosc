@@ -86,16 +86,20 @@ bool test_delete_node()
     Scene scene;
     SoundSource *source = scene.createSoundSource("source");
     Listener *listener = scene.createListener("listener");
-    scene.deleteNode(source);
+    if (! scene.deleteNode(source))
+    {
+        std::cout << __FUNCTION__ << ": deleteNode returned false." << std::endl;
+        return false;
+    }
     if (scene.getConnection(source, listener))
     {
-        std::cout << "Should not be able to find connection anymore." << std::endl;
+        std::cout << __FUNCTION__ << ": Should not be able to find connection anymore." << std::endl;
         return false;
     }
     SoundSource *orig = scene.getSoundSource("source");
     if (orig != 0)
     {
-        std::cout << "Should not be able to find source anymore." << std::endl;
+        std::cout << __FUNCTION__ << ": Should not be able to find source anymore." << std::endl;
         return false;
     }
     return true;

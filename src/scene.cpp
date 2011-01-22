@@ -45,11 +45,18 @@ namespace
         private:
             const T *a_;
     };
+    /**
+     * Removes an element from a vector of shared pointers if 
+     * the given pointer matches.
+     * @return Whether it deleted some elements of not.
+     */
     template <typename T>
-    void eraseFromVector(std::vector<std::tr1::shared_ptr<T> >& vec, T *a)
+    bool eraseFromVector(std::vector<std::tr1::shared_ptr<T> >& vec, T *a)
     {
+        unsigned int size_before = vec.size();
         IsEqual<T> predicate(a);
         vec.erase(std::remove_if(vec.begin(), vec.end(), predicate), vec.end());
+        return vec.size() < size_before;
     }
 } // end of anonymous namespace
 
@@ -381,24 +388,26 @@ void Scene::disconnectNodeConnections(Node *node)
     }
 }
 
-void Scene::deleteNode(SoundSource *node)
+bool Scene::deleteNode(SoundSource *node)
 {
     if (! node)
     {
         std::cerr << "Invalid source node." << std::endl;
+        return false;
     }
     disconnectNodeConnections(node);
-    eraseFromVector(SoundSourceList_, node);
+    return eraseFromVector(SoundSourceList_, node);
 }
 
-void Scene::deleteNode(Listener *node)
+bool Scene::deleteNode(Listener *node)
 {
     if (! node)
     {
         std::cerr << "Invalid listener node." << std::endl;
+        return false;
     }
     disconnectNodeConnections(node);
-    eraseFromVector(ListenerList_, node);
+    return eraseFromVector(ListenerList_, node);
 }
 } // end namespace spatosc
 

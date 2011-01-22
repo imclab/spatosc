@@ -196,14 +196,16 @@ class Scene
         /**
          * Deletes a Listener node
          * @param node Listener pointer.
+         * @return Whether it deleted a node or not.
          */
-        void deleteNode(Listener *node);
+        bool deleteNode(Listener *node);
 
         /**
          * Deletes a SoundSource node
          * @param node SoundSource pointer.
+         * @return Whether it deleted a node or not.
          */
-        void deleteNode(SoundSource *node);
+        bool deleteNode(SoundSource *node);
 
     private:
         /**
