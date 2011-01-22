@@ -102,6 +102,11 @@ bool test_delete_node()
         std::cout << __FUNCTION__ << ": Should not be able to find source anymore." << std::endl;
         return false;
     }
+    if (scene.deleteNode(source))
+    {
+        std::cout << __FUNCTION__ << ": should not be able to delete the same node twice." << std::endl;
+        return false;
+    }
     return true;
 }
 
