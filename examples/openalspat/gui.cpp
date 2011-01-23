@@ -18,8 +18,6 @@
  */
 
 #include "gui.h"
-#include "audio_scene.h"
-#include <algorithm>
 #include <spatosc/scene.h>
 #include <spatosc/spatdif_translator.h>
 #include <spatosc/soundsource.h>
