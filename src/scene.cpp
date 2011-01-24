@@ -134,11 +134,6 @@ void Scene::debugPrint ()
     }
 }
 
-Translator *Scene::getTranslator() const
-{
-    return translator_.get();
-}
-
 SoundSource* Scene::createSoundSource(const std::string &id)
 {
     using std::tr1::shared_ptr;
