@@ -37,7 +37,7 @@ PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
 export PKG_CONFIG_PATH
 
 #CXXFLAGS+=" -g3 -ggdb -Wall -Wextra -Wfatal-errors"
-CXXFLAGS+=" -Wall -Wextra -Wfatal-errors -Werror"
+CXXFLAGS+=" -Wall -Wextra -Wfatal-errors -Werror -Wnon-virtual-dtor"
 LDFLAGS+=" -fPIC -L/usr/local/lib -L/usr/local/lib64"
 
 # Checks for programs.
