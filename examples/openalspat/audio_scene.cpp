@@ -37,17 +37,29 @@ void AudioScene::init()
 int AudioScene::genericHandler(const char * path, const char * /*types*/,
         lo_arg ** /*argv*/, int /*argc*/, void * /*data*/, void * /*user_data*/)
 {
+#ifdef DEBUG
     std::cout << __FUNCTION__ << path << std::endl;
+#endif
     return 1; // handoff
 }
 
 int AudioScene::onSourcePositionChanged(const char * /*path*/, const char * /*types*/,
         lo_arg ** argv, int /*argc*/, void * /*data*/, void *user_data)
 {
-    //std::cout << __FUNCTION__ << std::endl;
+#ifdef DEBUG
+    std::cout << __FUNCTION__ << std::endl;
+#endif
     AudioScene *context = static_cast<AudioScene*>(user_data);
     for (int i = 0; i != 3; ++i)
+    {
         context->sourcePos_[i] = argv[i]->f;
+#ifdef DEBUG
+        std::cout << argv[i]->f << ",";
+#endif
+    }
+#ifdef DEBUG
+    std::cout << std::endl;
+#endif
     context->updateSourcePosition();
     return 0;
 }

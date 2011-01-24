@@ -1,5 +1,5 @@
 DEPS=clutter-1.0 spatosc-0.1 openal freealut liblo
-CXXFLAGS=`pkg-config --cflags $(DEPS)` -Wall -Werror -Wfatal-errors -Wextra -O2
+CXXFLAGS=`pkg-config --cflags $(DEPS)` -Wall -Werror -Wfatal-errors -Wextra -O2 -DDEBUG
 LIBS=`pkg-config --libs $(DEPS)`
 OBJS=main.o gui.o audio_scene.o application.o
 
