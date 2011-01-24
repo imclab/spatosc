@@ -21,6 +21,7 @@
 
 #include "spatdif_translator.h"
 #include <string>
+#include <cassert>
 #include "oscutils.h"
 #include "oscsender.h"
 #include "connection.h"
@@ -52,16 +53,9 @@ void SpatdifTranslator::pushOSCMessages(Connection * conn)
     SoundSource *src = dynamic_cast<SoundSource*>(conn->src_);
     Listener *snk = dynamic_cast<Listener*>(conn->snk_);
     // TODO:Wed Jan 19 14:47:57 EST 2011:tmatth: set positions, gains as needed!
-    if (src == 0)
-    {
-        std::cerr << "Sound source is NULL!\n";
-        return;
-    }
-    if (snk == 0)
-    {
-        std::cerr << "Sound sink is NULL!\n";
-        return;
-    }
+    assert(src);
+    assert(snk);
+
     if (src->getChannelID() < 0)
         return;
 
