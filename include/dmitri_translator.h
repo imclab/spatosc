@@ -39,7 +39,7 @@ class DmitriTranslator : public Translator
 public:
     explicit DmitriTranslator(const std::string &ip, bool verbose);
     virtual ~DmitriTranslator();
-    virtual void update(Connection *conn);
+    virtual void pushOSCMessages(Connection *conn);
 
 private:
     static const double SPACEMAP_RADIUS;

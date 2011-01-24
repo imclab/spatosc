@@ -39,12 +39,12 @@ Connection::Connection(Node *source, Node *sink) :
     diffractionEffect_(100.0)
 {
     // set updateFlag on at least one of the nodes for initial computation:
-    source->setUpdateFlag(true);
+    source->setUpdateFlag(true); // TODO: needsRefresh
     // calculate and store distance, azimuth and elevation
-    update();
+    recomputeConnection();
 }
 
-void Connection::update()
+void Connection::recomputeConnection()
 {
     if (src_->updateFlag() or snk_->updateFlag())
     {
@@ -64,6 +64,7 @@ void Connection::update()
         // FIXME:Thu Jan 13 14:52:26 EST 2011:tmatth:
         // is this the only place that needs to update its state when src 
         // or sink change?
+        // 2011-01-24:aalex:The nodes should not "need refresh", only the connection should.
         src_->setUpdateFlag(false);
         snk_->setUpdateFlag(false);
     }

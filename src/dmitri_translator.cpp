@@ -52,7 +52,7 @@ DmitriTranslator::~DmitriTranslator()
     lo_address_free(destAddr_);
 }
 
-void DmitriTranslator::update(Connection *conn)
+void DmitriTranslator::pushOSCMessages(Connection *conn)
 {
     std::string str;
     SoundSource *src = dynamic_cast<SoundSource*>(conn->src_);
