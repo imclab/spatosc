@@ -34,10 +34,10 @@ void AudioScene::init()
 }
 
 
-int AudioScene::genericHandler(const char * /*path*/, const char * /*types*/,
+int AudioScene::genericHandler(const char * path, const char * /*types*/,
         lo_arg ** /*argv*/, int /*argc*/, void * /*data*/, void * /*user_data*/)
 {
-    //std::cout << __FUNCTION__ << path << std::endl;
+    std::cout << __FUNCTION__ << path << std::endl;
     return 1; // handoff
 }
 

@@ -46,7 +46,7 @@ void SpatdifTranslator::sendPosition(const std::string &prefix, Node *node)
     oscSender_.sendMessage(path, "fff", vect.x, vect.y, vect.z, LO_ARGS_END);
 }
 
-void SpatdifTranslator::update(Connection * conn)
+void SpatdifTranslator::pushOSCMessages(Connection * conn)
 {
     // FIXME: Downcasts are evil
     SoundSource *src = dynamic_cast<SoundSource*>(conn->src_);

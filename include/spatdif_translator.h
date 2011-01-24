@@ -44,7 +44,7 @@ class SpatdifTranslator : public Translator
     public:
         explicit SpatdifTranslator(const std::string &ip, bool verbose);
         virtual ~SpatdifTranslator();
-        virtual void update(Connection *conn);
+        virtual void pushOSCMessages(Connection *conn);
 
     private:
         OscSender oscSender_;

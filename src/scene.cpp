@@ -28,8 +28,6 @@
 #include "soundsource.h"
 #include "connection.h"
 
-#define UNUSED(x) ((void) (x))
-
 namespace
 {
     // useful to search and delete in a vector of shared_ptr
