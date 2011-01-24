@@ -17,7 +17,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "dmitritranslator.h"
+#include "dmitri_translator.h"
 #include "oscutils.h"
 #include "soundsource.h"
 #include "connection.h"
