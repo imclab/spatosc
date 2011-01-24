@@ -25,6 +25,7 @@ libspatosc_@SPATOSC_API_VERSION@_la_SOURCES = \
     oscsender.cpp \
     oscutils.cpp \
     scene.cpp \
+    spatdif_receiver.cpp \
     spatdif_translator.cpp \
     translator.cpp \
     soundsource.cpp
@@ -49,6 +50,7 @@ libspatosc_@SPATOSC_API_VERSION@_la_include_HEADERS = \
     $(top_srcdir)/include/oscutils.h \
     $(top_srcdir)/include/scene.h \
     $(top_srcdir)/include/soundsource.h \
+    $(top_srcdir)/include/spatdif_receiver.h \
     $(top_srcdir)/include/spatdif_translator.h \
     $(top_srcdir)/include/spatosc.h \
     $(top_srcdir)/include/translator.h \
