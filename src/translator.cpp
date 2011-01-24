@@ -34,7 +34,7 @@ Translator::Translator(bool verbose = false)
     verbose_ = verbose;
 }
 
-void Translator::update(Connection *conn)
+void Translator::pushOSCMessages(Connection *conn)
 {
     if (getVerbose())
         std::cout << "Computation update for " << conn->src_->getID() << " -> " << conn->snk_->getID() << " :" <<std::endl;

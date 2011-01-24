@@ -52,7 +52,7 @@ public:
     /**
      * Update distance, azimuth and elevation values (usually called by Scene instance)
      */
-    void update();
+    void recomputeConnection();
 
     /**
      * Returns the distance between the source and sink nodes.

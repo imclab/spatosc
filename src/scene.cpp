@@ -318,7 +318,7 @@ Connection* Scene::connect(Node *src, Node *snk)
         connections_.push_back(conn);
         src->connectTO_.push_back(conn);
         snk->connectFROM_.push_back(conn);
-        update(conn.get());
+        onConnectionChanged(conn.get());
         return conn.get();
     }
     else
@@ -349,20 +349,20 @@ bool Scene::disconnect(Node *source, Node *sink)
     return true;
 }
 
-void Scene::update(Node *n)
+void Scene::onNodePositionChanged(Node *n)
 {
     connIterator c;
     for (c = n->connectTO_.begin(); c != n->connectTO_.end(); ++c)
     {
-        update(c->get());
+        onConnectionChanged(c->get());
     }
     for (c = n->connectFROM_.begin(); c != n->connectFROM_.end(); ++c)
     {
-        update(c->get());
+        onConnectionChanged(c->get());
     }
 }
 
-void Scene::update(Connection *conn)
+void Scene::onConnectionChanged(Connection *conn)
 {
     // If one of the connected nodes has been deactivated, then there is no need
     // to compute anything. Enable the mute (and send the status change if this
@@ -371,8 +371,8 @@ void Scene::update(Connection *conn)
     {
         if (translator_)
         {
-            conn->update();
-            translator_->update(conn);
+            conn->recomputeConnection();
+            translator_->pushOSCMessages(conn);
         }
     }
 }

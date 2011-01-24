@@ -172,12 +172,7 @@ class Scene
         /**
          * Called by a node when it is changed so that the scene updates all its sibling nodes.
          */
-        void update(Node *n);
-
-        /**
-         * Called by a connection when it is changed so that the scene updates all its sibling nodes.
-         */
-        void update(Connection *conn);
+        void onNodePositionChanged(Node *n);
 
         /**
          * Sets whether source and sink nodes should be automatically connected as soon as they are created.
@@ -208,6 +203,11 @@ class Scene
         bool deleteNode(SoundSource *node);
 
     private:
+        /**
+         * Called when a new connection is made or when its node position change, so that the scene updates all its sibling nodes, and the translator may push some OSC messages.
+         */
+        void onConnectionChanged(Connection *conn);
+
         /**
          * Returns a list of all connections that "directly involve" a node (ie, as the source or the sink): 
          * @param Node pointer for which we want its connections.

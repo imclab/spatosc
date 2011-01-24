@@ -90,19 +90,28 @@ class Node
          * Returns this node's position.
          * @return A Vector3 with its position as x, y and z coordinates.
          */
-        Vector3 getPosition() const { return pos_; }
+        Vector3 getPosition() const
+        {
+            return pos_;
+        }
         
         /**
          * Call this to make sure this node's position will be updated next time the scene nodes positions are calculated.
          * @param should_be_updated Wheter or not it should be updated.
          */
-        void setUpdateFlag(bool should_be_updated) { updateFlag_ = should_be_updated; }
+        void setNeedsRefresh(bool should_be_updated)
+        {
+            needsRefresh_ = should_be_updated;
+        }
 
         /**
          * Returns whether or not this node's position should be updated.
          * @return Either true if it needs to be computed by the Scene, of false if it's OK.
          */
-        bool updateFlag() const { return updateFlag_; }
+        bool getNeedsRefresh() const
+        {
+            return needsRefresh_;
+        }
 
     protected:
 
@@ -117,7 +126,7 @@ class Node
         std::vector<std::tr1::shared_ptr<Connection> > connectTO_;
         std::vector<std::tr1::shared_ptr<Connection> > connectFROM_;
 
-        bool updateFlag_;
+        bool needsRefresh_;
 };
 
 } // end namespace spatosc

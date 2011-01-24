@@ -41,17 +41,15 @@ class Translator
         Translator(bool verbose);
 
         /**
-         * The main work of the translator is done by the update() method, which is
+         * The main work of the translator is done by the pushOSCMessages() method, which is
          * called whenever there is a change to some parameters within a connection.
          * 
          * For each pair of nodes in the scene that are connected, it might calculate the 
          * distance between those two, their relative position, gain and other attributes.
          * It should then make sure there is some audio rendering going, either by sending interprocess
          * messages to control some audio engine, or by rendering audio by itself.
-         * 
-         * @deprecated Should have a better name.
          */
-        virtual void update(Connection *conn);
+        virtual void pushOSCMessages(Connection *conn);
 
         /**
          * Virtual classes should have virtual destructors.

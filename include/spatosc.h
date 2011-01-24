@@ -37,7 +37,7 @@
 #include "node.h"
 #include "listener.h"
 #include "maths.h"
-#include "dmitritranslator.h"
+#include "dmitri_translator.h"
 #include "translator.h"
 #include "connection.h"
 #include "soundsource.h"
