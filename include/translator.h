@@ -38,7 +38,7 @@ class Translator
          * Constructor.
          * @param verbose Whether it should print info to the console or not.
          */
-        Translator(bool verbose);
+        Translator(bool verbose = false);
 
         /**
          * The main work of the translator is done by the pushOSCMessages() method, which is
@@ -56,22 +56,10 @@ class Translator
          */
         virtual ~Translator() {}
 
-        /**
-         * Returns if it should be print info to the console or not.
-         * @return Verbose or not.
-         */
-        bool getVerbose() const;
-
-        /**
-         * Sets if it should be print info to the console or not.
-         * @param verbose Verbose or not.
-         */
-        void setVerbose(bool verbose);
-
         static const char *DEFAULT_SEND_PORT;
         static const char *DEFAULT_RECEIVER_PORT;
 
-    private:
+    protected:
         bool verbose_;
 };
 

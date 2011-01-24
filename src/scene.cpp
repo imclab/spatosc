@@ -19,6 +19,7 @@
 
 #include "scene.h"
 #include <iostream>
+#include <cassert>
 #include <algorithm>
 #include <tr1/memory>
 
@@ -112,9 +113,6 @@ void Scene::debugPrint ()
 
     std::cout << "\n=====================================================" << std::endl;
     std::cout << "[Scene]:: connectFilter = " << connectFilter_ << std::endl;
-
-    if (translator_ == 0)
-        std::cout << "[Scene]:: NO translator specified" << std::endl;
 
     std::cout << "[Scene]:: " << ListenerList_.size() << " listeners:" << std::endl;
     for (L = ListenerList_.begin(); L != ListenerList_.end(); ++L)
@@ -367,11 +365,9 @@ void Scene::onConnectionChanged(Connection *conn)
     // has just happened)
     if (conn->src_->active_ and conn->snk_->active_)
     {
-        if (translator_)
-        {
-            conn->recomputeConnection();
-            translator_->pushOSCMessages(conn);
-        }
+        assert(translator_);
+        conn->recomputeConnection();
+        translator_->pushOSCMessages(conn);
     }
 }
 
