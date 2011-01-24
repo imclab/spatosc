@@ -80,13 +80,18 @@ Scene::Scene() :
     connectRegex_(),
     ListenerList_(),
     SoundSourceList_(),
-    connections_()
+    connections_(),
+    verbose_(false)
 {
     this->ListenerList_.clear();
     this->SoundSourceList_.clear();
     this->connections_.clear();
-
     setConnectFilter(".*"); // match everything
+}
+
+void Scene::setVerbose(bool verbose)
+{
+    verbose_ = verbose;
 }
 
 void Scene::setAutoConnect(bool enabled)

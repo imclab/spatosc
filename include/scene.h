@@ -80,8 +80,7 @@ class Scene
         template <typename T>
         void setTranslator(const std::string &address)
         {
-            bool verbose = false;
-            translator_.reset(new T(address, verbose));
+            translator_.reset(new T(address, verbose_));
         }
 
         /**
@@ -195,6 +194,11 @@ class Scene
          * @return Whether it deleted a node or not.
          */
         bool deleteNode(SoundSource *node);
+        /**
+         * Sets the console verbosity for info messages.
+         * @param Whether to print a lot of messages or not.
+         */
+        void setVerbose(bool verbose);
 
     private:
         /**
@@ -217,6 +221,7 @@ class Scene
         std::vector<std::tr1::shared_ptr<Listener> >  ListenerList_;
         std::vector<std::tr1::shared_ptr<SoundSource> > SoundSourceList_;
         std::vector<std::tr1::shared_ptr<Connection> > connections_;
+        bool verbose_;
 };
 
 } // end namespace spatosc
