@@ -211,12 +211,9 @@ class Scene
         void disconnectNodeConnections(Node *node);
 
         std::tr1::shared_ptr<Translator> translator_;
-
         bool autoConnect_;
-
         std::string connectFilter_;
         regex_t connectRegex_;
-
         std::vector<std::tr1::shared_ptr<Listener> >  ListenerList_;
         std::vector<std::tr1::shared_ptr<SoundSource> > SoundSourceList_;
         std::vector<std::tr1::shared_ptr<Connection> > connections_;
