@@ -170,9 +170,9 @@ class Scene
         bool disconnect(Node *source, Node* sink);
 
         /**
-         * Called by a node when it is changed so that the scene updates all its sibling nodes.
+         * Called by a node when it is changed so that the scene recomputes all the connection in which it is involved.
          */
-        void onNodePositionChanged(Node *n);
+        void onNodeChanged(Node *n);
 
         /**
          * Sets whether source and sink nodes should be automatically connected as soon as they are created.

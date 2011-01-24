@@ -52,7 +52,7 @@ void Node::setPosition(double x, double y, double z)
     {
         pos_ = Vector3(x,y,z);
         needsRefresh_ = true;
-        scene_.onNodePositionChanged(this);
+        scene_.onNodeChanged(this);
     }
 }
 
@@ -62,7 +62,7 @@ void Node::setOrientation(double pitch, double roll, double yaw)
     {
         rot_ = Vector3(pitch, roll, yaw);
         needsRefresh_ = true;
-        scene_.onNodePositionChanged(this);
+        scene_.onNodeChanged(this);
     }
 }
 
