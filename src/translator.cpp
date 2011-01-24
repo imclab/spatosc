@@ -29,14 +29,12 @@ namespace spatosc
 const char *Translator::DEFAULT_SEND_PORT = "18033";
 const char *Translator::DEFAULT_RECEIVER_PORT = "18099";
 
-Translator::Translator(bool verbose = false)
-{
-    verbose_ = verbose;
-}
+Translator::Translator(bool verbose) : verbose_(verbose)
+{}
 
 void Translator::pushOSCMessages(Connection *conn)
 {
-    if (getVerbose())
+    if (verbose_)
         std::cout << "Computation update for " << conn->src_->getID() << " -> " << conn->snk_->getID() << " :" <<std::endl;
 
     /*
@@ -55,23 +53,13 @@ void Translator::pushOSCMessages(Connection *conn)
     double snkScalar = (double) (1.0 - (.01*xconn->rolloffEffect  * (1.0 - snkIncidenceGain)));
      */
 
-    if (getVerbose())
+    if (verbose_)
     {
         std::cout << "  dist:\t" << conn->distance() << std::endl;
         std::cout << "  azim:\t" << conn->azimuth() << std::endl;
         std::cout << "  elev:\t" << conn->elevation() << std::endl;
         std::cout << "  gain:\t" << conn->gain() << " dB" << std::endl;
     }
-}
-
-bool Translator::getVerbose() const
-{
-    return verbose_;
-}
-
-void Translator::setVerbose(bool verbose)
-{
-    verbose_ = verbose;
 }
 
 } // end namespace spatosc
