@@ -38,15 +38,15 @@ Connection::Connection(Node *source, Node *sink) :
     dopplerEffect_(100.0),
     diffractionEffect_(100.0)
 {
-    // set updateFlag on at least one of the nodes for initial computation:
-    source->setUpdateFlag(true); // TODO: needsRefresh
+    // set needsRefresh on at least one of the nodes for initial computation:
+    source->setNeedsRefresh(true);
     // calculate and store distance, azimuth and elevation
     recomputeConnection();
 }
 
 void Connection::recomputeConnection()
 {
-    if (src_->updateFlag() or snk_->updateFlag())
+    if (src_->getNeedsRefresh() or snk_->getNeedsRefresh())
     {
         Vector3 vect = src_->getPosition() - snk_->getPosition();
         distance_ = static_cast<double>(vect.Mag());
@@ -65,8 +65,8 @@ void Connection::recomputeConnection()
         // is this the only place that needs to update its state when src 
         // or sink change?
         // 2011-01-24:aalex:The nodes should not "need refresh", only the connection should.
-        src_->setUpdateFlag(false);
-        snk_->setUpdateFlag(false);
+        src_->setNeedsRefresh(false);
+        snk_->setNeedsRefresh(false);
     }
 }
 

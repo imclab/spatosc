@@ -32,7 +32,7 @@ Node::Node(const std::string &nodeID, Scene &scene) :
     active_(true),
     connectTO_(),
     connectFROM_(),
-    updateFlag_(true) // FIXME: rename this
+    needsRefresh_(true)
 {
     connectTO_.clear();
     connectFROM_.clear();
@@ -51,7 +51,7 @@ void Node::setPosition(double x, double y, double z)
     if (x != pos_.x or y != pos_.y or z != pos_.z)
     {
         pos_ = Vector3(x,y,z);
-        updateFlag_ = true;
+        needsRefresh_ = true;
         scene_.onNodePositionChanged(this);
     }
 }
@@ -61,7 +61,7 @@ void Node::setOrientation(double pitch, double roll, double yaw)
     if (pitch != rot_.x or roll != rot_.y or yaw != rot_.z)
     {
         rot_ = Vector3(pitch, roll, yaw);
-        updateFlag_ = true;
+        needsRefresh_ = true;
         scene_.onNodePositionChanged(this);
     }
 }
