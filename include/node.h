@@ -94,39 +94,16 @@ class Node
         {
             return pos_;
         }
-        
-        /**
-         * Call this to make sure this node's position will be updated next time the scene nodes positions are calculated.
-         * @param should_be_updated Wheter or not it should be updated.
-         */
-        void setNeedsRefresh(bool should_be_updated)
-        {
-            needsRefresh_ = should_be_updated;
-        }
-
-        /**
-         * Returns whether or not this node's position should be updated.
-         * @return Either true if it needs to be computed by the Scene, of false if it's OK.
-         */
-        bool getNeedsRefresh() const
-        {
-            return needsRefresh_;
-        }
 
     protected:
-
+        void notifyScene();
         std::string id_;
         Scene &scene_;
-
         Vector3 pos_;
         Vector3 rot_;
-
         bool active_;
-
         std::vector<std::tr1::shared_ptr<Connection> > connectTO_;
         std::vector<std::tr1::shared_ptr<Connection> > connectFROM_;
-
-        bool needsRefresh_;
 };
 
 } // end namespace spatosc

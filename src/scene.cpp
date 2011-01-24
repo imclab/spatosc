@@ -347,7 +347,7 @@ bool Scene::disconnect(Node *source, Node *sink)
     return true;
 }
 
-void Scene::onNodePositionChanged(Node *n)
+void Scene::onNodeChanged(Node *n)
 {
     connIterator c;
     for (c = n->connectTO_.begin(); c != n->connectTO_.end(); ++c)
