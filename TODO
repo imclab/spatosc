@@ -21,7 +21,6 @@ Packaging
  * add an --enable-debug flag
  * remove non-public functions and typedefs from include/*.h
  * build and install on Windows (needs <tr1/memory>, <regex.h> and <sys/utsname.h>)
- * On win32, it doesn't find some symbols in <cmath>: M_PI, std::isnan
  * maths:425 and 450: conversion from 'double' to 'float', possible loss of data
 
 Refactoring
