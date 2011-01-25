@@ -212,7 +212,7 @@ class Scene
          * @return A vector of Connection pointers. Never free these pointers. They will become invalid if these connections are deleted.
          */
         std::vector<Connection*> getConnectionsForNode(const Node *node);
-        void disconnectNodeConnections(Node *node);
+        bool disconnectNodeConnections(Node *node);
 
         std::tr1::shared_ptr<Translator> translator_;
         bool autoConnect_;

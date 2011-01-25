@@ -339,10 +339,9 @@ bool Scene::disconnect(Node *source, Node *sink)
         std::cerr << "Cannot disconnect nodes " << source->getID() << " and " << sink->getID() << ": They are not connected." << std::endl;
         return false;
     }
-    eraseFromVector(connections_, conn);
     eraseFromVector(source->connectTO_, conn);
     eraseFromVector(sink->connectFROM_, conn);
-    return true;
+    return eraseFromVector(connections_, conn);
 }
 
 void Scene::onNodeChanged(Node *n)
@@ -371,15 +370,18 @@ void Scene::onConnectionChanged(Connection *conn)
     }
 }
 
-void Scene::disconnectNodeConnections(Node *node)
+bool Scene::disconnectNodeConnections(Node *node)
 {
     std::vector<Connection*> nodeConnections = getConnectionsForNode(node);
     std::vector<Connection*>::iterator iter;
+    bool did_disconnect_some = false;
     for (iter = nodeConnections.begin(); iter != nodeConnections.end(); ++iter)
     {
         Connection* conn = (*iter);
-        disconnect(&conn->getSource(), &conn->getSink());
+        if (disconnect(&conn->getSource(), &conn->getSink()))
+            did_disconnect_some = true;
     }
+    return did_disconnect_some;
 }
 
 bool Scene::deleteNode(SoundSource *node)

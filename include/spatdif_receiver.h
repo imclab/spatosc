@@ -42,7 +42,15 @@ class SpatdifReceiver;
 class SpatdifReceiver
 {
     public:
+        /**
+         * Constructor.
+         * Starts listening for OSC messages on the given port.
+         * @param port String that must be a valid port number.
+         */
         SpatdifReceiver(const std::string &port);
+        /**
+         * Checks for incoming OSC messages.
+         */
         void poll();
     private:
         void registerCallbacks();
