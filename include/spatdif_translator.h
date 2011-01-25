@@ -42,8 +42,7 @@ class Node;
 class SpatdifTranslator : public Translator
 {
     public:
-        explicit SpatdifTranslator(const std::string &ip, bool verbose);
-        virtual ~SpatdifTranslator();
+        SpatdifTranslator(const std::string &ip, const std::string &port, bool verbose);
         virtual void pushOSCMessages(Connection *conn);
 
     private:

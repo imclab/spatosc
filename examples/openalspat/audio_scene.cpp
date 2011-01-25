@@ -34,11 +34,11 @@ void AudioScene::init()
 }
 
 
-int AudioScene::genericHandler(const char * path, const char * /*types*/,
+int AudioScene::genericHandler(const char * /*path*/, const char * /*types*/,
         lo_arg ** /*argv*/, int /*argc*/, void * /*data*/, void * /*user_data*/)
 {
 #ifdef DEBUG
-    std::cout << __FUNCTION__ << path << std::endl;
+    std::cout << __FUNCTION__ << std::endl;
 #endif
     return 1; // handoff
 }
@@ -82,7 +82,7 @@ gboolean AudioScene::pollOscReceiver(gpointer data)
 {
     bool verbose = false;
     AudioScene* context = static_cast<AudioScene*>(data);
-    int bytes = context->oscReceiver_->receive();
+    int bytes = context->receiver_->receive();
     if (bytes > 0 and verbose)
         std::cout << "received " << bytes << " bytes" << std::endl;
 
@@ -91,14 +91,14 @@ gboolean AudioScene::pollOscReceiver(gpointer data)
 
 void AudioScene::bindCallbacks()
 {
-    oscReceiver_->addHandler("/SpatDIF/core/source/1/position", "fff", onSourcePositionChanged, this);
+    receiver_->addHandler("/SpatDIF/core/source/1/position", "fff", onSourcePositionChanged, this);
     //oscReceiver_->addHandler("/SpatDIF/core/listener/1/position", "fff", onListenerPositionChanged, this);
     //oscReceiver_->addHandler(NULL, NULL, genericHandler, NULL);
     // add a timeout to poll our oscreceiver
     g_timeout_add(5 /*ms*/, pollOscReceiver, this);
 }
 
-AudioScene::AudioScene() : oscReceiver_(new spatosc::OscReceiver(RX_PORT))
+AudioScene::AudioScene() : receiver_(new spatosc::OscReceiver(RX_PORT))
 {
     createSource();
     createListener();

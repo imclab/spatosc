@@ -55,7 +55,7 @@ class SpatdifReceiver
     private:
         void registerCallbacks();
         static int onSourcePositionChanged(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
-        std::tr1::shared_ptr<OscReceiver> oscReceiver_;
+        std::tr1::shared_ptr<OscReceiver> receiver_;
         bool verbose_;
 };
 

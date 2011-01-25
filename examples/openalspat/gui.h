@@ -72,6 +72,7 @@ class GUI
         void updatePosition();
         void actorPosToSpatPos(float &x, float &y, float &z);
         static const float PIXELS_PER_METER;
+        static const float INV_PIXELS_PER_METER;
 
     public:
         /// Initialize clutter subsystem

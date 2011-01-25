@@ -23,12 +23,12 @@
 #ifndef __DMITRI_TRANSLATOR_H__
 #define __DMITRI_TRANSLATOR_H__
 
-#include <lo/lo.h>
-#include <string>
+#include <tr1/memory>
 #include "translator.h"
 
 namespace spatosc
 {
+class OscSender;
 class Connection;
 
 /**
@@ -37,14 +37,13 @@ class Connection;
 class DmitriTranslator : public Translator
 {
 public:
-    explicit DmitriTranslator(const std::string &ip, bool verbose);
-    virtual ~DmitriTranslator();
+    DmitriTranslator(const std::string &ip, const std::string &toPort, const std::string &fromPort, bool verbose);
+    DmitriTranslator(const std::string &ip, const std::string &toPort, bool verbose);
     virtual void pushOSCMessages(Connection *conn);
 
 private:
     static const double SPACEMAP_RADIUS;
-    lo_address destAddr_;
-    lo_server lo_serv_;
+    std::tr1::shared_ptr<OscSender> sender_;
     // not implemented
     DmitriTranslator(const DmitriTranslator&);
     const DmitriTranslator& operator=(const DmitriTranslator&);

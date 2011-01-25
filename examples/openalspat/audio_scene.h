@@ -52,7 +52,7 @@ class AudioScene {
         ALuint source_;
         ALfloat listenerPos_[3];
         ALuint listener_;
-        std::tr1::shared_ptr<spatosc::OscReceiver> oscReceiver_;
+        std::tr1::shared_ptr<spatosc::OscReceiver> receiver_;
         static const char* RX_PORT;
 
     public:

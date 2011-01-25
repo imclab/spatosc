@@ -19,6 +19,7 @@
 
 #include "gui.h"
 #include <spatosc/scene.h>
+#include <spatosc/translator.h>
 #include <spatosc/spatdif_translator.h>
 #include <spatosc/soundsource.h>
 #include <spatosc/listener.h>
@@ -26,6 +27,7 @@
 #include <sstream>
 
 const float GUI::PIXELS_PER_METER = 100.0; // 1 pixel = 1 cm
+const float GUI::INV_PIXELS_PER_METER = 1.0 / GUI::PIXELS_PER_METER;
 
 namespace 
 {
@@ -132,7 +134,7 @@ GUI::GUI() :
     default_stage_height_(600.0f),
     sound_(0)
 {
-    scene_->setTranslator<spatosc::SpatdifTranslator>("127.0.0.1");
+    scene_->setTranslator<spatosc::SpatdifTranslator>("127.0.0.1", spatosc::Translator::DEFAULT_SEND_PORT);
     createStage();
     connectMouseCallbacks();
     connectKeyCallbacks();
@@ -363,9 +365,9 @@ void GUI::actorPosToSpatPos(float &x, float &y, float &z)
     x = clutter_actor_get_x(sourceActor_) - halfWindowWidth;
     y = clutter_actor_get_y(sourceActor_) - halfWindowHeight;
     z = clutter_actor_get_depth(sourceActor_);
-    x /= PIXELS_PER_METER;
-    y /= PIXELS_PER_METER;
-    z /= PIXELS_PER_METER;
+    x *= INV_PIXELS_PER_METER;
+    y *= INV_PIXELS_PER_METER;
+    z *= INV_PIXELS_PER_METER;
 }
 
 void GUI::updateSoundPosition()

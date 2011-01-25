@@ -5,26 +5,34 @@ namespace spatosc
 {
 
 OscSender::OscSender() :
-    host_(""), port_(""), 
-    address_(0)
+    host_(""), toPort_(""), fromPort_(""),
+    address_(0), server_(0)
 {}
 
-OscSender::OscSender(const std::string &host, const std::string &port) :
-    host_(host), port_(port), 
-    address_(lo_address_new(host.c_str(), port_.c_str()))
+OscSender::OscSender(const std::string &host, const std::string &toPort) :
+    host_(host), toPort_(toPort.c_str()), fromPort_(""),
+    address_(lo_address_new(host.c_str(), toPort_.c_str())),
+    server_(lo_server_new(0, 0))
+{
+}
+
+OscSender::OscSender(const std::string &host, const std::string &toPort, const std::string &fromPort) :
+    host_(host), toPort_(toPort), fromPort_(fromPort),
+    address_(lo_address_new(host.c_str(), toPort_.c_str())),
+    server_(lo_server_new(fromPort_.c_str(), 0))
 {
 }
 
 std::string OscSender::toString() const
 {
-    return "host:" + host_ + ", port:" + port_;
+    return "host:" + host_ + ", port:" + toPort_;
 }
 
 
 void OscSender::sendMessage(const std::string &OSCpath, const char *types, ...) const
 {
     va_list ap;
-    va_start(ap, types);
+    va_start(ap, types); // lo_message_add_varargs will call va_end internally
     sendMessage(OSCpath, types, ap);
 }
 
@@ -43,7 +51,7 @@ void OscSender::sendMessage(const std::string &OSCpath, const char *types, va_li
 
 void OscSender::sendMessage(const std::string &OSCpath, lo_message msg) const
 {
-    lo_send_message(address_, OSCpath.c_str(), msg);
+    lo_send_message_from(address_, server_, OSCpath.c_str(), msg);
 
     // Let's free the message after (not sure if this is necessary):
     lo_message_free(msg);

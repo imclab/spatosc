@@ -31,20 +31,18 @@
 namespace spatosc
 {
 // TODO:2011-01-19:aalex:Allow to specify the sending port
-SpatdifTranslator::SpatdifTranslator(const std::string &ip, bool verbose = false) :
+SpatdifTranslator::SpatdifTranslator(const std::string &ip, 
+        const std::string &port, 
+        bool verbose = false) :
     Translator(verbose),
-    oscSender_(ip, DEFAULT_SEND_PORT)
+    oscSender_(ip, port)
     {}
-
-SpatdifTranslator::~SpatdifTranslator()
-{
-}
 
 void SpatdifTranslator::sendPosition(const std::string &prefix, Node *node)
 {
     std::string path = prefix +  "/position";
     Vector3 vect(node->getPosition());
-    oscSender_.sendMessage(path, "fff", vect.x, vect.y, vect.z, LO_ARGS_END);
+    oscSender_.sendMessage(path, "fff", vect.x, vect.y, vect.z, SPATOSC_ARGS_END);
 }
 
 void SpatdifTranslator::pushOSCMessages(Connection * conn)

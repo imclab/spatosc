@@ -19,8 +19,8 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "oscreceiver.h"
 #include "spatdif_receiver.h"
+#include "oscreceiver.h"
 #include <lo/lo.h>
 #include <string>
 #include <iostream>
@@ -31,7 +31,7 @@ namespace spatosc
 {
 
 SpatdifReceiver::SpatdifReceiver(const std::string &port) :
-    oscReceiver_(new OscReceiver(port.c_str())),
+    receiver_(new OscReceiver(port.c_str())),
     verbose_(true)
 {
     registerCallbacks();
@@ -39,12 +39,12 @@ SpatdifReceiver::SpatdifReceiver(const std::string &port) :
 
 void SpatdifReceiver::registerCallbacks()
 {
-    oscReceiver_->addHandler("/SpatDIF/core/source/*/position", "fff", onSourcePositionChanged, this);
+    receiver_->addHandler("/SpatDIF/core/source/*/position", "fff", onSourcePositionChanged, this);
 }
 
 void SpatdifReceiver::poll()
 {
-    int bytes = oscReceiver_->receive();
+    int bytes = receiver_->receive();
     if (bytes > 0 and verbose_)
         std::cout << "received " << bytes << " bytes" << std::endl;
 }
