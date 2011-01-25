@@ -7,8 +7,11 @@ The <node_id> can be any ASCII alpha-numeric string. Underscores and hyphens are
 
  * /spatosc/core/<s:node_id>/xyz f:x f:y f:z
  * /spatosc/core/<s:node_id>/aed f:azimuth f:elevation f:distance_meters
- * /spatosc/core/<s:node_id>/clipping f:x f:y: f:z f:scaleX f:scaleY f:scaleZ
- * /spatosc/core/<s:node_id>/xy f:x f:y (projected position on xy plane
+ * /spatosc/core/<s:node_id>/xy f:x f:y (projected position on xy plane)
+ * /spatosc/core/<s:node_id>/transformTranslation f:x f:y f:z
+ * /spatosc/core/<s:node_id>/transformRotation f:x f:y f:z f:w
+ * /spatosc/core/<s:node_id>/transformScale f:xScale f:yScale f:zScale
+ * /spatosc/core/<s:node_id>/transformShear f:a f:b f:c f:d f:e f:f
  * /spatosc/core/<s:node_id>/delay f:delay_ms
  * /spatosc/core/<s:node_id>/gain f:gain_DB
  * /spatosc/core/<s:node_id>/spread f:spread
