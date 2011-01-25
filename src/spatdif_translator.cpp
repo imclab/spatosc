@@ -37,7 +37,8 @@ SpatdifTranslator::SpatdifTranslator(const std::string &ip,
     Translator(verbose),
     oscSender_(ip, port)
     {
-		if (verbose) std::cout << "SpatdifTranslator sending to: " << oscSender_.toString() << std::endl;
+        if (verbose)
+            std::cout << "SpatdifTranslator sending to: " << oscSender_.toString() << std::endl;
     }
 
 void SpatdifTranslator::sendPosition(const std::string &prefix, Node *node)
