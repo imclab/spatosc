@@ -19,7 +19,6 @@
 
 #include "maths.h"
 
-
 namespace spatosc
 {
 

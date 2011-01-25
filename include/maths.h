@@ -26,7 +26,9 @@
 #include <cmath>
 #include <cstring>
 
-//#define M_PI 3.14159265358979323846
+#ifndef M_PI // Seems it's not set on windows
+#define M_PI 3.14159265358979323846
+#endif
 #define TO_DEGREES (180.0 / M_PI)
 #define TO_RADIANS (M_PI / 180.0)
 
