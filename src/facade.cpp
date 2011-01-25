@@ -17,41 +17,174 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "dmitri_translator.h"
 #include "facade.h"
-#include "scene.h"
-#include "node.h"
 #include "listener.h"
+#include "node.h"
+#include "scene.h"
 #include "soundsource.h"
+#include "spatdif_translator.h"
+#include "translator.h"
 #include <iostream>
 #include <tr1/memory>
 
 namespace spatosc
 {
 
-Scene* Facade::getScene(const std::string &scene)
+
+Wrapper::Wrapper() :
+    scene_(new Scene())
 {
-    SceneIterator iter = scenes_.find(scene);
-    if (iter == scenes_.end())
-        return 0;
-    else
-        return iter->second.get();
 }
 
-bool Facade::createScene(const std::string &scene)
+bool Wrapper::createListener(const std::string &nodeName)
 {
-    using std::tr1::shared_ptr;
-    Scene *obj = getScene(scene);
-    if (obj)
+    Listener *node = scene_->createListener(nodeName);
+    if (node == 0)
     {
-        std::cerr << "There is already such a scene: " << scene << std::endl;
+        std::cerr << "Error creating listener " << nodeName << std::endl;
+        return false;
+    }
+    else
+        return true;
+}
+
+bool Wrapper::createSource(const std::string &nodeName)
+{
+    SoundSource *node = scene_->createSoundSource(nodeName);
+    if (node == 0)
+    {
+        std::cerr << "Error creating sound source " << nodeName << std::endl;
+        return false;
+    }
+    else
+        return true;
+}
+
+bool Wrapper::deleteNode(const std::string &nodeName)
+{
+    Listener *listener = scene_->getListener(nodeName);
+    if (listener != 0)
+        return scene_->deleteNode(listener);
+    SoundSource *source = scene_->getSoundSource(nodeName);
+    if (source != 0)
+        return scene_->deleteNode(source);
+    else
+    {
+        std::cerr << "No such node: " << nodeName << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::setConnectFilter(const std::string &filterRegex)
+{
+    scene_->setConnectFilter(filterRegex);
+    return true;
+}
+
+bool Wrapper::clearScene()
+{
+    return false;
+}
+
+bool Wrapper::setAutoConnect(bool enabled)
+{
+    scene_->setAutoConnect(enabled);
+    return true;
+}
+
+bool Wrapper::disconnect(const std::string &nodeFrom, const std::string &nodeTo)
+{
+    Node *source = scene_->getNode(nodeFrom);
+    if (! source)
+    {
+        std::cerr << "No such node: " << nodeFrom << std::endl;
+        return false;
+    }
+    Node *sink = scene_->getNode(nodeFrom);
+    if (! sink)
+    {
+        std::cerr << "No such node: " << nodeTo << std::endl;
+        return false;
+    }
+    return scene_->disconnect(source,  sink);
+}
+
+bool Wrapper::connect(const std::string &nodeFrom, const std::string &nodeTo)
+{
+    Node *source = scene_->getNode(nodeFrom);
+    if (! source)
+    {
+        std::cerr << "No such node: " << nodeFrom << std::endl;
+        return false;
+    }
+    Node *sink = scene_->getNode(nodeFrom);
+    if (! sink)
+    {
+        std::cerr << "No such node: " << nodeTo << std::endl;
+        return false;
+    }
+    return scene_->connect(source, sink);
+}
+
+bool Wrapper::setOrientation(const std::string &nodeName, double pitch, double roll, double yaw)
+{
+    Node *node = scene_->getNode(nodeName);
+    if (! node)
+    {
+        std::cerr << "No such node: " << nodeName << std::endl;
         return false;
     }
     else
     {
-        scenes_[scene] = shared_ptr<Scene>(new Scene);
+        node->setOrientation(pitch, roll, yaw);
         return true;
     }
 }
 
+bool Wrapper::setPosition(const std::string &nodeName, double x, double y, double z)
+{
+    Node *node = scene_->getNode(nodeName);
+    if (! node)
+    {
+        std::cerr << "No such node: " << nodeName << std::endl;
+        return false;
+    }
+    else
+    {
+        node->setPosition(x, y, z);
+        return true;
+    }
 }
+
+bool Wrapper::setSourceChannel(const std::string &nodeName, int channel)
+{
+    SoundSource *node = scene_->getSoundSource(nodeName);
+    if (! node)
+    {
+        std::cerr << "No such node: " << nodeName << std::endl;
+        return false;
+    }
+    else
+    {
+        node->setChannelID(channel);
+        return true;
+    }
+}
+
+bool Wrapper::setTranslator(const std::string &translatorName, const std::string &sendToAddress)
+{
+    if (translatorName == "SpatdifTranslator")
+        scene_->setTranslator<SpatdifTranslator>(sendToAddress);
+    else if (translatorName == "DmitriTranslator")
+        scene_->setTranslator<DmitriTranslator>(sendToAddress);
+    else
+    {
+        std::cerr << "No such translator: " << translatorName << std::endl;
+        return false;
+    }
+    return true;
+}
+
+} // end of namespace spatosc
 

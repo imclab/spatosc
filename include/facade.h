@@ -18,7 +18,7 @@
  */
 
 /** @file
- * The Facade class. 
+ * The Wrapper class. 
  */
 
 #ifndef __FACADE_H__
@@ -38,43 +38,41 @@ class Scene;
  * Wraps the whole spatosc library.
  * @warning Most of it is not implemented. Will be renamed to something like Manager, World or so.
  */
-class Facade
+class Wrapper
 {
     public:
+        Wrapper();
+        /** Connects two nodes. */
+        bool connect(const std::string &nodeFrom, const std::string &nodeTo);
+        /** Creates a listener. */
+        bool createListener(const std::string &nodeName);
+        /** Creates a sound source. */
+        bool createSource(const std::string &nodeName);
+        /** Deletes a node. */
+        bool deleteNode(const std::string &nodeName);
         /** @warning Not implemented. */
-        bool connect(const std::string &scene, const std::string &from, const std::string &to);
+        bool clearScene();
+        /** Disconnects two nodes. */
+        bool disconnect(const std::string &nodeFrom, const std::string &nodeTo);
+        /** Enables/disables auto connection of source and sinks. */
+        bool setAutoConnect(bool enabled);
+        /** Sets the connection regulra expression filter. */
+        bool setConnectFilter(const std::string &filterRegex);
+        /** Sets a node's orientation. */
+        bool setOrientation(const std::string &nodeName, double pitch, double roll, double yaw);
+        /** Sets a node's position. */
+        bool setPosition(const std::string &nodeName, double x, double y, double z);
+        /** Sets a sound source's channel number. */
+        bool setSourceChannel(const std::string &nodeName, int channel);
+        /**
+         * Sets the translator to use. 
+         * @param translatorName Must be the name of a valid child of the Translator class.
+        */
+        bool setTranslator(const std::string &translatorName, const std::string &sendToAddress);
         /** @warning Not implemented. */
-        bool createListener(const std::string &scene, const std::string &node);
-        /** @warning Not implemented. */
-        bool createScene(const std::string &scene);
-        /** @warning Not implemented. */
-        bool createSource(const std::string &scene, const std::string &node);
-        /** @warning Not implemented. */
-        bool deleteNode(const std::string &scene, const std::string &node);
-        /** @warning Not implemented. */
-        bool deleteScene(const std::string &scene);
-        /** @warning Not implemented. */
-        bool disconnect(const std::string &scene, const std::string &from, const std::string &to);
-        /** @warning Not implemented. */
-        bool setAutoConnect(const std::string &scene, bool enabled);
-        /** @warning Not implemented. We might add port arg. */
-        bool setTranslator(const std::string &scene, const std::string &translator, const std::string &host);
-        /** @warning Not implemented. */
-        bool setConnectFilter(const std::string &scene, const std::string &filterRegex);
-        /** @warning Not implemented. */
-        bool setOrientation(const std::string &scene, const std::string &node, double pitch, double roll, double yaw);
-        /** @warning Not implemented. */
-        bool setPosition(const std::string &scene, const std::string &node, double x, double y, double z);
-        /** @warning Not implemented. */
-        bool setSourceChannel(const std::string &scene, const std::string &sound_source, const std::string &channel);
-        /** @warning Not implemented. */
-        bool setSourceGain(const std::string &scene, const std::string &sound_source, double linearGain);
-        /** @warning Not implemented. */
-        bool setTranslator(const std::string &scene, const std::string &translator);
+        bool setTranslatorProperty(const std::string &key, const std::string &value);
     private:
-        typedef std::map<std::string, std::tr1::shared_ptr<Scene> >::iterator SceneIterator;
-        Scene *getScene(const std::string &scene);
-        std::map<std::string, std::tr1::shared_ptr<Scene> > scenes_;
+        std::tr1::shared_ptr<Scene> scene_;
 };
 
 } // end of namespace spatosc
