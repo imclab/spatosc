@@ -30,8 +30,12 @@ int main(int /*argc*/, char ** /*argv*/)
     using namespace spatosc;
     if (VERBOSE)
         std::cout << "\nRunning spatoscTest ...\n" << std::endl;
+    
     // create the scene
     Scene scene;
+
+    // set verbosity of info messages:
+    scene.setVerbose(VERBOSE);
 
     // The spatosc library provides an API structured around one singleton class
     // called Scene. This class maintains lists of listeners and sound
@@ -58,7 +62,9 @@ int main(int /*argc*/, char ** /*argv*/)
     //scene.setTranslator<DmitriTranslator>("127.0.0.1");
     
     
-    scene.setTranslator<SpatdifTranslator>("127.0.0.1");
+    scene.setTranslator<SpatdifTranslator>("127.0.0.1", "9999");
+
+
 
     // The Scene class can print out everything to the console:
     if (VERBOSE)

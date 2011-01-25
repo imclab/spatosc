@@ -48,6 +48,9 @@ class SpatdifTranslator : public Translator
     private:
         OscSender oscSender_;
         void sendPosition(const std::string &prefix, Node *node);
+        void sendAED(const std::string &prefix, Connection *conn);
+        void sendDelay(const std::string &prefix, Connection *conn);
+        void sendGainDB(const std::string &prefix, Connection *conn);
         // not implemented
         SpatdifTranslator(const SpatdifTranslator&);
         const SpatdifTranslator& operator=(const SpatdifTranslator&);

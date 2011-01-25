@@ -32,7 +32,7 @@ Connection::Connection(Node *source, Node *sink) :
     elev_(0.0),
     gain_(0.0),
     gainDB_(0.0),
-    //vdel_(0.0),
+    vdel_(0.0),
     distanceEffect_(100.0),
     rolloffEffect_(100.0),
     dopplerEffect_(100.0),
@@ -52,7 +52,7 @@ void Connection::recomputeConnection()
     // for now, force sources to be above equator
     elev_ = std::max(elev_, 0.0); 
     // now from distance, compute gain and variable delay:
-    //vdel_ = distance_ * (1/SPEED_OF_SOUND) * .01 * dopplerEffect_; 
+    vdel_ = distance_ * (1/SPEED_OF_SOUND) * .01 * dopplerEffect_;
     gainDB_ = 20 * log10(distanceScalar);
 }
 

@@ -64,13 +64,13 @@ public:
 
     /**
      * Returns the azimuth (horizontal rotation) between the source and the sink node.
-     * @return Angle value.
+     * @return Angle value in radians.
      */
     double azimuth() const { return azim_; }
 
     /**
      * Returns the elevation (vertical angle) between the source and the sink node.
-     * @return Angle value.
+     * @return Angle value in radians.
      */
     double elevation() const { return elev_; }
 
@@ -89,6 +89,15 @@ public:
      * @return Gain in dB.
      */
     double gainDB() const { return gainDB_; }
+
+    /**
+     * Returns the delay due to travel time between the source and sink. This
+     * assumes position units are in meters, and provides a delay time in
+     * milliseconds.
+     *
+     * @return Delay in milliseconds.
+     */
+    double delay() const { return vdel_; }
 
     /**
      * Returns a reference to its source Node.
@@ -111,7 +120,7 @@ protected:
     double elev_;
     double gain_;
     double gainDB_;
-//    double vdel_;
+    double vdel_;
 //    FIXME:2010-01-15:aalex: Should thode effects be vector of shared_ptr to objects?
     float distanceEffect_;
     float rolloffEffect_;

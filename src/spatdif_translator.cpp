@@ -36,13 +36,33 @@ SpatdifTranslator::SpatdifTranslator(const std::string &ip,
         bool verbose = false) :
     Translator(verbose),
     oscSender_(ip, port)
-    {}
+    {
+		if (verbose) std::cout << "SpatdifTranslator sending to: " << oscSender_.toString() << std::endl;
+    }
 
 void SpatdifTranslator::sendPosition(const std::string &prefix, Node *node)
 {
     std::string path = prefix +  "/position";
     Vector3 vect(node->getPosition());
     oscSender_.sendMessage(path, "fff", vect.x, vect.y, vect.z, SPATOSC_ARGS_END);
+}
+
+void SpatdifTranslator::sendAED(const std::string &prefix, Connection *conn)
+{
+    std::string path = prefix +  "/aed";
+    oscSender_.sendMessage(path, "fff", conn->azimuth(), conn->elevation(), conn->distance(), LO_ARGS_END);
+}
+
+void SpatdifTranslator::sendDelay(const std::string &prefix, Connection *conn)
+{
+    std::string path = prefix +  "/delay";
+    oscSender_.sendMessage(path, "f", conn->delay(), LO_ARGS_END);
+}
+
+void SpatdifTranslator::sendGainDB(const std::string &prefix, Connection *conn)
+{
+    std::string path = prefix +  "/gainDB";
+    oscSender_.sendMessage(path, "f", conn->gainDB(), LO_ARGS_END);
 }
 
 void SpatdifTranslator::pushOSCMessages(Connection * conn)
@@ -57,13 +77,18 @@ void SpatdifTranslator::pushOSCMessages(Connection * conn)
     if (src->getChannelID() < 0)
         return;
 
-    // update source position
-    sendPosition("/SpatDIF/core/source/" +
-            OSCutil::stringify(src->getChannelID()), src);
 
     // FIXME:Wed Jan 19 16:22:42 EST 2011:tmatth should listener have channel ID? SpatDIF thinks so.
     // update sink position
     sendPosition("/SpatDIF/core/listener/1", snk);
+
+
+    std::string srcPath = "/SpatDIF/core/source/" + OSCutil::stringify(src->getChannelID());
+
+    sendPosition(srcPath, src);
+    sendAED(srcPath, conn);
+    sendDelay(srcPath, conn);
+    sendGainDB(srcPath, conn);
 }
 
 } // end namespace spatosc
