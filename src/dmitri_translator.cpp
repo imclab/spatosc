@@ -19,6 +19,7 @@
 
 #include "dmitri_translator.h"
 #include "oscutils.h"
+#include "oscsender.h"
 #include "soundsource.h"
 #include "connection.h"
 
@@ -33,23 +34,38 @@ const double DmitriTranslator::SPACEMAP_RADIUS = 750.0;
 // FIXME: Wed Jan 19 14:12:24 EST 2011: tmatth
 // could these port values be defined in translator.h/cpp? 
 // 2011-01-21:aalex:I think this default port number is D-Mitri-specific.
-DmitriTranslator::DmitriTranslator(const std::string &ip, const std::string &port, bool verbose = false) :
+DmitriTranslator::DmitriTranslator(const std::string &ip, 
+        const std::string &toPort, 
+        bool verbose = false) :
     Translator(verbose),
-    destAddr_(lo_address_new(ip.c_str(), port.c_str())),
-    lo_serv_(lo_server_new(DEFAULT_RECEIVER_PORT, NULL))
+    sender_(new OscSender(ip, toPort))
     {
         if (verbose_)
         {
-            std::cout << "Sending to D-Mitri on: " << lo_address_get_url(destAddr_) << std::endl;
-            std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
+            std::cout << "Sending to D-Mitri on: " << ip << std::endl;
+            //std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
+        }
+    }
+
+DmitriTranslator::DmitriTranslator(const std::string &ip, 
+        const std::string &toPort, 
+        const std::string &fromPort,
+        bool verbose = false) :
+    Translator(verbose),
+    sender_(new OscSender(ip, toPort, fromPort))
+    {
+        if (verbose_)
+        {
+            //std::cout << "Sending to D-Mitri on: " << lo_address_get_url(destAddr_) << std::endl;
+            //std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
         }
     }
 
 DmitriTranslator::~DmitriTranslator()
 {
     // destructor
-    lo_server_free(lo_serv_);
-    lo_address_free(destAddr_);
+    //lo_server_free(lo_serv_);
+    //lo_address_free(destAddr_);
 }
 
 void DmitriTranslator::pushOSCMessages(Connection *conn)
@@ -68,13 +84,16 @@ void DmitriTranslator::pushOSCMessages(Connection *conn)
     float spacemapY = sin(conn->azimuth()) * r * SPACEMAP_RADIUS;
 
     str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/x";
-    lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
+    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
+    sender_->sendMessage(str.c_str(), "f", spacemapX, SPATOSC_ARGS_END);
 
     str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/y";
-    lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
+    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
+    sender_->sendMessage(str.c_str(), "f", spacemapY, SPATOSC_ARGS_END);
 
     str = "Input " + OSCutil::stringify(src->getChannelID()) + " Level";
-    lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
+    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
+    sender_->sendMessage("/set", "sf", str.c_str(), conn->gain(), SPATOSC_ARGS_END);
 }
 
 } // end namespace spatosc
