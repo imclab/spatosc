@@ -2,7 +2,7 @@
 AUTOMAKE_OPTIONS = foreign
 # ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = src tests
+SUBDIRS = src tests build
 
 EXTRA_DIST = README LICENSE doxyfile.in spatosc.pc.in autogen.sh NEWS
 DISTCLEANFILES = spatosc.pc
