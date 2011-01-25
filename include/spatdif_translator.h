@@ -28,6 +28,7 @@
 
 #include "translator.h"
 #include <tr1/memory>
+#include <string>
 
 namespace spatosc
 {
