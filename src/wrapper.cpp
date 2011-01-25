@@ -101,7 +101,7 @@ bool Wrapper::disconnect(const std::string &nodeFrom, const std::string &nodeTo)
         std::cerr << "No such node: " << nodeFrom << std::endl;
         return false;
     }
-    Node *sink = scene_->getNode(nodeFrom);
+    Node *sink = scene_->getNode(nodeTo);
     if (! sink)
     {
         std::cerr << "No such node: " << nodeTo << std::endl;
@@ -118,7 +118,7 @@ bool Wrapper::connect(const std::string &nodeFrom, const std::string &nodeTo)
         std::cerr << "No such node: " << nodeFrom << std::endl;
         return false;
     }
-    Node *sink = scene_->getNode(nodeFrom);
+    Node *sink = scene_->getNode(nodeTo);
     if (! sink)
     {
         std::cerr << "No such node: " << nodeTo << std::endl;

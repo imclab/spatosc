@@ -42,6 +42,7 @@
 #include "connection.h"
 #include "soundsource.h"
 #include "version.h"
+#include "wrapper.h"
 
 /**
  * @mainpage The spatosc library.

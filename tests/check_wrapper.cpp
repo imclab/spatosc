@@ -28,6 +28,36 @@ using namespace spatosc;
 
 bool test_wrapper()
 {
+    Wrapper wrapper;
+    // Create source and listener, see if we can connect them:
+    if (! wrapper.setAutoConnect(false))
+        return false;
+    if (! wrapper.createSource("source"))
+        return false;
+    if (! wrapper.createListener("listener"))
+        return false;
+    if (! wrapper.connect("source", "listener"))
+        return false;
+    if (! wrapper.disconnect("source", "listener"))
+        return false;
+    if (! wrapper.connect("source", "listener"))
+        return false;
+
+    // See if auto connect works:
+    if (! wrapper.setAutoConnect(true))
+        return false;
+    if (! wrapper.createSource("source2"))
+        return false;
+    if (! wrapper.disconnect("source2", "listener"))
+        return false;
+
+    // See if we can set a node's position and the like:
+    if (! wrapper.setOrientation("source", 45.0, 45.0, 45.0))
+        return false;
+    if (! wrapper.setPosition("source", 1.0, 1.0, 1.0))
+        return false;
+    if (! wrapper.setSourceChannel("source", 1))
+        return false;
     return true;
 }
 
