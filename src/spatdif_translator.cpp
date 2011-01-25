@@ -30,7 +30,6 @@
 
 namespace spatosc
 {
-// TODO:2011-01-19:aalex:Allow to specify the sending port
 SpatdifTranslator::SpatdifTranslator(const std::string &ip, 
         const std::string &port, 
         bool verbose = false) :
@@ -50,19 +49,19 @@ void SpatdifTranslator::sendPosition(const std::string &prefix, Node *node)
 void SpatdifTranslator::sendAED(const std::string &prefix, Connection *conn)
 {
     std::string path = prefix +  "/aed";
-    oscSender_.sendMessage(path, "fff", conn->azimuth(), conn->elevation(), conn->distance(), LO_ARGS_END);
+    oscSender_.sendMessage(path, "fff", conn->azimuth(), conn->elevation(), conn->distance(), SPATOSC_ARGS_END);
 }
 
 void SpatdifTranslator::sendDelay(const std::string &prefix, Connection *conn)
 {
     std::string path = prefix +  "/delay";
-    oscSender_.sendMessage(path, "f", conn->delay(), LO_ARGS_END);
+    oscSender_.sendMessage(path, "f", conn->delay(), SPATOSC_ARGS_END);
 }
 
 void SpatdifTranslator::sendGainDB(const std::string &prefix, Connection *conn)
 {
     std::string path = prefix +  "/gainDB";
-    oscSender_.sendMessage(path, "f", conn->gainDB(), LO_ARGS_END);
+    oscSender_.sendMessage(path, "f", conn->gainDB(), SPATOSC_ARGS_END);
 }
 
 void SpatdifTranslator::pushOSCMessages(Connection * conn)
