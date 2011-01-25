@@ -6,6 +6,8 @@
 #include <lo/lo.h>
 #include <string>
 
+#define SPATOSC_ARGS_END LO_ARGS_END
+
 namespace spatosc
 {
 
@@ -20,10 +22,11 @@ class OscSender
         const char * host() { return host_.c_str(); }
         const char * port() { return port_.c_str(); }
          /**
-          * Send a message with one or more string, float and/or int args.
+          * Send a message with one or more string, float and/or int args. 
+          * The list of arguments MUST be terminated with SPATOSC_ARGS_END.
           * Here is an example: 
           * \code
-          * sendMessage("/oscpath", "fsi", 5.5, "foo", 4);
+          * sendMessage("/oscpath", "fsi", 5.5, "foo", 4, SPATOSC_ARGS_END);
           * \endcode
           */
         void sendMessage(const std::string &OSCpath, const char *types, ...) const;
