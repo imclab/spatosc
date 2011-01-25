@@ -40,11 +40,8 @@ DmitriTranslator::DmitriTranslator(const std::string &ip,
     Translator(verbose),
     sender_(new OscSender(ip, toPort))
     {
-        if (verbose_)
-        {
-            std::cout << "Sending to D-Mitri on: " << ip << std::endl;
-            //std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
-        }
+		if (verbose) 
+            std::cout << "spatdif translator sending to: " << sender_->toString() << std::endl;
     }
 
 DmitriTranslator::DmitriTranslator(const std::string &ip, 

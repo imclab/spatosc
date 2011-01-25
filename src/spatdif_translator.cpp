@@ -34,34 +34,35 @@ SpatdifTranslator::SpatdifTranslator(const std::string &ip,
         const std::string &port, 
         bool verbose = false) :
     Translator(verbose),
-    oscSender_(ip, port)
+    sender_(new OscSender(ip, port))
     {
-		if (verbose) std::cout << "SpatdifTranslator sending to: " << oscSender_.toString() << std::endl;
+		if (verbose_) 
+            std::cout << "SpatdifTranslator sending to: " << sender_->toString() << std::endl;
     }
 
 void SpatdifTranslator::sendPosition(const std::string &prefix, Node *node)
 {
     std::string path = prefix +  "/position";
     Vector3 vect(node->getPosition());
-    oscSender_.sendMessage(path, "fff", vect.x, vect.y, vect.z, SPATOSC_ARGS_END);
+    sender_->sendMessage(path, "fff", vect.x, vect.y, vect.z, SPATOSC_ARGS_END);
 }
 
 void SpatdifTranslator::sendAED(const std::string &prefix, Connection *conn)
 {
     std::string path = prefix +  "/aed";
-    oscSender_.sendMessage(path, "fff", conn->azimuth(), conn->elevation(), conn->distance(), SPATOSC_ARGS_END);
+    sender_->sendMessage(path, "fff", conn->azimuth(), conn->elevation(), conn->distance(), SPATOSC_ARGS_END);
 }
 
 void SpatdifTranslator::sendDelay(const std::string &prefix, Connection *conn)
 {
     std::string path = prefix +  "/delay";
-    oscSender_.sendMessage(path, "f", conn->delay(), SPATOSC_ARGS_END);
+    sender_->sendMessage(path, "f", conn->delay(), SPATOSC_ARGS_END);
 }
 
 void SpatdifTranslator::sendGainDB(const std::string &prefix, Connection *conn)
 {
     std::string path = prefix +  "/gainDB";
-    oscSender_.sendMessage(path, "f", conn->gainDB(), SPATOSC_ARGS_END);
+    sender_->sendMessage(path, "f", conn->gainDB(), SPATOSC_ARGS_END);
 }
 
 void SpatdifTranslator::pushOSCMessages(Connection * conn)

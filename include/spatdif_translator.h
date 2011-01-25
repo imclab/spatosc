@@ -27,13 +27,12 @@
 #define _SPATDIF_TRANSLATOR_H_
 
 #include "translator.h"
-#include "oscsender.h"
-#include <lo/lo.h>
-#include <string>
+#include <tr1/memory>
 
 namespace spatosc
 {
 
+class OscSender;
 class Node;
 
 /**
@@ -46,7 +45,7 @@ class SpatdifTranslator : public Translator
         virtual void pushOSCMessages(Connection *conn);
 
     private:
-        OscSender oscSender_;
+        std::tr1::shared_ptr<OscSender> sender_;
         void sendPosition(const std::string &prefix, Node *node);
         void sendAED(const std::string &prefix, Connection *conn);
         void sendDelay(const std::string &prefix, Connection *conn);

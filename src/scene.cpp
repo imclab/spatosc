@@ -52,7 +52,7 @@ namespace
     template <typename T>
     bool eraseFromVector(std::vector<std::tr1::shared_ptr<T> >& vec, T *a)
     {
-        unsigned int size_before = vec.size();
+        size_t size_before = vec.size();
         IsEqual<T> predicate(a);
         vec.erase(std::remove_if(vec.begin(), vec.end(), predicate), vec.end());
         return vec.size() < size_before;
