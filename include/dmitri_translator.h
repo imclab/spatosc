@@ -39,7 +39,6 @@ class DmitriTranslator : public Translator
 public:
     DmitriTranslator(const std::string &ip, const std::string &toPort, const std::string &fromPort, bool verbose);
     DmitriTranslator(const std::string &ip, const std::string &toPort, bool verbose);
-    virtual ~DmitriTranslator();
     virtual void pushOSCMessages(Connection *conn);
 
 private:

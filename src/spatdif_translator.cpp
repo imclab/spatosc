@@ -38,10 +38,6 @@ SpatdifTranslator::SpatdifTranslator(const std::string &ip,
     oscSender_(ip, port)
     {}
 
-SpatdifTranslator::~SpatdifTranslator()
-{
-}
-
 void SpatdifTranslator::sendPosition(const std::string &prefix, Node *node)
 {
     std::string path = prefix +  "/position";

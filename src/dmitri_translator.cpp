@@ -61,13 +61,6 @@ DmitriTranslator::DmitriTranslator(const std::string &ip,
         }
     }
 
-DmitriTranslator::~DmitriTranslator()
-{
-    // destructor
-    //lo_server_free(lo_serv_);
-    //lo_address_free(destAddr_);
-}
-
 void DmitriTranslator::pushOSCMessages(Connection *conn)
 {
     std::string str;
