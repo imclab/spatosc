@@ -18,9 +18,40 @@
  */
 
 #include "facade.h"
+#include "scene.h"
+#include "node.h"
+#include "listener.h"
+#include "soundsource.h"
+#include <iostream>
+#include <tr1/memory>
 
 namespace spatosc
 {
+
+Scene* Facade::getScene(const std::string &scene)
+{
+    SceneIterator iter = scenes_.find(scene);
+    if (iter == scenes_.end())
+        return 0;
+    else
+        return iter->second.get();
+}
+
+bool Facade::createScene(const std::string &scene)
+{
+    using std::tr1::shared_ptr;
+    Scene *obj = getScene(scene);
+    if (obj)
+    {
+        std::cerr << "There is already such a scene: " << scene << std::endl;
+        return false;
+    }
+    else
+    {
+        scenes_[scene] = shared_ptr<Scene>(new Scene);
+        return true;
+    }
+}
 
 }
 
