@@ -25,20 +25,56 @@
 #define __FACADE_H__
 
 #include <string>
-#include <vector>
+#include <map>
 #include <iostream>
 #include <tr1/memory>
 
 namespace spatosc
 {
 
+class Scene;
+
 /**
  * Wraps the whole spatosc library.
+ * @warning Most of it is not implemented. Will be renamed to something like Manager, World or so.
  */
 class Facade
 {
     public:
+        /** @warning Not implemented. */
+        bool connect(const std::string &scene, const std::string &from, const std::string &to);
+        /** @warning Not implemented. */
+        bool createListener(const std::string &scene, const std::string &node);
+        /** @warning Not implemented. */
+        bool createScene(const std::string &scene);
+        /** @warning Not implemented. */
+        bool createSource(const std::string &scene, const std::string &node);
+        /** @warning Not implemented. */
+        bool deleteNode(const std::string &scene, const std::string &node);
+        /** @warning Not implemented. */
+        bool deleteScene(const std::string &scene);
+        /** @warning Not implemented. */
+        bool disconnect(const std::string &scene, const std::string &from, const std::string &to);
+        /** @warning Not implemented. */
+        bool setAutoConnect(const std::string &scene, bool enabled);
+        /** @warning Not implemented. We might add port arg. */
+        bool setTranslator(const std::string &scene, const std::string &translator, const std::string &host);
+        /** @warning Not implemented. */
+        bool setConnectFilter(const std::string &scene, const std::string &filterRegex);
+        /** @warning Not implemented. */
+        bool setOrientation(const std::string &scene, const std::string &node, double pitch, double roll, double yaw);
+        /** @warning Not implemented. */
+        bool setPosition(const std::string &scene, const std::string &node, double x, double y, double z);
+        /** @warning Not implemented. */
+        bool setSourceChannel(const std::string &scene, const std::string &sound_source, const std::string &channel);
+        /** @warning Not implemented. */
+        bool setSourceGain(const std::string &scene, const std::string &sound_source, double linearGain);
+        /** @warning Not implemented. */
+        bool setTranslator(const std::string &scene, const std::string &translator);
     private:
+        typedef std::map<std::string, std::tr1::shared_ptr<Scene> >::iterator SceneIterator;
+        Scene *getScene(const std::string &scene);
+        std::map<std::string, std::tr1::shared_ptr<Scene> > scenes_;
 };
 
 } // end of namespace spatosc
