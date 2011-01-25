@@ -26,7 +26,6 @@
 #ifndef _SPATDIF_RECEIVER_H_
 #define _SPATDIF_RECEIVER_H_
 
-#include "oscreceiver.h"
 #include <lo/lo.h>
 #include <string>
 #include <tr1/memory>
