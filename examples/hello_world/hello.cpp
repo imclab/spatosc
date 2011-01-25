@@ -20,6 +20,7 @@
 #include <iostream>
 #include <tr1/memory>
 #include <spatosc/spatosc.h>
+#include <spatosc/spatdif_translator.h>
 
 static const bool VERBOSE = true;
 
@@ -54,21 +55,40 @@ int main(int /*argc*/, char ** /*argv*/)
     // we choose D-Mitri, and provide the IP address of the server on the
     // control network. Note that D-Mitri uses 2 interfaces, a control network
     // (typically IPv4) and an audio network (AVB):
-    scene.setTranslator<DmitriTranslator>("127.0.0.1");
+    //scene.setTranslator<DmitriTranslator>("127.0.0.1");
+    
+    
+    scene.setTranslator<SpatdifTranslator>("127.0.0.1");
 
     // The Scene class can print out everything to the console:
     if (VERBOSE)
         scene.debugPrint();
 
     // Now we just move nodes around and updates should be sent to D-Mitri:
+    //
+    // 'foo' will orbit in a circle, while 'bar' will slide back and forth
+    // along the X axis
 
-    foo->setPosition(0,10,0);
-    bar->setPosition(5,5,0);
+    float orbitRadius = 5.0;
+    float orbitDuration = 10.0;
+    int numSamples = 100;
 
-    //sleep(0.1);
+    while (1)
+    {
+        for (int i=0; i<numSamples; i++)
+        {
+            float angle = i * 2.0 * M_PI / (numSamples-1);
 
-    foo->setPosition(0,5,0);
-    bar->setPosition(-5,5,0);
+            foo->setPosition(sinf(angle)*orbitRadius,
+                             cosf(angle)*orbitRadius,
+                             1.0);
+            bar->setPosition(sinf(-angle)*orbitRadius,
+                             0.0,
+                             1.0);
+
+	        usleep(1000000 * orbitDuration / numSamples);
+        }
+    }
 
     if (VERBOSE)
         scene.debugPrint();
