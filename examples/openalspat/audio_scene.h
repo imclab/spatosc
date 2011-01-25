@@ -36,15 +36,22 @@ class AudioScene {
         void createListener();
         void updatePosition();
         void bindCallbacks();
+        void updateSourcePosition();
+        void updateListenerPosition();
         static gboolean pollOscReceiver(gpointer data);
         static int onSourcePositionChanged(const char *path, const char *types, 
-                lo_arg ** argv, int argc, void *user_data, void *data);
+                lo_arg ** argv, int argc, void *data, void *user_data);
+#if 0
+        static int onListenerPositionChanged(const char *path, const char *types, 
+                lo_arg ** argv, int argc, void *data, void *user_data);
+#endif
         static int genericHandler(const char *path, const char *types,
-        lo_arg ** argv, int argc, void *user_data, void *data);
+        lo_arg ** argv, int argc, void *data, void *user_data);
 
         ALfloat sourcePos_[3];
         ALuint source_;
-        double step_;
+        ALfloat listenerPos_[3];
+        ALuint listener_;
         std::tr1::shared_ptr<spatosc::OscReceiver> oscReceiver_;
         static const char* RX_PORT;
 

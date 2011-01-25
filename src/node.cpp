@@ -31,8 +31,7 @@ Node::Node(const std::string &nodeID, Scene &scene) :
     rot_(),
     active_(true),
     connectTO_(),
-    connectFROM_(),
-    updateFlag_(true)
+    connectFROM_()
 {
     connectTO_.clear();
     connectFROM_.clear();
@@ -48,16 +47,25 @@ void Node::debugPrint() const
 
 void Node::setPosition(double x, double y, double z)
 {
-    pos_ = Vector3(x,y,z);
-    updateFlag_ = true;
-    scene_.update(this);
+    if (x != pos_.x or y != pos_.y or z != pos_.z)
+    {
+        pos_ = Vector3(x,y,z);
+        notifyScene();
+    }
 }
 
 void Node::setOrientation(double pitch, double roll, double yaw)
 {
-    rot_ = Vector3(pitch, roll, yaw);
-    updateFlag_ = true;
-    scene_.update(this);
+    if (pitch != rot_.x or roll != rot_.y or yaw != rot_.z)
+    {
+        rot_ = Vector3(pitch, roll, yaw);
+        notifyScene();
+    }
+}
+
+void Node::notifyScene()
+{
+    scene_.onNodeChanged(this);
 }
 
 } // end namespace spatosc

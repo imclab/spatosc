@@ -1,6 +1,4 @@
-/* 
- * spatdif_translator.h
- *
+/*
  * This file is part of Spatosc.
  * 
  * Copyright (c) 2010 Society for Arts and Technologies <info@sat.qc.ca>
@@ -20,39 +18,39 @@
  */
 
 /** @file
- * The Spatdif translator class.
+ * The D-Mitri translator class.
  */
+#ifndef __DMITRI_TRANSLATOR_H__
+#define __DMITRI_TRANSLATOR_H__
 
-#ifndef _SPATDIF_TRANSLATOR_H_
-#define _SPATDIF_TRANSLATOR_H_
-
-#include "translator.h"
-#include "oscsender.h"
 #include <lo/lo.h>
 #include <string>
+#include "translator.h"
 
 namespace spatosc
 {
-
-class Node;
+class Connection;
 
 /**
- * Translator for the SpatDIF protocol.
+ * Translator for the proprietary D-Mitri system.
  */
-class SpatdifTranslator : public Translator
+class DmitriTranslator : public Translator
 {
-    public:
-        explicit SpatdifTranslator(const std::string &ip, bool verbose);
-        virtual ~SpatdifTranslator();
-        virtual void pushOSCMessages(Connection *conn);
+public:
+    explicit DmitriTranslator(const std::string &ip, bool verbose);
+    virtual ~DmitriTranslator();
+    virtual void pushOSCMessages(Connection *conn);
 
-    private:
-        OscSender oscSender_;
-        void sendPosition(const std::string &prefix, Node *node);
-        // not implemented
-        SpatdifTranslator(const SpatdifTranslator&);
-        const SpatdifTranslator& operator=(const SpatdifTranslator&);
+private:
+    static const double SPACEMAP_RADIUS;
+    lo_address destAddr_;
+    lo_server lo_serv_;
+    // not implemented
+    DmitriTranslator(const DmitriTranslator&);
+    const DmitriTranslator& operator=(const DmitriTranslator&);
+    bool verbose;
 };
 
 } // end namespace spatosc
-#endif // _SPATDIF_TRANSLATOR_H_
+
+#endif // __DMITRI_TRANSLATOR_H__

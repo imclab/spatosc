@@ -21,6 +21,7 @@
 
 #include "spatdif_translator.h"
 #include <string>
+#include <cassert>
 #include "oscutils.h"
 #include "oscsender.h"
 #include "connection.h"
@@ -46,32 +47,25 @@ void SpatdifTranslator::sendPosition(const std::string &prefix, Node *node)
     oscSender_.sendMessage(path, "fff", vect.x, vect.y, vect.z, LO_ARGS_END);
 }
 
-void SpatdifTranslator::update(Connection * conn)
+void SpatdifTranslator::pushOSCMessages(Connection * conn)
 {
     // FIXME: Downcasts are evil
     SoundSource *src = dynamic_cast<SoundSource*>(conn->src_);
     Listener *snk = dynamic_cast<Listener*>(conn->snk_);
     // TODO:Wed Jan 19 14:47:57 EST 2011:tmatth: set positions, gains as needed!
-    if (src == 0)
-    {
-        std::cerr << "Sound source is NULL!\n";
-        return;
-    }
-    if (snk == 0)
-    {
-        std::cerr << "Sound source is NULL!\n";
-        return;
-    }
+    assert(src);
+    assert(snk);
+
     if (src->getChannelID() < 0)
         return;
 
     // update source position
-    sendPosition("/SpatDIF/core/source/" + 
-            OSCutil::stringify(src->getChannelID()) + "/position", src);
+    sendPosition("/SpatDIF/core/source/" +
+            OSCutil::stringify(src->getChannelID()), src);
 
     // FIXME:Wed Jan 19 16:22:42 EST 2011:tmatth should listener have channel ID? SpatDIF thinks so.
     // update sink position
-    sendPosition("/SpatDIF/core/listener/1/position", snk);
+    sendPosition("/SpatDIF/core/listener/1", snk);
 }
 
 } // end namespace spatosc

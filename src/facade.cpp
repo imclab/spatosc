@@ -17,40 +17,10 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** @file
- * The D-Mitri translator class.
- */
-#ifndef __DMITRI_TRANSLATOR_H__
-#define __DMITRI_TRANSLATOR_H__
-
-#include <lo/lo.h>
-#include <string>
-#include "translator.h"
+#include "facade.h"
 
 namespace spatosc
 {
-class Connection;
 
-/**
- * Translator for the proprietary D-Mitri system.
- */
-class DmitriTranslator : public Translator
-{
-public:
-    explicit DmitriTranslator(const std::string &ip, bool verbose);
-    virtual ~DmitriTranslator();
-    virtual void update(Connection *conn);
+}
 
-private:
-    static const double SPACEMAP_RADIUS;
-    lo_address destAddr_;
-    lo_server lo_serv_;
-    // not implemented
-    DmitriTranslator(const DmitriTranslator&);
-    const DmitriTranslator& operator=(const DmitriTranslator&);
-    bool verbose;
-};
-
-} // end namespace spatosc
-
-#endif // __DMITRI_TRANSLATOR_H__

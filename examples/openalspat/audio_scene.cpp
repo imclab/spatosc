@@ -34,28 +34,56 @@ void AudioScene::init()
 }
 
 
-int AudioScene::genericHandler(const char *path, const char *types,
-        lo_arg ** argv, int argc, void *user_data, void *data)
+int AudioScene::genericHandler(const char * path, const char * /*types*/,
+        lo_arg ** /*argv*/, int /*argc*/, void * /*data*/, void * /*user_data*/)
 {
+#ifdef DEBUG
+    std::cout << __FUNCTION__ << path << std::endl;
+#endif
     return 1; // handoff
 }
 
-int AudioScene::onSourcePositionChanged(const char *path, const char *types,
-        lo_arg ** argv, int argc, void *user_data, void *data)
+int AudioScene::onSourcePositionChanged(const char * /*path*/, const char * /*types*/,
+        lo_arg ** argv, int /*argc*/, void * /*data*/, void *user_data)
 {
+#ifdef DEBUG
     std::cout << __FUNCTION__ << std::endl;
+#endif
     AudioScene *context = static_cast<AudioScene*>(user_data);
     for (int i = 0; i != 3; ++i)
+    {
         context->sourcePos_[i] = argv[i]->f;
-    context->updatePosition();
+#ifdef DEBUG
+        std::cout << argv[i]->f << ",";
+#endif
+    }
+#ifdef DEBUG
+    std::cout << std::endl;
+#endif
+    context->updateSourcePosition();
     return 0;
 }
 
+
+#if 0
+int AudioScene::onListenerPositionChanged(const char *path, const char *types,
+        lo_arg ** argv, int argc, void *data, void *user_data)
+{
+    //std::cout << __FUNCTION__ << std::endl;
+    AudioScene *context = static_cast<AudioScene*>(user_data);
+    for (int i = 0; i != 3; ++i)
+        context->listenerPos_[i] = argv[i]->f;
+    context->updateListenerPosition();
+    return 0;
+}
+#endif
+
 gboolean AudioScene::pollOscReceiver(gpointer data)
 {
+    bool verbose = false;
     AudioScene* context = static_cast<AudioScene*>(data);
     int bytes = context->oscReceiver_->receive();
-    if (bytes > 0)
+    if (bytes > 0 and verbose)
         std::cout << "received " << bytes << " bytes" << std::endl;
 
     return TRUE;
@@ -64,12 +92,13 @@ gboolean AudioScene::pollOscReceiver(gpointer data)
 void AudioScene::bindCallbacks()
 {
     oscReceiver_->addHandler("/SpatDIF/core/source/1/position", "fff", onSourcePositionChanged, this);
+    //oscReceiver_->addHandler("/SpatDIF/core/listener/1/position", "fff", onListenerPositionChanged, this);
     //oscReceiver_->addHandler(NULL, NULL, genericHandler, NULL);
     // add a timeout to poll our oscreceiver
-    g_timeout_add(1000 /*ms*/, pollOscReceiver, this);
+    g_timeout_add(5 /*ms*/, pollOscReceiver, this);
 }
 
-AudioScene::AudioScene() : step_(0.1), oscReceiver_(new spatosc::OscReceiver(RX_PORT))
+AudioScene::AudioScene() : oscReceiver_(new spatosc::OscReceiver(RX_PORT))
 {
     createSource();
     createListener();
@@ -108,8 +137,8 @@ void AudioScene::createSource()
 
 void AudioScene::createListener()
 {
-    // position of listener
-    ALfloat listenerPos[] = {0.0, 0.0, 0.0};
+    for (int i = 0; i != 3; ++i)
+        listenerPos_[i] = 0.0;
     // listener velocity
     ALfloat listenerVel[] = {0.0, 0.0, 0.0};
     // orientation of the listener (first 3 elements are "at", second 3 are "up"
@@ -119,7 +148,7 @@ void AudioScene::createListener()
         throw(std::runtime_error("OpenAL error")); 
     
     // set listener values
-    alListenerfv(AL_POSITION, listenerPos);
+    alListenerfv(AL_POSITION, listenerPos_);
     alListenerfv(AL_VELOCITY, listenerVel);
     alListenerfv(AL_ORIENTATION, listenerOri);
 }
@@ -130,8 +159,12 @@ AudioScene::~AudioScene()
     alutExit();
 }
 
-void AudioScene::updatePosition()
+void AudioScene::updateSourcePosition()
 {
     alSourcefv(source_, AL_POSITION, sourcePos_);
 }
 
+void AudioScene::updateListenerPosition()
+{
+    alSourcefv(listener_, AL_POSITION, listenerPos_);
+}

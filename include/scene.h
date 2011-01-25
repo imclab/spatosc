@@ -80,15 +80,8 @@ class Scene
         template <typename T>
         void setTranslator(const std::string &address)
         {
-            bool verbose = false;
-            translator_.reset(new T(address, verbose));
+            translator_.reset(new T(address, verbose_));
         }
-
-        /**
-         * Returns the current translator.
-         * @return A Translator pointer. Never free this pointer. It will become invalid if ever you switch to a different Translator.
-         */
-        Translator *getTranslator() const;
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
@@ -126,13 +119,6 @@ class Scene
         Listener* getListener(const std::string &id);
 
         /**
-         * Returns a list of all connections that "directly involve" a node (ie, as the source or the sink): 
-         * @param id Identifier of the node for which we want its connections.
-         * @return A vector of Connection pointers. Never free these pointers. They will become invalid if these connections are deleted.
-         */
-        std::vector<Connection*> getConnectionsForNode(const std::string &id);
-
-        /**
          * Returns a Connection between two node in the scene.
          * 
          * @param source The source node.
@@ -166,39 +152,76 @@ class Scene
 
         /** 
          * Connects two nodes together.
-         * @return A Connection pointer. Null if not found. Never free this pointer. It will become invalid if this connection is deleted.
+         * @return A Connection pointer. Null if either of the two nodes are not found, or if they are already connected. Never free this pointer. It will become invalid if this connection is deleted.
          */
         Connection* connect(Node *src, Node *snk);
 
         /** 
          * Disconnects two nodes.
-         * @warning Not implemented yet.
          * @return True if it successfully disconnected the nodes. False if they were not connected or if the nodes are invalid.
          */
         bool disconnect(Node *source, Node* sink);
 
         /**
-         * Called by a node when it is changed so that the scene updates all its sibling nodes.
+         * Called by a node when it is changed so that the scene recomputes all the connection in which it is involved.
          */
-        void update(Node *n);
+        void onNodeChanged(Node *n);
 
         /**
-         * Called by a connection when it is changed so that the scene updates all its sibling nodes.
+         * Sets whether source and sink nodes should be automatically connected as soon as they are created.
+         * Default is true.
+         * @param enabled Enabled or not.
          */
-        void update(Connection *conn);
+        void setAutoConnect(bool enabled);
+
+        /**
+         * Returns whether source and sink nodes should be automatically connected as soon as they are created.
+         * Default is true.
+         * @return Enabled or not.
+         */
+        bool getAutoConnect() const;
+
+        /**
+         * Deletes a Listener node
+         * @param node Listener pointer.
+         * @return Whether it deleted a node or not.
+         */
+        bool deleteNode(Listener *node);
+
+        /**
+         * Deletes a SoundSource node
+         * @param node SoundSource pointer.
+         * @return Whether it deleted a node or not.
+         */
+        bool deleteNode(SoundSource *node);
+        /**
+         * Sets the console verbosity for info messages.
+         * @param Whether to print a lot of messages or not.
+         */
+        void setVerbose(bool verbose);
 
     private:
+        /**
+         * Called when a new connection is made or when its node position change, so that the scene updates all its sibling nodes, and the translator may push some OSC messages.
+         */
+        void onConnectionChanged(Connection *conn);
+
+        /**
+         * Returns a list of all connections that "directly involve" a node (ie, as the source or the sink): 
+         * @param Node pointer for which we want its connections.
+         * @return A vector of Connection pointers. Never free these pointers. They will become invalid if these connections are deleted.
+         */
+        std::vector<Connection*> getConnectionsForNode(const Node *node);
+        bool disconnectNodeConnections(Node *node);
 
         std::tr1::shared_ptr<Translator> translator_;
-
         bool autoConnect_;
-
         std::string connectFilter_;
         regex_t connectRegex_;
-
         std::vector<std::tr1::shared_ptr<Listener> >  ListenerList_;
         std::vector<std::tr1::shared_ptr<SoundSource> > SoundSourceList_;
-        std::vector<std::tr1::shared_ptr<Connection> > ConnectionList_;
+        std::vector<std::tr1::shared_ptr<Connection> > connections_;
+        bool verbose_;
 };
 
 } // end namespace spatosc

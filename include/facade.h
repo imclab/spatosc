@@ -1,6 +1,4 @@
-/* 
- * spatdif_translator.h
- *
+/*
  * This file is part of Spatosc.
  * 
  * Copyright (c) 2010 Society for Arts and Technologies <info@sat.qc.ca>
@@ -20,39 +18,29 @@
  */
 
 /** @file
- * The Spatdif translator class.
+ * The Facade class. 
  */
 
-#ifndef _SPATDIF_TRANSLATOR_H_
-#define _SPATDIF_TRANSLATOR_H_
+#ifndef __FACADE_H__
+#define __FACADE_H__
 
-#include "translator.h"
-#include "oscsender.h"
-#include <lo/lo.h>
 #include <string>
+#include <vector>
+#include <iostream>
+#include <tr1/memory>
 
 namespace spatosc
 {
 
-class Node;
-
 /**
- * Translator for the SpatDIF protocol.
+ * Wraps the whole spatosc library.
  */
-class SpatdifTranslator : public Translator
+class Facade
 {
     public:
-        explicit SpatdifTranslator(const std::string &ip, bool verbose);
-        virtual ~SpatdifTranslator();
-        virtual void pushOSCMessages(Connection *conn);
-
     private:
-        OscSender oscSender_;
-        void sendPosition(const std::string &prefix, Node *node);
-        // not implemented
-        SpatdifTranslator(const SpatdifTranslator&);
-        const SpatdifTranslator& operator=(const SpatdifTranslator&);
 };
 
-} // end namespace spatosc
-#endif // _SPATDIF_TRANSLATOR_H_
+} // end of namespace spatosc
+
+#endif

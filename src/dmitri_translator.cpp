@@ -17,7 +17,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "dmitritranslator.h"
+#include "dmitri_translator.h"
 #include "oscutils.h"
 #include "soundsource.h"
 #include "connection.h"
@@ -38,7 +38,7 @@ DmitriTranslator::DmitriTranslator(const std::string &ip, bool verbose = false) 
     destAddr_(lo_address_new(ip.c_str(), DEFAULT_SEND_PORT)),
     lo_serv_(lo_server_new(DEFAULT_RECEIVER_PORT, NULL))
     {
-        if (getVerbose())
+        if (verbose_)
         {
             std::cout << "Sending to D-Mitri on: " << lo_address_get_url(destAddr_) << std::endl;
             std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
@@ -52,7 +52,7 @@ DmitriTranslator::~DmitriTranslator()
     lo_address_free(destAddr_);
 }
 
-void DmitriTranslator::update(Connection *conn)
+void DmitriTranslator::pushOSCMessages(Connection *conn)
 {
     std::string str;
     SoundSource *src = dynamic_cast<SoundSource*>(conn->src_);

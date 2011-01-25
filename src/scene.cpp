@@ -19,6 +19,9 @@
 
 #include "scene.h"
 #include <iostream>
+#include <cassert>
+#include <algorithm>
+#include <tr1/memory>
 
 #include "translator.h"
 #include "listener.h"
@@ -26,7 +29,35 @@
 #include "soundsource.h"
 #include "connection.h"
 
-#define UNUSED(x) ((void) (x))
+namespace
+{
+    // useful to search and delete in a vector of shared_ptr
+    template <typename T>
+    class IsEqual
+    {
+        public:
+            IsEqual(T *a) : a_(a) {}
+            bool operator() (const std::tr1::shared_ptr<T> &b)
+            {
+                return a_ == b.get();
+            }
+        private:
+            const T *a_;
+    };
+    /**
+     * Removes an element from a vector of shared pointers if 
+     * the given pointer matches.
+     * @return Whether it deleted some elements of not.
+     */
+    template <typename T>
+    bool eraseFromVector(std::vector<std::tr1::shared_ptr<T> >& vec, T *a)
+    {
+        unsigned int size_before = vec.size();
+        IsEqual<T> predicate(a);
+        vec.erase(std::remove_if(vec.begin(), vec.end(), predicate), vec.end());
+        return vec.size() < size_before;
+    }
+} // end of anonymous namespace
 
 namespace spatosc
 {
@@ -50,13 +81,28 @@ Scene::Scene() :
     connectRegex_(),
     ListenerList_(),
     SoundSourceList_(),
-    ConnectionList_()
+    connections_(),
+    verbose_(false)
 {
     this->ListenerList_.clear();
     this->SoundSourceList_.clear();
-    this->ConnectionList_.clear();
-
+    this->connections_.clear();
     setConnectFilter(".*"); // match everything
+}
+
+void Scene::setVerbose(bool verbose)
+{
+    verbose_ = verbose;
+}
+
+void Scene::setAutoConnect(bool enabled)
+{
+    autoConnect_ = enabled;
+}
+
+bool Scene::getAutoConnect() const
+{
+    return autoConnect_;
 }
 
 void Scene::debugPrint ()
@@ -67,9 +113,6 @@ void Scene::debugPrint ()
 
     std::cout << "\n=====================================================" << std::endl;
     std::cout << "[Scene]:: connectFilter = " << connectFilter_ << std::endl;
-
-    if (translator_ == 0)
-        std::cout << "[Scene]:: NO translator specified" << std::endl;
 
     std::cout << "[Scene]:: " << ListenerList_.size() << " listeners:" << std::endl;
     for (L = ListenerList_.begin(); L != ListenerList_.end(); ++L)
@@ -83,8 +126,8 @@ void Scene::debugPrint ()
         (*n)->debugPrint();
     }
 
-    std::cout << "[Scene]:: " << ConnectionList_.size() << " connections:" << std::endl;
-    for (c = ConnectionList_.begin(); c != ConnectionList_.end(); ++c)
+    std::cout << "[Scene]:: " << connections_.size() << " connections:" << std::endl;
+    for (c = connections_.begin(); c != connections_.end(); ++c)
     {
         std::cout << "  " << (*c)->id_ << ":" << std::endl;
         std::cout << "    distanceEffect:\t" << (*c)->distanceEffect_ << "%" << std::endl;
@@ -92,11 +135,6 @@ void Scene::debugPrint ()
         std::cout << "    dopplerEffect:\t" << (*c)->dopplerEffect_ << "%" << std::endl;
         std::cout << "    diffractionEffect:\t" << (*c)->diffractionEffect_ << "%" << std::endl;
     }
-}
-
-Translator *Scene::getTranslator() const
-{
-    return translator_.get();
 }
 
 SoundSource* Scene::createSoundSource(const std::string &id)
@@ -205,14 +243,14 @@ Listener* Scene::getListener(const std::string &id)
     return 0;
 }
 
-std::vector<Connection*> Scene::getConnectionsForNode(const std::string &id)
+std::vector<Connection*> Scene::getConnectionsForNode(const Node *node)
 {
     std::vector<Connection*> foundConnections;
     
     connIterator c;
-    for (c = ConnectionList_.begin(); c != ConnectionList_.end(); ++c)
+    for (c = connections_.begin(); c != connections_.end(); ++c)
     {
-        if (((*c)->src_->id_ == id) or ((*c)->snk_->id_ == id))
+        if (((*c)->src_ == node) or ((*c)->snk_ == node))
         {
             foundConnections.push_back(c->get());
         }
@@ -223,7 +261,7 @@ std::vector<Connection*> Scene::getConnectionsForNode(const std::string &id)
 Connection* Scene::getConnection(const Node *source, const Node *sink)
 {
     connIterator c;
-    for (c = ConnectionList_.begin(); c != ConnectionList_.end(); ++c)
+    for (c = connections_.begin(); c != connections_.end(); ++c)
     {
         if (((*c)->src_ == source) and ((*c)->snk_ == sink))
         {
@@ -259,24 +297,24 @@ Connection* Scene::connect(Node *src, Node *snk)
     if (conn)
     {
         std::cerr << "Nodes " << src->getID() << " and " << snk->getID() << " are already connected." << std::endl;
-        return conn;
+        return 0;
     }
 
     // Check src and snk id's against the connectFilter. If either match, then
     // proceed with the connection:
     int srcRegexStatus = regexec(&connectRegex_, src->id_.c_str(), (size_t)0, 0, 0);
     int snkRegexStatus = regexec(&connectRegex_, snk->id_.c_str(), (size_t)0, 0, 0);
-
+    //TODO:2011-01-21:aalex:we should also check the type of the two nodes in connect().
     if (srcRegexStatus == 0 or snkRegexStatus == 0)
     {
         // create connection:
         shared_ptr<Connection> conn(new Connection(src, snk));
         // register the connection with both the Scene and the
         // sink node (for backwards connectivity computation):
-        ConnectionList_.push_back(conn);
+        connections_.push_back(conn);
         src->connectTO_.push_back(conn);
         snk->connectFROM_.push_back(conn);
-        update(conn.get());
+        onConnectionChanged(conn.get());
         return conn.get();
     }
     else
@@ -285,39 +323,87 @@ Connection* Scene::connect(Node *src, Node *snk)
 
 bool Scene::disconnect(Node *source, Node *sink)
 {
-    UNUSED(source);
-    UNUSED(sink);
-    std::cout << "Scene::disconnect NOT IMPLEMENTED YET" << std::endl;
-    return false;
+    if (! source)
+    {
+        std::cerr << "Invalid source node." << std::endl;
+        return false;
+    }
+    if  (! sink) 
+    {
+        std::cerr << "Invalid sink node." << std::endl;
+        return false;
+    }
+    Connection* conn = getConnection(source, sink);
+    if (! conn)
+    {
+        std::cerr << "Cannot disconnect nodes " << source->getID() << " and " << sink->getID() << ": They are not connected." << std::endl;
+        return false;
+    }
+    eraseFromVector(source->connectTO_, conn);
+    eraseFromVector(sink->connectFROM_, conn);
+    return eraseFromVector(connections_, conn);
 }
 
-void Scene::update(Node *n)
+void Scene::onNodeChanged(Node *n)
 {
     connIterator c;
     for (c = n->connectTO_.begin(); c != n->connectTO_.end(); ++c)
     {
-        update(c->get());
+        onConnectionChanged(c->get());
     }
     for (c = n->connectFROM_.begin(); c != n->connectFROM_.end(); ++c)
     {
-        update(c->get());
+        onConnectionChanged(c->get());
     }
 }
 
-void Scene::update(Connection *conn)
+void Scene::onConnectionChanged(Connection *conn)
 {
     // If one of the connected nodes has been deactivated, then there is no need
     // to compute anything. Enable the mute (and send the status change if this
     // has just happened)
     if (conn->src_->active_ and conn->snk_->active_)
     {
-        if (translator_)
-        {
-            conn->update();
-            translator_->update(conn);
-        }
+        assert(translator_);
+        conn->recomputeConnection();
+        translator_->pushOSCMessages(conn);
     }
 }
 
+bool Scene::disconnectNodeConnections(Node *node)
+{
+    std::vector<Connection*> nodeConnections = getConnectionsForNode(node);
+    std::vector<Connection*>::iterator iter;
+    bool did_disconnect_some = false;
+    for (iter = nodeConnections.begin(); iter != nodeConnections.end(); ++iter)
+    {
+        Connection* conn = (*iter);
+        if (disconnect(&conn->getSource(), &conn->getSink()))
+            did_disconnect_some = true;
+    }
+    return did_disconnect_some;
+}
+
+bool Scene::deleteNode(SoundSource *node)
+{
+    if (! node)
+    {
+        std::cerr << "Invalid source node." << std::endl;
+        return false;
+    }
+    disconnectNodeConnections(node);
+    return eraseFromVector(SoundSourceList_, node);
+}
+
+bool Scene::deleteNode(Listener *node)
+{
+    if (! node)
+    {
+        std::cerr << "Invalid listener node." << std::endl;
+        return false;
+    }
+    disconnectNodeConnections(node);
+    return eraseFromVector(ListenerList_, node);
+}
 } // end namespace spatosc
 

@@ -38,35 +38,22 @@ Connection::Connection(Node *source, Node *sink) :
     dopplerEffect_(100.0),
     diffractionEffect_(100.0)
 {
-    // set updateFlag on at least one of the nodes for initial computation:
-    source->setUpdateFlag(true);
     // calculate and store distance, azimuth and elevation
-    update();
+    recomputeConnection();
 }
 
-void Connection::update()
+void Connection::recomputeConnection()
 {
-    if (src_->updateFlag() or snk_->updateFlag())
-    {
-        Vector3 vect = snk_->getPosition() - src_->getPosition();
-        distance_ = static_cast<double>(vect.Mag());
-        double distanceScalar = 1 / (1.0 + pow(distance_, static_cast<double>(distanceEffect_) * 0.01));
-        azim_ = atan2(vect.y, vect.x);
-        elev_ = atan2(sqrt(pow(vect.x, 2) + pow(vect.y, 2)), vect.z);
-        // for now, force sources to be above equator
-        elev_ = std::max(elev_, 0.0); 
-
-        // now from distance, compute gain and variable delay:
-
-        //vdel_ = distance_ * (1/SPEED_OF_SOUND) * .01 * dopplerEffect_; 
-        gainDB_ = 20 * log10(distanceScalar);
-
-        // FIXME:Thu Jan 13 14:52:26 EST 2011:tmatth:
-        // is this the only place that needs to update its state when src 
-        // or sink change?
-        src_->setUpdateFlag(false);
-        snk_->setUpdateFlag(false);
-    }
+    Vector3 vect = src_->getPosition() - snk_->getPosition();
+    distance_ = static_cast<double>(vect.Mag());
+    double distanceScalar = 1 / (1.0 + pow(distance_, static_cast<double>(distanceEffect_) * 0.01));
+    azim_ = atan2(vect.y, vect.x);
+    elev_ = atan2(sqrt(pow(vect.x, 2) + pow(vect.y, 2)), vect.z);
+    // for now, force sources to be above equator
+    elev_ = std::max(elev_, 0.0); 
+    // now from distance, compute gain and variable delay:
+    //vdel_ = distance_ * (1/SPEED_OF_SOUND) * .01 * dopplerEffect_; 
+    gainDB_ = 20 * log10(distanceScalar);
 }
 
 } // end namespace spatosc

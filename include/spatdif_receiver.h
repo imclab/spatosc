@@ -1,5 +1,5 @@
 /* 
- * spatdif_translator.h
+ * spatdif_receiver.h
  *
  * This file is part of Spatosc.
  * 
@@ -20,39 +20,44 @@
  */
 
 /** @file
- * The Spatdif translator class.
+ * The SpatdifReceiver class.
  */
 
-#ifndef _SPATDIF_TRANSLATOR_H_
-#define _SPATDIF_TRANSLATOR_H_
+#ifndef _SPATDIF_RECEIVER_H_
+#define _SPATDIF_RECEIVER_H_
 
-#include "translator.h"
-#include "oscsender.h"
+#include "oscreceiver.h"
 #include <lo/lo.h>
 #include <string>
+#include <tr1/memory>
 
 namespace spatosc
 {
 
-class Node;
+class OscReceiver;
 
 /**
- * Translator for the SpatDIF protocol.
+ * Useful for clients to receive messages from spatosc's SpatdifTranslator.
  */
-class SpatdifTranslator : public Translator
+class SpatdifReceiver
 {
     public:
-        explicit SpatdifTranslator(const std::string &ip, bool verbose);
-        virtual ~SpatdifTranslator();
-        virtual void pushOSCMessages(Connection *conn);
-
+        /**
+         * Constructor.
+         * Starts listening for OSC messages on the given port.
+         * @param port String that must be a valid port number.
+         */
+        SpatdifReceiver(const std::string &port);
+        /**
+         * Checks for incoming OSC messages.
+         */
+        void poll();
     private:
-        OscSender oscSender_;
-        void sendPosition(const std::string &prefix, Node *node);
-        // not implemented
-        SpatdifTranslator(const SpatdifTranslator&);
-        const SpatdifTranslator& operator=(const SpatdifTranslator&);
+        void registerCallbacks();
+        static int onSourcePositionChanged(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
+        std::tr1::shared_ptr<OscReceiver> oscReceiver_;
+        bool verbose_;
 };
 
 } // end namespace spatosc
-#endif // _SPATDIF_TRANSLATOR_H_
+#endif // _SPATDIF_RECEIVER_H_

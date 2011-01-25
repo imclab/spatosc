@@ -20,7 +20,6 @@ Packaging
 ---------
  * add an --enable-debug flag
  * remove non-public functions and typedefs from include/*.h
- * Use pkg-config for liblo, like in the kurt branch
  * build and install on Windows
 
 Refactoring
@@ -32,9 +31,28 @@ Refactoring
  * rename dmitri_translator.h like that.
  * rename Node.setPosition to setPositionXYZ(x,y,z)
  * add setPositionAED(a, e, d)
+ * Should we warn clients that we disconnected some nodes?
 
 Error handling
 --------------
- * Node id need to be unique. (either Listener or Sources)
+ * We should also check the type of the two nodes in connect(). We should implement bool Node::isSource() and bool Node::isSink()
 
+Wrapper for OSC and FUDI callbacks
+----------------------------------
+ * [s:sceneName] [s:nodeName] [s:method] [s:typeTags] [s:args...]
+
+ spatosc_connect(s:scene, s:from, s:to)
+ spatosc_create_listener(s:scene, s:node)
+ spatosc_create_scene(s:scene)
+ spatosc_create_source(s:scene, s:node)
+ spatosc_delete(s:scene, s:node)
+ spatosc_delete_scene(s:scene)
+ spatosc_disconnect(s:scene, s:from, s:to)
+ spatosc_set_auto_connect(s:scene, b:enabled)
+ spatosc_set_connect_filter(s:scene, s:regex)
+ spatosc_set_orientation(s:scene, s:node, f:pitch, f:roll, f:yaw)
+ spatosc_set_position(s:scene, s:node, f:x, f:y, f:z)
+ spatosc_set_source_channel(s:scene, s:sound_source, s:channel)
+ spatosc_set_source_gain(s:scene, s:sound_source)
+ spatosc_set_translator(s:scene, s:translator)
 
