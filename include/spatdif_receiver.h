@@ -26,14 +26,28 @@
 #ifndef _SPATDIF_RECEIVER_H_
 #define _SPATDIF_RECEIVER_H_
 
-#include <lo/lo.h>
 #include <string>
 #include <tr1/memory>
+#include <lo/lo.h>
 
 namespace spatosc
 {
 
 class OscReceiver;
+
+class SpatdifHandler 
+{
+    public:
+        virtual ~SpatdifHandler();
+        virtual void xyz(const std::string &id, float x, float y, float z) = 0;
+        virtual void aed(const std::string &id, float azimuth, float elevation, float distanceMeters) = 0;
+        virtual void xy(const std::string &id, float x, float y) = 0;
+        virtual void delay(const std::string &id, float delay) = 0;
+        virtual void gainDB(const std::string &id, float gainDB) = 0;
+        virtual void gain(const std::string &id, float gain) = 0;
+        virtual void spread(const std::string &id, float spread) = 0;
+        virtual void spreadAE(const std::string &id, float azimSpread, float elevSpread) = 0;
+};
 
 /**
  * Useful for clients to receive messages from spatosc's SpatdifTranslator.
