@@ -68,7 +68,7 @@ class Wrapper
          * Sets the translator to use. 
          * @param translatorName Must be the name of a valid child of the Translator class.
         */
-        bool setTranslator(const std::string &translatorName, const std::string &sendToAddress);
+        bool setTranslator(const std::string &translatorName, const std::string &sendToAddress, const std::string &port);
         /** @warning Not implemented. */
         bool setTranslatorProperty(const std::string &key, const std::string &value);
     private:

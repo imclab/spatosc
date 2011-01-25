@@ -18,13 +18,13 @@
  */
 
 #include "dmitri_translator.h"
-#include "facade.h"
 #include "listener.h"
 #include "node.h"
 #include "scene.h"
 #include "soundsource.h"
 #include "spatdif_translator.h"
 #include "translator.h"
+#include "wrapper.h"
 #include <iostream>
 #include <tr1/memory>
 
@@ -172,12 +172,12 @@ bool Wrapper::setSourceChannel(const std::string &nodeName, int channel)
     }
 }
 
-bool Wrapper::setTranslator(const std::string &translatorName, const std::string &sendToAddress)
+bool Wrapper::setTranslator(const std::string &translatorName, const std::string &sendToAddress, const std::string &port)
 {
     if (translatorName == "SpatdifTranslator")
-        scene_->setTranslator<SpatdifTranslator>(sendToAddress);
+        scene_->setTranslator<SpatdifTranslator>(sendToAddress, port);
     else if (translatorName == "DmitriTranslator")
-        scene_->setTranslator<DmitriTranslator>(sendToAddress);
+        scene_->setTranslator<DmitriTranslator>(sendToAddress, port);
     else
     {
         std::cerr << "No such translator: " << translatorName << std::endl;

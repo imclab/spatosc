@@ -17,7 +17,7 @@ lib_LTLIBRARIES = libspatosc-@SPATOSC_API_VERSION@.la
 libspatosc_@SPATOSC_API_VERSION@_la_SOURCES = \
     connection.cpp \
     dmitri_translator.cpp \
-    facade.cpp \
+    wrapper.cpp \
     listener.cpp \
     maths.cpp \
     node.cpp \
@@ -41,7 +41,7 @@ libspatosc_@SPATOSC_API_VERSION@_la_includedir = $(includedir)/spatosc-$(SPATOSC
 libspatosc_@SPATOSC_API_VERSION@_la_include_HEADERS = \
     $(top_srcdir)/include/connection.h \
     $(top_srcdir)/include/dmitri_translator.h \
-    $(top_srcdir)/include/facade.h \
+    $(top_srcdir)/include/wrapper.h \
     $(top_srcdir)/include/listener.h \
     $(top_srcdir)/include/maths.h \
     $(top_srcdir)/include/node.h \
