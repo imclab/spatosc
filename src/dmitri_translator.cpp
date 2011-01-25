@@ -33,9 +33,9 @@ const double DmitriTranslator::SPACEMAP_RADIUS = 750.0;
 // FIXME: Wed Jan 19 14:12:24 EST 2011: tmatth
 // could these port values be defined in translator.h/cpp? 
 // 2011-01-21:aalex:I think this default port number is D-Mitri-specific.
-DmitriTranslator::DmitriTranslator(const std::string &ip, bool verbose = false) :
+DmitriTranslator::DmitriTranslator(const std::string &ip, const std::string &port, bool verbose = false) :
     Translator(verbose),
-    destAddr_(lo_address_new(ip.c_str(), DEFAULT_SEND_PORT)),
+    destAddr_(lo_address_new(ip.c_str(), port.c_str())),
     lo_serv_(lo_server_new(DEFAULT_RECEIVER_PORT, NULL))
     {
         if (verbose_)

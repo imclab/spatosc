@@ -37,7 +37,7 @@ class Connection;
 class DmitriTranslator : public Translator
 {
 public:
-    explicit DmitriTranslator(const std::string &ip, bool verbose);
+    DmitriTranslator(const std::string &ip, const std::string &port, bool verbose);
     virtual ~DmitriTranslator();
     virtual void pushOSCMessages(Connection *conn);
 

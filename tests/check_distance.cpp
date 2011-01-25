@@ -38,7 +38,7 @@ int main(int /*argc*/, char ** /*argv*/)
         std::cout << std::endl << "Running..." << std::endl;
 
     Scene scene;
-    scene.setTranslator<DmitriTranslator>("127.0.0.1");
+    scene.setTranslator<DmitriTranslator>("127.0.0.1", Translator::DEFAULT_SEND_PORT);
     SoundSource *sound_a = scene.createSoundSource("sound_a");
     sound_a->setChannelID(1);
     Listener *listener = scene.createListener("listener");

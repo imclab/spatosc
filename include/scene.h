@@ -74,13 +74,13 @@ class Scene
          * Here is an example: 
          * \code
          * Scene scene();
-         * scene.setTranslator<SpatdifTranslator>("127.0.0.1");
+         * scene.setTranslator<SpatdifTranslator>("127.0.0.1", "11111");
          * \endcode
          */
         template <typename T>
-        void setTranslator(const std::string &address)
+        void setTranslator(const std::string &address, const std::string &port)
         {
-            translator_.reset(new T(address, verbose_));
+            translator_.reset(new T(address, port, verbose_));
         }
 
         /**

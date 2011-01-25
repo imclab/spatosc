@@ -24,7 +24,7 @@ std::string OscSender::toString() const
 void OscSender::sendMessage(const std::string &OSCpath, const char *types, ...) const
 {
     va_list ap;
-    va_start(ap, types);
+    va_start(ap, types); // lo_message_add_varargs will call va_end internally
     sendMessage(OSCpath, types, ap);
 }
 
