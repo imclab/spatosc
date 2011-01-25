@@ -26,6 +26,7 @@
 #include <sstream>
 
 const float GUI::PIXELS_PER_METER = 100.0; // 1 pixel = 1 cm
+const float GUI::INV_PIXELS_PER_METER = 1.0 / GUI::PIXELS_PER_METER;
 
 namespace 
 {
@@ -363,9 +364,9 @@ void GUI::actorPosToSpatPos(float &x, float &y, float &z)
     x = clutter_actor_get_x(sourceActor_) - halfWindowWidth;
     y = clutter_actor_get_y(sourceActor_) - halfWindowHeight;
     z = clutter_actor_get_depth(sourceActor_);
-    x /= PIXELS_PER_METER;
-    y /= PIXELS_PER_METER;
-    z /= PIXELS_PER_METER;
+    x *= INV_PIXELS_PER_METER;
+    y *= INV_PIXELS_PER_METER;
+    z *= INV_PIXELS_PER_METER;
 }
 
 void GUI::updateSoundPosition()

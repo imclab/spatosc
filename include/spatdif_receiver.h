@@ -34,7 +34,7 @@
 namespace spatosc
 {
 
-class OscReceiver;
+class SpatdifReceiver;
 
 /**
  * Useful for clients to receive messages from spatosc's SpatdifTranslator.
@@ -47,7 +47,7 @@ class SpatdifReceiver
     private:
         void registerCallbacks();
         static int onSourcePositionChanged(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
-        std::tr1::shared_ptr<OscReceiver> oscReceiver_;
+        std::tr1::shared_ptr<SpatdifReceiver> receiver_;
         bool verbose_;
 };
 
