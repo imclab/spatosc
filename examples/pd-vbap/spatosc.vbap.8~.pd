@@ -94,12 +94,13 @@
 #X obj 275 -39 inlet osc;
 #X obj 275 -13 OSCparse /\$1;
 #X obj 248 204 loadbang;
-#X obj 248 226 tgl 15 0 empty empty empty 17 7 0 10 -258113 -1 -1 1
+#X obj 248 226 tgl 15 0 empty empty empty 17 7 0 10 -258113 -1 -1 0
 1;
 #X text 494 101 Dependencies: [vbap] \, OSCrxtx;
 #X obj 355 205 pack 0 0;
 #X obj 376 283 print;
 #X obj 270 287 vbap 0 0;
+#X msg 193 109 1 0;
 #X connect 1 0 4 0;
 #X connect 1 0 8 0;
 #X connect 1 0 11 0;
@@ -165,3 +166,4 @@
 #X connect 62 0 63 0;
 #X connect 62 0 64 0;
 #X connect 64 0 7 0;
+#X connect 65 0 64 0;
