@@ -2,6 +2,7 @@
 
 AC_PREREQ([2.61])
 AC_INIT(spatosc, [0.1.0], [http://github.com/mikewoz/spatosc/issues], [spatosc], [http://github.com/mikewoz/spatosc])
+AC_CONFIG_MACRO_DIR([m4])
 AC_MSG_NOTICE([Configuring spatosc])
 AM_INIT_AUTOMAKE([subdir-objects -Wno-portability])
 AC_CONFIG_HEADERS([include/config.h])
@@ -49,6 +50,8 @@ AC_CHECK_HEADERS([arpa/inet.h stddef.h stdlib.h string.h sys/time.h])
 # Checks for library functions.
 AC_FUNC_ERROR_AT_LINE
 AC_CHECK_FUNCS([gettimeofday memmove mkdir setenv sqrt strchr strpbrk uname])
+
+ACX_PTHREAD
 
 # Special cases
 case "$host" in *-darwin* | *-macos10*)

@@ -1,5 +1,6 @@
 #AM_CPPFLAGS = -I$(top_srcdir)/include
-AM_CXXFLAGS = -I$(top_srcdir)/include $(LIBLO_CFLAGS)
+AM_CXXFLAGS = -I$(top_srcdir)/include $(LIBLO_CFLAGS) $(PTHREAD_CFLAGS)
+AM_LIBS = $(PTHREAD_LIBS)
 
 # use lib_LTLIBRARIES to build a shared lib:
 lib_LTLIBRARIES = libspatosc-@SPATOSC_API_VERSION@.la
