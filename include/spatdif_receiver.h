@@ -38,7 +38,9 @@ class OscReceiver;
 class SpatdifHandler 
 {
     public:
-        virtual ~SpatdifHandler();
+        virtual ~SpatdifHandler() {};
+    private:
+        friend class SpatdifReceiver;
         virtual void xyz(const std::string &id, float x, float y, float z) = 0;
         virtual void aed(const std::string &id, float azimuth, float elevation, float distanceMeters) = 0;
         virtual void xy(const std::string &id, float x, float y) = 0;
@@ -60,17 +62,17 @@ class SpatdifReceiver
          * Starts listening for OSC messages on the given port.
          * @param port String that must be a valid port number.
          */
-        SpatdifReceiver(const std::string &port);
+        SpatdifReceiver(const std::string &port, SpatdifHandler *handler);
         /**
          * Checks for incoming OSC messages.
          */
         void poll();
     private:
-        void registerCallbacks();
+        void registerCallbacks(SpatdifHandler * handler);
         // FIXME: Tue Jan 25 17:56:12 EST 2011: tmatth
         // make this a generic handler, use lo_pattern_match to figure out which
         // handler method to call
-        static int onSourcePositionChanged(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
+        static int onOSCMessage(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
         std::tr1::shared_ptr<OscReceiver> receiver_;
         bool verbose_;
 };
