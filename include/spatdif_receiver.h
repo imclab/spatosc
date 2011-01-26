@@ -67,6 +67,9 @@ class SpatdifReceiver
         void poll();
     private:
         void registerCallbacks();
+        // FIXME: Tue Jan 25 17:56:12 EST 2011: tmatth
+        // make this a generic handler, use lo_pattern_match to figure out which
+        // handler method to call
         static int onSourcePositionChanged(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
         std::tr1::shared_ptr<OscReceiver> receiver_;
         bool verbose_;
