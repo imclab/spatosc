@@ -32,6 +32,18 @@ AC_CHECK_TYPES([ptrdiff_t])
 # Checks for libraries
 AC_CHECK_LIB([m],[sqrt])
 
+# Checks for header files.
+AC_CHECK_HEADERS([arpa/inet.h stddef.h stdlib.h string.h sys/time.h])
+
+# Checks for library functions.
+AC_FUNC_ERROR_AT_LINE
+AC_CHECK_FUNCS([gettimeofday memmove mkdir setenv sqrt strchr strpbrk uname])
+
+ACX_PTHREAD
+
+# Beware! From now on, we might modify the CXXFLAGS and LDFLAGS.
+# --------------------------------------------------------------
+
 AC_TRY_COMPILE([#include <sys/types.h>
         #include <regex.h>],[  int i; 
         regex_t r;
@@ -44,15 +56,6 @@ if test "$have_regex" = yes; then
     AC_DEFINE(HAVE_REGEX,1,[Defined if found regex support. ])
     CXXFLAGS+=" -DHAVE_REGEX"
 fi
-
-# Checks for header files.
-AC_CHECK_HEADERS([arpa/inet.h stddef.h stdlib.h string.h sys/time.h])
-
-# Checks for library functions.
-AC_FUNC_ERROR_AT_LINE
-AC_CHECK_FUNCS([gettimeofday memmove mkdir setenv sqrt strchr strpbrk uname])
-
-ACX_PTHREAD
 
 # Special cases
 case "$host" in *-darwin* | *-macos10*)
@@ -76,8 +79,8 @@ export PKG_CONFIG_PATH
 
 #CXXFLAGS+=" -g3 -ggdb -Wall -Wextra -Wfatal-errors"
 CXXFLAGS+=" -Wall -Wextra -Wfatal-errors -Werror -Wnon-virtual-dtor"
+# FIXME:2011-01-26: That one is for Mac OSX only, right?
 LDFLAGS+=" -fPIC -L/usr/local/lib -L/usr/local/lib64"
-
 
 #Set LIBLO with pkg-config
 PKG_CHECK_MODULES(LIBLO, liblo, have_liblo=true, have_liblo=false)
