@@ -78,7 +78,9 @@ Scene::Scene() :
     translator_(new Translator(false)),
     autoConnect_(true),
     connectFilter_(),
+#ifdef HAVE_REGEX
     connectRegex_(),
+#endif
     ListenerList_(),
     SoundSourceList_(),
     connections_(),
@@ -277,13 +279,16 @@ void Scene::setConnectFilter(std::string s)
     // regular expression:
     if (s=="*")
         s = ".*";
-
+#ifdef HAVE_REGEX
     // TODO: Fri Jan 14 11:14:11 EST 2011: connectRegex_ should belong to translator
     if (regcomp(&connectRegex_, s.c_str(), REG_EXTENDED|REG_NOSUB) != 0)
     {
         std::cout << "Scene error: bad regex pattern passed to setConnectFilter(): " << s << std::endl;
         return;
     }
+#else
+    std::cerr << __FUNCTION__ << ": Compiled with no regex support." << std::endl;
+#endif
     connectFilter_ = s;
 }
 
@@ -299,7 +304,7 @@ Connection* Scene::connect(Node *src, Node *snk)
         std::cerr << "Nodes " << src->getID() << " and " << snk->getID() << " are already connected." << std::endl;
         return 0;
     }
-
+#ifdef HAVE_REGEX
     // Check src and snk id's against the connectFilter. If either match, then
     // proceed with the connection:
     int srcRegexStatus = regexec(&connectRegex_, src->id_.c_str(), (size_t)0, 0, 0);
@@ -307,6 +312,10 @@ Connection* Scene::connect(Node *src, Node *snk)
     //TODO:2011-01-21:aalex:we should also check the type of the two nodes in connect().
     if (srcRegexStatus == 0 or snkRegexStatus == 0)
     {
+#else
+    if (true)
+    {
+#endif
         // create connection:
         shared_ptr<Connection> conn(new Connection(src, snk));
         // register the connection with both the Scene and the

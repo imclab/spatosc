@@ -31,6 +31,18 @@ AC_CHECK_TYPES([ptrdiff_t])
 # Checks for libraries
 AC_CHECK_LIB([m],[sqrt])
 
+AC_TRY_COMPILE([#include <sys/types.h>
+        #include <regex.h>],[  int i; 
+        regex_t r;
+        int cflags = REG_EXTENDED;
+        const char *s = "abc";
+        i = regcomp(&r,s,cflags);
+        regfree(&r);
+        ]; , have_regex=yes, have_regex=no)
+if test "$have_regex" = yes; then
+    AC_DEFINE(HAVE_REGEX,1,[Defined if found regex support. ])
+fi
+
 # Checks for header files.
 AC_CHECK_HEADERS([arpa/inet.h stddef.h stdlib.h string.h sys/time.h])
 

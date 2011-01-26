@@ -24,7 +24,9 @@
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
+#ifdef HAVE_REGEX
 #include <regex.h>
+#endif
 #include <string>
 #include <vector>
 #include <tr1/memory>
@@ -217,7 +219,9 @@ class Scene
         std::tr1::shared_ptr<Translator> translator_;
         bool autoConnect_;
         std::string connectFilter_;
+#ifdef HAVE_REGEX
         regex_t connectRegex_;
+#endif
         //FIXME:2011-01-25:aalex:Would maps be faster?
         std::vector<std::tr1::shared_ptr<Listener> >  ListenerList_;
         std::vector<std::tr1::shared_ptr<SoundSource> > SoundSourceList_;
