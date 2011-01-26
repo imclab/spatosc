@@ -39,7 +39,7 @@ AC_CHECK_HEADERS([arpa/inet.h stddef.h stdlib.h string.h sys/time.h])
 AC_FUNC_ERROR_AT_LINE
 AC_CHECK_FUNCS([gettimeofday memmove mkdir setenv sqrt strchr strpbrk uname])
 
-ACX_PTHREAD
+AX_PTHREAD
 
 # Beware! From now on, we might modify the CXXFLAGS and LDFLAGS.
 # --------------------------------------------------------------

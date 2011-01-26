@@ -24,22 +24,23 @@
 #include <lo/lo.h>
 #include <string>
 #include <iostream>
+#include <cassert>
 
 #define UNUSED(x) ((void) (x))
 
 namespace spatosc
 {
 
-SpatdifReceiver::SpatdifReceiver(const std::string &port) :
+SpatdifReceiver::SpatdifReceiver(const std::string &port, SpatdifHandler * handler) :
     receiver_(new OscReceiver(port.c_str())),
-    verbose_(true)
+    verbose_(false)
 {
-    registerCallbacks();
+    registerCallbacks(handler);
 }
 
-void SpatdifReceiver::registerCallbacks()
+void SpatdifReceiver::registerCallbacks(SpatdifHandler *handler)
 {
-    receiver_->addHandler("/SpatDIF/core/source/*/position", "fff", onSourcePositionChanged, this);
+    receiver_->addHandler(NULL, NULL, onOSCMessage, handler);
 }
 
 void SpatdifReceiver::poll()
@@ -49,17 +50,77 @@ void SpatdifReceiver::poll()
         std::cout << "received " << bytes << " bytes" << std::endl;
 }
 
-int SpatdifReceiver::onSourcePositionChanged(const char * /*path*/, const char * /*types*/,
-        lo_arg ** argv, int /*argc*/, void * /*data*/, void *user_data)
+namespace {
+std::string getID(const std::string &path)
 {
-    SpatdifReceiver *context = static_cast<SpatdifReceiver *>(user_data);
-    UNUSED(context);
-    std::cout << __FUNCTION__ << std::endl;
-    for (int i = 0; i != 3; ++i)
+    size_t idx = path.find_first_not_of("/spatosc/core/");
+    std::string result(path.substr(idx, std::string::npos));
+    result = result.substr(0, result.find_first_of("/"));
+    return result;
+}
+
+std::string getMethodName(const std::string &path)
+{
+    size_t idx = path.find_last_of("/") + 1;
+    std::string result(path.substr(idx, std::string::npos));
+    return result;
+}
+} // end anonymous namespace
+
+int SpatdifReceiver::onOSCMessage(const char * path, const char * /*types*/,
+        lo_arg ** argv, int argc, void * /*data*/, void *user_data)
+{
+    SpatdifHandler *handler = static_cast<SpatdifHandler *>(user_data);
+    std::string id(getID(path));
+    std::string method(getMethodName(path));
+
+    // FIXME: Wed Jan 26 15:25:04 EST 2011: tmatth: refactor!!!
+    // only core methods for now
+    if (method == "xyz")
     {
-        std::cout << argv[i]->f << ",";
+        assert(argc == 3);
+        handler->xyz(id, argv[0]->f, argv[1]->f, argv[2]->f);
     }
-    std::cout << std::endl;
+    else if (method == "aed")
+    {
+        assert(argc == 3);
+        handler->aed(id, argv[0]->f, argv[1]->f, argv[2]->f);
+    }
+    else if (method == "xy")
+    {
+        assert(argc == 2);
+        handler->xy(id, argv[0]->f, argv[1]->f);
+    }
+    else if (method == "delay")
+    {
+        assert(argc == 1);
+        handler->delay(id, argv[0]->f);
+    }
+    else if (method == "gain")
+    {
+        assert(argc == 1);
+        handler->gain(id, argv[0]->f);
+    }
+    else if (method == "gainDB")
+    {
+        assert(argc == 1);
+        handler->gainDB(id, argv[0]->f);
+    }
+    else if (method == "spread")
+    {
+        assert(argc == 1);
+        handler->spread(id, argv[0]->f);
+    }
+    else if (method == "spreadAE")
+    {
+        assert(argc == 2);
+        handler->spreadAE(id, argv[0]->f, argv[1]->f);
+    }
+    else 
+    {
+        std::cerr << "Unknown method " << method << std::endl;
+        return 1;
+    }
     return 0;
 }
 

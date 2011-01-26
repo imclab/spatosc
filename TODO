@@ -6,10 +6,6 @@ Implementations
  * Implement SpatdifReceiver
  * Implement SpatdifTranslator
 
-OSC
----
- * support lo_send_from in OscSender
-
 Examples
 --------
  * Progress in the Ogre example
