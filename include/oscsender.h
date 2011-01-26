@@ -16,7 +16,6 @@ namespace spatosc
 class OscSender 
 {
     public:
-        OscSender();
         /**
          * Constructor that will create server on fromPort for sending messages to host:toPort.
          */

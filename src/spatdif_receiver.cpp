@@ -33,7 +33,7 @@ namespace spatosc
 
 SpatdifReceiver::SpatdifReceiver(const std::string &port, SpatdifHandler * handler) :
     receiver_(new OscReceiver(port.c_str())),
-    verbose_(true)
+    verbose_(false)
 {
     registerCallbacks(handler);
 }
@@ -71,7 +71,6 @@ int SpatdifReceiver::onOSCMessage(const char * path, const char * /*types*/,
         lo_arg ** argv, int argc, void * /*data*/, void *user_data)
 {
     SpatdifHandler *handler = static_cast<SpatdifHandler *>(user_data);
-    std::cout << __FUNCTION__ << std::endl;
     std::string id(getID(path));
     std::string method(getMethodName(path));
 
@@ -97,6 +96,16 @@ int SpatdifReceiver::onOSCMessage(const char * path, const char * /*types*/,
         assert(argc == 1);
         handler->delay(id, argv[0]->f);
     }
+    else if (method == "gain")
+    {
+        assert(argc == 1);
+        handler->gain(id, argv[0]->f);
+    }
+    else if (method == "gainDB")
+    {
+        assert(argc == 1);
+        handler->gainDB(id, argv[0]->f);
+    }
     else if (method == "spread")
     {
         assert(argc == 1);
@@ -104,12 +113,12 @@ int SpatdifReceiver::onOSCMessage(const char * path, const char * /*types*/,
     }
     else if (method == "spreadAE")
     {
-        assert(argc == 1);
+        assert(argc == 2);
         handler->spreadAE(id, argv[0]->f, argv[1]->f);
     }
     else 
     {
-        std::cerr << "Unknown method " << handler << std::endl;
+        std::cerr << "Unknown method " << method << std::endl;
         return 1;
     }
     return 0;

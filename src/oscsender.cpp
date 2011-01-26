@@ -4,11 +4,6 @@
 namespace spatosc
 {
 
-OscSender::OscSender() :
-    host_(""), toPort_(""), fromPort_(""),
-    address_(0), server_(0)
-{}
-
 OscSender::OscSender(const std::string &host, const std::string &toPort) :
     host_(host), toPort_(toPort.c_str()), fromPort_(""),
     address_(lo_address_new(host.c_str(), toPort_.c_str())),
