@@ -266,7 +266,7 @@ Connection* Scene::getConnection(const Node *source, const Node *sink)
     connIterator c;
     for (c = connections_.begin(); c != connections_.end(); ++c)
     {
-        if (((*c)->src_ == source) and ((*c)->snk_ == sink))
+        if (((*c)->src_ == source) && ((*c)->snk_ == sink))
         {
             return c->get();
         }
@@ -372,7 +372,7 @@ void Scene::onConnectionChanged(Connection *conn)
     // If one of the connected nodes has been deactivated, then there is no need
     // to compute anything. Enable the mute (and send the status change if this
     // has just happened)
-    if (conn->src_->active_ and conn->snk_->active_)
+    if (conn->src_->active_ && conn->snk_->active_)
     {
         assert(translator_);
         conn->recomputeConnection();
