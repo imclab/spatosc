@@ -18,6 +18,7 @@
  */
 
 #include "scene.h"
+#include "config.h"
 #include <iostream>
 #include <cassert>
 #include <algorithm>

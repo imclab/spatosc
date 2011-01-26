@@ -42,6 +42,7 @@ AC_TRY_COMPILE([#include <sys/types.h>
         ]; , have_regex=yes, have_regex=no)
 if test "$have_regex" = yes; then
     AC_DEFINE(HAVE_REGEX,1,[Defined if found regex support. ])
+    CXXFLAGS+=" -DHAVE_REGEX"
 fi
 
 # Checks for header files.
