@@ -23,7 +23,8 @@
 #ifndef __DMITRI_TRANSLATOR_H__
 #define __DMITRI_TRANSLATOR_H__
 
-#include <tr1/memory>
+#include <string>
+#include "memory.h"
 #include "translator.h"
 
 namespace spatosc

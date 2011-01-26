@@ -22,13 +22,13 @@
 #include <iostream>
 #include <cassert>
 #include <algorithm>
-#include <tr1/memory>
 
-#include "translator.h"
+#include "connection.h"
 #include "listener.h"
+#include "memory.h"
 #include "node.h"
 #include "soundsource.h"
-#include "connection.h"
+#include "translator.h"
 
 namespace
 {

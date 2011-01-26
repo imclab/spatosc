@@ -24,6 +24,7 @@
 #include "connection.h"
 
 #include <iostream>
+#include <string>
 
 namespace spatosc
 {

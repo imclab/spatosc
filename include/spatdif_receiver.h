@@ -28,7 +28,7 @@
 
 #include <lo/lo.h>
 #include <string>
-#include <tr1/memory>
+#include "memory.h"
 
 namespace spatosc
 {

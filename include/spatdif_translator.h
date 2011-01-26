@@ -27,7 +27,7 @@
 #define _SPATDIF_TRANSLATOR_H_
 
 #include "translator.h"
-#include <tr1/memory>
+#include "memory.h"
 #include <string>
 
 namespace spatosc

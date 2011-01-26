@@ -44,6 +44,7 @@ libspatosc_@SPATOSC_API_VERSION@_la_include_HEADERS = \
     $(top_srcdir)/include/dmitri_translator.h \
     $(top_srcdir)/include/wrapper.h \
     $(top_srcdir)/include/listener.h \
+    $(top_srcdir)/include/memory.h \
     $(top_srcdir)/include/maths.h \
     $(top_srcdir)/include/node.h \
     $(top_srcdir)/include/oscreceiver.h \

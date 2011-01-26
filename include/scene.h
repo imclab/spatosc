@@ -29,7 +29,7 @@
 #endif
 #include <string>
 #include <vector>
-#include <tr1/memory>
+#include "memory.h"
 
 namespace spatosc
 {
