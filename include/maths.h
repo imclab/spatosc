@@ -1,18 +1,18 @@
 /*
  * This file is part of Spatosc.
- * 
+ *
  * Copyright (c) 2010 Society for Arts and Technologies <info@sat.qc.ca>
- * 
+ *
  * Spatosc is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Spatosc is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -26,7 +26,9 @@
 #include <cmath>
 #include <cstring>
 
-//#define M_PI 3.14159265358979323846
+#ifndef M_PI // Seems it's not set on windows
+#define M_PI 3.14159265358979323846
+#endif
 #define TO_DEGREES (180.0 / M_PI)
 #define TO_RADIANS (M_PI / 180.0)
 
@@ -39,7 +41,7 @@ namespace spatosc
 /**
  * 2D vector
  */
-class Vector2 
+class Vector2
 {
     public:
         double x;
@@ -56,7 +58,7 @@ class Vector2
         Vector2(const Vector2 &a) : x(a.x), y(a.y)
         {}
         /**
-         * Constructor with x and y set as arguments. 
+         * Constructor with x and y set as arguments.
          */
         Vector2(double xVal, double yVal) : x(xVal), y(yVal)
         {}
@@ -66,7 +68,7 @@ class Vector2
         double Mag()
         {
             return (double) sqrt(x * x + y * y);
-        } 
+        }
         double Mag2()
         {
             return x * x + y * y;
@@ -267,7 +269,7 @@ class Matrix3
             _21(a._21), _22(a._22), _23(a._23),
             _31(a._31), _32(a._32), _33(a._33)
         {}
-        
+
         Matrix3& operator=(const Matrix3 &a)
         {
             if (this != &a)
@@ -536,7 +538,7 @@ double AngleBetweenVectors(Vector3 v1, Vector3 v2);
 Quaternion RotationBetweenVectors(Vector3 v1, Vector3 v2);
 
 /**
- * Converts Euler angles to a Quaternion. 
+ * Converts Euler angles to a Quaternion.
  */
 Quaternion EulerToQuat (Vector3 eulerAngles);
 //Quaternion EulerToQuat (double r, double p, double y);
@@ -548,7 +550,7 @@ Vector3 QuatToEuler(Quaternion q);
 Vector3 sphericalToCartesian(Vector3 aed);
 
 /**
- * Rotates a cartesian (?) 3D coordinate around a 3D axis. 
+ * Rotates a cartesian (?) 3D coordinate around a 3D axis.
  * The axis is between (0, 0, 0) and the given 3D point.
  */
 Vector3 rotateAroundAxis(Vector3 v, Vector3 axis, double angle);

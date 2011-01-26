@@ -1,23 +1,24 @@
 /*
  * This file is part of Spatosc.
- * 
+ *
  * Copyright (c) 2010 Society for Arts and Technologies <info@sat.qc.ca>
- * 
+ *
  * Spatosc is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Spatosc is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "scene.h"
+#include "config.h"
 #include <iostream>
 #include <cassert>
 #include <algorithm>
@@ -45,7 +46,7 @@ namespace
             const T *a_;
     };
     /**
-     * Removes an element from a vector of shared pointers if 
+     * Removes an element from a vector of shared pointers if
      * the given pointer matches.
      * @return Whether it deleted some elements of not.
      */
@@ -78,7 +79,9 @@ Scene::Scene() :
     translator_(new Translator(false)),
     autoConnect_(true),
     connectFilter_(),
+#ifdef HAVE_REGEX
     connectRegex_(),
+#endif
     ListenerList_(),
     SoundSourceList_(),
     connections_(),
@@ -206,11 +209,11 @@ Node* Scene::getNode(const std::string &id)
     Node *n = 0;
 
     n = getSoundSource(id);
-    if (n) 
+    if (n)
         return n;
 
     n = getListener(id);
-    if (n) 
+    if (n)
         return n;
     return 0;
 }
@@ -246,7 +249,7 @@ Listener* Scene::getListener(const std::string &id)
 std::vector<Connection*> Scene::getConnectionsForNode(const Node *node)
 {
     std::vector<Connection*> foundConnections;
-    
+
     connIterator c;
     for (c = connections_.begin(); c != connections_.end(); ++c)
     {
@@ -277,13 +280,16 @@ void Scene::setConnectFilter(std::string s)
     // regular expression:
     if (s=="*")
         s = ".*";
-
+#ifdef HAVE_REGEX
     // TODO: Fri Jan 14 11:14:11 EST 2011: connectRegex_ should belong to translator
     if (regcomp(&connectRegex_, s.c_str(), REG_EXTENDED|REG_NOSUB) != 0)
     {
         std::cout << "Scene error: bad regex pattern passed to setConnectFilter(): " << s << std::endl;
         return;
     }
+#else
+    std::cerr << __FUNCTION__ << ": Compiled with no regex support." << std::endl;
+#endif
     connectFilter_ = s;
 }
 
@@ -291,7 +297,7 @@ Connection* Scene::connect(Node *src, Node *snk)
 {
     using std::tr1::shared_ptr;
     // if the node pointers are invalid for some reason, return:
-    if (!src or !snk) 
+    if (!src or !snk)
         return 0;
     Connection* conn = getConnection(src, snk);
     if (conn)
@@ -299,7 +305,7 @@ Connection* Scene::connect(Node *src, Node *snk)
         std::cerr << "Nodes " << src->getID() << " and " << snk->getID() << " are already connected." << std::endl;
         return 0;
     }
-
+#ifdef HAVE_REGEX
     // Check src and snk id's against the connectFilter. If either match, then
     // proceed with the connection:
     int srcRegexStatus = regexec(&connectRegex_, src->id_.c_str(), (size_t)0, 0, 0);
@@ -307,6 +313,10 @@ Connection* Scene::connect(Node *src, Node *snk)
     //TODO:2011-01-21:aalex:we should also check the type of the two nodes in connect().
     if (srcRegexStatus == 0 or snkRegexStatus == 0)
     {
+#else
+    if (true)
+    {
+#endif
         // create connection:
         shared_ptr<Connection> conn(new Connection(src, snk));
         // register the connection with both the Scene and the
@@ -328,7 +338,7 @@ bool Scene::disconnect(Node *source, Node *sink)
         std::cerr << "Invalid source node." << std::endl;
         return false;
     }
-    if  (! sink) 
+    if  (! sink)
     {
         std::cerr << "Invalid sink node." << std::endl;
         return false;

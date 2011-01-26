@@ -1,18 +1,18 @@
 /*
  * This file is part of Spatosc.
- * 
+ *
  * Copyright (c) 2010 Society for Arts and Technologies <info@sat.qc.ca>
- * 
+ *
  * Spatosc is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Spatosc is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -33,13 +33,13 @@ namespace spatosc
 /**
  * OpenSoundControl utilities (networking and string handling utilities)
  */
-namespace OSCutil 
+namespace OSCutil
 {
     // *****************************************************************************
     // networking functions
 
     /**
-     * Returns this computer's host name. 
+     * Returns this computer's host name.
      */
     std::string getHostname();
     /**
@@ -64,7 +64,7 @@ namespace OSCutil
 
     // *****************************************************************************
     // string handling functions
-    
+
     /**
      * Casts a string to any type.
      */
@@ -89,7 +89,7 @@ namespace OSCutil
      * Splits a string into tokens given a delimiter.
      */
     std::vector<std::string> tokenize(const std::string& str, const std::string& delimiters = " ");
-    
+
     /**
      * Takes a string and uses spaces to
      * tokenize the string into a vector of floats. If the

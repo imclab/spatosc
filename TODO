@@ -20,7 +20,8 @@ Packaging
 ---------
  * add an --enable-debug flag
  * remove non-public functions and typedefs from include/*.h
- * build and install on Windows
+ * build and install on Windows (needs <tr1/memory>, <regex.h> and <sys/utsname.h>)
+ * maths:425 and 450: conversion from 'double' to 'float', possible loss of data
 
 Refactoring
 -----------
@@ -39,20 +40,4 @@ Error handling
 
 Wrapper for OSC and FUDI callbacks
 ----------------------------------
- * [s:sceneName] [s:nodeName] [s:method] [s:typeTags] [s:args...]
-
- spatosc_connect(s:scene, s:from, s:to)
- spatosc_create_listener(s:scene, s:node)
- spatosc_create_scene(s:scene)
- spatosc_create_source(s:scene, s:node)
- spatosc_delete(s:scene, s:node)
- spatosc_delete_scene(s:scene)
- spatosc_disconnect(s:scene, s:from, s:to)
- spatosc_set_auto_connect(s:scene, b:enabled)
- spatosc_set_connect_filter(s:scene, s:regex)
- spatosc_set_orientation(s:scene, s:node, f:pitch, f:roll, f:yaw)
- spatosc_set_position(s:scene, s:node, f:x, f:y, f:z)
- spatosc_set_source_channel(s:scene, s:sound_source, s:channel)
- spatosc_set_source_gain(s:scene, s:sound_source)
- spatosc_set_translator(s:scene, s:translator)
-
+ * [s:nodeName] [s:method] [s:typeTags] [s:args...]

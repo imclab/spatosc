@@ -24,8 +24,8 @@ class OscReceiver
         /**
          * Add a callback for a given OSC path.
          */
-        void addHandler(const char *path, 
-                const char *types, lo_method_handler handler, 
+        void addHandler(const char *path,
+                const char *types, lo_method_handler handler,
                 void *user_data);
         int receive();
     private:
@@ -37,8 +37,8 @@ class OscReceiver
         std::string port_;
         lo_server server_;
 #ifdef CONFIG_DEBUG
-        static int genericHandler(const char *path, 
-                const char *types, lo_arg **argv, 
+        static int genericHandler(const char *path,
+                const char *types, lo_arg **argv,
                 int argc, void *data, void *user_data);
 #endif
         static void error(int num, const char *msg, const char *path);

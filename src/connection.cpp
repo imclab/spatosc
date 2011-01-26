@@ -1,18 +1,18 @@
 /*
  * This file is part of Spatosc.
- * 
+ *
  * Copyright (c) 2010 Society for Arts and Technologies <info@sat.qc.ca>
- * 
+ *
  * Spatosc is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Spatosc is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -50,7 +50,7 @@ void Connection::recomputeConnection()
     azim_ = atan2(vect.y, vect.x);
     elev_ = atan2(sqrt(pow(vect.x, 2) + pow(vect.y, 2)), vect.z);
     // for now, force sources to be above equator
-    elev_ = std::max(elev_, 0.0); 
+    elev_ = std::max(elev_, 0.0);
     // now from distance, compute gain and variable delay:
     vdel_ = distance_ * (1/SPEED_OF_SOUND) * .01 * dopplerEffect_;
     gainDB_ = 20 * log10(distanceScalar);
