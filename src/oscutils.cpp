@@ -18,10 +18,13 @@
  */
 
 #include <string>
+#include <cstdlib>
+
+#ifndef _WIN32
 #include <sys/utsname.h>
 #include <ifaddrs.h>
 #include <arpa/inet.h>
-#include <cstdlib>
+#endif
 
 #include "oscutils.h"
 
@@ -30,9 +33,11 @@ namespace spatosc
 
 // *****************************************************************************
 // networking functions
-
 std::string OSCutil::getMyIPaddress()
 {
+#ifdef _WIN32
+    return "127.0.0.1";
+#else
     using std::string;
     struct ifaddrs *interfaceArray = 0, *tempIfAddr = 0;
     void *tempAddrPtr = 0;
@@ -63,11 +68,16 @@ std::string OSCutil::getMyIPaddress()
         }
     }
     return IPaddress;
+#endif
 }
 
 std::string OSCutil::getMyBroadcastAddress()
 {
+#ifndef _WIN32
     std::string myIP(getMyIPaddress());
+#else
+    std::string myIP("255.255.255.255");
+#endif
     return myIP.substr(0,myIP.rfind(".")) + ".255";
 }
 
