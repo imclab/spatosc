@@ -1,18 +1,18 @@
 /*
  * This file is part of Spatosc.
- * 
+ *
  * Copyright (c) 2010 Society for Arts and Technologies <info@sat.qc.ca>
- * 
+ *
  * Spatosc is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Spatosc is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -84,7 +84,7 @@ std::string OSCutil::getMyBroadcastAddress()
 bool OSCutil::isMulticastAddress(const std::string &s)
 {
     bool b = false;
-    try 
+    try
     {
         int i = atoi(s.substr(0, s.find(".")).c_str());
         if (i >= 224 and i <= 239)
@@ -100,7 +100,7 @@ bool OSCutil::isMulticastAddress(const std::string &s)
 bool OSCutil::isBroadcastAddress(const std::string &s)
 {
     bool b = false;
-    try 
+    try
     {
         if (s.substr(s.rfind(".") + 1) == "255")
             b = true;
@@ -156,7 +156,7 @@ std::vector<std::string> OSCutil::tokenize(const std::string& str, const std::st
         tokens.push_back(str);
         return tokens;
     }
-    else 
+    else
     {
         while (string::npos != pos or string::npos != lastPos)
         {

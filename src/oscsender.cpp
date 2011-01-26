@@ -44,7 +44,7 @@ void OscSender::sendMessage(const std::string &OSCpath, const char *types, va_li
 
     if (!err)
         sendMessage(OSCpath, msg);
-    else 
+    else
         std::cout << "ERROR (OscSender::sendMessage): " << err << std::endl;
 }
 

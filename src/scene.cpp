@@ -1,18 +1,18 @@
 /*
  * This file is part of Spatosc.
- * 
+ *
  * Copyright (c) 2010 Society for Arts and Technologies <info@sat.qc.ca>
- * 
+ *
  * Spatosc is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Spatosc is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -45,7 +45,7 @@ namespace
             const T *a_;
     };
     /**
-     * Removes an element from a vector of shared pointers if 
+     * Removes an element from a vector of shared pointers if
      * the given pointer matches.
      * @return Whether it deleted some elements of not.
      */
@@ -208,11 +208,11 @@ Node* Scene::getNode(const std::string &id)
     Node *n = 0;
 
     n = getSoundSource(id);
-    if (n) 
+    if (n)
         return n;
 
     n = getListener(id);
-    if (n) 
+    if (n)
         return n;
     return 0;
 }
@@ -248,7 +248,7 @@ Listener* Scene::getListener(const std::string &id)
 std::vector<Connection*> Scene::getConnectionsForNode(const Node *node)
 {
     std::vector<Connection*> foundConnections;
-    
+
     connIterator c;
     for (c = connections_.begin(); c != connections_.end(); ++c)
     {
@@ -296,7 +296,7 @@ Connection* Scene::connect(Node *src, Node *snk)
 {
     using std::tr1::shared_ptr;
     // if the node pointers are invalid for some reason, return:
-    if (!src or !snk) 
+    if (!src or !snk)
         return 0;
     Connection* conn = getConnection(src, snk);
     if (conn)
@@ -337,7 +337,7 @@ bool Scene::disconnect(Node *source, Node *sink)
         std::cerr << "Invalid source node." << std::endl;
         return false;
     }
-    if  (! sink) 
+    if  (! sink)
     {
         std::cerr << "Invalid sink node." << std::endl;
         return false;
