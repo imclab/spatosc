@@ -1,5 +1,5 @@
 DEPS=spatosc-0.1 liblo
-CXXFLAGS=`pkg-config --cflags $(DEPS)` -Wall -Werror -Wfatal-errors -Wextra
+CXXFLAGS=`pkg-config --cflags $(DEPS)` -g -Wall -Werror -Wfatal-errors -Wextra
 LIBS=`pkg-config --libs $(DEPS)`
 OBJS=hello.o
 
