@@ -158,7 +158,7 @@ std::vector<std::string> OSCutil::tokenize(const std::string& str, const std::st
     }
     else
     {
-        while (string::npos != pos or string::npos != lastPos)
+        while (string::npos != pos || string::npos != lastPos)
         {
             // found a token, add it to the vector:
             tokens.push_back(str.substr(lastPos, pos - lastPos));
@@ -198,7 +198,7 @@ bool OSCutil::wildcardMatch(const char *path, const char *str)
         case '\0':
             return *str == '\0';
         case '*':
-            return wildcardMatch(path + 1, str) or (*str and wildcardMatch(path, str + 1));
+            return wildcardMatch(path + 1, str) || (*str and wildcardMatch(path, str + 1));
         case '?':
             return *str and wildcardMatch(path + 1, str + 1);
         default:

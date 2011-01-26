@@ -253,7 +253,7 @@ std::vector<Connection*> Scene::getConnectionsForNode(const Node *node)
     connIterator c;
     for (c = connections_.begin(); c != connections_.end(); ++c)
     {
-        if (((*c)->src_ == node) or ((*c)->snk_ == node))
+        if (((*c)->src_ == node) || ((*c)->snk_ == node))
         {
             foundConnections.push_back(c->get());
         }
@@ -297,7 +297,7 @@ Connection* Scene::connect(Node *src, Node *snk)
 {
     using std::tr1::shared_ptr;
     // if the node pointers are invalid for some reason, return:
-    if (!src or !snk)
+    if (!src || !snk)
         return 0;
     Connection* conn = getConnection(src, snk);
     if (conn)
@@ -311,7 +311,7 @@ Connection* Scene::connect(Node *src, Node *snk)
     int srcRegexStatus = regexec(&connectRegex_, src->id_.c_str(), (size_t)0, 0, 0);
     int snkRegexStatus = regexec(&connectRegex_, snk->id_.c_str(), (size_t)0, 0, 0);
     //TODO:2011-01-21:aalex:we should also check the type of the two nodes in connect().
-    if (srcRegexStatus == 0 or snkRegexStatus == 0)
+    if (srcRegexStatus == 0 || snkRegexStatus == 0)
     {
 #else
     if (true)
