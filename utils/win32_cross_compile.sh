@@ -18,4 +18,5 @@ make distclean
 ./configure --host=i586-mingw32msvc --prefix=/usr/i586-mingw32msvc
 make
 
+# env CPPFLAGS="-I${HOME}/win32-x264/include" LDFLAGS="-L${HOME}/win32-x264/lib" ./configure --host=i586-mingw32msvc --prefix=/usr/i586-mingw32msvc
 
