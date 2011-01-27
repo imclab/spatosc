@@ -75,21 +75,25 @@ void DmitriTranslator::pushOSCMessages(Connection *conn)
         return;
     }
 
-    float r = conn->elevation() / (M_PI / 2);
-    float spacemapX = cos(conn->azimuth()) * r * SPACEMAP_RADIUS;
-    float spacemapY = sin(conn->azimuth()) * r * SPACEMAP_RADIUS;
+    if (src->sendNewPosition())
+    {
+        float r = conn->elevation() / (M_PI / 2);
+        float spacemapX = cos(conn->azimuth()) * r * SPACEMAP_RADIUS;
+        float spacemapY = sin(conn->azimuth()) * r * SPACEMAP_RADIUS;
 
-    str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/x";
-    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
-    sender_->sendMessage(str.c_str(), "f", spacemapX, SPATOSC_ARGS_END);
+        str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/x";
+        //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
+        sender_->sendMessage(str.c_str(), "f", spacemapX, SPATOSC_ARGS_END);
 
-    str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/y";
-    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
-    sender_->sendMessage(str.c_str(), "f", spacemapY, SPATOSC_ARGS_END);
+        str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/y";
+        //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
+        sender_->sendMessage(str.c_str(), "f", spacemapY, SPATOSC_ARGS_END);
 
-    str = "Input " + OSCutil::stringify(src->getChannelID()) + " Level";
-    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
-    sender_->sendMessage("/set", "sf", str.c_str(), conn->gainDB(), SPATOSC_ARGS_END);
+        str = "Input " + OSCutil::stringify(src->getChannelID()) + " Level";
+        //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
+        sender_->sendMessage("/set", "sf", str.c_str(), conn->gainDB(), SPATOSC_ARGS_END);
+        src->positionSent();
+    }
 }
 
 } // end namespace spatosc
