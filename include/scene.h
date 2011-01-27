@@ -89,6 +89,7 @@ class Scene
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
          *
          * If a node wih this name already exists, it returns a null pointer and prints an error message.
+         * @warning Make sure you call this node's setChannelID method after its creation.
          * @return A SoundSource pointer. Null if a node with this name already exists. Never free this pointer. It will become invalid if this node is deleted.
          */
         SoundSource* createSoundSource(const std::string &id);

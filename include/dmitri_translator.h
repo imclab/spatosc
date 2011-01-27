@@ -34,6 +34,7 @@ class Connection;
 
 /**
  * Translator for the proprietary D-Mitri system.
+ * Note that nodes need a positive channel ID. If not set, their coordinates will not be sent to D-Mitri.
  */
 class DmitriTranslator : public Translator
 {

@@ -25,7 +25,7 @@ namespace spatosc
 // *****************************************************************************
 SoundSource::SoundSource(const std::string &nodeID, Scene &scene) :
     Node(nodeID, scene),
-    channelID_(-1)
+    channelID_(-1) // a negative channel means it's invalid.
 {
 }
 

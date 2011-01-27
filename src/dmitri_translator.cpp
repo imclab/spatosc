@@ -64,13 +64,18 @@ void DmitriTranslator::pushOSCMessages(Connection *conn)
     std::string str;
     SoundSource *src = dynamic_cast<SoundSource*>(conn->src_);
 
-    if (!src)
+    if (! src)
+    {
+        std::cerr << __FUNCTION__ << "This connection does not have a valid source node." << std::endl;
         return;
+    }
     if (src->getChannelID() < 0)
+    {
+        std::cerr << __FUNCTION__ << "This sound source has a negative channel ID." << std::endl;
         return;
+    }
 
     float r = conn->elevation() / (M_PI / 2);
-
     float spacemapX = cos(conn->azimuth()) * r * SPACEMAP_RADIUS;
     float spacemapY = sin(conn->azimuth()) * r * SPACEMAP_RADIUS;
 

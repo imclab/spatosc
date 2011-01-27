@@ -49,7 +49,7 @@ void Node::setPosition(double x, double y, double z)
 {
     if (x != pos_.x || y != pos_.y || z != pos_.z)
     {
-        pos_ = Vector3(x,y,z);
+        pos_ = Vector3(x, y, z);
         notifyScene();
     }
 }
