@@ -84,7 +84,8 @@ void AudioScene::bindCallbacks()
 
 // receive messages from the spatosc plugin
 AudioScene::AudioScene() : 
-    handler_(new MyHandler(this)), receiver_(new spatosc::SpatdifReceiver(spatosc::Translator::DEFAULT_SEND_PORT, handler_.get()))
+    handler_(new MyHandler(this)), 
+    receiver_(new spatosc::SpatdifReceiver(spatosc::Translator::DEFAULT_SEND_PORT, handler_.get()))
 {
     createSource();
     createListener();

@@ -69,23 +69,33 @@ void SpatdifTranslator::pushOSCMessages(Connection * conn)
 {
     SoundSource *src = conn->src_;
     Listener *snk = conn->snk_;
-    // TODO:Wed Jan 19 14:47:57 EST 2011:tmatth: set positions, gains as needed!
     assert(src);
     assert(snk);
 
     if (src->getChannelID() < 0)
+    {
+        std::cerr << "Invalid channel ID " << src->getChannelID() << " for source\n";
         return;
+    }
 
-    // FIXME:Wed Jan 19 16:22:42 EST 2011:tmatth should listener have channel ID? SpatDIF thinks so.
-    // update sink position
-    sendPosition("/spatosc/core/listener", snk);
+    // FIXME:Wed Jan 19 16:22:42 EST 2011:tmatth 
+    // do we want node-type/node-id or just node-id?
+    if (snk->sendNewPosition())
+    {
+        sendPosition("/spatosc/core/listener", snk);
+        snk->positionSent();
+    }
 
     std::string srcPath = "/spatosc/core/source" + OSCutil::stringify(src->getChannelID());
 
-    sendPosition(srcPath, src);
-    sendAED(srcPath, conn);
-    sendDelay(srcPath, conn);
-    sendGainDB(srcPath, conn);
+    if (src->sendNewPosition())
+    {
+        sendPosition(srcPath, src);
+        sendAED(srcPath, conn);
+        sendDelay(srcPath, conn);
+        sendGainDB(srcPath, conn);
+        src->positionSent();
+    }
 }
 
 } // end namespace spatosc
