@@ -24,9 +24,7 @@ Refactoring
 -----------
  * remove friend classes in vBaseNode
  * Cleanup the public interface of the public classes.
- * Scene::update methods should be renamed to something more meaningful
  * convert aed-style orientation into quaternions. (or at least support also quaternions)
- * rename dmitri_translator.h like that.
  * rename Node.setPosition to setPositionXYZ(x,y,z)
  * add setPositionAED(a, e, d)
  * Should we warn clients that we disconnected some nodes?
