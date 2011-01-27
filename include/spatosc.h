@@ -88,6 +88,8 @@
    program_LDADD = $(SPATOSC_LIBS)
    \endverbatim
  *
+ * To build spatosc for Microsoft Windows, please follow the instructions in the README.txt file of the project's "build" directory.
+ *
  * @section Usage
  *
  * One should create a instance of Scene, and set the Translator pluging to use. The Translator takes care of
