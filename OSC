@@ -13,10 +13,10 @@ The <node_id> can be any ASCII alpha-numeric string. Underscores and hyphens are
  * /spatosc/core/<s:node_id>/gainDB f:gain_DB
  * /spatosc/core/<s:node_id>/spread f:spread
  * /spatosc/core/<s:node_id>/spreadAE f:azim_spread f:elev_spread
- * /spatosc/transform/<s:node_id>/translation f:x f:y f:z
- * /spatosc/transform/<s:node_id>/rotation f:x f:y f:z f:w
- * /spatosc/transform/<s:node_id>/scale f:xScale f:yScale f:zScale
- * /spatosc/transform/<s:node_id>/shear f:a f:b f:c f:d f:e f:f
+ * /spatosc/transform/translation f:x f:y f:z
+ * /spatosc/transform/rotation f:x f:y f:z f:w
+ * /spatosc/transform/scale f:xScale f:yScale f:zScale
+ * /spatosc/transform/shear f:a f:b f:c f:d f:e f:f
 
 
 D-Mitri
