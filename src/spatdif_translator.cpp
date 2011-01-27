@@ -80,10 +80,13 @@ void SpatdifTranslator::pushOSCMessages(Connection * conn)
 
     // FIXME:Wed Jan 19 16:22:42 EST 2011:tmatth 
     // do we want node-type/node-id or just node-id?
+    //
+    bool newPositions = false;
     if (snk->sendNewPosition())
     {
         sendPosition("/spatosc/core/listener", snk);
         snk->positionSent();
+        newPositions = true;
     }
 
     std::string srcPath = "/spatosc/core/source" + OSCutil::stringify(src->getChannelID());
@@ -91,10 +94,17 @@ void SpatdifTranslator::pushOSCMessages(Connection * conn)
     if (src->sendNewPosition())
     {
         sendPosition(srcPath, src);
+        src->positionSent();
+        newPositions = true;
+    }
+
+    // FIXME: Thu Jan 27 15:35:29 EST 2011:tmatth 
+    // maybe this should be in connection? Probably not though.
+    if (newPositions)
+    {
         sendAED(srcPath, conn);
         sendDelay(srcPath, conn);
         sendGainDB(srcPath, conn);
-        src->positionSent();
     }
 }
 
