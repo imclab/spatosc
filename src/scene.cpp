@@ -423,9 +423,11 @@ bool Scene::deleteNode(Listener *node)
 
 void Scene::deleteAllNodes()
 {
-    ListenerList_.clear();
-    SoundSourceList_.clear();
-    connections_.clear();
+    // we swap them with emtpy vectors to make sure their size is 0.
+    // see http://www.gotw.ca/gotw/054.htm
+    std::vector<std::tr1::shared_ptr<Connection> >().swap(connections_);
+    std::vector<std::tr1::shared_ptr<Listener> >().swap(ListenerList_);
+    std::vector<std::tr1::shared_ptr<SoundSource> >().swap(SoundSourceList_);
 }
 
 } // end namespace spatosc
