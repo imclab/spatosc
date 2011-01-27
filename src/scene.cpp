@@ -18,7 +18,8 @@
  */
 
 #include "scene.h"
-#include "config.h"
+#include <regex.h>
+
 #include <iostream>
 #include <cassert>
 #include <algorithm>
@@ -29,6 +30,14 @@
 #include "node.h"
 #include "soundsource.h"
 #include "connection.h"
+
+namespace spatosc {
+struct Scene::RegexHandle {
+#ifdef HAVE_REGEX
+    regex_t regex;
+#endif
+};
+}
 
 namespace
 {
@@ -62,7 +71,6 @@ namespace
 
 namespace spatosc
 {
-
 #if 0
 // *****************************************************************************
 // This is a function that can be used by std::sort to make a
@@ -73,15 +81,12 @@ static bool nodeSortFunction (Node *n1, Node *n2)
 }
 #endif
 
-
 // for now, create a basic (CONSOLE) translator:
 Scene::Scene() :
+    connectRegex_(new Scene::RegexHandle),
     translator_(new Translator(false)),
     autoConnect_(true),
     connectFilter_(),
-#ifdef HAVE_REGEX
-    connectRegex_(),
-#endif
     ListenerList_(),
     SoundSourceList_(),
     connections_(),
@@ -278,11 +283,11 @@ void Scene::setConnectFilter(std::string s)
 {
     // we like specifying just one asterisk ( * ), so we need to convert to a
     // regular expression:
-    if (s=="*")
+    if (s == "*")
         s = ".*";
 #ifdef HAVE_REGEX
     // TODO: Fri Jan 14 11:14:11 EST 2011: connectRegex_ should belong to translator
-    if (regcomp(&connectRegex_, s.c_str(), REG_EXTENDED|REG_NOSUB) != 0)
+    if (regcomp(&connectRegex_->regex, s.c_str(), REG_EXTENDED|REG_NOSUB) != 0)
     {
         std::cout << "Scene error: bad regex pattern passed to setConnectFilter(): " << s << std::endl;
         return;
@@ -308,8 +313,8 @@ Connection* Scene::connect(Node *src, Node *snk)
 #ifdef HAVE_REGEX
     // Check src and snk id's against the connectFilter. If either match, then
     // proceed with the connection:
-    int srcRegexStatus = regexec(&connectRegex_, src->id_.c_str(), (size_t)0, 0, 0);
-    int snkRegexStatus = regexec(&connectRegex_, snk->id_.c_str(), (size_t)0, 0, 0);
+    int srcRegexStatus = regexec(&connectRegex_->regex, src->id_.c_str(), (size_t)0, 0, 0);
+    int snkRegexStatus = regexec(&connectRegex_->regex, snk->id_.c_str(), (size_t)0, 0, 0);
     //TODO:2011-01-21:aalex:we should also check the type of the two nodes in connect().
     if (srcRegexStatus == 0 or snkRegexStatus == 0)
     {

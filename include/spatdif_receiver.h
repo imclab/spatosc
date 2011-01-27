@@ -35,20 +35,20 @@ namespace spatosc
 
 class OscReceiver;
 
-class SpatdifHandler 
+class SpatdifHandler
 {
     public:
         virtual ~SpatdifHandler() {};
     private:
         friend class SpatdifReceiver;
         virtual void xyz(const std::string &id, float x, float y, float z) = 0;
-        virtual void aed(const std::string &id, float azimuth, float elevation, float distanceMeters) = 0;
-        virtual void xy(const std::string &id, float x, float y) = 0;
-        virtual void delay(const std::string &id, float delay) = 0;
-        virtual void gainDB(const std::string &id, float gainDB) = 0;
-        virtual void gain(const std::string &id, float gain) = 0;
-        virtual void spread(const std::string &id, float spread) = 0;
-        virtual void spreadAE(const std::string &id, float azimSpread, float elevSpread) = 0;
+        virtual void aed(const std::string &id, float azimuth, float elevation, float distanceMeters);
+        virtual void xy(const std::string &id, float x, float y);
+        virtual void delay(const std::string &id, float delay);
+        virtual void gainDB(const std::string &id, float gainDB);
+        virtual void gain(const std::string &id, float gain);
+        virtual void spread(const std::string &id, float spread);
+        virtual void spreadAE(const std::string &id, float azimSpread, float elevSpread);
 };
 
 /**

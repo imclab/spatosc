@@ -25,7 +25,6 @@
 #define __FACADE_H__
 
 #include <string>
-#include <map>
 #include <iostream>
 #include <tr1/memory>
 

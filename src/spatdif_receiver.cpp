@@ -116,13 +116,23 @@ int SpatdifReceiver::onOSCMessage(const char * path, const char * /*types*/,
         assert(argc == 2);
         handler->spreadAE(id, argv[0]->f, argv[1]->f);
     }
-    else 
+    else
     {
         std::cerr << "Unknown method " << method << std::endl;
         return 1;
     }
     return 0;
 }
+
+// FIXME: these shouldn't have empty implementations
+void SpatdifHandler::aed(const std::string &/*id*/, float /*azimuth*/, float /*elevation*/, float /*distanceMeters*/)
+{}
+void SpatdifHandler::xy(const std::string &/*id*/, float /*x*/, float /*y*/){};
+void SpatdifHandler::delay(const std::string &/*id*/, float /*delay*/){};
+void SpatdifHandler::gainDB(const std::string &/*id*/, float /*gainDB*/){};
+void SpatdifHandler::gain(const std::string &/*id*/, float /*gain*/){};
+void SpatdifHandler::spread(const std::string &/*id*/, float /*spread*/){};
+void SpatdifHandler::spreadAE(const std::string &/*id*/, float /*azimSpread*/, float /*elevSpread*/){};
 
 } // end namespace spatosc
 
