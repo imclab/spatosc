@@ -146,8 +146,10 @@ class Scene
          * For this game process, you'd have several plugins instances that would send different
          * OSC streams to their respective renderers. For each of those plugins instances, you'd have
          * a different connect filter, so that player A listens to player B, but not to itself.
+         * 
+         * @return Success or not.
          */
-        void setConnectFilter(std::string s);
+        bool setConnectFilter(std::string s);
 
         /**
          * Connects two nodes together.

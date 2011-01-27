@@ -34,8 +34,10 @@
 #include "soundsource.h"
 #include "translator.h"
 
-namespace spatosc {
-struct Scene::RegexHandle {
+namespace spatosc
+{
+struct Scene::RegexHandle
+{
 #ifdef HAVE_REGEX
     regex_t regex;
 #endif
@@ -294,7 +296,7 @@ Connection* Scene::getConnection(const Node *source, const Node *sink)
     return 0;
 }
 
-void Scene::setConnectFilter(std::string s)
+bool Scene::setConnectFilter(std::string s)
 {
     // we like specifying just one asterisk ( * ), so we need to convert to a
     // regular expression:
@@ -305,12 +307,14 @@ void Scene::setConnectFilter(std::string s)
     if (regcomp(&connectRegex_->regex, s.c_str(), REG_EXTENDED|REG_NOSUB) != 0)
     {
         std::cout << "Scene error: bad regex pattern passed to setConnectFilter(): " << s << std::endl;
-        return;
+        return false;
     }
+    connectFilter_ = s;
+    return true;
 #else
     std::cerr << __FUNCTION__ << ": Compiled with no regex support." << std::endl;
+    return false;
 #endif
-    connectFilter_ = s;
 }
 
 Connection* Scene::connect(SoundSource *src, Listener *snk)

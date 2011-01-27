@@ -78,8 +78,7 @@ bool Wrapper::deleteNode(const std::string &nodeName)
 
 bool Wrapper::setConnectFilter(const std::string &filterRegex)
 {
-    scene_->setConnectFilter(filterRegex);
-    return true;
+    return scene_->setConnectFilter(filterRegex);
 }
 
 bool Wrapper::clearScene()
