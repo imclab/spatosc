@@ -327,7 +327,6 @@ Connection* Scene::connect(SoundSource *src, Listener *snk)
     // proceed with the connection:
     int srcRegexStatus = regexec(&connectRegex_->regex, src->id_.c_str(), (size_t)0, 0, 0);
     int snkRegexStatus = regexec(&connectRegex_->regex, snk->id_.c_str(), (size_t)0, 0, 0);
-    //TODO:2011-01-21:aalex:we should also check the type of the two nodes in connect().
     if (srcRegexStatus == 0 || snkRegexStatus == 0)
     {
 #else
