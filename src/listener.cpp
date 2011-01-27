@@ -18,6 +18,7 @@
  */
 
 #include "listener.h"
+#include "soundsource.h"
 #include "scene.h"
 #include "connection.h"
 

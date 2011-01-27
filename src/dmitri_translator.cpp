@@ -62,7 +62,7 @@ DmitriTranslator::DmitriTranslator(const std::string &ip,
 void DmitriTranslator::pushOSCMessages(Connection *conn)
 {
     std::string str;
-    SoundSource *src = dynamic_cast<SoundSource*>(conn->src_);
+    SoundSource *src = conn->src_;
 
     if (! src)
     {

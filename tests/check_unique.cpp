@@ -33,7 +33,7 @@ bool test_unique_source()
     SoundSource *foo_source = scene.createSoundSource("foo");
     if (foo_source != 0)
     {
-        std::cout << "duplicate foo SoundSource" << std::endl;
+        std::cout << "FAIL: duplicate foo SoundSource" << std::endl;
         return false;
     }
     return true;
@@ -46,7 +46,7 @@ bool test_unique_listener()
     Listener *foo_listener = scene.createListener("foo");
     if (foo_listener != 0)
     {
-        std::cout << "duplicate foo Listener" << std::endl;
+        std::cout << "FAIL: duplicate foo Listener" << std::endl;
         return false;
     }
     return true;
@@ -59,7 +59,7 @@ bool test_unique_mixed_node_types()
     SoundSource *foo_listener = scene.createSoundSource("foo");
     if (foo_listener != 0)
     {
-        std::cout << "duplicate node named foo" << std::endl;
+        std::cout << "FAIL: duplicate node named foo" << std::endl;
         return false;
     }
     return true;

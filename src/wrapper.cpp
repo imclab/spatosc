@@ -96,13 +96,13 @@ bool Wrapper::setAutoConnect(bool enabled)
 
 bool Wrapper::disconnect(const std::string &nodeFrom, const std::string &nodeTo)
 {
-    Node *source = scene_->getNode(nodeFrom);
+    SoundSource *source = scene_->getSoundSource(nodeFrom);
     if (! source)
     {
         std::cerr << "No such node: " << nodeFrom << std::endl;
         return false;
     }
-    Node *sink = scene_->getNode(nodeTo);
+    Listener *sink = scene_->getListener(nodeTo);
     if (! sink)
     {
         std::cerr << "No such node: " << nodeTo << std::endl;
@@ -113,13 +113,13 @@ bool Wrapper::disconnect(const std::string &nodeFrom, const std::string &nodeTo)
 
 bool Wrapper::connect(const std::string &nodeFrom, const std::string &nodeTo)
 {
-    Node *source = scene_->getNode(nodeFrom);
+    SoundSource *source = scene_->getSoundSource(nodeFrom);
     if (! source)
     {
         std::cerr << "No such node: " << nodeFrom << std::endl;
         return false;
     }
-    Node *sink = scene_->getNode(nodeTo);
+    Listener *sink = scene_->getListener(nodeTo);
     if (! sink)
     {
         std::cerr << "No such node: " << nodeTo << std::endl;

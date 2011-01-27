@@ -153,7 +153,7 @@ class Scene
          * Connects two nodes together.
          * @return A Connection pointer. Null if either of the two nodes are not found, or if they are already connected. Never free this pointer. It will become invalid if this connection is deleted.
          */
-        Connection* connect(Node *src, Node *snk);
+        Connection* connect(SoundSource *src, Listener *snk);
 
         /**
          * Disconnects two nodes.

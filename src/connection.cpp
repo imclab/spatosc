@@ -18,12 +18,13 @@
  */
 
 #include "connection.h"
-#include "node.h"
+#include "soundsource.h"
+#include "listener.h"
 
 namespace spatosc
 {
 
-Connection::Connection(Node *source, Node *sink) :
+Connection::Connection(SoundSource *source, Listener *sink) :
     id_(source->getID() + "-" + sink->getID() + ".conn"),
     src_(source),
     snk_(sink),

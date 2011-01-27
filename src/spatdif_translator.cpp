@@ -67,9 +67,8 @@ void SpatdifTranslator::sendGainDB(const std::string &prefix, Connection *conn)
 
 void SpatdifTranslator::pushOSCMessages(Connection * conn)
 {
-    // FIXME: Downcasts are evil
-    SoundSource *src = dynamic_cast<SoundSource*>(conn->src_);
-    Listener *snk = dynamic_cast<Listener*>(conn->snk_);
+    SoundSource *src = conn->src_;
+    Listener *snk = conn->snk_;
     // TODO:Wed Jan 19 14:47:57 EST 2011:tmatth: set positions, gains as needed!
     assert(src);
     assert(snk);
