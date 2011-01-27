@@ -5,6 +5,7 @@ Features
 ---------------
  * Load balancing, don't push all the state, all the time, over OSC.
  * Only push whatever's changed, and at some controlled rate.
+ * Support world coordinates changes. (for example, in the dome, +X is on your right, but +Z behind you and +Y is up)
 
 Examples
 --------
