@@ -49,7 +49,7 @@ class Scene
         typedef std::vector<std::tr1::shared_ptr<Node> >::iterator NodeIterator;
         typedef std::vector<std::tr1::shared_ptr<SoundSource> >::iterator SourceIterator;
         typedef std::vector<std::tr1::shared_ptr<Connection> >::iterator ConnIterator;
-        typedef std::vector<std::tr1::shared_ptr<Connection> >::const_iterator ConstConnIterator;
+        typedef std::vector<std::tr1::shared_ptr<Connection> >::const_iterator ConnConstIterator;
 
         /**
          * Constructor.
