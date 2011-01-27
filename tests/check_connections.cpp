@@ -109,6 +109,19 @@ bool test_delete_node()
     }
     return true;
 }
+bool test_clear_scene()
+{
+    Scene scene;
+    SoundSource *source = scene.createSoundSource("source");
+    scene.createListener("listener");
+    scene.deleteAllNodes();
+    if (scene.deleteNode(source))
+    {
+        std::cout << __FUNCTION__ << ": should not be able to delete a node once the scene has been cleared." << std::endl;
+        return false;
+    }
+    return true;
+}
 
 int main(int /*argc*/, char ** /*argv*/)
 {
@@ -117,6 +130,8 @@ int main(int /*argc*/, char ** /*argv*/)
     if (! test_disconnect())
         return 1;
     if (! test_delete_node())
+        return 1;
+    if (! test_clear_scene())
         return 1;
     return 0;
 }

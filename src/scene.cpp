@@ -420,5 +420,13 @@ bool Scene::deleteNode(Listener *node)
     disconnectNodeConnections(node);
     return eraseFromVector(ListenerList_, node);
 }
+
+void Scene::deleteAllNodes()
+{
+    ListenerList_.clear();
+    SoundSourceList_.clear();
+    connections_.clear();
+}
+
 } // end namespace spatosc
 

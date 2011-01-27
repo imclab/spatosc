@@ -84,7 +84,8 @@ bool Wrapper::setConnectFilter(const std::string &filterRegex)
 
 bool Wrapper::clearScene()
 {
-    return false;
+    scene_->deleteAllNodes();
+    return true;
 }
 
 bool Wrapper::setAutoConnect(bool enabled)

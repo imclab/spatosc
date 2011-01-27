@@ -65,7 +65,7 @@ class Wrapper
          */
         bool deleteNode(const std::string &nodeName);
         /**
-         * @warning Not implemented.
+         * Clears all nodes and connections in the scene.
          * @return Success or not.
          */
         bool clearScene();

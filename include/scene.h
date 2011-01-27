@@ -198,6 +198,12 @@ class Scene
          * @param Whether to print a lot of messages or not.
          */
         void setVerbose(bool verbose);
+        
+        /**
+         * Delete all nodes in the scene.
+         * Useful, so that you don't need to set the translator again.
+         */
+        void deleteAllNodes();
 
     private:
         // private handle class
