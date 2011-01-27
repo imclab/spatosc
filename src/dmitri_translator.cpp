@@ -89,7 +89,7 @@ void DmitriTranslator::pushOSCMessages(Connection *conn)
 
     str = "Input " + OSCutil::stringify(src->getChannelID()) + " Level";
     //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
-    sender_->sendMessage("/set", "sf", str.c_str(), conn->gain(), SPATOSC_ARGS_END);
+    sender_->sendMessage("/set", "sf", str.c_str(), conn->gainDB(), SPATOSC_ARGS_END);
 }
 
 } // end namespace spatosc
