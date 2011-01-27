@@ -59,7 +59,7 @@ void Translator::pushOSCMessages(Connection *conn)
         std::cout << "  dist:\t" << conn->distance() << std::endl;
         std::cout << "  azim:\t" << conn->azimuth() << std::endl;
         std::cout << "  elev:\t" << conn->elevation() << std::endl;
-        std::cout << "  gain:\t" << conn->gain() << " dB" << std::endl;
+        std::cout << "  gain:\t" << conn->gainDB() << " dB" << std::endl;
     }
 }
 

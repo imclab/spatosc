@@ -383,6 +383,8 @@ bool Scene::disconnect(Node *source, Node *sink)
     return eraseFromVector(connections_, conn);
 }
 
+// FIXME: Source node shouldn't have connectFROM_
+// FIXME: Sink node shouldn't have connectFROM_
 void Scene::onNodeChanged(Node *n)
 {
     ConnIterator c;
