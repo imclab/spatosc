@@ -73,7 +73,8 @@ int SpatdifHandler::onOSCMessage(const char * path, const char * /*types*/,
         lo_arg ** argv, int argc, void * /*data*/, void *user_data)
 {
     SpatdifHandler *handler = static_cast<SpatdifHandler*>(user_data);
-    //FIXME: Thu Jan 27 14:36:07 EST 2011 : tmatth: use regexes/improve path
+    // FIXME: Thu Jan 27 14:36:07 EST 2011 : tmatth: use regexes/improve path,
+    // reduce string comparisons
     std::string id(getID(path));
     std::string method(getMethodName(path));
     //std::cout << "id=" << id << ", method " << method << std::endl;
