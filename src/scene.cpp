@@ -148,8 +148,14 @@ void Scene::debugPrint ()
 SoundSource* Scene::createSoundSource(const std::string &id)
 {
     using std::tr1::shared_ptr;
-    // check if it already exists:
-    Node *node = getNode(id);
+    // check if it already exists (as a source or listener):
+    if (getListener(id) != 0)
+    {
+        std::cerr << "Cannot create sound source " << id << 
+            ", there is already a listener with that id\n";
+        return 0;
+    }
+    SoundSource *node = getSoundSource(id);
 
     if (node == 0)
     {
@@ -158,7 +164,7 @@ SoundSource* Scene::createSoundSource(const std::string &id)
 
         // add it to the SoundSourceList:
         SoundSourceList_.push_back(tmp);
-        node = dynamic_cast<Node *>(tmp.get());
+        node = tmp.get();
 
         if (autoConnect_)
         {
@@ -168,7 +174,7 @@ SoundSource* Scene::createSoundSource(const std::string &id)
                 connect(node, iter->get());
             }
         }
-        return dynamic_cast<SoundSource *>(node);
+        return node;
     }
     else
     {
@@ -180,14 +186,20 @@ SoundSource* Scene::createSoundSource(const std::string &id)
 Listener* Scene::createListener(const std::string &id)
 {
     using std::tr1::shared_ptr;
-    // check if it already exists:
-    Node *node = getNode(id);
+    // check if it already exists (as a source or listener:
+    if (getSoundSource(id) != 0)
+    {
+        std::cerr << "Cannot create listener " << id << 
+            ", there is already a sound source with that id\n";
+        return 0;
+    }
+    Listener *node = getListener(id);
 
     if (! node)
     {
         // if not, create a new vSoundNode:
         shared_ptr<Listener> tmp(new Listener(id, *this));
-        node = dynamic_cast<Node *>(tmp.get());
+        node = tmp.get();
 
         // add it to the ListenerList:
         ListenerList_.push_back(tmp);
@@ -200,7 +212,7 @@ Listener* Scene::createListener(const std::string &id)
                 connect(iter->get(), node);
             }
         }
-        return dynamic_cast<Listener *>(node);
+        return node;
     }
     else
     {
@@ -298,7 +310,7 @@ void Scene::setConnectFilter(std::string s)
     connectFilter_ = s;
 }
 
-Connection* Scene::connect(Node *src, Node *snk)
+Connection* Scene::connect(SoundSource *src, Listener *snk)
 {
     using std::tr1::shared_ptr;
     // if the node pointers are invalid for some reason, return:

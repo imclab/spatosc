@@ -30,8 +30,8 @@ bool test_connect()
 {
     Scene scene;
     scene.setAutoConnect(false);
-    Node *source = dynamic_cast<Node*>(scene.createSoundSource("source"));
-    Node *listener = dynamic_cast<Node*>(scene.createListener("listener"));
+    SoundSource *source = scene.createSoundSource("source");
+    Listener *listener = scene.createListener("listener");
     Connection *connection = scene.connect(source, listener);
     if (connection == 0)
     {
@@ -57,8 +57,8 @@ bool test_disconnect()
 {
     Scene scene;
     scene.setAutoConnect(false);
-    Node *source = scene.createSoundSource("source");
-    Node *listener = scene.createListener("listener");
+    SoundSource *source = scene.createSoundSource("source");
+    Listener *listener = scene.createListener("listener");
     Connection *connection = scene.connect(source, listener);
     bool success = scene.disconnect(source, listener);
     if (! success)

@@ -27,7 +27,8 @@
 namespace spatosc
 {
 
-class Node;
+class SoundSource;
+class Listener;
 
 /**
  * Audio connection between two nodes.
@@ -48,7 +49,7 @@ private:
 
 public:
 
-    Connection(Node *source, Node *sink);
+    Connection(SoundSource *source, Listener *sink);
     /**
      * Update distance, azimuth and elevation values (usually called by Scene instance)
      */
@@ -103,18 +104,18 @@ public:
      * Returns a reference to its source Node.
      * @return A Node.
      */
-    Node& getSource() const { return *src_; }
+    SoundSource& getSource() const { return *src_; }
 
     /**
      * Returns a reference to its sink Node.
      * @return A Node.
      */
-    Node& getSink() const { return *snk_; }
+    Listener& getSink() const { return *snk_; }
 
 protected:
     std::string id_;
-    Node *src_;
-    Node *snk_;
+    SoundSource *src_;
+    Listener *snk_;
     double distance_;
     double azim_;
     double elev_;

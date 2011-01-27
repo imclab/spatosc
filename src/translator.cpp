@@ -21,7 +21,8 @@
 
 #include "translator.h"
 #include "connection.h"
-#include "node.h"
+#include "soundsource.h"
+#include "listener.h"
 
 namespace spatosc
 {
