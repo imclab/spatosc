@@ -25,35 +25,41 @@
 #include <glib/gtypes.h>
 #include "lo/lo.h"
 
+#include <spatosc/spatdif_receiver.h>
 
+
+class AudioScene;
 namespace spatosc {
-    class OscReceiver;
+    class SpatdifReceiver;
 }
+    
+class MyHandler : public spatosc::SpatdifHandler 
+{
+    private:
+        AudioScene *owner_;
+        virtual void xyz(const std::string &id, float x, float y, float z);
+    public:
+        MyHandler(AudioScene *owner);
+
+};
 
 class AudioScene {
     private:
+        friend class MyHandler;
         void createSource();
         void createListener();
         void updatePosition();
         void bindCallbacks();
         void updateSourcePosition();
         void updateListenerPosition();
-        static gboolean pollOscReceiver(gpointer data);
-        static int onSourcePositionChanged(const char *path, const char *types, 
-                lo_arg ** argv, int argc, void *data, void *user_data);
-#if 0
-        static int onListenerPositionChanged(const char *path, const char *types, 
-                lo_arg ** argv, int argc, void *data, void *user_data);
-#endif
-        static int genericHandler(const char *path, const char *types,
-        lo_arg ** argv, int argc, void *data, void *user_data);
+        static gboolean pollReceiver(gpointer data);
 
         ALfloat sourcePos_[3];
         ALuint source_;
         ALfloat listenerPos_[3];
         ALuint listener_;
-        std::tr1::shared_ptr<spatosc::OscReceiver> receiver_;
-        static const char* RX_PORT;
+        std::tr1::shared_ptr<MyHandler> handler_;
+        std::tr1::shared_ptr<spatosc::SpatdifReceiver> receiver_;
 
     public:
         AudioScene();

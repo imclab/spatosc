@@ -42,7 +42,7 @@ SpatdifTranslator::SpatdifTranslator(const std::string &ip,
 
 void SpatdifTranslator::sendPosition(const std::string &prefix, Node *node)
 {
-    std::string path = prefix +  "/position";
+    std::string path = prefix +  "/xyz";
     Vector3 vect(node->getPosition());
     sender_->sendMessage(path, "fff", vect.x, vect.y, vect.z, SPATOSC_ARGS_END);
 }
@@ -80,10 +80,10 @@ void SpatdifTranslator::pushOSCMessages(Connection * conn)
 
     // FIXME:Wed Jan 19 16:22:42 EST 2011:tmatth should listener have channel ID? SpatDIF thinks so.
     // update sink position
-    sendPosition("/SpatDIF/core/listener/1", snk);
+    sendPosition("/spatosc/core/listener", snk);
 
 
-    std::string srcPath = "/SpatDIF/core/source/" + OSCutil::stringify(src->getChannelID());
+    std::string srcPath = "/spatosc/core/source" + OSCutil::stringify(src->getChannelID());
 
     sendPosition(srcPath, src);
     sendAED(srcPath, conn);

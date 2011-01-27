@@ -24,9 +24,6 @@
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
-#ifdef HAVE_REGEX
-#include <regex.h>
-#endif
 #include <string>
 #include <vector>
 #include "memory.h"
@@ -34,7 +31,6 @@
 namespace spatosc
 {
 
-// forward declarations
 class Listener;
 class Node;
 class SoundSource;
@@ -204,6 +200,10 @@ class Scene
         void setVerbose(bool verbose);
 
     private:
+        // private handle class
+        struct RegexHandle;
+        std::tr1::shared_ptr<RegexHandle> connectRegex_;
+
         /**
          * Called when a new connection is made or when its node position change, so that the scene updates all its sibling nodes, and the translator may push some OSC messages.
          */
@@ -220,9 +220,7 @@ class Scene
         std::tr1::shared_ptr<Translator> translator_;
         bool autoConnect_;
         std::string connectFilter_;
-#ifdef HAVE_REGEX
-        regex_t connectRegex_;
-#endif
+
         //FIXME:2011-01-25:aalex:Would maps be faster?
         std::vector<std::tr1::shared_ptr<Listener> >  ListenerList_;
         std::vector<std::tr1::shared_ptr<SoundSource> > SoundSourceList_;

@@ -21,11 +21,8 @@
 #include <stdexcept>
 #include <iostream>
 #include <spatosc/translator.h>
-#include <spatosc/oscreceiver.h>
+#include <spatosc/spatdif_receiver.h>
 #include <glib/gmain.h> // for gtimeout
-
-// receive messages from the spatosc plugin
-const char* AudioScene::RX_PORT = spatosc::Translator::DEFAULT_SEND_PORT;
 
 void AudioScene::init()
 {
@@ -33,35 +30,28 @@ void AudioScene::init()
     alGetError(); // clear the error bit
 }
 
-
-int AudioScene::genericHandler(const char * /*path*/, const char * /*types*/,
-        lo_arg ** /*argv*/, int /*argc*/, void * /*data*/, void * /*user_data*/)
+MyHandler::MyHandler(AudioScene *owner) : owner_(owner)
 {
-#ifdef DEBUG
-    std::cout << __FUNCTION__ << std::endl;
-#endif
-    return 1; // handoff
 }
 
-int AudioScene::onSourcePositionChanged(const char * /*path*/, const char * /*types*/,
-        lo_arg ** argv, int /*argc*/, void * /*data*/, void *user_data)
+void MyHandler::xyz(const std::string &id, float x, float y, float z)
 {
-#ifdef DEBUG
-    std::cout << __FUNCTION__ << std::endl;
-#endif
-    AudioScene *context = static_cast<AudioScene*>(user_data);
-    for (int i = 0; i != 3; ++i)
+    if (id == "source1")
     {
-        context->sourcePos_[i] = argv[i]->f;
-#ifdef DEBUG
-        std::cout << argv[i]->f << ",";
-#endif
+        owner_->sourcePos_[0] = x;
+        owner_->sourcePos_[1] = y;
+        owner_->sourcePos_[2] = z;
+        owner_->updateSourcePosition();
     }
-#ifdef DEBUG
-    std::cout << std::endl;
-#endif
-    context->updateSourcePosition();
-    return 0;
+    else if (id == "listener")
+    {
+        owner_->listenerPos_[0] = x;
+        owner_->listenerPos_[1] = y;
+        owner_->listenerPos_[2] = z;
+        owner_->updateListenerPosition();
+    }
+    else
+        std::cerr << "Unknown id " << id << std::endl;
 }
 
 
@@ -78,27 +68,23 @@ int AudioScene::onListenerPositionChanged(const char *path, const char *types,
 }
 #endif
 
-gboolean AudioScene::pollOscReceiver(gpointer data)
+gboolean AudioScene::pollReceiver(gpointer data)
 {
-    bool verbose = false;
     AudioScene* context = static_cast<AudioScene*>(data);
-    int bytes = context->receiver_->receive();
-    if (bytes > 0 and verbose)
-        std::cout << "received " << bytes << " bytes" << std::endl;
+    context->receiver_->poll();
 
     return TRUE;
 }
 
 void AudioScene::bindCallbacks()
 {
-    receiver_->addHandler("/SpatDIF/core/source/1/position", "fff", onSourcePositionChanged, this);
-    //oscReceiver_->addHandler("/SpatDIF/core/listener/1/position", "fff", onListenerPositionChanged, this);
-    //oscReceiver_->addHandler(NULL, NULL, genericHandler, NULL);
     // add a timeout to poll our oscreceiver
-    g_timeout_add(5 /*ms*/, pollOscReceiver, this);
+    g_timeout_add(5 /*ms*/, pollReceiver, this);
 }
 
-AudioScene::AudioScene() : receiver_(new spatosc::OscReceiver(RX_PORT))
+// receive messages from the spatosc plugin
+AudioScene::AudioScene() : 
+    handler_(new MyHandler(this)), receiver_(new spatosc::SpatdifReceiver(spatosc::Translator::DEFAULT_SEND_PORT, handler_.get()))
 {
     createSource();
     createListener();
@@ -120,7 +106,7 @@ void AudioScene::createSource()
     ALfloat sourceVel[] = {0.0, 0.0, 0.0};
     // if argv[1] is present, it's a filename
     ALuint buffer = alutCreateBufferFromFile("/usr/share/sounds/alsa/Noise.wav");
-    
+
     // sources are points emitting sound
 
     alGenSources(1, &source_);
@@ -143,10 +129,10 @@ void AudioScene::createListener()
     ALfloat listenerVel[] = {0.0, 0.0, 0.0};
     // orientation of the listener (first 3 elements are "at", second 3 are "up"
     ALfloat listenerOri[] = {0.0, 0.0, -1.0, 0.0, 1.0, 0.0};
-    
+
     if (alGetError() != AL_NO_ERROR)
         throw(std::runtime_error("OpenAL error")); 
-    
+
     // set listener values
     alListenerfv(AL_POSITION, listenerPos_);
     alListenerfv(AL_VELOCITY, listenerVel);
