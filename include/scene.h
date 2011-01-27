@@ -45,11 +45,11 @@ class Scene
 {
     public:
         // iterators:
-        typedef std::vector<std::tr1::shared_ptr<Listener> >::iterator listenerIterator;
-        typedef std::vector<std::tr1::shared_ptr<Node> >::iterator nodeIterator;
-        typedef std::vector<std::tr1::shared_ptr<SoundSource> >::iterator sourceIterator;
-        typedef std::vector<std::tr1::shared_ptr<Connection> >::iterator connIterator;
-        typedef std::vector<std::tr1::shared_ptr<Connection> >::const_iterator connConstIterator;
+        typedef std::vector<std::tr1::shared_ptr<Listener> >::iterator ListenerIterator;
+        typedef std::vector<std::tr1::shared_ptr<Node> >::iterator NodeIterator;
+        typedef std::vector<std::tr1::shared_ptr<SoundSource> >::iterator SourceIterator;
+        typedef std::vector<std::tr1::shared_ptr<Connection> >::iterator ConnIterator;
+        typedef std::vector<std::tr1::shared_ptr<Connection> >::const_iterator ConnConstIterator;
 
         /**
          * Constructor.
@@ -228,8 +228,8 @@ class Scene
         std::string connectFilter_;
 
         //FIXME:2011-01-25:aalex:Would maps be faster?
-        std::vector<std::tr1::shared_ptr<Listener> >  ListenerList_;
-        std::vector<std::tr1::shared_ptr<SoundSource> > SoundSourceList_;
+        std::vector<std::tr1::shared_ptr<Listener> >  listeners_;
+        std::vector<std::tr1::shared_ptr<SoundSource> > soundSources_;
         std::vector<std::tr1::shared_ptr<Connection> > connections_;
         bool verbose_;
 };

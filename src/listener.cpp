@@ -34,7 +34,7 @@ void Listener::debugPrint() const
 {
     Node::debugPrint();
 
-    Scene::connConstIterator c;
+    Scene::ConnConstIterator c;
     std::cout << "    listen to:\t";
     for (c = connectFROM_.begin(); c != connectFROM_.end(); ++c)
     {
