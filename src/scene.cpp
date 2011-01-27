@@ -95,7 +95,8 @@ Scene::Scene() :
     listeners_(),
     soundSources_(),
     connections_(),
-    verbose_(false)
+    verbose_(false),
+    synchronous_(true)
 {
     this->listeners_.clear();
     this->soundSources_.clear();
@@ -106,6 +107,11 @@ Scene::Scene() :
 void Scene::setVerbose(bool verbose)
 {
     verbose_ = verbose;
+}
+
+void Scene::setSynchronous(bool synchronous)
+{
+    synchronous_ = synchronous;
 }
 
 void Scene::setAutoConnect(bool enabled)
@@ -399,7 +405,28 @@ void Scene::onConnectionChanged(Connection *conn)
     {
         assert(translator_);
         conn->recomputeConnection();
-        translator_->pushOSCMessages(conn);
+        if (synchronous_)
+            translator_->pushOSCMessages(conn);
+    }
+}
+
+// Should be called at regular interval to flush the OSC messages to be sent.
+bool Scene::flushMessages()
+{
+    if (synchronous_)
+    {
+        std::cerr << "Sould not call " << __FUNCTION__ << " if in synchronous mode.\n";
+        return false;
+    }
+    else
+    {
+        ConnConstIterator iter;
+        for (iter = connections_.begin(); iter != connections_.end(); ++iter)
+        {
+            Connection* conn = (*iter).get();
+            translator_->pushOSCMessages(conn);
+        }
+        return true;
     }
 }
 

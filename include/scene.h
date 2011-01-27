@@ -207,6 +207,8 @@ class Scene
          */
         void deleteAllNodes();
 
+        void setSynchronous(bool synchronous);
+        bool flushMessages();
     private:
         // private handle class
         struct RegexHandle;
@@ -234,6 +236,7 @@ class Scene
         std::vector<std::tr1::shared_ptr<SoundSource> > soundSources_;
         std::vector<std::tr1::shared_ptr<Connection> > connections_;
         bool verbose_;
+        bool synchronous_;
 };
 
 } // end namespace spatosc
