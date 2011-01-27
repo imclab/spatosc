@@ -13,10 +13,15 @@ The <node_id> can be any ASCII alpha-numeric string. Underscores and hyphens are
  * /spatosc/core/<s:node_id>/gainDB f:gain_DB
  * /spatosc/core/<s:node_id>/spread f:spread
  * /spatosc/core/<s:node_id>/spreadAE f:azim_spread f:elev_spread
- * /spatosc/transform/<s:node_id>/translation f:x f:y f:z
- * /spatosc/transform/<s:node_id>/rotation f:x f:y f:z f:w
- * /spatosc/transform/<s:node_id>/scale f:xScale f:yScale f:zScale
- * /spatosc/transform/<s:node_id>/shear f:a f:b f:c f:d f:e f:f
+
+ The geotransform extension allows clients to specify a coordinate space transformation to be done on 
+ the rendering side. For example, if a client want all of its coordinates to be shifted 5 units up in y,
+ they would send a translation message with (0.0, 5.0, 0.0) as arguments.
+
+ * /spatosc/geotransform/translation f:x f:y f:z
+ * /spatosc/geotransform/rotation f:x f:y f:z f:w
+ * /spatosc/geotransform/scale f:xScale f:yScale f:zScale
+ * /spatosc/geotransform/shear f:a f:b f:c f:d f:e f:f
 
 
 D-Mitri
