@@ -95,6 +95,18 @@ class Node
             return pos_;
         }
 
+        /**
+         * Returns true if this node's new position must be sent
+         * @return boolean
+         */
+        bool sendNewPosition() const { return sendNewPosition_; }
+        
+        /**
+         * Set to true if this node's new position has been sent
+         * @return boolean
+         */
+        void positionSent() { sendNewPosition_ = false; }
+
     protected:
         void notifyScene();
         std::string id_;
@@ -102,6 +114,10 @@ class Node
         Vector3 pos_;
         Vector3 rot_;
         bool active_;
+        bool sendNewPosition_;
+        // FIXME: Thu Jan 27 15:03:58 EST 2011 :tmatth:
+        // A source shouldn't have a connectFROM_ and a 
+        // sink should not have a connectTO_
         std::vector<std::tr1::shared_ptr<Connection> > connectTO_;
         std::vector<std::tr1::shared_ptr<Connection> > connectFROM_;
 };

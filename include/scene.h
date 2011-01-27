@@ -76,9 +76,9 @@ class Scene
          * \endcode
          */
         template <typename T>
-        void setTranslator(const std::string &address, const std::string &port)
+        void setTranslator(const std::string &address, const std::string &port, bool verbose = true)
         {
-            translator_.reset(new T(address, port, verbose_));
+            translator_.reset(new T(address, port, verbose));
         }
 
         /**
