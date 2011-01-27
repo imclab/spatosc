@@ -30,6 +30,7 @@ Node::Node(const std::string &nodeID, Scene &scene) :
     pos_(),
     rot_(),
     active_(true),
+    sendNewPosition_(true),
     connectTO_(),
     connectFROM_()
 {
@@ -65,7 +66,9 @@ void Node::setOrientation(double pitch, double roll, double yaw)
 
 void Node::notifyScene()
 {
+    sendNewPosition_ = true;
     scene_.onNodeChanged(this);
+    sendNewPosition_ = false;
 }
 
 } // end namespace spatosc
