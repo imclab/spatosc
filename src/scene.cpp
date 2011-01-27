@@ -18,7 +18,10 @@
  */
 
 #include "scene.h"
+#include "config.h"
+#ifdef HAVE_REGEX
 #include <regex.h>
+#endif
 
 #include <iostream>
 #include <cassert>
