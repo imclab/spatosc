@@ -415,7 +415,7 @@ bool Scene::flushMessages()
 {
     if (synchronous_)
     {
-        std::cerr << "Sould not call " << __FUNCTION__ << " if in synchronous mode.\n";
+        std::cerr << "Should not call " << __FUNCTION__ << " if in synchronous mode.\n";
         return false;
     }
     else
