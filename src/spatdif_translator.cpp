@@ -32,7 +32,7 @@ namespace spatosc
 {
 SpatdifTranslator::SpatdifTranslator(const std::string &ip,
         const std::string &port,
-        bool verbose = false) :
+        bool verbose = true) :
     Translator(verbose),
     sender_(new OscSender(ip, port))
     {
