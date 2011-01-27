@@ -87,7 +87,7 @@ bool OSCutil::isMulticastAddress(const std::string &s)
     try
     {
         int i = atoi(s.substr(0, s.find(".")).c_str());
-        if (i >= 224 and i <= 239)
+        if (i >= 224 && i <= 239)
             b = true;
     }
     catch (int i)
@@ -158,7 +158,7 @@ std::vector<std::string> OSCutil::tokenize(const std::string& str, const std::st
     }
     else
     {
-        while (string::npos != pos or string::npos != lastPos)
+        while (string::npos != pos || string::npos != lastPos)
         {
             // found a token, add it to the vector:
             tokens.push_back(str.substr(lastPos, pos - lastPos));
@@ -198,11 +198,11 @@ bool OSCutil::wildcardMatch(const char *path, const char *str)
         case '\0':
             return *str == '\0';
         case '*':
-            return wildcardMatch(path + 1, str) or (*str and wildcardMatch(path, str + 1));
+            return wildcardMatch(path + 1, str) || (*str && wildcardMatch(path, str + 1));
         case '?':
-            return *str and wildcardMatch(path + 1, str + 1);
+            return *str && wildcardMatch(path + 1, str + 1);
         default:
-            return (*path == *str) and (wildcardMatch(path + 1, str + 1));
+            return (*path == *str) && (wildcardMatch(path + 1, str + 1));
     }
 }
 

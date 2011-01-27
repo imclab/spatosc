@@ -47,16 +47,16 @@ void Node::debugPrint() const
 
 void Node::setPosition(double x, double y, double z)
 {
-    if (x != pos_.x or y != pos_.y or z != pos_.z)
+    if (x != pos_.x || y != pos_.y || z != pos_.z)
     {
-        pos_ = Vector3(x,y,z);
+        pos_ = Vector3(x, y, z);
         notifyScene();
     }
 }
 
 void Node::setOrientation(double pitch, double roll, double yaw)
 {
-    if (pitch != rot_.x or roll != rot_.y or yaw != rot_.z)
+    if (pitch != rot_.x || roll != rot_.y || yaw != rot_.z)
     {
         rot_ = Vector3(pitch, roll, yaw);
         notifyScene();

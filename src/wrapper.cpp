@@ -19,6 +19,7 @@
 
 #include "dmitri_translator.h"
 #include "listener.h"
+#include "memory.h"
 #include "node.h"
 #include "scene.h"
 #include "soundsource.h"
@@ -26,7 +27,6 @@
 #include "translator.h"
 #include "wrapper.h"
 #include <iostream>
-#include <tr1/memory>
 
 namespace spatosc
 {

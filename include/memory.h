@@ -17,27 +17,17 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "soundsource.h"
+/** @file
+ * Wrapper for including <tr1/memory>
+ */
+#ifndef __MEMORY_H__
+#define __MEMORY_H__
 
-namespace spatosc
-{
+#ifdef _WIN32
+#include <memory>
+#else
+#include <tr1/memory>
+#endif
 
-// *****************************************************************************
-SoundSource::SoundSource(const std::string &nodeID, Scene &scene) :
-    Node(nodeID, scene),
-    channelID_(-1) // a negative channel means it's invalid.
-{
-}
+#endif // __MEMORY_H__
 
-void SoundSource::debugPrint() const
-{
-    Node::debugPrint();
-    std::cout << "    channelID\t" << channelID_ << std::endl;
-}
-
-void SoundSource::setChannelID(int channel)
-{
-    channelID_ = channel;
-}
-
-} // end namespace spatosc

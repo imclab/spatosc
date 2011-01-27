@@ -44,11 +44,14 @@ namespace OSCutil
     std::string getHostname();
     /**
      * Tries to guess the IP address of one of this computer's network interfaces.
+     * @return The IP address of one of this computer's network interfaces, or "127.0.0.1" if it failed to find it.
+     * @warning This is not currently supported on Windows. It will return "127.0.0.1".
      */
     std::string getMyIPaddress();
 
     /**
      * Returns the IP address for broadcasting UDP messages to this local area network.
+     * @warning This is not currently supported on Windows. It will return "255.255.255.255".
      */
     std::string getMyBroadcastAddress();
 

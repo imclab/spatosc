@@ -27,7 +27,7 @@
 #define _SPATDIF_RECEIVER_H_
 
 #include <string>
-#include <tr1/memory>
+#include "memory.h"
 #include <lo/lo.h>
 
 namespace spatosc

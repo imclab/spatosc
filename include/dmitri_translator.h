@@ -23,7 +23,8 @@
 #ifndef __DMITRI_TRANSLATOR_H__
 #define __DMITRI_TRANSLATOR_H__
 
-#include <tr1/memory>
+#include <string>
+#include "memory.h"
 #include "translator.h"
 
 namespace spatosc
@@ -33,6 +34,7 @@ class Connection;
 
 /**
  * Translator for the proprietary D-Mitri system.
+ * Note that nodes need a positive channel ID. If not set, their coordinates will not be sent to D-Mitri.
  */
 class DmitriTranslator : public Translator
 {
