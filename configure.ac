@@ -54,7 +54,6 @@ AC_TRY_COMPILE([#include <sys/types.h>
        ]; , have_regex=yes, have_regex=no)
 if test "$have_regex" = yes; then
    AC_DEFINE(HAVE_REGEX,1,[Defined if found regex support. ])
-CXXFLAGS+=" -DHAVE_REGEX"
 fi
 
 # Special cases
@@ -68,19 +67,18 @@ case "$host" in *-darwin* | *-macos10*)
     CXXFLAGS+=" -I/sw/include"
     LDFLAGS+=" -L/sw/lib"
   fi
+  #TODO: is this going to mess up with GNU/Linux systems?
+  # OSX does not include /usr/local/lib/pkgconfig path, so we export it here
+  # (for everyone, just in case)
+  PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+  export PKG_CONFIG_PATH
+  LDFLAGS+=" -fPIC -L/usr/local/lib -L/usr/local/lib64"
   ;;
 esac
-
-#TODO: is this going to mess up with GNU/Linux systems?
-# OSX does not include /usr/local/lib/pkgconfig path, so we export it here
-# (for everyone, just in case)
-PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
-export PKG_CONFIG_PATH
 
 #CXXFLAGS+=" -g3 -ggdb -Wall -Wextra -Wfatal-errors"
 CXXFLAGS+=" -Wall -Wextra -Wfatal-errors -Werror -Wnon-virtual-dtor"
 # FIXME:2011-01-26: That one is for Mac OSX only, right?
-LDFLAGS+=" -fPIC -L/usr/local/lib -L/usr/local/lib64"
 
 #Set LIBLO with pkg-config
 PKG_CHECK_MODULES(LIBLO, liblo, have_liblo=true, have_liblo=false)
