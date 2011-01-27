@@ -18,7 +18,10 @@
  */
 
 #include "scene.h"
+#include "config.h"
+#ifdef HAVE_REGEX
 #include <regex.h>
+#endif
 
 #include <iostream>
 #include <cassert>
@@ -31,8 +34,10 @@
 #include "soundsource.h"
 #include "translator.h"
 
-namespace spatosc {
-struct Scene::RegexHandle {
+namespace spatosc
+{
+struct Scene::RegexHandle
+{
 #ifdef HAVE_REGEX
     regex_t regex;
 #endif
