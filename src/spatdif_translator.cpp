@@ -77,11 +77,9 @@ void SpatdifTranslator::pushOSCMessages(Connection * conn)
     if (src->getChannelID() < 0)
         return;
 
-
     // FIXME:Wed Jan 19 16:22:42 EST 2011:tmatth should listener have channel ID? SpatDIF thinks so.
     // update sink position
     sendPosition("/spatosc/core/listener", snk);
-
 
     std::string srcPath = "/spatosc/core/source" + OSCutil::stringify(src->getChannelID());
 
