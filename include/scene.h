@@ -207,7 +207,17 @@ class Scene
          */
         void deleteAllNodes();
 
+        /**
+         * In synchronous mode, the messages are automaticlly sent evey time a node changes, otherwise the programmer needs to call flushMessages() every now and then.
+         * Default is to be in the synchronous mode. (true)
+         * @param synchronous Whether it should be in the synchronous mode or not.
+         */
         void setSynchronous(bool synchronous);
+        /**
+         * When in asynchronous mode, (not synchronous) one needs to call this quite often to flush the OSC messages.
+         * To be in the asynchronous mode, one should setSynchronous with false as parameter.
+         * @return Success or not. Returns false if in synchronous mode. (that would be an error to call this if this is the case)
+         */
         bool flushMessages();
     private:
         // private handle class
