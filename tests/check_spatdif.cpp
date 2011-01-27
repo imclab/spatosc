@@ -86,6 +86,13 @@ class DummyAudioSpatializer : public spatosc::SpatdifHandler
         {
             receiver_.poll();
         }
+        
+        bool allMessagesHandled() const
+        {
+            // if the size of handled size is 8 (the number of handler methods), we know
+            // that all of them have been called
+            return handled_.size() == 8;
+        }
 };
 
 int main()
@@ -103,10 +110,14 @@ int main()
     spat.poll();
     sender.sendMessage(prefix + "gain", "f", 1.1, SPATOSC_ARGS_END);
     spat.poll();
+    sender.sendMessage(prefix + "gainDB", "f", 1.1, SPATOSC_ARGS_END);
+    spat.poll();
     sender.sendMessage(prefix + "spread", "f", 1.1, SPATOSC_ARGS_END);
     spat.poll();
     sender.sendMessage(prefix + "spreadAE", "ff", 1.1, 2.2, SPATOSC_ARGS_END);
     spat.poll();
-    sender.sendMessage(prefix + "spreadAE", "ff", 1.1, 2.2, SPATOSC_ARGS_END);
+
+    if (not spat.allMessagesHandled())
+        return 1;
     return 0;
 }
