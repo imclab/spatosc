@@ -24,9 +24,6 @@
 #include <spatosc/spatdif_receiver.h>
 #include <glib/gmain.h> // for gtimeout
 
-// receive messages from the spatosc plugin
-const char* AudioScene::RX_PORT = spatosc::Translator::DEFAULT_SEND_PORT;
-
 void AudioScene::init()
 {
     alutInit(0, 0);
@@ -39,13 +36,22 @@ MyHandler::MyHandler(AudioScene *owner) : owner_(owner)
 
 void MyHandler::xyz(const std::string &id, float x, float y, float z)
 {
-    if (id == "source")
+    if (id == "source1")
     {
         owner_->sourcePos_[0] = x;
         owner_->sourcePos_[1] = y;
         owner_->sourcePos_[2] = z;
         owner_->updateSourcePosition();
     }
+    else if (id == "listener")
+    {
+        owner_->listenerPos_[0] = x;
+        owner_->listenerPos_[1] = y;
+        owner_->listenerPos_[2] = z;
+        owner_->updateListenerPosition();
+    }
+    else
+        std::cerr << "Unknown id " << id << std::endl;
 }
 
 
@@ -72,15 +78,13 @@ gboolean AudioScene::pollReceiver(gpointer data)
 
 void AudioScene::bindCallbacks()
 {
-    //receiver_->addHandler("/SpatDIF/core/source/1/position", "fff", onSourcePositionChanged, this);
-    //oscReceiver_->addHandler("/SpatDIF/core/listener/1/position", "fff", onListenerPositionChanged, this);
-    //oscReceiver_->addHandler(NULL, NULL, genericHandler, NULL);
     // add a timeout to poll our oscreceiver
     g_timeout_add(5 /*ms*/, pollReceiver, this);
 }
 
+// receive messages from the spatosc plugin
 AudioScene::AudioScene() : 
-    handler_(new MyHandler(this)), receiver_(new spatosc::SpatdifReceiver(RX_PORT, handler_.get()))
+    handler_(new MyHandler(this)), receiver_(new spatosc::SpatdifReceiver(spatosc::Translator::DEFAULT_SEND_PORT, handler_.get()))
 {
     createSource();
     createListener();

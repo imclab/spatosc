@@ -21,6 +21,7 @@
 
 #include "spatdif_receiver.h"
 #include "oscreceiver.h"
+#include <cstring>
 #include <lo/lo.h>
 #include <string>
 #include <iostream>
@@ -31,16 +32,16 @@
 namespace spatosc
 {
 
-SpatdifReceiver::SpatdifReceiver(const std::string &port, SpatdifHandler * handler) :
+SpatdifReceiver::SpatdifReceiver(const std::string &port, SpatdifHandler * handler, bool verbose) :
     receiver_(new OscReceiver(port.c_str())),
-    verbose_(false)
+    verbose_(verbose)
 {
     registerCallbacks(handler);
 }
 
 void SpatdifReceiver::registerCallbacks(SpatdifHandler *handler)
 {
-    receiver_->addHandler(NULL, NULL, onOSCMessage, handler);
+    receiver_->addHandler(NULL, NULL, SpatdifHandler::onOSCMessage, handler);
 }
 
 void SpatdifReceiver::poll()
@@ -53,7 +54,8 @@ void SpatdifReceiver::poll()
 namespace {
 std::string getID(const std::string &path)
 {
-    size_t idx = path.find_first_not_of("/spatosc/core/");
+    static const int NAMESPACE_LENGTH = strlen("/spatosc/core/");
+    size_t idx = NAMESPACE_LENGTH;
     std::string result(path.substr(idx, std::string::npos));
     result = result.substr(0, result.find_first_of("/"));
     return result;
@@ -67,12 +69,13 @@ std::string getMethodName(const std::string &path)
 }
 } // end anonymous namespace
 
-int SpatdifReceiver::onOSCMessage(const char * path, const char * /*types*/,
+int SpatdifHandler::onOSCMessage(const char * path, const char * /*types*/,
         lo_arg ** argv, int argc, void * /*data*/, void *user_data)
 {
-    SpatdifHandler *handler = static_cast<SpatdifHandler *>(user_data);
+    SpatdifHandler *handler = static_cast<SpatdifHandler*>(user_data);
     std::string id(getID(path));
     std::string method(getMethodName(path));
+    //std::cout << "id=" << id << ", method " << method << std::endl;
 
     // FIXME: Wed Jan 26 15:25:04 EST 2011: tmatth: refactor!!!
     // only core methods for now

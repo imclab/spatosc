@@ -60,7 +60,6 @@ class AudioScene {
         ALuint listener_;
         std::tr1::shared_ptr<MyHandler> handler_;
         std::tr1::shared_ptr<spatosc::SpatdifReceiver> receiver_;
-        static const char* RX_PORT;
 
     public:
         AudioScene();
