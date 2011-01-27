@@ -87,13 +87,13 @@ Scene::Scene() :
     translator_(new Translator(false)),
     autoConnect_(true),
     connectFilter_(),
-    ListenerList_(),
-    SoundSourceList_(),
+    listeners_(),
+    soundSources_(),
     connections_(),
     verbose_(false)
 {
-    this->ListenerList_.clear();
-    this->SoundSourceList_.clear();
+    this->listeners_.clear();
+    this->soundSources_.clear();
     this->connections_.clear();
     setConnectFilter(".*"); // match everything
 }
@@ -122,14 +122,14 @@ void Scene::debugPrint ()
     std::cout << "\n=====================================================" << std::endl;
     std::cout << "[Scene]:: connectFilter = " << connectFilter_ << std::endl;
 
-    std::cout << "[Scene]:: " << ListenerList_.size() << " listeners:" << std::endl;
-    for (L = ListenerList_.begin(); L != ListenerList_.end(); ++L)
+    std::cout << "[Scene]:: " << listeners_.size() << " listeners:" << std::endl;
+    for (L = listeners_.begin(); L != listeners_.end(); ++L)
     {
         (*L)->debugPrint();
     }
 
-    std::cout << "[Scene]:: " << SoundSourceList_.size() << " sources:" << std::endl;
-    for (n = SoundSourceList_.begin(); n != SoundSourceList_.end(); ++n)
+    std::cout << "[Scene]:: " << soundSources_.size() << " sources:" << std::endl;
+    for (n = soundSources_.begin(); n != soundSources_.end(); ++n)
     {
         (*n)->debugPrint();
     }
@@ -157,13 +157,13 @@ SoundSource* Scene::createSoundSource(const std::string &id)
         shared_ptr<SoundSource> tmp(new SoundSource(id, *this));
 
         // add it to the SoundSourceList:
-        SoundSourceList_.push_back(tmp);
+        soundSources_.push_back(tmp);
         node = dynamic_cast<Node *>(tmp.get());
 
         if (autoConnect_)
         {
             listenerIterator iter;
-            for (iter = ListenerList_.begin(); iter != ListenerList_.end(); ++iter)
+            for (iter = listeners_.begin(); iter != listeners_.end(); ++iter)
             {
                 connect(node, iter->get());
             }
@@ -190,12 +190,12 @@ Listener* Scene::createListener(const std::string &id)
         node = dynamic_cast<Node *>(tmp.get());
 
         // add it to the ListenerList:
-        ListenerList_.push_back(tmp);
+        listeners_.push_back(tmp);
 
         if (autoConnect_)
         {
             sourceIterator iter;
-            for (iter = SoundSourceList_.begin(); iter != SoundSourceList_.end(); ++iter)
+            for (iter = soundSources_.begin(); iter != soundSources_.end(); ++iter)
             {
                 connect(iter->get(), node);
             }
@@ -228,7 +228,7 @@ Node* Scene::getNode(const std::string &id)
 SoundSource* Scene::getSoundSource(const std::string &id)
 {
     sourceIterator n;
-    for (n = SoundSourceList_.begin(); n != SoundSourceList_.end(); ++n)
+    for (n = soundSources_.begin(); n != soundSources_.end(); ++n)
     {
         if ((*n)->id_ == id)
         {
@@ -241,7 +241,7 @@ SoundSource* Scene::getSoundSource(const std::string &id)
 Listener* Scene::getListener(const std::string &id)
 {
     listenerIterator L;
-    for (L = ListenerList_.begin(); L != ListenerList_.end(); ++L)
+    for (L = listeners_.begin(); L != listeners_.end(); ++L)
     {
         if ((*L)->id_ == id)
         {
@@ -407,7 +407,7 @@ bool Scene::deleteNode(SoundSource *node)
         return false;
     }
     disconnectNodeConnections(node);
-    return eraseFromVector(SoundSourceList_, node);
+    return eraseFromVector(soundSources_, node);
 }
 
 bool Scene::deleteNode(Listener *node)
@@ -418,7 +418,7 @@ bool Scene::deleteNode(Listener *node)
         return false;
     }
     disconnectNodeConnections(node);
-    return eraseFromVector(ListenerList_, node);
+    return eraseFromVector(listeners_, node);
 }
 
 void Scene::deleteAllNodes()
@@ -426,8 +426,8 @@ void Scene::deleteAllNodes()
     // we swap them with emtpy vectors to make sure their size is 0.
     // see http://www.gotw.ca/gotw/054.htm
     std::vector<std::tr1::shared_ptr<Connection> >().swap(connections_);
-    std::vector<std::tr1::shared_ptr<Listener> >().swap(ListenerList_);
-    std::vector<std::tr1::shared_ptr<SoundSource> >().swap(SoundSourceList_);
+    std::vector<std::tr1::shared_ptr<Listener> >().swap(listeners_);
+    std::vector<std::tr1::shared_ptr<SoundSource> >().swap(soundSources_);
 }
 
 } // end namespace spatosc

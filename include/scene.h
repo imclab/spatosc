@@ -228,8 +228,8 @@ class Scene
         std::string connectFilter_;
 
         //FIXME:2011-01-25:aalex:Would maps be faster?
-        std::vector<std::tr1::shared_ptr<Listener> >  ListenerList_;
-        std::vector<std::tr1::shared_ptr<SoundSource> > SoundSourceList_;
+        std::vector<std::tr1::shared_ptr<Listener> >  listeners_;
+        std::vector<std::tr1::shared_ptr<SoundSource> > soundSources_;
         std::vector<std::tr1::shared_ptr<Connection> > connections_;
         bool verbose_;
 };
