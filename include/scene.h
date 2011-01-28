@@ -85,6 +85,9 @@ class Scene
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
          *
          * If a node wih this name already exists, it returns a null pointer and prints an error message.
+         *
+         * Once you created a SoundSource, you should probably want to set its position and orientation.
+         *
          * @warning Make sure you call this node's setChannelID method after its creation.
          * @return A SoundSource pointer. Null if a node with this name already exists. Never free this pointer. It will become invalid if this node is deleted.
          */
@@ -92,6 +95,8 @@ class Scene
 
         /**
          * Returns a node in the scene identified by its identifier.
+         *
+         * The default position for any node is (0, 0, 0).
          *
          * If a node wih this name already exists, it returns a null pointer and prints an error message.
          * @return A Listener pointer. Null if a node with this name already exists. Never free this pointer. It will become invalid if this node is deleted.
@@ -146,7 +151,7 @@ class Scene
          * For this game process, you'd have several plugins instances that would send different
          * OSC streams to their respective renderers. For each of those plugins instances, you'd have
          * a different connect filter, so that player A listens to player B, but not to itself.
-         * 
+         *
          * @return Success or not.
          */
         bool setConnectFilter(std::string s);
@@ -200,7 +205,7 @@ class Scene
          * @param Whether to print a lot of messages or not.
          */
         void setVerbose(bool verbose);
-        
+
         /**
          * Delete all nodes in the scene.
          * Useful, so that you don't need to set the translator again.

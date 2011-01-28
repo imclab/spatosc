@@ -32,6 +32,7 @@
 
 namespace spatosc
 {
+
 class Connection;
 class Scene;
 
@@ -69,6 +70,14 @@ class Node
 
         /**
          * Sets this node's position in the 3D cartesian space.
+         * 
+         * Distances are in meters.
+         *
+         * The default coordinate space in this library is left-handed.
+         * On the horizontal axis, +X is on the right.
+         * On the longitudinal axis, +Y is in the front.
+         * On the vertical axis, +Z is up.
+         *
          * @param x Position on the X axis for this node.
          * @param y Position on the Y axis for this node.
          * @param z Position on the Z axis for this node.
@@ -78,11 +87,19 @@ class Node
         /**
          * Sets this node's orientation.
          *
+         * The orientation of a Node means the direction in which it is facing.
+         * For SoundSource nodes, this is quite useful if their directivity is omnidirectional.
+         * For Listener nodes, it sounds like it rotates the whole world around them, of course.
+         *
          * Angles are in degrees.
-         * 0 degrees is in front of you. 90 is on your right.
-         * @param pitch Rotation on the lateral axis (saying "yes")
-         * @param roll Rotation on the longitudinal axis (saying "maybe")
-         * @param yaw Rotation on the vertical axis (saying "no")
+         * 0 degrees is in front of the node. 90 is on its right.
+         *
+         * The default coordinate space in this library is left-handed.
+         * A rotation around the Z axis is positive when it is clockwise from a bird's eye view.
+         *
+         * @param pitch Rotation on the lateral (X) axis. (saying "yes")
+         * @param roll Rotation on the longitudinal (Y) axis. (saying "maybe")
+         * @param yaw Rotation on the vertical (Z) axis. (saying "no")
          */
         virtual void setOrientation(double pitch, double roll, double yaw);
 
@@ -99,13 +116,19 @@ class Node
          * Returns true if this node's new position must be sent
          * @return boolean
          */
-        bool sendNewPosition() const { return sendNewPosition_; }
-        
+        bool sendNewPosition() const
+        {
+            return sendNewPosition_;
+        }
+
         /**
          * Set to true if this node's new position has been sent
          * @return boolean
          */
-        void positionSent() { sendNewPosition_ = false; }
+        void positionSent()
+        {
+            sendNewPosition_ = false;
+        }
 
     protected:
         void notifyScene();
@@ -116,7 +139,7 @@ class Node
         bool active_;
         bool sendNewPosition_;
         // FIXME: Thu Jan 27 15:03:58 EST 2011 :tmatth:
-        // A source shouldn't have a connectFROM_ and a 
+        // A source shouldn't have a connectFROM_ and a
         // sink should not have a connectTO_
         std::vector<std::tr1::shared_ptr<Connection> > connectTO_;
         std::vector<std::tr1::shared_ptr<Connection> > connectFROM_;

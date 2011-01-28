@@ -78,7 +78,7 @@ void SpatdifTranslator::pushOSCMessages(Connection * conn)
         return;
     }
 
-    // FIXME:Wed Jan 19 16:22:42 EST 2011:tmatth 
+    // FIXME:Wed Jan 19 16:22:42 EST 2011:tmatth
     // do we want node-type/node-id or just node-id?
     //
     bool newPositions = false;
@@ -98,7 +98,7 @@ void SpatdifTranslator::pushOSCMessages(Connection * conn)
         newPositions = true;
     }
 
-    // FIXME: Thu Jan 27 15:35:29 EST 2011:tmatth 
+    // FIXME: Thu Jan 27 15:35:29 EST 2011:tmatth
     // maybe this should be in connection? Probably not though.
     if (newPositions)
     {
