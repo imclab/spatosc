@@ -70,6 +70,8 @@ class Node
 
         /**
          * Sets this node's position in the 3D cartesian space.
+         * 
+         * Distances are in meters.
          *
          * The default coordinate space in this library is left-handed.
          * On the horizontal axis, +X is on the right.
