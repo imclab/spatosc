@@ -162,7 +162,7 @@ SoundSource* Scene::createSoundSource(const std::string &id)
     // check if it already exists (as a source or listener):
     if (getListener(id) != 0)
     {
-        std::cerr << "Cannot create sound source " << id << 
+        std::cerr << "Cannot create sound source " << id <<
             ", there is already a listener with that id\n";
         return 0;
     }
@@ -200,7 +200,7 @@ Listener* Scene::createListener(const std::string &id)
     // check if it already exists (as a source or listener:
     if (getSoundSource(id) != 0)
     {
-        std::cerr << "Cannot create listener " << id << 
+        std::cerr << "Cannot create listener " << id <<
             ", there is already a sound source with that id\n";
         return 0;
     }

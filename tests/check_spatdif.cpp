@@ -86,7 +86,7 @@ class DummyAudioSpatializer : public spatosc::SpatdifHandler
         {
             receiver_.poll();
         }
-        
+
         bool allMessagesHandled() const
         {
             // if the size of handled size is 8 (the number of handler methods), we know
