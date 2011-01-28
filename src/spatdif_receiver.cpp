@@ -47,11 +47,9 @@ void SpatdifReceiver::registerCallbacks(SpatdifHandler *handler)
 void SpatdifReceiver::poll()
 {
     int bytes = 0;
-    int iterations = 0;
     do 
     {
         bytes = receiver_->receive();
-        iterations++; 
     }
     while (bytes > 0);
             
