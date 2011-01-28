@@ -412,7 +412,6 @@ void Scene::onConnectionChanged(Connection *conn)
     }
 }
 
-// Should be called at regular interval to flush the OSC messages to be sent.
 bool Scene::flushMessages()
 {
     if (synchronous_)

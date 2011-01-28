@@ -213,7 +213,7 @@ class Scene
         void deleteAllNodes();
 
         /**
-         * In synchronous mode, the messages are automaticlly sent evey time a node changes, otherwise the programmer needs to call flushMessages() every now and then.
+         * In synchronous mode, the messages are automaticlly sent evey time a node changes, otherwise the programmer needs to call flushMessages() every now and then to flush the OSC messages to be sent.
          * Default is to be in the synchronous mode. (true)
          * @param synchronous Whether it should be in the synchronous mode or not.
          */
