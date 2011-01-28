@@ -46,7 +46,15 @@ void SpatdifReceiver::registerCallbacks(SpatdifHandler *handler)
 
 void SpatdifReceiver::poll()
 {
-    int bytes = receiver_->receive();
+    int bytes = 0;
+    int iterations = 0;
+    do 
+    {
+        bytes = receiver_->receive();
+        iterations++; 
+    }
+    while (bytes > 0);
+            
     if (bytes > 0 && verbose_)
         std::cout << "received " << bytes << " bytes" << std::endl;
 }
