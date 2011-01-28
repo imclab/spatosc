@@ -69,11 +69,6 @@ void DmitriTranslator::pushOSCMessages(Connection *conn)
         std::cerr << __FUNCTION__ << "This connection does not have a valid source node." << std::endl;
         return;
     }
-    if (src->getChannelID() < 0)
-    {
-        std::cerr << __FUNCTION__ << "This sound source has a negative channel ID." << std::endl;
-        return;
-    }
 
     if (src->sendNewPosition())
     {
@@ -81,15 +76,15 @@ void DmitriTranslator::pushOSCMessages(Connection *conn)
         float spacemapX = cos(conn->azimuth()) * r * SPACEMAP_RADIUS;
         float spacemapY = sin(conn->azimuth()) * r * SPACEMAP_RADIUS;
 
-        str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/x";
+        str = "/spacemap/" + src->getID() + "/x";
         //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
         sender_->sendMessage(str.c_str(), "f", spacemapX, SPATOSC_ARGS_END);
 
-        str = "/spacemap/" + OSCutil::stringify(src->getChannelID()) + "/y";
+        str = "/spacemap/" + src->getID() + "/y";
         //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
         sender_->sendMessage(str.c_str(), "f", spacemapY, SPATOSC_ARGS_END);
 
-        str = "Input " + OSCutil::stringify(src->getChannelID()) + " Level";
+        str = "Input " + src->getID() + " Level";
         //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
         sender_->sendMessage("/set", "sf", str.c_str(), conn->gainDB(), SPATOSC_ARGS_END);
         src->positionSent();

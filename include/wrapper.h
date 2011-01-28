@@ -55,7 +55,6 @@ class Wrapper
         bool createListener(const std::string &nodeName);
         /**
          * Creates a sound source.
-         * @warning Make sure you call setSourceChannel after you call this.
          * @return Success or not.
          */
         bool createSource(const std::string &nodeName);
@@ -94,13 +93,6 @@ class Wrapper
          * @return Success or not.
          */
         bool setPosition(const std::string &nodeName, double x, double y, double z);
-        /**
-         * Sets a sound source's channel number.
-         * The channel number must be postive to be valid.
-         * @warning Make sure you call this for each SoundSource Node you create.
-         * @return Success or not.
-         */
-        bool setSourceChannel(const std::string &nodeName, int channel);
         /**
          * Sets the translator to use.
          * Example of valid translators names include "SpatdifTranslator" and "DmitriTranslator".

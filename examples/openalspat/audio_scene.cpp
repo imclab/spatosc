@@ -43,7 +43,7 @@ void MyHandler::xyz(const std::string &id, float x, float y, float z)
         owner_->sourcePos_[2] = z;
         owner_->updateSourcePosition();
     }
-    else if (id == "listener")
+    else if (id == "listener1")
     {
         owner_->listenerPos_[0] = x;
         owner_->listenerPos_[1] = y;
