@@ -89,18 +89,23 @@ static bool nodeSortFunction (Node *n1, Node *n2)
 #endif
 
 // for now, create a basic (CONSOLE) translator:
-Scene::Scene() :
+Scene::Scene(const std::string &receiverPort) :
     connectRegex_(new Scene::RegexHandle),
     translator_(new Translator(false)),
     autoConnect_(true),
     connectFilter_(),
-    receiver_(0),
+    receiver_(),
     listeners_(),
     soundSources_(),
     connections_(),
     verbose_(false),
     synchronous_(true)
 {
+    if (not receiverPort.empty())
+    {
+        receiver_.reset(new SpatdifReceiver(receiverPort));
+        std::cout << "Scene receiving on port " << receiverPort << std::endl;
+    }
     this->listeners_.clear();
     this->soundSources_.clear();
     this->connections_.clear();
@@ -159,24 +164,6 @@ void Scene::debugPrint ()
     }
 }
 
-void Scene::setReceiver(const std::string &port)
-{
-	// TODO: (mikewoz) It's probably not good to have a public method for this.
-	// Ideally, we want the user to set the receiver at the start (right when
-	// the Scene is created), and never change it. You can't change a liblo
-	// server (socket) once it's created anyway, and you don't want to loose all
-	// the registered handlers!
-	//
-	// The receiver should thus be created in the Scene constructor... but, it's
-	// not always needed, and we don't want to occupy a socket for nothing.
-
-	if (receiver_) delete receiver_;
-	//receiver_ = new SpatdifReceiver(port, NULL, verbose_);
-	receiver_ = new OscReceiver(port);
-
-}
-
-
 SoundSource* Scene::createSoundSource(const std::string &id)
 {
     using std::tr1::shared_ptr;
@@ -202,16 +189,12 @@ SoundSource* Scene::createSoundSource(const std::string &id)
         {
             ListenerIterator iter;
             for (iter = listeners_.begin(); iter != listeners_.end(); ++iter)
-            {
                 connect(node, iter->get());
-            }
         }
 
         // register a callback for the sound source with the oscReceiver:
         if (receiver_)
-        {
-        	receiver_->addHandler(NULL,NULL,SpatdifReceiver::onNodeMessage,(void*)node);
-        }
+        	receiver_->addHandler(NULL, NULL, SpatdifReceiver::onNodeMessage, node);
 
         return node;
     }
@@ -220,6 +203,12 @@ SoundSource* Scene::createSoundSource(const std::string &id)
         std::cerr << "A node named " << id << " of type " << typeid(node).name() << " already exists." << std::endl;
         return 0;
     }
+}
+
+void Scene::poll()
+{
+    if (receiver_)
+        receiver_->poll();
 }
 
 Listener* Scene::createListener(const std::string &id)

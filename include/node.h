@@ -71,7 +71,7 @@ class Node
 
         /**
          * Sets this node's position in the 3D cartesian space.
-         * 
+         *
          * Distances are in meters.
          *
          * The default coordinate space in this library is left-handed.
@@ -97,7 +97,7 @@ class Node
          *
          * The default coordinate space in this library is left-handed.
          * A rotation around the Z axis is positive when it is clockwise from a bird's eye view.
-         * 
+         *
          * Pitch, roll and yaw are computed in this order. These are Euler's angles.
          *
          * @param pitch Rotation on the lateral (X) axis. (saying "yes")
@@ -133,7 +133,7 @@ class Node
             sendNewPosition_ = false;
         }
 
-        void handleMessage(const std::string &method, int argc, lo_arg ** argv);
+        virtual void handleMessage(const std::string &method, int argc, lo_arg ** argv);
 
     protected:
         void notifyScene();

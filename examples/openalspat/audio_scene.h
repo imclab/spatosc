@@ -25,27 +25,16 @@
 #include <glib/gtypes.h>
 #include "lo/lo.h"
 
-#include <spatosc/spatdif_receiver.h>
+#include <spatosc/scene.h>
 
 
 class AudioScene;
 namespace spatosc {
-    class SpatdifReceiver;
+    class SoundSource;
 }
-    
-class MyHandler : public spatosc::SpatdifHandler 
-{
-    private:
-        AudioScene *owner_;
-        virtual void xyz(const std::string &id, float x, float y, float z);
-    public:
-        MyHandler(AudioScene *owner);
-
-};
 
 class AudioScene {
     private:
-        friend class MyHandler;
         void createSource();
         void createListener();
         void updatePosition();
@@ -54,12 +43,12 @@ class AudioScene {
         void updateListenerPosition();
         static gboolean pollReceiver(gpointer data);
 
+        spatosc::Scene scene_;
         ALfloat sourcePos_[3];
         ALuint source_;
         ALfloat listenerPos_[3];
         ALuint listener_;
-        std::tr1::shared_ptr<MyHandler> handler_;
-        std::tr1::shared_ptr<spatosc::SpatdifReceiver> receiver_;
+        spatosc::SoundSource *soundNode_;
 
     public:
         AudioScene();

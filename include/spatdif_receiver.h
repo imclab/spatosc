@@ -27,19 +27,17 @@
 #define _SPATDIF_RECEIVER_H_
 
 #include <string>
+#include "oscreceiver.h"
 #include "memory.h"
-#include <lo/lo.h>
 
 namespace spatosc
 {
 
-class OscReceiver;
-
+#if 0
 class SpatdifHandler
 {
     public:
         virtual ~SpatdifHandler() {};
-        static int onOSCMessage(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
     private:
         virtual void xyz(const std::string &id, float x, float y, float z) = 0;
         virtual void aed(const std::string &id, float azimuth, float elevation, float distanceMeters);
@@ -50,11 +48,12 @@ class SpatdifHandler
         virtual void spread(const std::string &id, float spread);
         virtual void spreadAE(const std::string &id, float azimSpread, float elevSpread);
 };
+#endif
 
 /**
  * Useful for clients to receive messages from spatosc's SpatdifTranslator.
  */
-class SpatdifReceiver
+class SpatdifReceiver : public OscReceiver
 {
     public:
         /**
@@ -62,17 +61,15 @@ class SpatdifReceiver
          * Starts listening for OSC messages on the given port.
          * @param port String that must be a valid port number.
          */
-        SpatdifReceiver(const std::string &port, SpatdifHandler *handler, bool verbose = false);
+        SpatdifReceiver(const std::string &port, bool verbose = false);
         /**
          * Checks for incoming OSC messages.
          */
         void poll();
+        static int onNodeMessage(const char * path, const char * /*types*/,
+        lo_arg ** argv, int argc, void * /*data*/, void *user_data);
 
-        static int onNodeMessage(const char * path, const char *types,
-                lo_arg ** argv, int argc, void *data, void *user_data);
     private:
-        void registerCallbacks(SpatdifHandler * handler);
-        std::tr1::shared_ptr<OscReceiver> receiver_;
         bool verbose_;
 };
 
