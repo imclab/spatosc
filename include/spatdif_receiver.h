@@ -67,6 +67,9 @@ class SpatdifReceiver
          * Checks for incoming OSC messages.
          */
         void poll();
+
+        static int onNodeMessage(const char * path, const char *types,
+                lo_arg ** argv, int argc, void *data, void *user_data);
     private:
         void registerCallbacks(SpatdifHandler * handler);
         std::tr1::shared_ptr<OscReceiver> receiver_;

@@ -36,6 +36,7 @@ class Node;
 class SoundSource;
 class Connection;
 class Translator;
+class OscReceiver;
 
 /**
  * Manages the nodes and their connections.
@@ -80,6 +81,11 @@ class Scene
         {
             translator_.reset(new T(address, port, verbose));
         }
+
+        /**
+         * Set a receiver so that this scene can be updated via Spatdif OSC.
+         */
+        void setReceiver(const std::string &port);
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
@@ -245,6 +251,8 @@ class Scene
         std::tr1::shared_ptr<Translator> translator_;
         bool autoConnect_;
         std::string connectFilter_;
+
+        OscReceiver *receiver_;
 
         //FIXME:2011-01-25:aalex:Would maps be faster?
         std::vector<std::tr1::shared_ptr<Listener> >  listeners_;

@@ -1,6 +1,9 @@
 #include "./oscreceiver.h"
 #include <iostream>
 #include <cstdio>
+#include <cassert>
+
+#include "soundsource.h"
 
 namespace spatosc
 {
@@ -57,6 +60,7 @@ int OscReceiver::genericHandler(const char *path,
     return 1;
 }
 #endif // CONFIG_DEBUG
+
 
 std::string OscReceiver::toString() const
 {

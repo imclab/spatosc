@@ -27,6 +27,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <lo/lo.h>
 #include "maths.h"
 #include "memory.h"
 
@@ -131,6 +132,8 @@ class Node
         {
             sendNewPosition_ = false;
         }
+
+        void handleMessage(const std::string &method, int argc, lo_arg ** argv);
 
     protected:
         void notifyScene();

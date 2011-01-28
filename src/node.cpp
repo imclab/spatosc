@@ -21,6 +21,7 @@
 #include "scene.h"
 #include "connection.h"
 
+
 namespace spatosc
 {
 
@@ -62,6 +63,12 @@ void Node::setOrientation(double pitch, double roll, double yaw)
         rot_ = Vector3(pitch, roll, yaw);
         notifyScene();
     }
+}
+
+void Node::handleMessage(const std::string &method, int argc, lo_arg ** /*argv*/)
+{
+	std::cout << "TODO: handle message for node " << id_ << ": " << method << "("<<argc<<" args)" << std::endl;
+
 }
 
 void Node::notifyScene()

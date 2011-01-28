@@ -21,6 +21,7 @@
 
 #include "spatdif_receiver.h"
 #include "oscreceiver.h"
+#include "node.h"
 #include <cstring>
 #include <lo/lo.h>
 #include <string>
@@ -79,6 +80,7 @@ int SpatdifHandler::onOSCMessage(const char * path, const char * /*types*/,
         lo_arg ** argv, int argc, void * /*data*/, void *user_data)
 {
     SpatdifHandler *handler = static_cast<SpatdifHandler*>(user_data);
+
     // FIXME: Thu Jan 27 14:36:07 EST 2011 : tmatth: use regexes/improve path,
     // reduce string comparisons
     std::string id(getID(path));
@@ -132,7 +134,47 @@ int SpatdifHandler::onOSCMessage(const char * path, const char * /*types*/,
         std::cerr << "Unknown method " << method << std::endl;
         return 1;
     }
-    return 0;
+    return 1;
+}
+
+
+
+int SpatdifReceiver::onNodeMessage(const char * path, const char * /*types*/,
+        lo_arg ** argv, int argc, void * /*data*/, void *user_data)
+{
+    Node *node = static_cast<Node*>(user_data);
+
+    // TODO: (mikewoz) check if the path prefix is in /spatosc/core namespace
+
+    // TODO: (mikewoz) then check that 2nd last path component matches source->getID()
+
+    // then get method:
+    std::string pathStr = std::string(path);
+    size_t idx = pathStr.find_last_of("/") + 1;
+    std::string method(pathStr.substr(idx, std::string::npos));
+
+    // then call node's handleMessage and perhaps return true if handled?
+    node->handleMessage(method, argc, argv);
+
+    /*
+    if (method == "xyz")
+    {
+        assert (argc == 3);
+        node->setPosition(argv[0]->f, argv[1]->f, argv[2]->f);
+    }
+    else if (method == "aed")
+    {
+        assert(argc == 3);
+        node->setOrientation(argv[0]->f, argv[1]->f, argv[2]->f);
+    }
+    else
+    {
+        std::cerr << "Unknown method " << method << std::endl;
+        return 1;
+    }
+     */
+
+    return 1;
 }
 
 // FIXME: these shouldn't have empty implementations

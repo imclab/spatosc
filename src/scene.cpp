@@ -33,6 +33,8 @@
 #include "node.h"
 #include "soundsource.h"
 #include "translator.h"
+#include "oscreceiver.h"
+#include "spatdif_receiver.h"
 
 namespace spatosc
 {
@@ -92,6 +94,7 @@ Scene::Scene() :
     translator_(new Translator(false)),
     autoConnect_(true),
     connectFilter_(),
+    receiver_(0),
     listeners_(),
     soundSources_(),
     connections_(),
@@ -156,6 +159,24 @@ void Scene::debugPrint ()
     }
 }
 
+void Scene::setReceiver(const std::string &port)
+{
+	// TODO: (mikewoz) It's probably not good to have a public method for this.
+	// Ideally, we want the user to set the receiver at the start (right when
+	// the Scene is created), and never change it. You can't change a liblo
+	// server (socket) once it's created anyway, and you don't want to loose all
+	// the registered handlers!
+	//
+	// The receiver should thus be created in the Scene constructor... but, it's
+	// not always needed, and we don't want to occupy a socket for nothing.
+
+	if (receiver_) delete receiver_;
+	//receiver_ = new SpatdifReceiver(port, NULL, verbose_);
+	receiver_ = new OscReceiver(port);
+
+}
+
+
 SoundSource* Scene::createSoundSource(const std::string &id)
 {
     using std::tr1::shared_ptr;
@@ -185,6 +206,13 @@ SoundSource* Scene::createSoundSource(const std::string &id)
                 connect(node, iter->get());
             }
         }
+
+        // register a callback for the sound source with the oscReceiver:
+        if (receiver_)
+        {
+        	receiver_->addHandler(NULL,NULL,SpatdifReceiver::onNodeMessage,(void*)node);
+        }
+
         return node;
     }
     else

@@ -65,6 +65,9 @@ class OscReceiver
          * \endcode
          */
         int receive();
+
+        static int onSourceMessage(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
+
     private:
         // not implemented
         OscReceiver(const OscReceiver&);
