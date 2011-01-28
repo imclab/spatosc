@@ -112,7 +112,7 @@
     }
 
     configuration { "windows" }
-      links   { "liblo.lib",
+      links   { "liblo",
                 "ws2_32",
               }
             
