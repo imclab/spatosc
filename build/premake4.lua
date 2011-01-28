@@ -105,7 +105,6 @@
     files {
       "../src/*.cpp",
       "../include/*.h",
-      "../src/spatosc.def",
     }
 
     excludes {
@@ -113,10 +112,8 @@
     }
 
     configuration { "windows" }
-      links   { "user32",
-                "wsock32",
+      links   { "liblo.lib",
                 "ws2_32",
-                "pthreadVC2",
               }
             
     configuration { "*Lib" }
