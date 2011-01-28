@@ -96,6 +96,8 @@ class Node
          *
          * The default coordinate space in this library is left-handed.
          * A rotation around the Z axis is positive when it is clockwise from a bird's eye view.
+         * 
+         * Pitch, roll and yaw are computed in this order. These are Euler's angles.
          *
          * @param pitch Rotation on the lateral (X) axis. (saying "yes")
          * @param roll Rotation on the longitudinal (Y) axis. (saying "maybe")
