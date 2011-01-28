@@ -46,10 +46,8 @@ int main(int /*argc*/, char ** /*argv*/)
     // D-Mitri. Setting the bus to -1 will effectively disable computation for
     // that node:
     scene.createListener("listener");
-    SoundSource *foo = scene.createSoundSource("foo");
-    foo->setChannelID(1);
-    SoundSource *bar = scene.createSoundSource("bar");
-    bar->setChannelID(2);
+    SoundSource *foo = scene.createSoundSource("1");
+    SoundSource *bar = scene.createSoundSource("2");
 
     // In order to send OSC, some output plugin must be specified. In this case,
     // we choose D-Mitri, and provide the IP address of the server on the

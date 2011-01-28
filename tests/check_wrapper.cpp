@@ -56,8 +56,6 @@ bool test_wrapper()
         return false;
     if (! wrapper.setPosition("source", 1.0, 1.0, 1.0))
         return false;
-    if (! wrapper.setSourceChannel("source", 1))
-        return false;
     return true;
 }
 
