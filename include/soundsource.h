@@ -35,29 +35,7 @@ namespace spatosc
 class SoundSource : public Node
 {
     public:
-        /**
-         * @warning Make sure you call setChannelID
-         */
         SoundSource(const std::string &nodeID, Scene &scene);
-
-        virtual void debugPrint() const;
-
-        /**
-         * Sets the input channel number - for when using live sound sources.
-         * Note that nodes need a positive channel ID. If not set, their coordinates will not be sent by the Translator. (to D-Mitri, for example)
-         * @param channel The channel number.
-         */
-        void setChannelID(int channel);
-
-        /**
-         * Returns the input channel number - for when using live sound sources.
-         * @return An audio channel number which can be used to represent the actual audio channel of an audio interface.
-         */
-        int getChannelID() const { return channelID_; }
-
-    protected:
-
-        int channelID_;
 };
 
 } // end namespace spatosc

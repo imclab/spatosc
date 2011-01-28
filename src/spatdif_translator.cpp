@@ -72,24 +72,18 @@ void SpatdifTranslator::pushOSCMessages(Connection * conn)
     assert(src);
     assert(snk);
 
-    if (src->getChannelID() < 0)
-    {
-        std::cerr << "Invalid channel ID " << src->getChannelID() << " for source\n";
-        return;
-    }
-
     // FIXME:Wed Jan 19 16:22:42 EST 2011:tmatth
     // do we want node-type/node-id or just node-id?
     //
     bool newPositions = false;
     if (snk->sendNewPosition())
     {
-        sendPosition("/spatosc/core/listener", snk);
+        sendPosition("/spatosc/core/listener/" + snk->getID(), snk);
         snk->positionSent();
         newPositions = true;
     }
 
-    std::string srcPath = "/spatosc/core/source" + OSCutil::stringify(src->getChannelID());
+    std::string srcPath = "/spatosc/core/source/" + src->getID();
 
     if (src->sendNewPosition())
     {

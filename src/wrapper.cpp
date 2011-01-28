@@ -157,21 +157,6 @@ bool Wrapper::setPosition(const std::string &nodeName, double x, double y, doubl
     }
 }
 
-bool Wrapper::setSourceChannel(const std::string &nodeName, int channel)
-{
-    SoundSource *node = scene_->getSoundSource(nodeName);
-    if (! node)
-    {
-        std::cerr << "No such node: " << nodeName << std::endl;
-        return false;
-    }
-    else
-    {
-        node->setChannelID(channel);
-        return true;
-    }
-}
-
 bool Wrapper::setTranslator(const std::string &translatorName, const std::string &sendToAddress, const std::string &port)
 {
     if (translatorName == "SpatdifTranslator")

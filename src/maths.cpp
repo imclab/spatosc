@@ -19,6 +19,17 @@
 
 #include "maths.h"
 
+namespace
+{
+
+// std::isnan is not found in some old std C++ libraries, so we define it here:
+inline bool isNan(double x)
+{
+    return x != x;
+}
+
+} // end of anonymous namespace
+
 namespace spatosc
 {
 
@@ -111,7 +122,7 @@ double AngleBetweenVectors(Vector3 v1, Vector3 v2)
 
     // Here we make sure that the angle is not a -1.#IND0000000 number,
     // which means indefinite
-    if (std::isnan(angle))  //__isnand(x)
+    if (isNan(angle))
         return 0;
 
     // Return the angle in radians

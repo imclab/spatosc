@@ -1,14 +1,16 @@
 This directory contains tools to build spatosc on Microsoft Windows.
 
-1) Launch a DOS console, cd to this directory and type something like this:
+ * Launch a command-line console, cd to this directory and type something like this:
 
- > premake4.exe vs2008
+C:\Users\USER\spatosc> premake4.exe vs2008
 
-2) Next, launch the create project with Microsoft Visual Studio 2002, 2003, 2005, or 2008, including the Express editions.
+ * Next, launch the create project with Microsoft Visual Studio 2002, 2003, 2005, or 2008, including the Express editions.
 
-3) You need to add a few libraries to this project.
+ * You need to add a few libraries to this project.
+   - liblo_d.lib (liblo)
+   - ws2_32.lib (Win Sock)
 
-4) Make sure you link statically to all libraries.
+ * Make sure you link statically to all libraries.
+   - Go to "Configuration Properties > General > Project Defaults > Configuration Type" and choose "Static Library (.lib)"
 
 See http://industriousone.com/premake for more info on how to use Premake.
-

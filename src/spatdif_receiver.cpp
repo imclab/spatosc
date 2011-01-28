@@ -58,14 +58,13 @@ void SpatdifReceiver::poll()
         std::cout << "received " << bytes << " bytes" << std::endl;
 }
 
+// Helper methods to parse OSC paths
 namespace {
 std::string getID(const std::string &path)
 {
-    static const int NAMESPACE_LENGTH = strlen("/spatosc/core/");
-    size_t idx = NAMESPACE_LENGTH;
-    std::string result(path.substr(idx, std::string::npos));
-    result = result.substr(0, result.find_first_of("/"));
-    return result;
+    size_t idx = path.find_last_of("/");
+    std::string result(path.substr(0, idx)); 
+    return result.substr(result.find_last_of("/") + 1, std::string::npos); 
 }
 
 std::string getMethodName(const std::string &path)
@@ -73,6 +72,13 @@ std::string getMethodName(const std::string &path)
     size_t idx = path.find_last_of("/") + 1;
     std::string result(path.substr(idx, std::string::npos));
     return result;
+}
+
+std::string getTypeName(const std::string &path)
+{
+    size_t idx = strlen("/spatosc/core/");
+    std::string result(path.substr(idx, std::string::npos));
+    return result.substr(0, result.find_first_of("/"));
 }
 } // end anonymous namespace
 
