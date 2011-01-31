@@ -37,6 +37,8 @@ class Listener : public Node
     public:
         Listener(const std::string &nodeID, Scene &scene);
         virtual void debugPrint() const;
+    private:
+        virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv);
 };
 
 } // end namespace spatosc

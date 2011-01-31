@@ -165,6 +165,8 @@ class Node
         // sink should not have a connectTO_
         std::vector<std::tr1::shared_ptr<Connection> > connectTO_;
         std::vector<std::tr1::shared_ptr<Connection> > connectFROM_;
+    private:
+        virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv) = 0;
 };
 
 } // end namespace spatosc

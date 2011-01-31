@@ -96,47 +96,49 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv)
     {
         //assert(argc == 3);
         //aed(argv[0]->f, argv[1]->f, argv[2]->f);
-        std::cout << "NOT IMPLEMENTED" << std::endl;
+        std::cerr << method << " NOT IMPLEMENTED" << std::endl;
     }
     else if (method == "xy")
     {
         //assert(argc == 2);
         //xy(argv[0]->f, argv[1]->f);
-        std::cout << "NOT IMPLEMENTED" << std::endl;
+        std::cerr << method << " NOT IMPLEMENTED" << std::endl;
     }
     else if (method == "delay")
     {
         //assert(argc == 1);
         //delay(argv[0]->f);
-        std::cout << "NOT IMPLEMENTED" << std::endl;
+        std::cerr << method << " NOT IMPLEMENTED" << std::endl;
     }
     else if (method == "gain")
     {
         //assert(argc == 1);
         //gain(argv[0]->f);
-        std::cout << "NOT IMPLEMENTED" << std::endl;
+        std::cerr << method << " NOT IMPLEMENTED" << std::endl;
     }
     else if (method == "gainDB")
     {
         //assert(argc == 1);
         //gainDB(argv[0]->f);
-        std::cout << "NOT IMPLEMENTED" << std::endl;
+        std::cerr << method << " NOT IMPLEMENTED" << std::endl;
     }
     else if (method == "spread")
     {
         //assert(argc == 1);
         //spread(argv[0]->f);
-        std::cout << "NOT IMPLEMENTED" << std::endl;
+        std::cerr << method << " NOT IMPLEMENTED" << std::endl;
     }
     else if (method == "spreadAE")
     {
         //assert(argc == 2);
         //spreadAE(argv[0]->f, argv[1]->f);
-        std::cout << "NOT IMPLEMENTED" << std::endl;
+        std::cerr << method << " NOT IMPLEMENTED" << std::endl;
     }
     else
     {
-        std::cerr << "Unknown method " << method << std::endl;
+        // delegate to derived classes
+        if (not handleMessage_(method, argc, argv))
+            std::cerr << "Unknown method " << method << std::endl;
     }
 }
 } // end namespace spatosc
