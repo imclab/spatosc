@@ -254,7 +254,7 @@ Vector3 rotateAroundAxis(Vector3 v, Vector3 axis, double angle)
               + (t * axis.z * axis.z +          c) * v.z;
 
     Vector3 w = Vector3(w1,w2,w3);
-    w.Normalize();
+    w.Normalize(); // why normalize?
 
     return w;
 }
