@@ -24,14 +24,12 @@
  * $ libtool --mode=execute gdb check_distance
  */
 #include <iostream>
-#include <tr1/memory>
 #include "spatosc.h"
 
 static const bool VERBOSE = false;
 
 int main(int /*argc*/, char ** /*argv*/)
 {
-    using std::tr1::shared_ptr;
     using namespace spatosc;
 
     if (VERBOSE)

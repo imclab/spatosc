@@ -26,7 +26,6 @@
  */
 #include <iostream>
 #include <cmath>
-#include <tr1/memory>
 #include "spatosc.h"
 
 static const bool VERBOSE = true;
@@ -55,7 +54,6 @@ static int checkAngles(spatosc::Connection *conn, double azim, double elev, cons
 
 int main(int /*argc*/, char ** /*argv*/)
 {
-    using std::tr1::shared_ptr;
     using namespace spatosc;
 
     if (VERBOSE)

@@ -18,15 +18,12 @@
  */
 
 #include <iostream>
-#include <tr1/memory>
 #include "spatosc.h"
-
 
 static const bool VERBOSE = false;
 
 int main(int /*argc*/, char ** /*argv*/)
 {
-    using std::tr1::shared_ptr;
     using namespace spatosc;
     if (VERBOSE)
         std::cout << "\nRunning spatoscTest ...\n" << std::endl;
