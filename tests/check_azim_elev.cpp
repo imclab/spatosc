@@ -36,8 +36,8 @@ static const double EPSILON = 0.0001;
  */
 static bool checkAngles(spatosc::Connection *conn, double azim, double elev, const char *description="")
 {
-	double dAzim = std::abs(conn->azimuth() * TO_DEGREES - azim);
-	double dElev = std::abs(conn->elevation() * TO_DEGREES - elev);
+	double dAzim = std::abs(conn->azimuth() * spatosc::TO_DEGREES - azim);
+	double dElev = std::abs(conn->elevation() * spatosc::TO_DEGREES - elev);
 
 	bool success = ((dAzim < EPSILON) && (dElev < EPSILON));
 
@@ -45,7 +45,7 @@ static bool checkAngles(spatosc::Connection *conn, double azim, double elev, con
 	{
 		std::cout << description << ": " << std::endl;
 		std::cout << "  got: "
-			<< conn->azimuth() * TO_DEGREES << "," << (conn->elevation() * TO_DEGREES)
+			<< conn->azimuth() * spatosc::TO_DEGREES << "," << (conn->elevation() * spatosc::TO_DEGREES)
 			<< ", expecting: " << azim << "," << elev
 			<< " deltas: " << dAzim << "," << dElev
 			<< (success ? " passed!" : " failed!") << std::endl;
