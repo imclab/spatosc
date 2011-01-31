@@ -115,6 +115,16 @@ class Node
         }
 
         /**
+         * Returns this node's orientation.
+         * @return A Vector3 with pitch, roll, and yaw (in radians)
+         *
+         */
+        Vector3 getOrientation() const
+        {
+            return rot_;
+        }
+
+        /**
          * Returns true if this node's new position must be sent
          * @return boolean
          */
