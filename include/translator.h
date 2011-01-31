@@ -56,9 +56,6 @@ class Translator
          */
         virtual ~Translator() {}
 
-        static const char *DEFAULT_SEND_PORT;
-        static const char *DEFAULT_RECEIVER_PORT;
-
     protected:
         bool verbose_;
 };

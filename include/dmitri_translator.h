@@ -42,6 +42,8 @@ public:
     DmitriTranslator(const std::string &ip, const std::string &toPort, const std::string &fromPort, bool verbose);
     DmitriTranslator(const std::string &ip, const std::string &toPort, bool verbose);
     virtual void pushOSCMessages(Connection *conn);
+    static const char *DEFAULT_SEND_PORT;
+    static const char *DEFAULT_RECEIVER_PORT;
 
 private:
     static const double SPACEMAP_RADIUS;

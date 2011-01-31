@@ -29,6 +29,8 @@
 namespace spatosc
 {
 
+const char *DmitriTranslator::DEFAULT_SEND_PORT = "18033";
+const char *DmitriTranslator::DEFAULT_RECEIVER_PORT = "18099";
 const double DmitriTranslator::SPACEMAP_RADIUS = 750.0;
 
 // ************************************************
