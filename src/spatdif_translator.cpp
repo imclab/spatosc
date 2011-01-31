@@ -72,8 +72,8 @@ void SpatdifTranslator::sendGainDB(const std::string &prefix, Connection *conn)
 
 void SpatdifTranslator::pushOSCMessages(Connection * conn)
 {
-    SoundSource *src = conn->src_;
-    Listener *snk = conn->snk_;
+    SoundSource *src = conn->getSource();
+    Listener *snk = conn->getSink();
     assert(src);
     assert(snk);
 

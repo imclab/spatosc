@@ -20,6 +20,7 @@
 #include "connection.h"
 #include "soundsource.h"
 #include "listener.h"
+#include <iostream>
 
 namespace spatosc
 {
@@ -53,13 +54,22 @@ void Connection::recomputeConnection()
     // for now, force sources to be above equator
     elev_ = std::max(elev_, 0.0);
     // now from distance, compute gain and variable delay:
-    vdel_ = distance_ * (1/SPEED_OF_SOUND) * .01 * dopplerEffect_;
+    vdel_ = distance_ * (1 / SPEED_OF_SOUND) * .01 * dopplerEffect_;
     gainDB_ = 20 * log10(distanceScalar);
 }
 
 bool Connection::active() const 
 {
     return src_->active() && snk_->active();
+}
+
+void Connection::debugPrint() const
+{
+    std::cout << "  Connection " << id_ << ":" << std::endl;
+    std::cout << "    distanceEffect:\t" << distanceEffect_ << "%" << std::endl;
+    std::cout << "    rolloffEffect:\t" << rolloffEffect_ << "%" << std::endl;
+    std::cout << "    dopplerEffect:\t" << dopplerEffect_ << "%" << std::endl;
+    std::cout << "    diffractionEffect:\t" << diffractionEffect_ << "%" << std::endl;
 }
 
 } // end namespace spatosc

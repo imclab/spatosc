@@ -36,13 +36,6 @@ class Listener;
 class Connection
 {
 private:
-    // TODO: get rid of friend classes, and add proper getter methods:
-    friend class Scene;
-    friend class Translator;
-    friend class SpatdifTranslator;
-    friend class DmitriTranslator;
-    friend class Listener;
-
     // not implemented
     Connection(const Connection&);
     const Connection& operator=(const Connection&);
@@ -101,16 +94,19 @@ public:
     double delay() const { return vdel_; }
 
     /**
-     * Returns a reference to its source Node.
-     * @return A Node.
+     * Returns a pointer to its source Node.
+     * @return A Node pointer. Never free this pointer. It might become invalid if the node is deleted.
      */
-    SoundSource& getSource() const { return *src_; }
+    SoundSource *getSource() const { return src_; }
 
     /**
-     * Returns a reference to its sink Node.
-     * @return A Node.
+     * Returns a pointer to its sink Node.
+     * @return A Node pointer. Never free this pointer. It might become invalid if the node is deleted.
      */
-    Listener& getSink() const { return *snk_; }
+    Listener *getSink() const { return snk_; }
+
+    std::string getID() const { return id_; }
+    void debugPrint() const;
 
     /**
      * Returns true if source and sink are active
