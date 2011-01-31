@@ -267,7 +267,7 @@ SoundSource* Scene::getSoundSource(const std::string &id)
     SourceIterator n;
     for (n = soundSources_.begin(); n != soundSources_.end(); ++n)
     {
-        if ((*n)->id_ == id)
+        if ((*n)->getID() == id)
         {
             return n->get();
         }
@@ -280,7 +280,7 @@ Listener* Scene::getListener(const std::string &id)
     ListenerIterator L;
     for (L = listeners_.begin(); L != listeners_.end(); ++L)
     {
-        if ((*L)->id_ == id)
+        if ((*L)->getID() == id)
         {
             return L->get();
         }
@@ -352,8 +352,8 @@ Connection* Scene::connect(SoundSource *src, Listener *snk)
 #ifdef HAVE_REGEX
     // Check src and snk id's against the connectFilter. If either match, then
     // proceed with the connection:
-    int srcRegexStatus = regexec(&connectRegex_->regex, src->id_.c_str(), (size_t)0, 0, 0);
-    int snkRegexStatus = regexec(&connectRegex_->regex, snk->id_.c_str(), (size_t)0, 0, 0);
+    int srcRegexStatus = regexec(&connectRegex_->regex, src->getID().c_str(), (size_t)0, 0, 0);
+    int snkRegexStatus = regexec(&connectRegex_->regex, snk->getID().c_str(), (size_t)0, 0, 0);
     if (srcRegexStatus == 0 || snkRegexStatus == 0)
     {
 #else
