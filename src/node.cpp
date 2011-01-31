@@ -31,7 +31,7 @@ Node::Node(const std::string &nodeID, Scene &scene) :
     id_(nodeID),
     scene_(scene),
     pos_(),
-    rot_(),
+    orientation_(),
     active_(true),
     sendNewPosition_(true),
     connectTO_(),
@@ -45,7 +45,7 @@ void Node::debugPrint() const
 {
     std::cout << "  " << id_ << ":" << std::endl;
     std::cout << "    pos:\t" << pos_.x << "," << pos_.y << "," << pos_.z << std::endl;
-    std::cout << "    rot:\t" << rot_.x << "," << rot_.y << "," << rot_.z << std::endl;
+    std::cout << "    rot:\t" << orientation_.x << "," << orientation_.y << "," << orientation_.z << std::endl;
     std::cout << "    active?\t" << active_ << std::endl;
 }
 
@@ -62,11 +62,11 @@ void Node::setPosition(double x, double y, double z)
 
 void Node::setOrientation(double pitch, double roll, double yaw)
 {
-    if (pitch != rot_.x || roll != rot_.y || yaw != rot_.z)
+    if (pitch != orientation_.x || roll != orientation_.y || yaw != orientation_.z)
     {
-        rot_.x = pitch;
-        rot_.y = roll;
-        rot_.z = yaw;
+        orientation_.x = pitch;
+        orientation_.y = roll;
+        orientation_.z = yaw;
         notifyScene();
     }
 }
@@ -90,36 +90,43 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv)
     {
         //assert(argc == 3);
         //aed(argv[0]->f, argv[1]->f, argv[2]->f);
+        std::cout << "NOT IMPLEMENTED" << std::endl;
     }
     else if (method == "xy")
     {
         //assert(argc == 2);
         //xy(argv[0]->f, argv[1]->f);
+        std::cout << "NOT IMPLEMENTED" << std::endl;
     }
     else if (method == "delay")
     {
         //assert(argc == 1);
         //delay(argv[0]->f);
+        std::cout << "NOT IMPLEMENTED" << std::endl;
     }
     else if (method == "gain")
     {
         //assert(argc == 1);
         //gain(argv[0]->f);
+        std::cout << "NOT IMPLEMENTED" << std::endl;
     }
     else if (method == "gainDB")
     {
         //assert(argc == 1);
         //gainDB(argv[0]->f);
+        std::cout << "NOT IMPLEMENTED" << std::endl;
     }
     else if (method == "spread")
     {
         //assert(argc == 1);
         //spread(argv[0]->f);
+        std::cout << "NOT IMPLEMENTED" << std::endl;
     }
     else if (method == "spreadAE")
     {
         //assert(argc == 2);
         //spreadAE(argv[0]->f, argv[1]->f);
+        std::cout << "NOT IMPLEMENTED" << std::endl;
     }
     else
     {

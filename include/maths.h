@@ -31,14 +31,15 @@
 #define M_PI 3.14159265358979323846
 #endif
 
+// Below are a bunch of helper classes/functions for 2D/3D math:
+namespace spatosc
+{
+
 const double TO_DEGREES = 180.0 / M_PI;
 const double TO_RADIANS = M_PI / 180.0;
 // 340m/s = .340 m/ms
 const double SPEED_OF_SOUND = 0.340;
 
-// Below are a bunch of helper classes/functions for 2D/3D math:
-namespace spatosc
-{
 /**
  * 2D vector
  */
