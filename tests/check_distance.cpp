@@ -27,14 +27,10 @@
 #include "spatosc.h"
 
 static const bool VERBOSE = false;
+using namespace spatosc;
 
-int main(int /*argc*/, char ** /*argv*/)
+bool check_simple_distances()
 {
-    using namespace spatosc;
-
-    if (VERBOSE)
-        std::cout << std::endl << "Running..." << std::endl;
-
     Scene scene;
     scene.setTranslator<DmitriTranslator>("127.0.0.1", Translator::DEFAULT_SEND_PORT);
     SoundSource *sound_a = scene.createSoundSource("sound_a");
@@ -51,24 +47,53 @@ int main(int /*argc*/, char ** /*argv*/)
         if (! conn)
         {
             std::cout << "Could not find a connection between the two nodes." << std::endl;
-            return 1;
+            return false;
         }
         double dist = conn->distance();
         double expected = x * 2;
         if (dist != expected)
         {
             std::cout << "Expected " << expected << " but distance between the two nodes is " << dist << std::endl;
-            return 1;
+            return false;
         }
-        sleep(0.1);
     }
-
     if (VERBOSE)
     {
         scene.debugPrint();
-        std::cout << "Bye.\n";
     }
-    std::cout << "Success" << std::endl;
+    return true;
+}
+
+
+bool xyz_matches_aed(SoundSource *node, Vector3 xyz, Vector3 aed)
+{
+    node->setPositionAED(xyz.x, xyz.y, xyz.z);
+    Vector3 pos = node->getPosition();
+    if (pos.x != xyz.x || pos.y != xyz.y || pos.z != xyz.z)
+    {
+        std::cout << "Expected XYZ:(" << xyz.x << ", " << xyz.y << ", " << xyz.z
+            << ") for AED:(" << aed.x << ", " << aed.y << ", " << aed.z << ")"
+            << " but we got XYZ:(" << pos.x << ", " << pos.y << ", " << pos.z << ")" << std::endl;
+        return false;
+    }
+    return true;
+}
+
+bool check_position_aed()
+{
+    Scene scene;
+    SoundSource *sound_a = scene.createSoundSource("sound_a");
+    xyz_matches_aed(sound_a, Vector3(0.0, 0.0, 0.0), Vector3(0.0, 0.0, 0.0));
+    xyz_matches_aed(sound_a, Vector3(0.0, 0.0, 10.0), Vector3(0.0, 10.0, 0.0));
+    return true;
+}
+
+int main(int /*argc*/, char ** /*argv*/)
+{
+    if (! check_simple_distances())
+        return 1;
+    if (! check_position_aed())
+        return 1;
     return 0;
 }
 
