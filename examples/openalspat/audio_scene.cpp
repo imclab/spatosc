@@ -112,6 +112,7 @@ void AudioScene::createListener()
     // listener velocity
     ALfloat listenerVel[] = {0.0, 0.0, 0.0};
     // orientation of the listener (first 3 elements are "at", second 3 are "up"
+    // this means you're looking forward (into -z) and up (positive y).
     ALfloat listenerOri[] = {0.0, 0.0, -1.0, 0.0, 1.0, 0.0};
 
     if (alGetError() != AL_NO_ERROR)
