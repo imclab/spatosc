@@ -23,9 +23,8 @@ TutorialApplication::TutorialApplication() : headNode_(0)
 
 void TutorialApplication::createAudioScene()
 {
-    soundSource_ = audioScene_.createSoundSource("sound_a");
-    soundSource_->setChannelID(1);
-    listener_ = audioScene_.createListener("listener");
+    soundSource_ = audioScene_.createSoundSource("1");
+    listener_ = audioScene_.createListener("1");
 }
 
 bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
