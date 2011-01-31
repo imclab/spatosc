@@ -28,7 +28,6 @@
 namespace spatosc
 {
 
-// FIXME: tmatth Wed Jan 12 16:05:10 EST 2011: why is this virtual?
 /**
  * Sound source node.
  */

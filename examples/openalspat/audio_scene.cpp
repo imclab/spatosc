@@ -21,7 +21,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <spatosc/scene.h>
-#include <spatosc/translator.h>
+#include <spatosc/spatdif_translator.h>
 #include <spatosc/soundsource.h>
 #include <spatosc/maths.h>
 #include <glib/gmain.h> // for gtimeout
@@ -67,7 +67,7 @@ void AudioScene::bindCallbacks()
 
 // receive messages from the spatosc plugin
 AudioScene::AudioScene() : 
-    scene_(spatosc::Translator::DEFAULT_SEND_PORT)
+    scene_(spatosc::SpatdifTranslator::DEFAULT_SEND_PORT)
 {
     createSource();
     createListener();

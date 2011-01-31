@@ -33,23 +33,6 @@
 namespace spatosc
 {
 
-#if 0
-class SpatdifHandler
-{
-    public:
-        virtual ~SpatdifHandler() {};
-    private:
-        virtual void xyz(const std::string &id, float x, float y, float z) = 0;
-        virtual void aed(const std::string &id, float azimuth, float elevation, float distanceMeters);
-        virtual void xy(const std::string &id, float x, float y);
-        virtual void delay(const std::string &id, float delay);
-        virtual void gainDB(const std::string &id, float gainDB);
-        virtual void gain(const std::string &id, float gain);
-        virtual void spread(const std::string &id, float spread);
-        virtual void spreadAE(const std::string &id, float azimSpread, float elevSpread);
-};
-#endif
-
 /**
  * Useful for clients to receive messages from spatosc's SpatdifTranslator.
  */
