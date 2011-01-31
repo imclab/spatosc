@@ -27,15 +27,14 @@
 #include <cstring>
 #include <iostream>
 
-
 #ifndef M_PI // Seems it's not set on windows
 #define M_PI 3.14159265358979323846
 #endif
-#define TO_DEGREES (180.0 / M_PI)
-#define TO_RADIANS (M_PI / 180.0)
 
+const double TO_DEGREES = 180.0 / M_PI;
+const double TO_RADIANS = M_PI / 180.0;
 // 340m/s = .340 m/ms
-#define SPEED_OF_SOUND 0.340
+const double SPEED_OF_SOUND = 0.340;
 
 // Below are a bunch of helper classes/functions for 2D/3D math:
 namespace spatosc

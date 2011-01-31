@@ -29,41 +29,39 @@
 #include "spatosc.h"
 
 static const bool VERBOSE = true;
+static const double EPSILON = 0.0001;
 
-#define EPSILON 0.0001
-static int checkAngles(spatosc::Connection *conn, double azim, double elev, const char *description="")
+/**
+ * 
+ */
+static bool checkAngles(spatosc::Connection *conn, double azim, double elev, const char *description="")
 {
-	double dAzim = std::abs(conn->azimuth()*TO_DEGREES - azim);
-	double dElev = std::abs(conn->elevation()*TO_DEGREES - elev);
+	double dAzim = std::abs(conn->azimuth() * TO_DEGREES - azim);
+	double dElev = std::abs(conn->elevation() * TO_DEGREES - elev);
 
-	bool success = ( (dAzim < EPSILON) && (dElev < EPSILON) );
+	bool success = ((dAzim < EPSILON) && (dElev < EPSILON));
 
 	if (VERBOSE)
 	{
-		std::cout << "Checking azim-elev angles: " << description << std::endl;
+		std::cout << description << ": " << std::endl;
 		std::cout << "  got: "
-			<< conn->azimuth()*TO_DEGREES << ","<< conn->elevation()*TO_DEGREES
+			<< conn->azimuth() * TO_DEGREES << "," << (conn->elevation() * TO_DEGREES)
 			<< ", expecting: " << azim << "," << elev
-			<< " ... deltas: " << dAzim << "," << dElev
-			<< " so success = " << success << std::endl << std::endl;
+			<< " deltas: " << dAzim << "," << dElev
+			<< (success ? " passed!" : " failed!") << std::endl;
 	}
-
-	if (success) return 0;
-	else return 1;
+    return success;
 }
 
 int main(int /*argc*/, char ** /*argv*/)
 {
     using namespace spatosc;
-
     if (VERBOSE)
         std::cout << std::endl << "Running test: check_azim_elev" << std::endl;
-
     Scene scene;
     scene.setTranslator<DmitriTranslator>("127.0.0.1", Translator::DEFAULT_SEND_PORT);
     SoundSource *source = scene.createSoundSource("source");
     Listener *listener = scene.createListener("listener");
-
     Connection *conn = scene.getConnection(source, listener);
     if (! conn)
     {
@@ -72,34 +70,30 @@ int main(int /*argc*/, char ** /*argv*/)
     }
 
     listener->setPosition(0.0, 0.0, 0.0);
-
-    int fail = 0;
-
     source->setPosition(0.0, 1.0, 0.0);
-    if (checkAngles(conn, 0, 0, "source in front")) fail = 1;
-
+    if (! checkAngles(conn, 0, 0, "source in front"))
+        return 1;
     source->setPosition(0.0, -1.0, 0.0);
-    if (checkAngles(conn, 0, 180, "source behind")) fail = 1;
-
+    if (! checkAngles(conn, 0, 180, "source behind"))
+        return 1;
     source->setPosition(0.0, 0.0, 1.0);
-    if (checkAngles(conn, 0, 90, "source up above")) fail = 1;
-
+    if (! checkAngles(conn, 0, 90, "source up above"))
+        return 1;
     source->setPosition(1.0, 0.0, 0.0);
-    if (checkAngles(conn, 0, -90, "source to the right")) fail = 1;
-
+    if (! checkAngles(conn, 0, -90, "source to the right"))
+        return 1;
     source->setPosition(1.0, 1.0, 0.0);
-    if (checkAngles(conn, 0, -45, "source front-right on XY plane")) fail = 1;
-
+    if (! checkAngles(conn, 0, -45, "source front-right on XY plane"))
+        return 1;
     source->setPosition(1.0, 1.0, 1.0);
-    if (checkAngles(conn, 45, -45, "source front-right and up")) fail = 1;
-
+    if (! checkAngles(conn, 45, -45, "source front-right and up"))
+        return 1;
     source->setPosition(1.0, 0.0, 1.0);
-    if (checkAngles(conn, 45, -90, "source right and up")) fail = 1;
-
+    if (! checkAngles(conn, 45, -90, "source right and up"))
+        return 1;
     source->setPosition(1.0, -1.0, 1.0);
-    if (checkAngles(conn, 45, -135, "source back-right and up")) fail = 1;
-
-
-    return fail;
+    if (! checkAngles(conn, 45, -135, "source back-right and up"))
+        return 1;
+    return 0;
 }
 
