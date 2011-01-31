@@ -156,11 +156,7 @@ void Scene::debugPrint ()
     std::cout << "[Scene]:: " << connections_.size() << " connections:" << std::endl;
     for (c = connections_.begin(); c != connections_.end(); ++c)
     {
-        std::cout << "  " << (*c)->id_ << ":" << std::endl;
-        std::cout << "    distanceEffect:\t" << (*c)->distanceEffect_ << "%" << std::endl;
-        std::cout << "    rolloffEffect:\t" << (*c)->rolloffEffect_ << "%" << std::endl;
-        std::cout << "    dopplerEffect:\t" << (*c)->dopplerEffect_ << "%" << std::endl;
-        std::cout << "    diffractionEffect:\t" << (*c)->diffractionEffect_ << "%" << std::endl;
+        (*c)->debugPrint();
     }
 }
 
@@ -195,7 +191,6 @@ SoundSource* Scene::createSoundSource(const std::string &id)
         // register a callback for the sound source with the oscReceiver:
         if (receiver_)
         	receiver_->addHandler(NULL, NULL, SpatdifReceiver::onNodeMessage, node);
-
         return node;
     }
     else
@@ -300,7 +295,7 @@ std::vector<Connection*> Scene::getConnectionsForNode(const Node *node)
     ConnIterator c;
     for (c = connections_.begin(); c != connections_.end(); ++c)
     {
-        if (((*c)->src_ == node) || ((*c)->snk_ == node))
+        if (((*c)->getSource() == node) || ((*c)->getSink() == node))
         {
             foundConnections.push_back(c->get());
         }
@@ -313,7 +308,7 @@ Connection* Scene::getConnection(const Node *source, const Node *sink)
     ConnIterator c;
     for (c = connections_.begin(); c != connections_.end(); ++c)
     {
-        if (((*c)->src_ == source) && ((*c)->snk_ == sink))
+        if (((*c)->getSource() == source) && ((*c)->getSink() == sink))
         {
             return c->get();
         }
@@ -422,7 +417,7 @@ void Scene::onConnectionChanged(Connection *conn)
     // If one of the connected nodes has been deactivated, then there is no need
     // to compute anything. Enable the mute (and send the status change if this
     // has just happened)
-    if (conn->src_->active_ && conn->snk_->active_)
+    if (conn->getSource()->active_ && conn->getSink()->active_)
     {
         assert(translator_);
         conn->recomputeConnection();

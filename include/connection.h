@@ -37,10 +37,6 @@ class Connection
 {
 private:
     // TODO: get rid of friend classes, and add proper getter methods:
-    friend class Scene;
-    friend class Translator;
-    friend class SpatdifTranslator;
-    friend class DmitriTranslator;
     friend class Listener;
 
     // not implemented
@@ -111,6 +107,9 @@ public:
      * @return A Node.
      */
     Listener *getSink() const { return snk_; }
+
+    std::string getID() const { return id_; }
+    void debugPrint() const;
 
 protected:
     std::string id_;
