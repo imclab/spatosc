@@ -18,6 +18,7 @@
  */
 
 #include "scene.h"
+#include "vectors.h"
 #include "config.h"
 #ifdef HAVE_REGEX
 #include <regex.h>
@@ -45,36 +46,6 @@ struct Scene::RegexHandle
 #endif
 };
 }
-
-namespace
-{
-    // useful to search and delete in a vector of shared_ptr
-    template <typename T>
-    class IsEqual
-    {
-        public:
-            IsEqual(T *a) : a_(a) {}
-            bool operator() (const std::tr1::shared_ptr<T> &b)
-            {
-                return a_ == b.get();
-            }
-        private:
-            const T *a_;
-    };
-    /**
-     * Removes an element from a vector of shared pointers if
-     * the given pointer matches.
-     * @return Whether it deleted some elements of not.
-     */
-    template <typename T>
-    bool eraseFromVector(std::vector<std::tr1::shared_ptr<T> >& vec, T *a)
-    {
-        size_t size_before = vec.size();
-        IsEqual<T> predicate(a);
-        vec.erase(std::remove_if(vec.begin(), vec.end(), predicate), vec.end());
-        return vec.size() < size_before;
-    }
-} // end of anonymous namespace
 
 namespace spatosc
 {
@@ -272,7 +243,7 @@ SoundSource* Scene::getSoundSource(const std::string &id)
     SourceIterator n;
     for (n = soundSources_.begin(); n != soundSources_.end(); ++n)
     {
-        if ((*n)->id_ == id)
+        if ((*n)->getID() == id)
         {
             return n->get();
         }
@@ -285,7 +256,7 @@ Listener* Scene::getListener(const std::string &id)
     ListenerIterator L;
     for (L = listeners_.begin(); L != listeners_.end(); ++L)
     {
-        if ((*L)->id_ == id)
+        if ((*L)->getID() == id)
         {
             return L->get();
         }
@@ -357,8 +328,8 @@ Connection* Scene::connect(SoundSource *src, Listener *snk)
 #ifdef HAVE_REGEX
     // Check src and snk id's against the connectFilter. If either match, then
     // proceed with the connection:
-    int srcRegexStatus = regexec(&connectRegex_->regex, src->id_.c_str(), (size_t)0, 0, 0);
-    int snkRegexStatus = regexec(&connectRegex_->regex, snk->id_.c_str(), (size_t)0, 0, 0);
+    int srcRegexStatus = regexec(&connectRegex_->regex, src->getID().c_str(), (size_t)0, 0, 0);
+    int snkRegexStatus = regexec(&connectRegex_->regex, snk->getID().c_str(), (size_t)0, 0, 0);
     if (srcRegexStatus == 0 || snkRegexStatus == 0)
     {
 #else
@@ -370,8 +341,8 @@ Connection* Scene::connect(SoundSource *src, Listener *snk)
         // register the connection with both the Scene and the
         // sink node (for backwards connectivity computation):
         connections_.push_back(conn);
-        src->connectTO_.push_back(conn);
-        snk->connectFROM_.push_back(conn);
+        src->addConnectionTo(conn);
+        snk->addConnectionFrom(conn);
         onConnectionChanged(conn.get());
         return conn.get();
     }
@@ -379,7 +350,7 @@ Connection* Scene::connect(SoundSource *src, Listener *snk)
         return 0;
 }
 
-bool Scene::disconnect(Node *source, Node *sink)
+bool Scene::disconnect(SoundSource *source, Listener *sink)
 {
     if (! source)
     {
@@ -397,24 +368,9 @@ bool Scene::disconnect(Node *source, Node *sink)
         std::cerr << "Cannot disconnect nodes " << source->getID() << " and " << sink->getID() << ": They are not connected." << std::endl;
         return false;
     }
-    eraseFromVector(source->connectTO_, conn);
-    eraseFromVector(sink->connectFROM_, conn);
+    source->removeConnectionTo(conn);
+    sink->removeConnectionFrom(conn);
     return eraseFromVector(connections_, conn);
-}
-
-// FIXME: Source node shouldn't have connectFROM_
-// FIXME: Sink node shouldn't have connectFROM_
-void Scene::onNodeChanged(Node *n)
-{
-    ConnIterator c;
-    for (c = n->connectTO_.begin(); c != n->connectTO_.end(); ++c)
-    {
-        onConnectionChanged(c->get());
-    }
-    for (c = n->connectFROM_.begin(); c != n->connectFROM_.end(); ++c)
-    {
-        onConnectionChanged(c->get());
-    }
 }
 
 void Scene::onConnectionChanged(Connection *conn)
@@ -422,7 +378,7 @@ void Scene::onConnectionChanged(Connection *conn)
     // If one of the connected nodes has been deactivated, then there is no need
     // to compute anything. Enable the mute (and send the status change if this
     // has just happened)
-    if (conn->src_->active_ && conn->snk_->active_)
+    if (conn->active())
     {
         assert(translator_);
         conn->recomputeConnection();

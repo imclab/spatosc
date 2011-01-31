@@ -81,7 +81,7 @@ void Node::setOrientation(double pitch, double roll, double yaw)
 void Node::notifyScene()
 {
     sendNewPosition_ = true;
-    scene_.onNodeChanged(this);
+    onNodeChanged();
     sendNewPosition_ = false;
 }
 
@@ -141,6 +141,17 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv)
         if (not handleMessage_(method, argc, argv))
             std::cerr << "Unknown method " << method << std::endl;
     }
+}
+
+void Node::onNodeChanged()
+{
+    typedef std::vector<std::tr1::shared_ptr<Connection> >::iterator ConnIterator;
+    ConnIterator c;
+    for (c = connectTO_.begin(); c != connectTO_.end(); ++c)
+        scene_.onConnectionChanged(c->get());
+
+    for (c = connectFROM_.begin(); c != connectFROM_.end(); ++c)
+        scene_.onConnectionChanged(c->get());
 }
 } // end namespace spatosc
 

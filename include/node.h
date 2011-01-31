@@ -41,9 +41,6 @@ class Scene;
  */
 class Node
 {
-        // TODO: remove friend classes and provide real getter methods:
-        friend class Scene;
-
     public:
         /**
          * Constructor for a Node object.
@@ -150,6 +147,7 @@ class Node
         }
 
         virtual void handleMessage(const std::string &method, int argc, lo_arg ** argv);
+        bool active() const { return active_; }
 
     protected:
         void notifyScene();
@@ -165,6 +163,7 @@ class Node
         std::vector<std::tr1::shared_ptr<Connection> > connectTO_;
         std::vector<std::tr1::shared_ptr<Connection> > connectFROM_;
     private:
+        void onNodeChanged();
         virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv) = 0;
 };
 

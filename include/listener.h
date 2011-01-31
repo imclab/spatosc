@@ -27,6 +27,7 @@
 
 namespace spatosc
 {
+    class Connection;
 /**
  * Node that can listen to sound sources.
  *
@@ -37,6 +38,8 @@ class Listener : public Node
     public:
         Listener(const std::string &nodeID, Scene &scene);
         virtual void debugPrint() const;
+        void addConnectionFrom(const std::tr1::shared_ptr<Connection> &conn);
+        void removeConnectionFrom(Connection *conn);
     private:
         virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv);
 };

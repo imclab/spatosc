@@ -24,9 +24,11 @@
 #define __SOUNDSOURCE_H__
 
 #include "node.h"
+#include "memory.h"
 
 namespace spatosc
 {
+    class Connection;
 
 /**
  * Sound source node.
@@ -35,6 +37,8 @@ class SoundSource : public Node
 {
     public:
         SoundSource(const std::string &nodeID, Scene &scene);
+        void addConnectionTo(const std::tr1::shared_ptr<Connection> &conn);
+        void removeConnectionTo(Connection *conn);
     private:
         virtual bool handleMessage_(const std::string &/*method*/, int argc, lo_arg ** /*argv*/);
 };
