@@ -78,6 +78,8 @@ class Node
          * On the longitudinal axis, +Y is in the front.
          * On the vertical axis, +Z is up.
          *
+         * We use a strictly navigational coordinate system, where zero de- grees azimuth are due front, the y-axis points to the front, the x-axis to the right, the z-axis upwards, horizontal angles rotate in a clockwise fashion and vertical angles increase from the horizontal plane. This coordinate system is commonly used in electro-acoustic composition tools, most notably in IRCAM`s Spat and has recently become one of the supported coordi nate system of SpatDIF.
+         *
          * @param x Position on the X axis for this node.
          * @param y Position on the Y axis for this node.
          * @param z Position on the Z axis for this node.
