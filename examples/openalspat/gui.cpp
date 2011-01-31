@@ -139,7 +139,6 @@ GUI::GUI() :
     connectMouseCallbacks();
     connectKeyCallbacks();
     sound_ = scene_->createSoundSource("sound1");
-    //sound_->setChannelID(1);
     scene_->createListener("listener");
     moveSourceToOrigin();
 }

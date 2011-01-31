@@ -85,6 +85,7 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv)
     {
         assert(argc == 3);
         setPosition(argv[0]->f, argv[1]->f, argv[2]->f);
+        std::cout << "HANDLED XYZ " << argv[0]->f << "," << argv[1]->f << "," << argv[2]->f << "\n"; 
     }
     else if (method == "aed")
     {

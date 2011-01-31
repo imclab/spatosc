@@ -39,7 +39,7 @@ SpatdifReceiver::SpatdifReceiver(const std::string &port, bool verbose) :
 {
 }
 
-void SpatdifReceiver::poll()
+int SpatdifReceiver::poll()
 {
     int bytes = 0;
     do
@@ -50,6 +50,7 @@ void SpatdifReceiver::poll()
 
     if (bytes > 0 && verbose_)
         std::cout << "received " << bytes << " bytes" << std::endl;
+    return bytes;
 }
 
 // Helper methods to parse OSC paths

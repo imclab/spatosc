@@ -227,7 +227,7 @@ class Scene
          */
         bool flushMessages();
 
-        void poll();
+        bool poll();
     private:
         // private handle class
         struct RegexHandle;

@@ -65,7 +65,7 @@ class SpatdifReceiver : public OscReceiver
         /**
          * Checks for incoming OSC messages.
          */
-        void poll();
+        int poll();
         static int onNodeMessage(const char * path, const char * /*types*/,
         lo_arg ** argv, int argc, void * /*data*/, void *user_data);
 

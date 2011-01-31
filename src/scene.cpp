@@ -205,10 +205,12 @@ SoundSource* Scene::createSoundSource(const std::string &id)
     }
 }
 
-void Scene::poll()
+bool Scene::poll()
 {
     if (receiver_)
-        receiver_->poll();
+        if (receiver_->poll() > 0)
+            return true;
+    return false; 
 }
 
 Listener* Scene::createListener(const std::string &id)

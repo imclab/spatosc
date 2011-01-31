@@ -25,13 +25,13 @@
  */
 
 #include <iostream>
+#include <cassert>
 #include <map>
 #include <string>
 #include "scene.h"
 #include "spatdif_receiver.h"
 #include "soundsource.h"
 #include "translator.h"
-#include "oscsender.h"
 
 #if 0
 namespace spatosc {
@@ -68,16 +68,30 @@ class DummyNode : public SoundSource
 #endif
 int main()
 {
-#if 0
     spatosc::Scene scene;
-    spatosc::DummyNode *node(scene.createSoundSource("dummy_node"));
-    spatosc::OscSender sender("127.0.0.1", spatosc::Translator::DEFAULT_SEND_PORT);
-    std::string prefix("/spatosc/core/dummy_node/");
-    sender.sendMessage(prefix + "xyz", "fff", 1.4, 2.4, 3.4, SPATOSC_ARGS_END);
-    node.poll();
+    spatosc::SoundSource *source(scene.createSoundSource("dummy"));
+    spatosc::Listener *listener(scene.createListener("dummy_l"));
+    (void) listener;
+    assert(source->getID() == "dummy");
+    
+    lo_arg **args = new lo_arg*[3];
+    int num_args = 3;
+    for (int i = 0 ; i != 3; ++i)
+        args[i] = new lo_arg;
+    static const float x = 1.4f;
+    static const float y = 2.4f;
+    static const float z = 3.4f;
+    args[0]->f = x;
+    args[1]->f = y;
+    args[2]->f = z;
 
-    if (not node.allMessagesHandled())
+    source->handleMessage("xyz", num_args, args);
+
+    for (int i = 0 ; i != num_args; ++i)
+        delete args[i];
+    delete [] args;
+    spatosc::Vector3 pos = source->getPosition();
+    if (pos.x != x or pos.y != y or pos.z != z)
         return 1;
-#endif
     return 0;
 }
