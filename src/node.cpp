@@ -34,12 +34,8 @@ Node::Node(const std::string &nodeID, Scene &scene) :
     pos_(),
     orientation_(),
     active_(true),
-    sendNewPosition_(true),
-    connectTO_(),
-    connectFROM_()
+    sendNewPosition_(true)
 {
-    connectTO_.clear();
-    connectFROM_.clear();
 }
 
 void Node::debugPrint() const
@@ -143,15 +139,5 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv)
     }
 }
 
-void Node::onNodeChanged()
-{
-    typedef std::vector<std::tr1::shared_ptr<Connection> >::iterator ConnIterator;
-    ConnIterator c;
-    for (c = connectTO_.begin(); c != connectTO_.end(); ++c)
-        scene_.onConnectionChanged(c->get());
-
-    for (c = connectFROM_.begin(); c != connectFROM_.end(); ++c)
-        scene_.onConnectionChanged(c->get());
-}
 } // end namespace spatosc
 

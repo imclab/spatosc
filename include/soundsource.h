@@ -40,6 +40,8 @@ class SoundSource : public Node
         void addConnectionTo(const std::tr1::shared_ptr<Connection> &conn);
         void removeConnectionTo(Connection *conn);
     private:
+        std::vector<std::tr1::shared_ptr<Connection> > connectTO_;
+        virtual void onNodeChanged();
         virtual bool handleMessage_(const std::string &/*method*/, int argc, lo_arg ** /*argv*/);
 };
 

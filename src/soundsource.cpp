@@ -17,6 +17,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "scene.h"
 #include "soundsource.h"
 #include "vectors.h"
 
@@ -42,5 +43,14 @@ void SoundSource::addConnectionTo(const std::tr1::shared_ptr<Connection> &conn)
 void SoundSource::removeConnectionTo(Connection *conn)
 {
     eraseFromVector(connectTO_, conn);
+}
+
+void SoundSource::onNodeChanged()
+{
+    typedef std::vector<std::tr1::shared_ptr<Connection> >::iterator ConnIterator;
+    ConnIterator c;
+
+    for (c = connectTO_.begin(); c != connectTO_.end(); ++c)
+        scene_.onConnectionChanged(c->get());
 }
 } // end namespace spatosc

@@ -61,4 +61,13 @@ void Listener::removeConnectionFrom(Connection *conn)
 {
     eraseFromVector(connectFROM_, conn);
 }
+
+void Listener::onNodeChanged()
+{
+    typedef std::vector<std::tr1::shared_ptr<Connection> >::iterator ConnIterator;
+    ConnIterator c;
+
+    for (c = connectFROM_.begin(); c != connectFROM_.end(); ++c)
+        scene_.onConnectionChanged(c->get());
+}
 } // end namespace spatosc

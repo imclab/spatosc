@@ -160,10 +160,8 @@ class Node
         // FIXME: Thu Jan 27 15:03:58 EST 2011 :tmatth:
         // A source shouldn't have a connectFROM_ and a
         // sink should not have a connectTO_
-        std::vector<std::tr1::shared_ptr<Connection> > connectTO_;
-        std::vector<std::tr1::shared_ptr<Connection> > connectFROM_;
     private:
-        void onNodeChanged();
+        virtual void onNodeChanged() = 0;
         virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv) = 0;
 };
 

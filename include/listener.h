@@ -41,7 +41,9 @@ class Listener : public Node
         void addConnectionFrom(const std::tr1::shared_ptr<Connection> &conn);
         void removeConnectionFrom(Connection *conn);
     private:
+        virtual void onNodeChanged();
         virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv);
+        std::vector<std::tr1::shared_ptr<Connection> > connectFROM_;
 };
 
 } // end namespace spatosc
