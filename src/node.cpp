@@ -19,6 +19,7 @@
 
 #include "node.h"
 #include <cassert>
+#include <iostream>
 #include <lo/lo.h>
 #include "scene.h"
 #include "connection.h"
