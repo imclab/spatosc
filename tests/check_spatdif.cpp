@@ -29,49 +29,13 @@
 #include <map>
 #include <string>
 #include "scene.h"
-#include "spatdif_receiver.h"
 #include "soundsource.h"
 #include "translator.h"
 
-#if 0
-namespace spatosc {
-
-class DummyNode : public SoundSource
-{
-    public:
-        DummyNode(Scene &scene) : Node("dummy_node", scene), handled_(0)
-        {
-        }
-
-        void poll()
-        {
-            receiver_.poll();
-        }
-
-        bool allMessagesHandled() const
-        {
-            // if the size of handled size is 8 (the number of handler methods), we know
-            // that all of them have been called
-            return handled_ == 1;
-        }
-    private:
-        int handled_;
-
-        virtual void setPosition(const std::string &id, float x, float y, float z)
-        {
-            std::cout << id << ":" << x << "," << y << "," << z << std::endl;
-            handled_++;
-        }
-};
-}
-
-#endif
 int main()
 {
     spatosc::Scene scene;
     spatosc::SoundSource *source(scene.createSoundSource("dummy"));
-    spatosc::Listener *listener(scene.createListener("dummy_l"));
-    (void) listener;
     assert(source->getID() == "dummy");
     
     lo_arg **args = new lo_arg*[3];
