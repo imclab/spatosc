@@ -44,6 +44,8 @@ class SpatdifTranslator : public Translator
     public:
         SpatdifTranslator(const std::string &ip, const std::string &port, bool verbose);
         virtual void pushOSCMessages(Connection *conn);
+        static const char *DEFAULT_SEND_PORT;
+        static const char *DEFAULT_RECEIVER_PORT;
 
     private:
         std::tr1::shared_ptr<OscSender> sender_;
