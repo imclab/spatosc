@@ -60,6 +60,12 @@ void Node::setPosition(double x, double y, double z)
     }
 }
 
+void Node::setPositionAED(double angle, double elevation, double distance)
+{
+    Vector3 xyz = sphericalToCartesian(Vector3(angle, elevation, distance));
+    setPosition(xyz.x, xyz.y, xyz.z);
+}
+
 void Node::setOrientation(double pitch, double roll, double yaw)
 {
     if (pitch != orientation_.x || roll != orientation_.y || yaw != orientation_.z)

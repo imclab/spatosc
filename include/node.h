@@ -86,6 +86,11 @@ class Node
          * @param z Position on the Z axis for this node.
          */
         virtual void setPosition(double x, double y, double z);
+        /**
+         * Sets the node's position using spherical coordinates.
+         * @see sphericalToCartesian()
+         */
+        void setPositionAED(double angle, double elevation, double distance);
 
         /**
          * Sets this node's orientation.
