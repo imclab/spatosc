@@ -95,13 +95,13 @@ public:
 
     /**
      * Returns a pointer to its source Node.
-     * @return A Node.
+     * @return A Node pointer. Never free this pointer. It might become invalid if the node is deleted.
      */
     SoundSource *getSource() const { return src_; }
 
     /**
      * Returns a pointer to its sink Node.
-     * @return A Node.
+     * @return A Node pointer. Never free this pointer. It might become invalid if the node is deleted.
      */
     Listener *getSink() const { return snk_; }
 
