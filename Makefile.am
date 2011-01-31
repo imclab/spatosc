@@ -4,7 +4,15 @@ AUTOMAKE_OPTIONS = foreign
 
 SUBDIRS = src tests build
 
-EXTRA_DIST = README LICENSE doxyfile.in spatosc.pc.in autogen.sh NEWS
+EXTRA_DIST = \
+    LICENSE \
+    NEWS \
+    README \
+    autogen.sh \
+    configure.ac \
+    doxyfile.in \
+    spatosc.pc.in
+
 DISTCLEANFILES = spatosc.pc
 
 pkgconfigdir = $(libdir)/pkgconfig

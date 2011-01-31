@@ -1,16 +1,30 @@
-This directory contains tools to build spatosc on Microsoft Windows.
+This directory contains tools to build spatosc on with Visual Studio Microsoft Windows.
 
- * Launch a command-line console, cd to this directory and type something like this:
+Here is how to do this.
 
-C:\Users\USER\spatosc> premake4.exe vs2008
+ * Install the pthreads-win32 library using the exe installer.
 
- * Next, launch the create project with Microsoft Visual Studio 2002, 2003, 2005, or 2008, including the Express editions.
+ * In Visual Studio, add the path to pthreads-win32-'s header file in menu "Tools > Options > Project and Solutions"
+   - Choose "Include Files" and add the path to the directory containing "pthread.h"
 
- * You need to add a few libraries to this project.
-   - liblo_d.lib (liblo)
-   - ws2_32.lib (Win Sock)
+ * Build liblo for Visual Studio. (first run premake4.exe, as explained in liblo's documentation)
 
- * Make sure you link statically to all libraries.
-   - Go to "Configuration Properties > General > Project Defaults > Configuration Type" and choose "Static Library (.lib)"
+ * Add the path to the resulting liblo library in menu "Tools > Options > Project and Solutions"
+   - Choose "VC++ Directories > Library Files", and add liblo: C:\[...]/liblo-0.26/lib/ReleaseLib
+   - Choose "Include Files" and add the path to the directory containing "pthread.h"
+
+ * Download the archive of the spatosc project.
+
+ * To create a Visual Studio project for sptaosc, launch a command-line console
+   - cd to this spatosc/build directory and type something like this:
+   - C:\Users\USER\spatosc> premake4.exe vs2008
+   - Note that if you use a version of Visual Studio that is earlier than 2010, you will need to install the standard TR1 C++ libraries.
+
+ * Next, launch the created ".vcproj" project file with Microsoft Visual Studio 2008, or later. (including the Express editions)
+
+ * You probably want to choose the ReleaseLib configuration. (in the top toolbar) It will build a static library.
+
+ * Build the library (press F5)
 
 See http://industriousone.com/premake for more info on how to use Premake.
+

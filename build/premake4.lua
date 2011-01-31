@@ -14,8 +14,6 @@
       os.rmdir(action)
     end
   end
-  
-  
 
 ----------------------------------------------------------------------
 -- The solution, and solution-wide settings
@@ -33,7 +31,7 @@
       
     -- define all the possible build configurations
     configurations {
-      "DebugDLL", "ReleaseDLL", 
+--      "DebugDLL", "ReleaseDLL", 
       "DebugLib", "ReleaseLib", 
     }
     
@@ -105,7 +103,6 @@
     files {
       "../src/*.cpp",
       "../include/*.h",
-      "../src/spatosc.def",
     }
 
     excludes {
@@ -113,19 +110,17 @@
     }
 
     configuration { "windows" }
-      links   { "user32",
-                "wsock32",
+      links   { "liblo",
                 "ws2_32",
-                "pthreadVC2",
               }
             
     configuration { "*Lib" }
       kind    "StaticLib"
       defines "LIBSPATOSC_LIB"
       
-    configuration { "*DLL" }
-      kind    "SharedLib"
-      defines "LIBSPATOSC_DLL"
+--    configuration { "*DLL" }
+--      kind    "SharedLib"
+--      defines "LIBSPATOSC_DLL"
 
     configuration { "Debug*" }
       targetname "libspatosc_d"

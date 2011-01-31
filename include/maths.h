@@ -25,6 +25,8 @@
 
 #include <cmath>
 #include <cstring>
+#include <iostream>
+
 
 #ifndef M_PI // Seems it's not set on windows
 #define M_PI 3.14159265358979323846
@@ -43,6 +45,11 @@ namespace spatosc
  */
 class Vector2
 {
+    friend std::ostream &operator<<(std::ostream &out, const Vector2 &v)
+    {
+        return out << "(" << v.x << "," << v.y << ")";
+    }
+
     public:
         double x;
         double y;
@@ -128,10 +135,17 @@ class Vector2
  */
 class Vector3
 {
-    public:
+    friend std::ostream &operator<<(std::ostream &out, const Vector3 &v)
+    {
+        return out << "(" << v.x << "," << v.y << "," << v.z << ")";
+    }
+
+	public:
         double x;
         double y;
         double z;
+
+
 
         Vector3() : x(0.0f), y(0.0f), z(0.0f)
         {}
@@ -209,6 +223,8 @@ class Vector3
             return Vector3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
         }
 };
+
+
 
 /*
    inline double operator*(Vector3 &a, Vector3 &b){
@@ -407,6 +423,11 @@ inline Matrix4 Matrix4Translation(double x, double y, double z)
  */
 class Quaternion
 {
+    friend std::ostream &operator<<(std::ostream &out, const Quaternion &q)
+    {
+        return out << "(" << q.x << "," << q.y << "," << q.z << "), " << q.w;
+    }
+
     public:
         double x;
         double y;
