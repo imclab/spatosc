@@ -28,4 +28,8 @@ SoundSource::SoundSource(const std::string &nodeID, Scene &scene) :
 {
 }
 
+bool SoundSource::handleMessage_(const std::string & /*method*/, int /*argc*/, lo_arg ** /*argv*/)
+{
+    return false;
+}
 } // end namespace spatosc

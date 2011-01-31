@@ -45,5 +45,9 @@ void Listener::debugPrint() const
     std::cout << std::endl;
 }
 
-} // end namespace spatosc
+bool Listener::handleMessage_(const std::string &/*method*/, int /*argc*/, lo_arg ** /*argv*/)
+{
+    return false;
+}
 
+} // end namespace spatosc

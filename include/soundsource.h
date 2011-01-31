@@ -36,6 +36,8 @@ class SoundSource : public Node
 {
     public:
         SoundSource(const std::string &nodeID, Scene &scene);
+    private:
+        virtual bool handleMessage_(const std::string &/*method*/, int argc, lo_arg ** /*argv*/);
 };
 
 } // end namespace spatosc
