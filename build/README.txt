@@ -13,7 +13,7 @@ Here is how to do this.
    - Choose "VC++ Directories > Library Files", and add liblo: C:\[...]/liblo-0.26/lib/ReleaseLib
    - Choose "Include Files" and add the path to the directory containing "pthread.h"
 
- * Download the full spatosc project (not the tarball *.tar.gz file, but all the files, including one called "configure.ac") from the Web.
+ * Download the archive of the spatosc project.
 
  * To create a Visual Studio project for sptaosc, launch a command-line console
    - cd to this spatosc/build directory and type something like this:
