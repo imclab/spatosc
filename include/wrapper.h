@@ -25,7 +25,6 @@
 #define __FACADE_H__
 
 #include <string>
-#include <iostream>
 #include "memory.h"
 
 namespace spatosc
