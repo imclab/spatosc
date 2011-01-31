@@ -458,7 +458,7 @@ bool Scene::disconnectNodeConnections(Node *node)
     for (iter = nodeConnections.begin(); iter != nodeConnections.end(); ++iter)
     {
         Connection* conn = (*iter);
-        if (disconnect(&conn->getSource(), &conn->getSink()))
+        if (disconnect(conn->getSource(), conn->getSink()))
             did_disconnect_some = true;
     }
     return did_disconnect_some;

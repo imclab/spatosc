@@ -101,16 +101,16 @@ public:
     double delay() const { return vdel_; }
 
     /**
-     * Returns a reference to its source Node.
+     * Returns a pointer to its source Node.
      * @return A Node.
      */
-    SoundSource& getSource() const { return *src_; }
+    SoundSource *getSource() const { return src_; }
 
     /**
-     * Returns a reference to its sink Node.
+     * Returns a pointer to its sink Node.
      * @return A Node.
      */
-    Listener& getSink() const { return *snk_; }
+    Listener *getSink() const { return snk_; }
 
 protected:
     std::string id_;
