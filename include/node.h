@@ -26,8 +26,7 @@
 
 #include <string>
 #include <vector>
-#include <iostream>
-#include <lo/lo.h>
+#include <lo/lo_osc_types.h> // for lo_arg
 #include "maths.h"
 #include "memory.h"
 

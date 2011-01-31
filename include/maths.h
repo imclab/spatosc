@@ -25,7 +25,7 @@
 
 #include <cmath>
 #include <cstring>
-#include <iostream>
+#include <ostream>
 
 #ifndef M_PI // Seems it's not set on windows
 #define M_PI 3.14159265358979323846

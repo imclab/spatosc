@@ -17,6 +17,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <iostream>
 #include "listener.h"
 #include "soundsource.h"
 #include "scene.h"

@@ -21,6 +21,7 @@
 
 #include "spatdif_translator.h"
 #include <string>
+#include <iostream>
 #include <cassert>
 #include "oscutils.h"
 #include "oscsender.h"
