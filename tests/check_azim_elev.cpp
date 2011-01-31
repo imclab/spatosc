@@ -25,6 +25,7 @@
  * $ libtool --mode=execute gdb check_distance
  */
 #include <iostream>
+#include <cmath>
 #include <tr1/memory>
 #include "spatosc.h"
 
@@ -33,8 +34,8 @@ static const bool VERBOSE = true;
 #define EPSILON 0.0001
 static int checkAngles(spatosc::Connection *conn, double azim, double elev, const char *description="")
 {
-	double dAzim = abs(conn->azimuth()*TO_DEGREES - azim);
-	double dElev = abs(conn->elevation()*TO_DEGREES - elev);
+	double dAzim = std::abs(conn->azimuth()*TO_DEGREES - azim);
+	double dElev = std::abs(conn->elevation()*TO_DEGREES - elev);
 
 	bool success = ( (dAzim < EPSILON) && (dElev < EPSILON) );
 
