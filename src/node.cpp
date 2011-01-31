@@ -31,7 +31,7 @@ Node::Node(const std::string &nodeID, Scene &scene) :
     id_(nodeID),
     scene_(scene),
     pos_(),
-    rot_(),
+    orientation_(),
     active_(true),
     sendNewPosition_(true),
     connectTO_(),
@@ -45,7 +45,7 @@ void Node::debugPrint() const
 {
     std::cout << "  " << id_ << ":" << std::endl;
     std::cout << "    pos:\t" << pos_.x << "," << pos_.y << "," << pos_.z << std::endl;
-    std::cout << "    rot:\t" << rot_.x << "," << rot_.y << "," << rot_.z << std::endl;
+    std::cout << "    rot:\t" << orientation_.x << "," << orientation_.y << "," << orientation_.z << std::endl;
     std::cout << "    active?\t" << active_ << std::endl;
 }
 
@@ -62,11 +62,11 @@ void Node::setPosition(double x, double y, double z)
 
 void Node::setOrientation(double pitch, double roll, double yaw)
 {
-    if (pitch != rot_.x || roll != rot_.y || yaw != rot_.z)
+    if (pitch != orientation_.x || roll != orientation_.y || yaw != orientation_.z)
     {
-        rot_.x = pitch;
-        rot_.y = roll;
-        rot_.z = yaw;
+        orientation_.x = pitch;
+        orientation_.y = roll;
+        orientation_.z = yaw;
         notifyScene();
     }
 }
