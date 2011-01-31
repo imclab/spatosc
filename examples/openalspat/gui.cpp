@@ -138,8 +138,7 @@ GUI::GUI() :
     createStage();
     connectMouseCallbacks();
     connectKeyCallbacks();
-    sound_ = scene_->createSoundSource("source1");
-    sound_->setChannelID(1);
+    sound_ = scene_->createSoundSource("sound1");
     scene_->createListener("listener");
     moveSourceToOrigin();
 }
@@ -365,6 +364,7 @@ void GUI::actorPosToSpatPos(float &x, float &y, float &z)
     x = clutter_actor_get_x(sourceActor_) - halfWindowWidth;
     y = clutter_actor_get_y(sourceActor_) - halfWindowHeight;
     z = clutter_actor_get_depth(sourceActor_);
+    // FIXME: replace with scale transform
     x *= INV_PIXELS_PER_METER;
     y *= INV_PIXELS_PER_METER;
     z *= INV_PIXELS_PER_METER;

@@ -54,8 +54,8 @@ class OscReceiver
         /**
          * Polls the liblo server for received messages. Clients
          * may want to repeatedly call it while it's still
-         * receiving bytes. 
-         * 
+         * receiving bytes.
+         *
          * \code
          * do
          * {
@@ -65,6 +65,7 @@ class OscReceiver
          * \endcode
          */
         int receive();
+
     private:
         // not implemented
         OscReceiver(const OscReceiver&);

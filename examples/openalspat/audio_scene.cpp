@@ -20,8 +20,10 @@
 #include "audio_scene.h"
 #include <stdexcept>
 #include <iostream>
+#include <spatosc/scene.h>
 #include <spatosc/translator.h>
-#include <spatosc/spatdif_receiver.h>
+#include <spatosc/soundsource.h>
+#include <spatosc/maths.h>
 #include <glib/gmain.h> // for gtimeout
 
 void AudioScene::init()
@@ -29,31 +31,6 @@ void AudioScene::init()
     alutInit(0, 0);
     alGetError(); // clear the error bit
 }
-
-MyHandler::MyHandler(AudioScene *owner) : owner_(owner)
-{
-}
-
-void MyHandler::xyz(const std::string &id, float x, float y, float z)
-{
-    if (id == "source1")
-    {
-        owner_->sourcePos_[0] = x;
-        owner_->sourcePos_[1] = y;
-        owner_->sourcePos_[2] = z;
-        owner_->updateSourcePosition();
-    }
-    else if (id == "listener1")
-    {
-        owner_->listenerPos_[0] = x;
-        owner_->listenerPos_[1] = y;
-        owner_->listenerPos_[2] = z;
-        owner_->updateListenerPosition();
-    }
-    else
-        std::cerr << "Unknown id " << id << std::endl;
-}
-
 
 #if 0
 int AudioScene::onListenerPositionChanged(const char *path, const char *types,
@@ -71,7 +48,13 @@ int AudioScene::onListenerPositionChanged(const char *path, const char *types,
 gboolean AudioScene::pollReceiver(gpointer data)
 {
     AudioScene* context = static_cast<AudioScene*>(data);
-    context->receiver_->poll();
+    context->scene_.poll();
+    // position may have changed, this is not so optimal
+    spatosc::Vector3 vec = context->soundNode_->getPosition();
+    context->sourcePos_[0] = vec.x;
+    context->sourcePos_[1] = vec.y;
+    context->sourcePos_[2] = vec.z;
+    context->updateSourcePosition();
 
     return TRUE;
 }
@@ -84,8 +67,7 @@ void AudioScene::bindCallbacks()
 
 // receive messages from the spatosc plugin
 AudioScene::AudioScene() : 
-    handler_(new MyHandler(this)), 
-    receiver_(new spatosc::SpatdifReceiver(spatosc::Translator::DEFAULT_SEND_PORT, handler_.get()))
+    scene_(spatosc::Translator::DEFAULT_SEND_PORT)
 {
     createSource();
     createListener();
@@ -120,6 +102,7 @@ void AudioScene::createSource()
 
     if (alGetError() != AL_NO_ERROR)
         throw(std::runtime_error("OpenAL error")); 
+    soundNode_ = scene_.createSoundSource("sound1");
 }
 
 void AudioScene::createListener()
@@ -138,6 +121,7 @@ void AudioScene::createListener()
     alListenerfv(AL_POSITION, listenerPos_);
     alListenerfv(AL_VELOCITY, listenerVel);
     alListenerfv(AL_ORIENTATION, listenerOri);
+    scene_.createListener("listener");
 }
 
 AudioScene::~AudioScene()

@@ -33,6 +33,8 @@
 #include "node.h"
 #include "soundsource.h"
 #include "translator.h"
+#include "oscreceiver.h"
+#include "spatdif_receiver.h"
 
 namespace spatosc
 {
@@ -87,17 +89,23 @@ static bool nodeSortFunction (Node *n1, Node *n2)
 #endif
 
 // for now, create a basic (CONSOLE) translator:
-Scene::Scene() :
+Scene::Scene(const std::string &receiverPort) :
     connectRegex_(new Scene::RegexHandle),
     translator_(new Translator(false)),
     autoConnect_(true),
     connectFilter_(),
+    receiver_(),
     listeners_(),
     soundSources_(),
     connections_(),
     verbose_(false),
     synchronous_(true)
 {
+    if (not receiverPort.empty())
+    {
+        receiver_.reset(new SpatdifReceiver(receiverPort));
+        std::cout << "Scene receiving on port " << receiverPort << std::endl;
+    }
     this->listeners_.clear();
     this->soundSources_.clear();
     this->connections_.clear();
@@ -181,10 +189,13 @@ SoundSource* Scene::createSoundSource(const std::string &id)
         {
             ListenerIterator iter;
             for (iter = listeners_.begin(); iter != listeners_.end(); ++iter)
-            {
                 connect(node, iter->get());
-            }
         }
+
+        // register a callback for the sound source with the oscReceiver:
+        if (receiver_)
+        	receiver_->addHandler(NULL, NULL, SpatdifReceiver::onNodeMessage, node);
+
         return node;
     }
     else
@@ -192,6 +203,14 @@ SoundSource* Scene::createSoundSource(const std::string &id)
         std::cerr << "A node named " << id << " of type " << typeid(node).name() << " already exists." << std::endl;
         return 0;
     }
+}
+
+bool Scene::poll()
+{
+    if (receiver_)
+        if (receiver_->poll() > 0)
+            return true;
+    return false; 
 }
 
 Listener* Scene::createListener(const std::string &id)

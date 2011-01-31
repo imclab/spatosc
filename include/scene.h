@@ -36,6 +36,7 @@ class Node;
 class SoundSource;
 class Connection;
 class Translator;
+class SpatdifReceiver;
 
 /**
  * Manages the nodes and their connections.
@@ -57,8 +58,9 @@ class Scene
          * Your next steps should be to set the translator and create a listener node.
          *
          * When you create a scene, there is not a single node in the scene and you must create some if you want to do anything.
+         * @param receiverPort Optional port to specify if the scene's nodes should receive OSC messages
          */
-        Scene();
+        Scene(const std::string &receiverPort = "");
 
         /**
          * Prints debug info to the console.
@@ -76,7 +78,7 @@ class Scene
          * \endcode
          */
         template <typename T>
-        void setTranslator(const std::string &address, const std::string &port, bool verbose = true)
+        void setTranslator(const std::string &address="", const std::string &port="", bool verbose = true)
         {
             translator_.reset(new T(address, port, verbose));
         }
@@ -224,6 +226,8 @@ class Scene
          * @return Success or not. Returns false if in synchronous mode. (that would be an error to call this if this is the case)
          */
         bool flushMessages();
+
+        bool poll();
     private:
         // private handle class
         struct RegexHandle;
@@ -245,6 +249,8 @@ class Scene
         std::tr1::shared_ptr<Translator> translator_;
         bool autoConnect_;
         std::string connectFilter_;
+
+        std::tr1::shared_ptr<SpatdifReceiver> receiver_;
 
         //FIXME:2011-01-25:aalex:Would maps be faster?
         std::vector<std::tr1::shared_ptr<Listener> >  listeners_;

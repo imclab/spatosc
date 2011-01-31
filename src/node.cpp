@@ -18,8 +18,11 @@
  */
 
 #include "node.h"
+#include <cassert>
+#include <lo/lo.h>
 #include "scene.h"
 #include "connection.h"
+
 
 namespace spatosc
 {
@@ -50,7 +53,9 @@ void Node::setPosition(double x, double y, double z)
 {
     if (x != pos_.x || y != pos_.y || z != pos_.z)
     {
-        pos_ = Vector3(x, y, z);
+        pos_.x = x;
+        pos_.y = y;
+        pos_.z = z;
         notifyScene();
     }
 }
@@ -59,7 +64,9 @@ void Node::setOrientation(double pitch, double roll, double yaw)
 {
     if (pitch != rot_.x || roll != rot_.y || yaw != rot_.z)
     {
-        rot_ = Vector3(pitch, roll, yaw);
+        rot_.x = pitch;
+        rot_.y = roll;
+        rot_.z = yaw;
         notifyScene();
     }
 }
@@ -71,5 +78,53 @@ void Node::notifyScene()
     sendNewPosition_ = false;
 }
 
+
+void Node::handleMessage(const std::string &method, int argc, lo_arg **argv)
+{
+    if (method == "xyz")
+    {
+        assert(argc == 3);
+        setPosition(argv[0]->f, argv[1]->f, argv[2]->f);
+    }
+    else if (method == "aed")
+    {
+        //assert(argc == 3);
+        //aed(argv[0]->f, argv[1]->f, argv[2]->f);
+    }
+    else if (method == "xy")
+    {
+        //assert(argc == 2);
+        //xy(argv[0]->f, argv[1]->f);
+    }
+    else if (method == "delay")
+    {
+        //assert(argc == 1);
+        //delay(argv[0]->f);
+    }
+    else if (method == "gain")
+    {
+        //assert(argc == 1);
+        //gain(argv[0]->f);
+    }
+    else if (method == "gainDB")
+    {
+        //assert(argc == 1);
+        //gainDB(argv[0]->f);
+    }
+    else if (method == "spread")
+    {
+        //assert(argc == 1);
+        //spread(argv[0]->f);
+    }
+    else if (method == "spreadAE")
+    {
+        //assert(argc == 2);
+        //spreadAE(argv[0]->f, argv[1]->f);
+    }
+    else
+    {
+        std::cerr << "Unknown method " << method << std::endl;
+    }
+}
 } // end namespace spatosc
 
