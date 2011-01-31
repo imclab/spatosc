@@ -36,9 +36,6 @@ class Listener;
 class Connection
 {
 private:
-    // TODO: get rid of friend classes, and add proper getter methods:
-    friend class Listener;
-
     // not implemented
     Connection(const Connection&);
     const Connection& operator=(const Connection&);
