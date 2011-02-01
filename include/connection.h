@@ -108,6 +108,11 @@ public:
     std::string getID() const { return id_; }
     void debugPrint() const;
 
+    /**
+     * Returns true if source and sink are active
+     */
+    bool active() const;
+
 protected:
     std::string id_;
     SoundSource *src_;

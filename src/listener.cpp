@@ -18,6 +18,7 @@
  */
 
 #include <iostream>
+#include "vectors.h"
 #include "listener.h"
 #include "soundsource.h"
 #include "scene.h"
@@ -51,4 +52,22 @@ bool Listener::handleMessage_(const std::string &/*method*/, int /*argc*/, lo_ar
     return false;
 }
 
+void Listener::addConnectionFrom(const std::tr1::shared_ptr<Connection> &conn)
+{
+    connectFROM_.push_back(conn);
+}
+
+void Listener::removeConnectionFrom(Connection *conn)
+{
+    eraseFromVector(connectFROM_, conn);
+}
+
+void Listener::onNodeChanged()
+{
+    typedef std::vector<std::tr1::shared_ptr<Connection> >::iterator ConnIterator;
+    ConnIterator c;
+
+    for (c = connectFROM_.begin(); c != connectFROM_.end(); ++c)
+        scene_.onConnectionChanged(c->get());
+}
 } // end namespace spatosc

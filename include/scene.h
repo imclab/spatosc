@@ -168,7 +168,7 @@ class Scene
          * Disconnects two nodes.
          * @return True if it successfully disconnected the nodes. False if they were not connected or if the nodes are invalid.
          */
-        bool disconnect(Node *source, Node* sink);
+        bool disconnect(SoundSource *source, Listener* sink);
 
         /**
          * Called by a node when it is changed so that the scene recomputes all the connection in which it is involved.
@@ -228,15 +228,15 @@ class Scene
         bool flushMessages();
 
         bool poll();
-    private:
-        // private handle class
-        struct RegexHandle;
-        std::tr1::shared_ptr<RegexHandle> connectRegex_;
 
         /**
          * Called when a new connection is made or when its node position change, so that the scene updates all its sibling nodes, and the translator may push some OSC messages.
          */
         void onConnectionChanged(Connection *conn);
+    private:
+        // private handle class
+        struct RegexHandle;
+        std::tr1::shared_ptr<RegexHandle> connectRegex_;
 
         /**
          * Returns a list of all connections that "directly involve" a node (ie, as the source or the sink):

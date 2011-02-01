@@ -58,6 +58,11 @@ void Connection::recomputeConnection()
     gainDB_ = 20 * log10(distanceScalar);
 }
 
+bool Connection::active() const 
+{
+    return src_->active() && snk_->active();
+}
+
 void Connection::debugPrint() const
 {
     std::cout << "  Connection " << id_ << ":" << std::endl;
