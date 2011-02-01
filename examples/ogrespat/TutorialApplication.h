@@ -42,4 +42,4 @@ class TutorialApplication : public BaseApplication
         spatosc::Listener *listener_;
 };
 
-#endif // #ifndef __TUTORIAL_APPLICATION_H_
+#endif // __TUTORIAL_APPLICATION_H_
