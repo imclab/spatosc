@@ -33,7 +33,7 @@ Translator::Translator(bool verbose) : verbose_(verbose)
 void Translator::pushOSCMessages(Connection *conn)
 {
     if (verbose_)
-        std::cout << "Computation update for " << conn->getSource()->getID() << " -> " << conn->getSink()->getID() << " :" <<std::endl;
+        std::cout << "Computation update for " << conn->getSource() << " -> " << conn->getSink() << " :" <<std::endl;
 
     /*
     // SRC INCIDENCE:

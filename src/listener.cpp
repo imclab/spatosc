@@ -40,7 +40,7 @@ void Listener::debugPrint() const
     std::cout << "    listen to:\t";
     for (c = connectFROM_.begin(); c != connectFROM_.end(); ++c)
     {
-        std::cout << (*c)->getSource()->getID() << " ";
+        std::cout << (*c)->getSource() << " ";
     }
     if (connectFROM_.empty())
         std::cout << "<NO CONNECTIONS>";

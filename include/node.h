@@ -148,6 +148,7 @@ class Node
 
         virtual void handleMessage(const std::string &method, int argc, lo_arg ** argv);
         bool active() const { return active_; }
+        friend std::ostream &operator<<(std::ostream &out, const Node &n);
 
     protected:
         void notifyScene();

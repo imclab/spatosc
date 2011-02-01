@@ -139,5 +139,9 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv)
     }
 }
 
-} // end namespace spatosc
+std::ostream &operator<<(std::ostream &out, const spatosc::Node &n)
+{
+    return out << n.id_;
+}
 
+} // end namespace spatosc
