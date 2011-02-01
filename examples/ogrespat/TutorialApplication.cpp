@@ -15,8 +15,11 @@ This source file is part of the
 -----------------------------------------------------------------------------
 */
 #include "TutorialApplication.h"
+
+static const double OSC_FLUSH_INTERVAL = 0.5; // How many second between each OSC flushing
  
-TutorialApplication::TutorialApplication() : headNode_(0)
+TutorialApplication::TutorialApplication() :
+    headNode_(0)
 {
     createAudioScene();
 }
@@ -32,10 +35,8 @@ bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     bool ret = BaseApplication::frameRenderingQueued(evt);
     if (not processUnbufferedInput(evt)) 
         return false;
-
     return ret;
 }
-
 
 bool TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
 {
@@ -44,22 +45,22 @@ bool TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
     static double updateSoundSource = 0.0;
     const static double move = 10.0;
     Ogre::Vector3 transVector(Ogre::Vector3::ZERO);
-    if (mKeyboard->isKeyDown(OIS::KC_A) or
+    if (mKeyboard->isKeyDown(OIS::KC_A) ||
             mKeyboard->isKeyDown(OIS::KC_LEFT))
     {
         transVector.x -= move;
     }
-    if (mKeyboard->isKeyDown(OIS::KC_D) or
+    if (mKeyboard->isKeyDown(OIS::KC_D) ||
             mKeyboard->isKeyDown(OIS::KC_RIGHT))
     {
         transVector.x += move;
     }
-    if (mKeyboard->isKeyDown(OIS::KC_W) or
+    if (mKeyboard->isKeyDown(OIS::KC_W) ||
             mKeyboard->isKeyDown(OIS::KC_UP))
     {
         transVector.y -= move;
     }
-    if (mKeyboard->isKeyDown(OIS::KC_S) or
+    if (mKeyboard->isKeyDown(OIS::KC_S) ||
             mKeyboard->isKeyDown(OIS::KC_DOWN))
     {
         transVector.y += move;
@@ -71,17 +72,15 @@ bool TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
     updateSoundSource -= evt.timeSinceLastFrame;
     if (updateSoundSource < 0.0)
     {
-        soundSource_->setPosition(transVector.x, 
-                transVector.y, transVector.z);
-        updateSoundSource = 0.5; // update every 0.5 seconds
+        soundSource_->setPosition(transVector.x, transVector.y, transVector.z);
+        updateSoundSource = OSC_FLUSH_INTERVAL;
     }
     return true;
 }
 
 void TutorialApplication::createScene()
 {
-    Ogre::Entity *ogreHead = mSceneMgr->createEntity("Suzanne", "suzanne.mesh");
-
+    Ogre::Entity *ogreHead = mSceneMgr->createEntity("Head", "suzanne.mesh");
     headNode_ = mSceneMgr->getRootSceneNode()->createChildSceneNode();
     headNode_->attachObject(ogreHead);
     // FIXME: Fri Jan 14 20:00:09 EST 2011: should adjust mesh instead of 
@@ -91,7 +90,7 @@ void TutorialApplication::createScene()
     headNode_->pitch(pitch);
 
     // set ambient light
-    mSceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+    mSceneMgr->setAmbientLight(Ogre::ColourValue(0.8, 0.6, 0.2));
 
     // create a light
     Ogre::Light *l = mSceneMgr->createLight("MainLight");
@@ -112,6 +111,5 @@ int main(int argc, char *argv[])
         std::cerr << "An exception has occured: " <<
             e.getFullDescription().c_str() << std::endl;
     }
-
     return 0;
 }

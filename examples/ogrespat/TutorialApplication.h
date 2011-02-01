@@ -14,13 +14,14 @@ This source file is part of the
       http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
 */
-#ifndef __TutorialApplication_h_
-#define __TutorialApplication_h_
+#ifndef __TUTORIAL_APPLICATION_H_
+#define __TUTORIAL_APPLICATION_H_
 
 #include "BaseApplication.h"
 #include <spatosc/spatosc.h>
 
-namespace Ogre {
+namespace Ogre
+{
     class SceneNode;
 }
 
@@ -39,4 +40,4 @@ class TutorialApplication : public BaseApplication
         spatosc::Listener *listener_;
 };
 
-#endif // #ifndef __TutorialApplication_h_
+#endif // #ifndef __TUTORIAL_APPLICATION_H_

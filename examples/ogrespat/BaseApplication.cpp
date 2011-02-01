@@ -82,9 +82,9 @@ void BaseApplication::createCamera()
     mCamera = mSceneMgr->createCamera("PlayerCam");
 
     // Position it at 500 in Z direction
-    mCamera->setPosition(Ogre::Vector3(0,0,80));
+    mCamera->setPosition(Ogre::Vector3(0, 0, 80));
     // Look back along -Z
-    mCamera->lookAt(Ogre::Vector3(0,0,-300));
+    mCamera->lookAt(Ogre::Vector3(0, 0, -300));
     mCamera->setNearClipDistance(5);
 }
 //-------------------------------------------------------------------------------------
@@ -138,7 +138,7 @@ void BaseApplication::createViewports()
 {
     // Create one viewport, entire window
     Ogre::Viewport* vp = mWindow->addViewport(mCamera);
-    vp->setBackgroundColour(Ogre::ColourValue(0,0,0));
+    vp->setBackgroundColour(Ogre::ColourValue(0, 0, 0)); // black
 
     // Alter the camera aspect ratio to match the viewport
     mCamera->setAspectRatio(
@@ -190,7 +190,7 @@ void BaseApplication::go()
     mPluginsCfg = "plugins.cfg";
 #endif
 
-    if (!setup())
+    if (! setup())
         return;
 
     mRoot->startRendering();
@@ -206,7 +206,8 @@ bool BaseApplication::setup()
     setupResources();
 
     bool carryOn = configure();
-    if (!carryOn) return false;
+    if (! carryOn)
+        return false;
 
     chooseSceneManager();
     createCamera();
@@ -275,7 +276,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
     {
         mWindow->writeContentsToTimestampedFile("screenshot", ".jpg");
     }
-    else if (arg.key == OIS::KC_ESCAPE or arg.key == OIS::KC_Q)
+    else if (arg.key == OIS::KC_ESCAPE || arg.key == OIS::KC_Q)
     {
         mShutDown = true;
     }
@@ -331,3 +332,4 @@ void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
         }
     }
 }
+
