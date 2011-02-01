@@ -41,6 +41,7 @@
 #include "translator.h"
 #include "connection.h"
 #include "soundsource.h"
+#include "spatdif_translator.h"
 #include "version.h"
 #include "wrapper.h"
 
