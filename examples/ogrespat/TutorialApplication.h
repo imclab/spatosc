@@ -35,8 +35,10 @@ class TutorialApplication : public BaseApplication
         virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
         virtual void createScene();
         Ogre::SceneNode *headNode_;
+        Ogre::SceneNode *nodeTwo_;
         spatosc::Scene audioScene_;
-        spatosc::SoundSource *soundSource_;
+        spatosc::SoundSource *soundSourceOne_;
+        spatosc::SoundSource *soundSourceTwo_;
         spatosc::Listener *listener_;
 };
 
