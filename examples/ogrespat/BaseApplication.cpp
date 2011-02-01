@@ -276,7 +276,7 @@ bool BaseApplication::keyPressed( const OIS::KeyEvent &arg )
     {
         mWindow->writeContentsToTimestampedFile("screenshot", ".jpg");
     }
-    else if (arg.key == OIS::KC_ESCAPE || arg.key == OIS::KC_Q)
+    else if (arg.key == OIS::KC_ESCAPE)
     {
         mShutDown = true;
     }
