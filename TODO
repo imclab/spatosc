@@ -10,8 +10,6 @@ Features
 Examples
 --------
  * Progress in the Ogre example
- * Make the clutter / openal example use meters in its GUI
- * Update the openal rendering example
 
 Packaging
 ---------
@@ -21,7 +19,6 @@ Packaging
 
 Refactoring
 -----------
- * remove friend classes in Node
  * Cleanup the public interface of the public classes.
  * convert aed-style orientation into quaternions. (or at least support also quaternions)
  * Should we warn clients that we disconnected some nodes?
