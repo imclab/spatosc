@@ -35,7 +35,7 @@ int main()
     spatosc::OscSender sender("127.0.0.1", TEST_PORT);
     spatosc::Scene scene(TEST_PORT);
     spatosc::SoundSource *source(scene.createSoundSource("dummy"));
-    
+
     static const float x = 1.4f;
     static const float y = 2.4f;
     static const float z = 3.4f;

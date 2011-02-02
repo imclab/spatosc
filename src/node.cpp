@@ -38,6 +38,12 @@ Node::Node(const std::string &nodeID, Scene &scene) :
 {
 }
 
+Node::~Node()
+{
+    // remove osc handler for this node
+    scene_.unsubscribe(this);
+}
+
 void Node::debugPrint() const
 {
     std::cout << "  " << id_ << ":" << std::endl;

@@ -142,7 +142,7 @@ class Vector3
         return out << "(" << v.x << "," << v.y << "," << v.z << ")";
     }
 
-	public:
+    public:
         double x;
         double y;
         double z;

@@ -37,7 +37,7 @@ int main()
     spatosc::Scene scene;
     spatosc::SoundSource *source(scene.createSoundSource("dummy"));
     assert(source->getID() == "dummy");
-    
+
     lo_arg **args = new lo_arg*[3];
     int num_args = 3;
     for (int i = 0 ; i != 3; ++i)

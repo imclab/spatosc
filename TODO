@@ -20,6 +20,7 @@ Packaging
 
 Refactoring
 -----------
+ * Scene with receiver should be subclass of regular scene. We shouldn't have to do if (receiver_) all the time.
  * Cleanup the public interface of the public classes.
  * convert aed-style orientation into quaternions. (or at least support also quaternions)
  * Should we warn clients that we disconnected some nodes?

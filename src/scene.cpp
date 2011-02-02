@@ -161,7 +161,7 @@ SoundSource* Scene::createSoundSource(const std::string &id)
 
         // register a callback for the sound source with the oscReceiver:
         if (receiver_)
-        	receiver_->addHandler(NULL, NULL, SpatdifReceiver::onNodeMessage, node);
+            receiver_->addHandler(NULL, NULL, SpatdifReceiver::onNodeMessage, node);
         return node;
     }
     else
@@ -176,7 +176,14 @@ bool Scene::poll()
     if (receiver_)
         if (receiver_->poll() > 0)
             return true;
-    return false; 
+    return false;
+}
+
+
+void Scene::unsubscribe(Node *node)
+{
+    if (receiver_)
+        receiver_->removeGenericHandler(node);
 }
 
 Listener* Scene::createListener(const std::string &id)
@@ -208,6 +215,9 @@ Listener* Scene::createListener(const std::string &id)
                 connect(iter->get(), node);
             }
         }
+        // register a callback for the listener with the oscReceiver:
+        if (receiver_)
+            receiver_->addHandler(NULL, NULL, SpatdifReceiver::onNodeMessage, node);
         return node;
     }
     else
