@@ -8,6 +8,7 @@ check_PROGRAMS = \
     check_connections \
     check_distance \
     check_itworks \
+    check_osc \
     check_spatdif \
     check_spatdif_osc \
     check_unique \
@@ -21,6 +22,7 @@ check_connectfilter_SOURCES = check_connectfilter.cpp
 check_connections_SOURCES = check_connections.cpp
 check_distance_SOURCES = check_distance.cpp
 check_itworks_SOURCES = check_it_works.cpp
+check_osc_SOURCES = check_osc.cpp
 check_spatdif_SOURCES = check_spatdif.cpp
 check_spatdif_osc_SOURCES = check_spatdif_osc.cpp
 check_unique_SOURCES = check_unique.cpp
