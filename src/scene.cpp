@@ -327,7 +327,7 @@ Connection* Scene::connect(SoundSource *src, Listener *snk)
     Connection* conn = getConnection(src, snk);
     if (conn)
     {
-        std::cerr << "Nodes " << src << " and " << snk << " are already connected." << std::endl;
+        std::cerr << "Nodes " << src->getID() << " and " << snk->getID() << " are already connected." << std::endl;
         return 0;
     }
 #ifdef HAVE_REGEX
@@ -370,7 +370,7 @@ bool Scene::disconnect(SoundSource *source, Listener *sink)
     Connection* conn = getConnection(source, sink);
     if (! conn)
     {
-        std::cerr << "Cannot disconnect nodes " << source << " and " << sink << ": They are not connected." << std::endl;
+        std::cerr << "Cannot disconnect nodes " << source->getID() << " and " << sink->getID() << ": They are not connected." << std::endl;
         return false;
     }
     source->removeConnectionTo(conn);

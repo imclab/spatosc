@@ -37,6 +37,7 @@ int main()
     spatosc::OscSender sender("127.0.0.1", TEST_PORT);
     spatosc::Scene scene(TEST_PORT);
     spatosc::SoundSource *source(scene.createSoundSource("dummy"));
+    spatosc::SoundSource *source2(scene.createSoundSource("bunny"));
     spatosc::Listener *listener(scene.createListener("funny"));
 
     static const float x = 1.4f;
@@ -44,7 +45,8 @@ int main()
     static const float z = 3.4f;
 
     sender.sendMessage("/spatosc/core/source/dummy/xyz", "fff", x, y, z, LO_ARGS_END);
-    sender.sendMessage("/spatosc/core/source/funny/xyz", "fff", x, y, z, LO_ARGS_END);
+    sender.sendMessage("/spatosc/core/source/bunny/xyz", "fff", 2*x, 2*y, 2*z, LO_ARGS_END);
+    sender.sendMessage("/spatosc/core/source/funny/xyz", "fff", 3*x, 3*y, 3*z, LO_ARGS_END);
     scene.poll();
 
     spatosc::Vector3 pos = source->getPosition();
@@ -53,8 +55,14 @@ int main()
         std::cerr << "Unexpected source position " << pos << std::endl;
         return 1;
     }
+    pos = source2->getPosition();
+    if (pos.x != 2*x || pos.y != 2*y || pos.z != 2*z)
+    {
+        std::cerr << "Unexpected source2 position " << pos << std::endl;
+        return 1;
+    }
     pos = listener->getPosition();
-    if (pos.x != x || pos.y != y || pos.z != z)
+    if (pos.x != 3*x || pos.y != 3*y || pos.z != 3*z)
     {
         std::cerr << "Unexpected listener position " << pos << std::endl;
         return 1;
