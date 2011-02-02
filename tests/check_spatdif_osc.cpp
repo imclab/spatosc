@@ -44,7 +44,7 @@ int main()
     scene.poll();
 
     spatosc::Vector3 pos = source->getPosition();
-    if (pos.x != x or pos.y != y or pos.z != z)
+    if (pos.x != x || pos.y != y || pos.z != z)
         return 1;
     return 0;
 }
