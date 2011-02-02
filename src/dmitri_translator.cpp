@@ -43,7 +43,7 @@ DmitriTranslator::DmitriTranslator(const std::string &ip,
     Translator(verbose),
     sender_(new OscSender(ip, toPort))
     {
-		if (verbose)
+        if (verbose)
             std::cout << "D-Mitri translator sending to: " << sender_->toString() << std::endl;
     }
 

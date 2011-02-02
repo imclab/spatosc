@@ -63,6 +63,11 @@ class Scene
         Scene(const std::string &receiverPort = "");
 
         /**
+         * Called when a node should stop receiving OSC messages.
+         */
+        void unsubscribe(Node *node);
+
+        /**
          * Prints debug info to the console.
          */
         void debugPrint();

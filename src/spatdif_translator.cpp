@@ -41,7 +41,7 @@ SpatdifTranslator::SpatdifTranslator(const std::string &ip,
     Translator(verbose),
     sender_(new OscSender(ip, port))
     {
-		if (verbose_)
+        if (verbose_)
             std::cout << "SpatdifTranslator sending to: " << sender_->toString() << std::endl;
     }
 

@@ -52,7 +52,7 @@ class Node
         /**
          * Virtual classes should have virtual destructors.
          */
-        virtual ~Node() {}
+        virtual ~Node();
 
         /**
          * Returns the identifier of this node.

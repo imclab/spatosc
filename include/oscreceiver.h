@@ -52,6 +52,11 @@ class OscReceiver
                 const char *types, lo_method_handler handler,
                 void *user_data);
         /**
+         * Remove a generic callback for a given data pointer.
+         * This will remove the osc handler for a given user data argument.
+         */
+        void removeGenericHandler(void *data);
+        /**
          * Polls the liblo server for received messages. Clients
          * may want to repeatedly call it while it's still
          * receiving bytes.

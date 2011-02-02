@@ -32,7 +32,7 @@ static const bool VERBOSE = true;
 static const double EPSILON = 0.0001;
 
 /**
- * 
+ *
  */
 static bool checkAngles(spatosc::Connection *conn, double azim, double elev, const char *description="")
 {
