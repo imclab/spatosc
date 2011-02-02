@@ -24,9 +24,11 @@
  * $ libtool --mode=execute gdb check_spatdif_osc
  */
 
+#include <iostream>
 #include "oscsender.h"
 #include "scene.h"
 #include "soundsource.h"
+#include "listener.h"
 
 int main()
 {
@@ -35,16 +37,27 @@ int main()
     spatosc::OscSender sender("127.0.0.1", TEST_PORT);
     spatosc::Scene scene(TEST_PORT);
     spatosc::SoundSource *source(scene.createSoundSource("dummy"));
+    spatosc::Listener *listener(scene.createListener("funny"));
 
     static const float x = 1.4f;
     static const float y = 2.4f;
     static const float z = 3.4f;
 
     sender.sendMessage("/spatosc/core/source/dummy/xyz", "fff", x, y, z, LO_ARGS_END);
+    sender.sendMessage("/spatosc/core/source/funny/xyz", "fff", x, y, z, LO_ARGS_END);
     scene.poll();
 
     spatosc::Vector3 pos = source->getPosition();
     if (pos.x != x || pos.y != y || pos.z != z)
+    {
+        std::cerr << "Unexpected source position " << pos << std::endl;
         return 1;
+    }
+    pos = listener->getPosition();
+    if (pos.x != x || pos.y != y || pos.z != z)
+    {
+        std::cerr << "Unexpected listener position " << pos << std::endl;
+        return 1;
+    }
     return 0;
 }

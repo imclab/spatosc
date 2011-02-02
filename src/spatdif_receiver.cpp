@@ -110,4 +110,3 @@ int SpatdifReceiver::onNodeMessage(const char * path, const char * /*types*/,
     return 1;
 }
 } // end namespace spatosc
-
