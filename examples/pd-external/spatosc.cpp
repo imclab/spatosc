@@ -103,13 +103,11 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
         printf("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
         post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
     }
-#if 0
     bool success = x->wrapper.setTranslator(translatorName, sendToAddress, sendToPort);
     if (! success)
     {
         post("[spatosc]: ERROR calling setTranslator.");
     }
-#endif
     
     // create outlets
     x->outlet_status = outlet_new(&x->x_obj, 0);
