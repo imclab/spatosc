@@ -48,7 +48,7 @@ typedef struct _spatosc
 
 static void spatosc_print_usage()
 {
-    post("[spatosc] ERROR: Usage: [spatosc <f:port> <s:host> <s:translator>]");
+    post("[spatosc] ERROR: Usage: [spatosc <s:translator> <f:port> <s:host>]");
 }
 
 static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
@@ -60,27 +60,27 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
     int port = 0;
     t_symbol *host = gensym("NULL");
     t_symbol *translator = gensym("NULL");
-    // PORT
-    if (argc >= 1)
+    // TRANSLATOR
+    if (argc >= 1) 
     {
-        if (argv[0].a_type == A_FLOAT)
-            port = (int) argv[0].a_w.w_float;
+        if (argv[0].a_type == A_SYMBOL)
+            translator = argv[0].a_w.w_symbol;
+        else
+            spatosc_print_usage();
+    }
+    // PORT
+    if (argc >= 2)
+    {
+        if (argv[1].a_type == A_FLOAT)
+            port = (int) argv[1].a_w.w_float;
         else
             spatosc_print_usage();
     }
     // HOST
-    if (argc >= 2) 
-    {
-        if (argv[1].a_type == A_SYMBOL)
-            host = argv[1].a_w.w_symbol;
-        else
-            spatosc_print_usage();
-    }
-    // TRANSLATOR
     if (argc >= 3) 
     {
         if (argv[2].a_type == A_SYMBOL)
-            translator = argv[2].a_w.w_symbol;
+            host = argv[2].a_w.w_symbol;
         else
             spatosc_print_usage();
     }
