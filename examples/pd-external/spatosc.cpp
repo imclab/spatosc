@@ -99,10 +99,8 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
     }
     if (SPATOSC_DEBUG)
     {
-        printf("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
         post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
     }
-    printf("setTranslator at startup is disabled for now.");
     bool success = x->wrapper.setTranslator(translatorName, sendToAddress, sendToPort);
     if (! success)
     {
@@ -136,6 +134,7 @@ static void spatosc_setConnectFilter(t_spatosc *x, t_symbol *filter);
 static void spatosc_setOrientation(t_spatosc *x, t_symbol *node, t_floatarg pitch, t_floatarg roll, t_floatarg yaw);
 static void spatosc_setPosition(t_spatosc *x, t_symbol *node, t_floatarg xPos, t_floatarg yPos, t_floatarg zPos);
 static void spatosc_setAutoConnect(t_spatosc *x, t_floatarg enabled);
+static void spatosc_setTranslator(t_spatosc *x, t_symbol *translator, t_symbol *host, t_floatarg port);
 
 extern "C" void spatosc_setup(void)
 {
@@ -206,3 +205,25 @@ static void spatosc_setAutoConnect(t_spatosc *x, t_floatarg enabled)
     output_success(x, x->wrapper.setAutoConnect(enabled != 0.0f));
 }
 
+static void spatosc_setTranslator(t_spatosc *x, t_symbol *translator, t_symbol *host, t_floatarg port)
+{
+    std::string translatorName = "SpatdifTranslator";
+    std::string sendToAddress = "localhost";
+    std::string sendToPort = spatosc::SpatdifTranslator::DEFAULT_SEND_PORT;
+    if (std::string("NULL") != translator->s_name)
+        translatorName = translator->s_name;
+    if (std::string("NULL") != host->s_name)
+        sendToAddress = host->s_name;
+    if (0 != port)
+    {
+        std::ostringstream os;
+        os << port;
+        sendToPort = os.str();
+    }
+    if (SPATOSC_DEBUG)
+    {
+        printf("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
+        post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
+    }
+    output_success(x, x->wrapper.setTranslator(translatorName, sendToAddress, sendToPort));
+}
