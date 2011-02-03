@@ -23,9 +23,8 @@
 #include <AL/alut.h>
 #include <tr1/memory>
 #include <glib/gtypes.h>
-#include "lo/lo.h"
 
-#include <spatosc/scene.h>
+#include <spatosc/osc_scene.h>
 
 
 class AudioScene;
@@ -43,7 +42,7 @@ class AudioScene {
         void updateListenerPosition();
         static gboolean pollReceiver(gpointer data);
 
-        spatosc::Scene scene_;
+        spatosc::OscScene scene_;
         ALfloat sourcePos_[3];
         ALuint source_;
         ALfloat listenerPos_[3];
