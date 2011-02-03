@@ -14,7 +14,7 @@ This source file is part of the
       http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
 */
-#include "TutorialApplication.h"
+#include "spat_application.h"
 
 static const double OSC_FLUSH_INTERVAL = 0.5; // How many second between each OSC flushing
  
