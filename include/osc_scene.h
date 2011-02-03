@@ -30,6 +30,8 @@
 namespace spatosc
 {
 
+class SpatdifReceiver;
+
 /**
  * Manages the nodes and their connections.
  * It also manages the translator, who allow to render a scene with some audio engine. Can receive osc messages
