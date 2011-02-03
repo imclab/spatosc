@@ -73,7 +73,7 @@ class OscScene : public Scene
          * If a node wih this name already exists, it returns a null pointer and prints an error message.
          * @return A Listener pointer. Null if a node with this name already exists. Never free this pointer. It will become invalid if this node is deleted.
          */
-        Listener* createListener(const std::string &id);
+        virtual Listener* createListener(const std::string &id);
 
         /**
          * Called to check if any new OSC messages have arrived

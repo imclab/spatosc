@@ -21,6 +21,7 @@
 #include "soundsource.h"
 #include "listener.h"
 #include <iostream>
+#include <cassert>
 
 namespace spatosc
 {
@@ -70,6 +71,34 @@ void Connection::debugPrint() const
     std::cout << "    rolloffEffect:\t" << rolloffEffect_ << "%" << std::endl;
     std::cout << "    dopplerEffect:\t" << dopplerEffect_ << "%" << std::endl;
     std::cout << "    diffractionEffect:\t" << diffractionEffect_ << "%" << std::endl;
+}
+
+void Connection::handleMessage(const std::string &method, int argc, lo_arg **argv)
+{
+    if (method == "aed")
+    {
+        assert(argc == 3);
+        azim_ = argv[0]->f;
+        elev_ = argv[1]->f;
+        distance_ = argv[2]->f;
+    }
+    else if (method == "delay")
+    {
+        assert(argc == 1);
+        vdel_ = argv[0]->f;
+    }
+    else if (method == "gain")
+    {
+        assert(argc == 1);
+        gain_ = argv[0]->f;
+    }
+    else if (method == "gainDB")
+    {
+        assert(argc == 1);
+        gainDB_ = argv[0]->f;
+    }
+    else
+        std::cerr << "Unknown method " << method << std::endl;
 }
 
 } // end namespace spatosc
