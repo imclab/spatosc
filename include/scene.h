@@ -45,6 +45,9 @@ class SpatdifReceiver;
 class Scene
 {
     public:
+        // FIXME: Thu Feb  3 12:33:48 EST 2011 : tmatth: this only belongs in osc_scene
+        virtual void unsubscribe(Node * /*node*/) {};
+        virtual ~Scene() {}
         // iterators:
         typedef std::vector<std::tr1::shared_ptr<Listener> >::iterator ListenerIterator;
         typedef std::vector<std::tr1::shared_ptr<Node> >::iterator NodeIterator;
@@ -58,14 +61,8 @@ class Scene
          * Your next steps should be to set the translator and create a listener node.
          *
          * When you create a scene, there is not a single node in the scene and you must create some if you want to do anything.
-         * @param receiverPort Optional port to specify if the scene's nodes should receive OSC messages
          */
-        Scene(const std::string &receiverPort = "");
-
-        /**
-         * Called when a node should stop receiving OSC messages.
-         */
-        void unsubscribe(Node *node);
+        Scene();
 
         /**
          * Prints debug info to the console.
@@ -98,7 +95,7 @@ class Scene
          * @warning Make sure you call this node's setChannelID method after its creation.
          * @return A SoundSource pointer. Null if a node with this name already exists. Never free this pointer. It will become invalid if this node is deleted.
          */
-        SoundSource* createSoundSource(const std::string &id);
+        virtual SoundSource* createSoundSource(const std::string &id);
 
         /**
          * Returns a node in the scene identified by its identifier.
@@ -108,7 +105,7 @@ class Scene
          * If a node wih this name already exists, it returns a null pointer and prints an error message.
          * @return A Listener pointer. Null if a node with this name already exists. Never free this pointer. It will become invalid if this node is deleted.
          */
-        Listener* createListener(const std::string &id);
+        virtual Listener* createListener(const std::string &id);
 
         /**
          * Returns a node in the scene, given its identifier.
@@ -176,11 +173,6 @@ class Scene
         bool disconnect(SoundSource *source, Listener* sink);
 
         /**
-         * Called by a node when it is changed so that the scene recomputes all the connection in which it is involved.
-         */
-        void onNodeChanged(Node *n);
-
-        /**
          * Sets whether source and sink nodes should be automatically connected as soon as they are created.
          * Default is true.
          * @param enabled Enabled or not.
@@ -231,8 +223,6 @@ class Scene
          * @return Success or not. Returns false if in synchronous mode. (that would be an error to call this if this is the case)
          */
         bool flushMessages();
-
-        bool poll();
 
         /**
          * Called when a new connection is made or when its node position change, so that the scene updates all its sibling nodes, and the translator may push some OSC messages.

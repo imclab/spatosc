@@ -26,7 +26,7 @@
 
 #include <iostream>
 #include "oscsender.h"
-#include "scene.h"
+#include "osc_scene.h"
 #include "soundsource.h"
 #include "listener.h"
 
@@ -35,7 +35,7 @@ int main()
     // test's scene's receiving facilities
     const char *TEST_PORT = "11111";
     spatosc::OscSender sender("127.0.0.1", TEST_PORT);
-    spatosc::Scene scene(TEST_PORT);
+    spatosc::OscScene scene(TEST_PORT);
     spatosc::SoundSource *source(scene.createSoundSource("dummy"));
     spatosc::SoundSource *source2(scene.createSoundSource("bunny"));
     spatosc::Listener *listener(scene.createListener("funny"));
