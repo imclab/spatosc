@@ -101,9 +101,10 @@ void SpatdifTranslator::pushOSCMessages(Connection * conn)
     // maybe this should be in connection? Probably not though.
     if (newPositions)
     {
-        sendAED(srcPath, conn);
-        sendDelay(srcPath, conn);
-        sendGainDB(srcPath, conn);
+        std::string connectionPath = "/spatosc/core/connection/" + conn->getID();
+        sendAED(connectionPath, conn);
+        sendDelay(connectionPath, conn);
+        sendGainDB(connectionPath, conn);
     }
 }
 

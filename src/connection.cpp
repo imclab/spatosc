@@ -26,7 +26,7 @@ namespace spatosc
 {
 
 Connection::Connection(SoundSource *source, Listener *sink) :
-    id_(source->getID() + "-" + sink->getID() + ".conn"),
+    id_(source->getID() + "->" + sink->getID()),
     src_(source),
     snk_(sink),
     distance_(0.0),
