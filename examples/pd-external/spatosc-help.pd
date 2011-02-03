@@ -1,0 +1,72 @@
+#N canvas 43 56 834 630 10;
+#X text 327 124 1);
+#X text 386 155 2);
+#X obj 109 452 OSCrx 9000;
+#X obj 109 429 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X text 129 428 <- a bang to any OSCrx prints status info;
+#X obj 361 192 bng 12 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 389 224 tgl 12 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 389 204 OSCtx;
+#X msg 350 124 setAddress 224.0.0.100 9009;
+#X text 342 274 Multicast receiver:;
+#X text 577 125 1);
+#X text 639 157 2);
+#X obj 599 194 bng 12 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 642 225 tgl 12 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+11722;
+#X obj 642 206 OSCtx tcp;
+#X msg 405 155 /some/multicast message;
+#X msg 604 124 setAddress localhost 9001;
+#X obj 109 478 print OSCrx-1;
+#X obj 343 296 OSCrx 224.0.0.100 9009;
+#X obj 343 319 print Multicast_MSG;
+#X msg 659 155 /tcp/msg message;
+#X text 57 124 1);
+#X text 116 155 2);
+#X obj 91 192 bng 12 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 119 224 tgl 12 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 119 204 OSCtx;
+#X text 57 101 UDP sender:;
+#X text 327 101 Multicast sender:;
+#X text 578 103 TCP sender:;
+#X msg 80 124 setAddress localhost 9000;
+#X msg 135 155 /hello udp;
+#X text 51 25 OSCsplit accepts an OSC message as a list and sends the
+OSC path from the right outlet first (in case you want to set routing
+or spigots for the arguments). Then the rest of the arguments come
+out the left outlet.;
+#X obj 83 296 OSCrx 9000;
+#X text 82 274 UDP receiver:;
+#X obj 83 319 print UDP_MSG;
+#X text 51 385 NOTE: You can have multiple instances of [OSCrx]. Each
+one is reference counted and share the same socket.;
+#X text 612 274 TCP receiver:;
+#X obj 613 319 print TCP_MSG;
+#X obj 613 296 OSCrx 9001 tcp;
+#X text 51 520 See also:;
+#X text 101 545 adds one more namespace to the front of the symbol
+;
+#X obj 54 544 OSCtx;
+#X connect 2 0 17 0;
+#X connect 3 0 2 0;
+#X connect 5 0 7 0;
+#X connect 7 0 6 0;
+#X connect 8 0 7 0;
+#X connect 12 0 14 0;
+#X connect 14 0 13 0;
+#X connect 15 0 7 0;
+#X connect 16 0 14 0;
+#X connect 18 0 19 0;
+#X connect 20 0 14 0;
+#X connect 23 0 25 0;
+#X connect 25 0 24 0;
+#X connect 29 0 25 0;
+#X connect 30 0 25 0;
+#X connect 32 0 34 0;
+#X connect 38 0 37 0;
