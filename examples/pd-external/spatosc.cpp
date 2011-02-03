@@ -103,13 +103,11 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
         post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
     }
     printf("setTranslator at startup is disabled for now.");
-#if 0
     bool success = x->wrapper.setTranslator(translatorName, sendToAddress, sendToPort);
     if (! success)
     {
-        post("[spatosc]: ERROR calling setTranslator.");
+        post("[spatosc]: ERROR calling setTranslator from the constructor.");
     }
-#endif
     
     // create outlets
     x->outlet_status = outlet_new(&x->x_obj, 0);
