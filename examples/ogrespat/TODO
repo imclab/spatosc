@@ -1,0 +1,7 @@
+Packaging
+---------
+ * install config files, and load them if found
+
+Audio
+-----
+ * render audio with some PD patch or so.
