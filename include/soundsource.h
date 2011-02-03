@@ -38,7 +38,7 @@ class SoundSource : public Node
     public:
         SoundSource(const std::string &nodeID, Scene &scene);
         void addConnectionTo(const std::tr1::shared_ptr<Connection> &conn);
-        void removeConnectionTo(Connection *conn);
+        void removeConnectionTo(const Connection *conn);
     private:
         std::vector<std::tr1::shared_ptr<Connection> > connectTO_;
         virtual void onNodeChanged();

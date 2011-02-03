@@ -41,6 +41,14 @@ struct Scene::RegexHandle
 {
 #ifdef HAVE_REGEX
     regex_t regex;
+    bool isMatch(const std::string &str) const
+    {
+        return regexec(&regex, str.c_str(), (size_t)0, 0, 0) == 0;
+    }
+    bool setPattern(const std::string &str)
+    {
+        return regcomp(&regex, str.c_str(), REG_EXTENDED|REG_NOSUB) == 0;
+    }
 #endif
 };
 }
@@ -219,7 +227,7 @@ SoundSource* Scene::getSoundSource(const std::string &id)
     SourceIterator n;
     for (n = soundSources_.begin(); n != soundSources_.end(); ++n)
     {
-        if ((*n)->getID() == id)
+        if ((*n)->hasID(id))
         {
             return n->get();
         }
@@ -232,7 +240,7 @@ Listener* Scene::getListener(const std::string &id)
     ListenerIterator L;
     for (L = listeners_.begin(); L != listeners_.end(); ++L)
     {
-        if ((*L)->getID() == id)
+        if ((*L)->hasID(id))
         {
             return L->get();
         }
@@ -275,8 +283,7 @@ bool Scene::setConnectFilter(std::string s)
     if (s == "*")
         s = ".*";
 #ifdef HAVE_REGEX
-    // TODO: Fri Jan 14 11:14:11 EST 2011: connectRegex_ should belong to translator
-    if (regcomp(&connectRegex_->regex, s.c_str(), REG_EXTENDED|REG_NOSUB) != 0)
+    if (!connectRegex_->setPattern(s))
     {
         std::cout << "Scene error: bad regex pattern passed to setConnectFilter(): " << s << std::endl;
         return false;
@@ -298,15 +305,15 @@ Connection* Scene::connect(SoundSource *src, Listener *snk)
     Connection* conn = getConnection(src, snk);
     if (conn)
     {
-        std::cerr << "Nodes " << src->getID() << " and " << snk->getID() << " are already connected." << std::endl;
+        std::cerr << "Nodes " << *src << " and " << *snk << " are already connected." << std::endl;
         return 0;
     }
 #ifdef HAVE_REGEX
     // Check src and snk id's against the connectFilter. If either match, then
     // proceed with the connection:
-    int srcRegexStatus = regexec(&connectRegex_->regex, src->getID().c_str(), (size_t)0, 0, 0);
-    int snkRegexStatus = regexec(&connectRegex_->regex, snk->getID().c_str(), (size_t)0, 0, 0);
-    if (srcRegexStatus == 0 || snkRegexStatus == 0)
+    bool srcRegexStatus = connectRegex_->isMatch(src->getID());
+    bool snkRegexStatus = connectRegex_->isMatch(snk->getID());
+    if (srcRegexStatus || snkRegexStatus)
     {
 #else
     if (true)
@@ -341,7 +348,7 @@ bool Scene::disconnect(SoundSource *source, Listener *sink)
     Connection* conn = getConnection(source, sink);
     if (! conn)
     {
-        std::cerr << "Cannot disconnect nodes " << source->getID() << " and " << sink->getID() << ": They are not connected." << std::endl;
+        std::cerr << "Cannot disconnect nodes " << *source << " and " << *sink << ": They are not connected." << std::endl;
         return false;
     }
     source->removeConnectionTo(conn);
@@ -382,7 +389,7 @@ bool Scene::flushMessages()
     }
 }
 
-bool Scene::disconnectNodeConnections(Node *node)
+bool Scene::disconnectNodeConnections(const Node *node)
 {
     std::vector<Connection*> nodeConnections = getConnectionsForNode(node);
     std::vector<Connection*>::iterator iter;
@@ -396,7 +403,7 @@ bool Scene::disconnectNodeConnections(Node *node)
     return did_disconnect_some;
 }
 
-bool Scene::deleteNode(SoundSource *node)
+bool Scene::deleteNode(const SoundSource *node)
 {
     if (! node)
     {
@@ -407,7 +414,7 @@ bool Scene::deleteNode(SoundSource *node)
     return eraseFromVector(soundSources_, node);
 }
 
-bool Scene::deleteNode(Listener *node)
+bool Scene::deleteNode(const Listener *node)
 {
     if (! node)
     {

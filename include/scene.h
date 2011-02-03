@@ -191,14 +191,14 @@ class Scene
          * @param node Listener pointer.
          * @return Whether it deleted a node or not.
          */
-        bool deleteNode(Listener *node);
+        bool deleteNode(const Listener *node);
 
         /**
          * Deletes a SoundSource node
          * @param node SoundSource pointer.
          * @return Whether it deleted a node or not.
          */
-        bool deleteNode(SoundSource *node);
+        bool deleteNode(const SoundSource *node);
         /**
          * Sets the console verbosity for info messages.
          * @param Whether to print a lot of messages or not.
@@ -239,7 +239,7 @@ class Scene
          * @return A vector of Connection pointers. Never free these pointers. They will become invalid if these connections are deleted.
          */
         std::vector<Connection*> getConnectionsForNode(const Node *node);
-        bool disconnectNodeConnections(Node *node);
+        bool disconnectNodeConnections(const Node *node);
 
         std::tr1::shared_ptr<Translator> translator_;
         bool autoConnect_;

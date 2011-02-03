@@ -145,6 +145,11 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv)
     }
 }
 
+bool Node::hasID(const std::string &id) const
+{
+    return id_ == id;
+}
+
 std::ostream &operator<<(std::ostream &out, const spatosc::Node &n)
 {
     return out << n.id_;

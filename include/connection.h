@@ -24,6 +24,8 @@
 #define __CONNECTION_H__
 
 #include <string>
+#include <lo/lo_osc_types.h> // for lo_arg
+
 namespace spatosc
 {
 
@@ -35,13 +37,7 @@ class Listener;
  */
 class Connection
 {
-private:
-    // not implemented
-    Connection(const Connection&);
-    const Connection& operator=(const Connection&);
-
 public:
-
     Connection(SoundSource *source, Listener *sink);
     /**
      * Update distance, azimuth and elevation values (usually called by Scene instance)
@@ -113,7 +109,9 @@ public:
      */
     bool active() const;
 
-protected:
+    void handleMessage(const std::string &method, int argc, lo_arg ** argv);
+
+private:
     std::string id_;
     SoundSource *src_;
     Listener *snk_;
@@ -128,6 +126,9 @@ protected:
     float rolloffEffect_;
     float dopplerEffect_;
     float diffractionEffect_;
+    // not implemented
+    Connection(const Connection&);
+    const Connection& operator=(const Connection&);
 };
 
 } // end namespace spatosc
