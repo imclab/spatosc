@@ -57,7 +57,7 @@ void Listener::addConnectionFrom(const std::tr1::shared_ptr<Connection> &conn)
     connectFROM_.push_back(conn);
 }
 
-void Listener::removeConnectionFrom(Connection *conn)
+void Listener::removeConnectionFrom(const Connection *conn)
 {
     eraseFromVector(connectFROM_, conn);
 }

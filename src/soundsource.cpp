@@ -40,7 +40,7 @@ void SoundSource::addConnectionTo(const std::tr1::shared_ptr<Connection> &conn)
     connectTO_.push_back(conn);
 }
 
-void SoundSource::removeConnectionTo(Connection *conn)
+void SoundSource::removeConnectionTo(const Connection *conn)
 {
     eraseFromVector(connectTO_, conn);
 }
