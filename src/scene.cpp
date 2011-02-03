@@ -389,7 +389,7 @@ bool Scene::flushMessages()
     }
 }
 
-bool Scene::disconnectNodeConnections(Node *node)
+bool Scene::disconnectNodeConnections(const Node *node)
 {
     std::vector<Connection*> nodeConnections = getConnectionsForNode(node);
     std::vector<Connection*>::iterator iter;
@@ -403,7 +403,7 @@ bool Scene::disconnectNodeConnections(Node *node)
     return did_disconnect_some;
 }
 
-bool Scene::deleteNode(SoundSource *node)
+bool Scene::deleteNode(const SoundSource *node)
 {
     if (! node)
     {
@@ -414,7 +414,7 @@ bool Scene::deleteNode(SoundSource *node)
     return eraseFromVector(soundSources_, node);
 }
 
-bool Scene::deleteNode(Listener *node)
+bool Scene::deleteNode(const Listener *node)
 {
     if (! node)
     {

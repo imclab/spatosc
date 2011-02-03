@@ -33,7 +33,7 @@ namespace spatosc {
     class IsEqual
     {
         public:
-            IsEqual(T *a) : a_(a) {}
+            IsEqual(const T *a) : a_(a) {}
             bool operator() (const std::tr1::shared_ptr<T> &b)
             {
                 return a_ == b.get();
@@ -47,7 +47,7 @@ namespace spatosc {
      * @return Whether it deleted some elements of not.
      */
     template <typename T>
-    bool eraseFromVector(std::vector<std::tr1::shared_ptr<T> >& vec, T *a)
+    bool eraseFromVector(std::vector<std::tr1::shared_ptr<T> >& vec, const T *a)
     {
         size_t size_before = vec.size();
         IsEqual<T> predicate(a);

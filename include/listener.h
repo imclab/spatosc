@@ -39,7 +39,7 @@ class Listener : public Node
         Listener(const std::string &nodeID, Scene &scene);
         virtual void debugPrint() const;
         void addConnectionFrom(const std::tr1::shared_ptr<Connection> &conn);
-        void removeConnectionFrom(Connection *conn);
+        void removeConnectionFrom(const Connection *conn);
     private:
         virtual void onNodeChanged();
         virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv);
