@@ -1,4 +1,4 @@
-#N canvas 433 134 752 471 10;
+#N canvas 592 104 752 471 10;
 #X obj 133 348 tgl 50 0 empty empty success 17 7 0 10 -258113 -1 -1
 0 1;
 #X msg 90 87 createSource source;
@@ -9,7 +9,6 @@
 #X floatatom 307 76 5 0 0 0 - - -;
 #X floatatom 346 76 5 0 0 0 - - -;
 #X floatatom 385 76 5 0 0 0 - - -;
-#X obj 133 316 spatosc 18032 localhost SpatdifTranslator;
 #X msg 411 215 setTranslator SpatdifTranslator localhost 18032;
 #X text 34 -26 [spatosc] Creates a spatosc audio scene and allows one
 to create sound source nodes and listeners in a 3D virtual audio environment.
@@ -53,18 +52,19 @@ and controls them using the Open Sound Control protocol.;
 #X connect 4 0 1 0;
 #X connect 5 0 2 0;
 #X restore 491 96 pd pack3f;
-#X connect 1 0 9 0;
-#X connect 2 0 9 0;
-#X connect 3 0 9 0;
-#X connect 4 0 9 0;
-#X connect 5 0 9 0;
-#X connect 6 0 13 0;
-#X connect 7 0 13 1;
-#X connect 8 0 13 2;
-#X connect 9 0 0 0;
-#X connect 10 0 9 0;
-#X connect 13 0 3 0;
-#X connect 14 0 17 0;
-#X connect 15 0 17 1;
-#X connect 16 0 17 2;
-#X connect 17 0 4 0;
+#X obj 133 316 spatosc SpatdifTranslator 18032 localhost;
+#X connect 1 0 17 0;
+#X connect 2 0 17 0;
+#X connect 3 0 17 0;
+#X connect 4 0 17 0;
+#X connect 5 0 17 0;
+#X connect 6 0 12 0;
+#X connect 7 0 12 1;
+#X connect 8 0 12 2;
+#X connect 9 0 17 0;
+#X connect 12 0 3 0;
+#X connect 13 0 16 0;
+#X connect 14 0 16 1;
+#X connect 15 0 16 2;
+#X connect 16 0 4 0;
+#X connect 17 0 0 0;
