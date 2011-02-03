@@ -63,24 +63,24 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
     // PORT
     if (argc >= 1)
     {
-        if ((&argv)[0]->a_type == A_FLOAT)
-            port = (int) atom_getfloat((&argv)[0]);
+        if (argv[0].a_type == A_FLOAT)
+            port = (int) argv[0].a_w.w_float;
         else
             spatosc_print_usage();
     }
     // HOST
     if (argc >= 2) 
     {
-        if ((&argv)[1]->a_type == A_SYMBOL)
-            host = atom_getsymbol((&argv)[1]);
+        if (argv[1].a_type == A_SYMBOL)
+            host = argv[1].a_w.w_symbol;
         else
             spatosc_print_usage();
     }
     // TRANSLATOR
     if (argc >= 3) 
     {
-        if ((&argv)[2]->a_type == A_SYMBOL)
-            translator = atom_getsymbol((&argv)[2]);
+        if (argv[2].a_type == A_SYMBOL)
+            translator = argv[2].a_w.w_symbol;
         else
             spatosc_print_usage();
     }
