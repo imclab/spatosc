@@ -24,6 +24,8 @@
 #include "soundsource.h"
 #include "listener.h"
 
+#define UNUSED(x) ((void) (x))
+
 namespace spatosc
 {
 
@@ -63,8 +65,8 @@ void Translator::pushOSCMessages(Connection *conn)
 ConsoleTranslator::ConsoleTranslator(const std::string &ip, const std::string &port, bool verbose = false) :
     Translator(verbose)
 {
-    (void) (port);
-    (void) (ip);
+    UNUSED(port);
+    UNUSED(ip);
 }
 
 } // end namespace spatosc
