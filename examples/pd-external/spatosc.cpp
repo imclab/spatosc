@@ -55,6 +55,7 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
 {
     UNUSED(s);
     t_spatosc *x = (t_spatosc *) pd_new(spatosc_class);
+    x->wrapper = spatosc::Wrapper();
     
     int port = 0;
     t_symbol *host = gensym("NULL");
@@ -97,11 +98,18 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
         os << port;
         sendToPort = os.str();
     }
+    if (SPATOSC_DEBUG)
+    {
+        printf("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
+        post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
+    }
+#if 0
     bool success = x->wrapper.setTranslator(translatorName, sendToAddress, sendToPort);
     if (! success)
     {
         post("[spatosc]: ERROR calling setTranslator.");
     }
+#endif
     
     // create outlets
     x->outlet_status = outlet_new(&x->x_obj, 0);
