@@ -84,11 +84,17 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
         else
             spatosc_print_usage();
     }
-    std::string translatorName = "SpatdifTranslator";
+    std::string translatorName = "ConsoleTranslator";
     std::string sendToAddress = "localhost";
-    std::string sendToPort = spatosc::SpatdifTranslator::DEFAULT_SEND_PORT;
+    std::string sendToPort = "0";
     if (std::string("NULL") != translator->s_name)
+    {
         translatorName = translator->s_name;
+        if (translatorName == "DmitriTranslator")
+            sendToPort = spatosc::DmitriTranslator::DEFAULT_SEND_PORT;
+        else if (translatorName == "SpatdifTranslator")
+            sendToPort = spatosc::SpatdifTranslator::DEFAULT_SEND_PORT;
+    }
     if (std::string("NULL") != host->s_name)
         sendToAddress = host->s_name;
     if (0 != port)
@@ -207,11 +213,15 @@ static void spatosc_setAutoConnect(t_spatosc *x, t_floatarg enabled)
 
 static void spatosc_setTranslator(t_spatosc *x, t_symbol *translator, t_symbol *host, t_floatarg port)
 {
-    std::string translatorName = "SpatdifTranslator";
+    std::string translatorName = "ConsoleTranslator";
     std::string sendToAddress = "localhost";
     std::string sendToPort = spatosc::SpatdifTranslator::DEFAULT_SEND_PORT;
     if (std::string("NULL") != translator->s_name)
+    {
         translatorName = translator->s_name;
+        if (translatorName == "DmitriTranslator")
+            sendToPort = spatosc::DmitriTranslator::DEFAULT_SEND_PORT;
+    }
     if (std::string("NULL") != host->s_name)
         sendToAddress = host->s_name;
     if (0 != port)
