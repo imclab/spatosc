@@ -15,6 +15,7 @@ This source file is part of the
 -----------------------------------------------------------------------------
 */
 #include "base_application.h"
+#include <string>
 
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication()
@@ -61,7 +62,6 @@ bool BaseApplication::configure()
     {
         // Here we choose to let the system create a default rendering window by passing 'true'
         mWindow = mRoot->initialise(true, "TutorialApplication Render Window");
-
         return true;
     }
     else
