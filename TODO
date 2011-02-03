@@ -3,7 +3,6 @@ Spatosc TODO
 
 Features
 ---------------
- * Send/receiver parameters for connections (aed, gain, etc.), these should have the connection id in the message.
  * Load balancing, don't push all the state, all the time, over OSC. Only push whatever's changed, and at some controlled rate.
  * Support world coordinates changes. (for example, in the dome, +X is on your right, but +Z behind you and +Y is up)
  * Support multicast and TCP in OscSender and OscReceiver. Perhaps use liblo urls in constructor arguments? (eg, osc.upd://239.0.0.1:9999/ or osc.tcp://localhost:9998/)
