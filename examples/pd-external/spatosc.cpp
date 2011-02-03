@@ -84,7 +84,6 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
         else
             spatosc_print_usage();
     }
-    
     std::string translatorName = "SpatdifTranslator";
     std::string sendToAddress = "localhost";
     std::string sendToPort = spatosc::SpatdifTranslator::DEFAULT_SEND_PORT;
@@ -103,11 +102,14 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
         printf("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
         post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
     }
+    printf("setTranslator at startup is disabled for now.");
+#if 0
     bool success = x->wrapper.setTranslator(translatorName, sendToAddress, sendToPort);
     if (! success)
     {
         post("[spatosc]: ERROR calling setTranslator.");
     }
+#endif
     
     // create outlets
     x->outlet_status = outlet_new(&x->x_obj, 0);
@@ -131,7 +133,7 @@ static void spatosc_createListener(t_spatosc *x, t_symbol *node);
 static void spatosc_deleteNode(t_spatosc *x, t_symbol *node);
 static void spatosc_connect(t_spatosc *x, t_symbol *from, t_symbol *to);
 static void spatosc_disconnect(t_spatosc *x, t_symbol *from, t_symbol *to);
-static void spatosc_clearScene(t_spatosc *x);
+static void spatosc_clearScene(t_spatosc *x, int argc, t_atom *argv);
 static void spatosc_setConnectFilter(t_spatosc *x, t_symbol *filter);
 static void spatosc_setOrientation(t_spatosc *x, t_symbol *node, t_floatarg pitch, t_floatarg roll, t_floatarg yaw);
 static void spatosc_setPosition(t_spatosc *x, t_symbol *node, t_floatarg xPos, t_floatarg yPos, t_floatarg zPos);
@@ -145,7 +147,7 @@ extern "C" void spatosc_setup(void)
 	class_addmethod(spatosc_class, (t_method) spatosc_deleteNode, gensym("deleteNode"), A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_connect, gensym("connect"), A_SYMBOL, A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_disconnect, gensym("disconnect"), A_SYMBOL, A_SYMBOL, 0);
-	//class_addmethod(spatosc_class, (t_method) spatosc_clearScene, gensym("clearScene"), 0);
+	class_addmethod(spatosc_class, (t_method) spatosc_clearScene, gensym("clearScene"), A_GIMME, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setAutoConnect, gensym("setAutoConnect"), A_FLOAT, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setConnectFilter, gensym("setConnectFilter"), A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setOrientation, gensym("setOrientation"), A_SYMBOL, A_FLOAT, A_FLOAT, A_FLOAT, 0);
@@ -179,8 +181,10 @@ static void spatosc_disconnect(t_spatosc *x, t_symbol *from, t_symbol *to)
     output_success(x, x->wrapper.disconnect(from->s_name, to->s_name));
 }
 
-static void spatosc_clearScene(t_spatosc *x)
+static void spatosc_clearScene(t_spatosc *x, int argc, t_atom *argv)
 {
+    UNUSED(argc);
+    UNUSED(argv);
     output_success(x, x->wrapper.clearScene());
 }
 
@@ -203,3 +207,4 @@ static void spatosc_setAutoConnect(t_spatosc *x, t_floatarg enabled)
 {
     output_success(x, x->wrapper.setAutoConnect(enabled != 0.0f));
 }
+
