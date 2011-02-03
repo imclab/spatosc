@@ -60,5 +60,12 @@ void Translator::pushOSCMessages(Connection *conn)
     }
 }
 
+ConsoleTranslator::ConsoleTranslator(const std::string &ip, const std::string &port, bool verbose = false) :
+    Translator(verbose)
+{
+    (void) (port);
+    (void) (ip);
+}
+
 } // end namespace spatosc
 

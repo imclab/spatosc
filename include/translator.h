@@ -23,6 +23,8 @@
 #ifndef __TRANSLATOR_H__
 #define __TRANSLATOR_H__
 
+#include <string>
+
 namespace spatosc
 {
 
@@ -58,6 +60,12 @@ class Translator
 
     protected:
         bool verbose_;
+};
+
+class ConsoleTranslator : public Translator
+{
+    public:
+        ConsoleTranslator(const std::string &ip, const std::string &port, bool verbose);
 };
 
 } // end namespace spatosc
