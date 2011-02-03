@@ -163,6 +163,8 @@ bool Wrapper::setTranslator(const std::string &translatorName, const std::string
         scene_->setTranslator<SpatdifTranslator>(sendToAddress, port);
     else if (translatorName == "DmitriTranslator")
         scene_->setTranslator<DmitriTranslator>(sendToAddress, port);
+    else if (translatorName == "ConsoleTranslator")
+        scene_->setTranslator<Translator>(false); // TODO: create a ConsoleTranslator child class
     else
     {
         std::cerr << "No such translator: " << translatorName << std::endl;
