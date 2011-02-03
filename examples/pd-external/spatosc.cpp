@@ -26,9 +26,7 @@
 #include <lo/lo.h>
 #include <spatosc/spatosc.h>
 #include <sstream>
-#include <stdlib.h>
 #include <string>
-#include <vector>
 
 #define UNUSED(x) ((void) (x))
 
@@ -155,6 +153,7 @@ extern "C" void spatosc_setup(void)
 	class_addmethod(spatosc_class, (t_method) spatosc_setConnectFilter, gensym("setConnectFilter"), A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setOrientation, gensym("setOrientation"), A_SYMBOL, A_FLOAT, A_FLOAT, A_FLOAT, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setPosition, gensym("setPosition"), A_SYMBOL, A_FLOAT, A_FLOAT, A_FLOAT, 0);
+	class_addmethod(spatosc_class, (t_method) spatosc_setTranslator, gensym("setTranslator"), A_SYMBOL, A_SYMBOL, A_FLOAT, 0);
     if (SPATOSC_DEBUG)
         post("[spatosc] loaded");
 }
