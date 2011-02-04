@@ -25,10 +25,10 @@ namespace Ogre
     class SceneNode;
 }
 
-class TutorialApplication : public BaseApplication
+class SpatApplication : public BaseApplication
 {
     public: 
-        TutorialApplication();
+        SpatApplication();
     private:
         void createAudioScene();
         virtual bool processUnbufferedInput(const Ogre::FrameEvent& evt);

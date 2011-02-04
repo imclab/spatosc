@@ -18,13 +18,13 @@ This source file is part of the
 
 static const double OSC_FLUSH_INTERVAL = 0.5; // How many second between each OSC flushing
  
-TutorialApplication::TutorialApplication() :
+SpatApplication::SpatApplication() :
     headNode_(0)
 {
     createAudioScene();
 }
 
-void TutorialApplication::createAudioScene()
+void SpatApplication::createAudioScene()
 {
     audioScene_.setSynchronous(false); // we will need to call flushMessages() once in a while
     audioScene_.setTranslator<spatosc::SpatdifTranslator>("127.0.0.1", spatosc::SpatdifTranslator::DEFAULT_SEND_PORT);
@@ -33,7 +33,7 @@ void TutorialApplication::createAudioScene()
     listener_ = audioScene_.createListener("1");
 }
 
-bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
+bool SpatApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
     bool ret = BaseApplication::frameRenderingQueued(evt);
     if (! processUnbufferedInput(evt)) 
@@ -41,7 +41,7 @@ bool TutorialApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
     return ret;
 }
 
-bool TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
+bool SpatApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
 {
     if (headNode_ == 0)
         return false;
@@ -102,7 +102,7 @@ bool TutorialApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
     return true;
 }
 
-void TutorialApplication::createScene()
+void SpatApplication::createScene()
 {
     // First node:
     Ogre::Entity *ogreHead = mSceneMgr->createEntity("Head", "suzanne.mesh");
@@ -132,7 +132,7 @@ void TutorialApplication::createScene()
 int main(int argc, char *argv[])
 {
     // Create application object
-    TutorialApplication app;
+    SpatApplication app;
 
     try 
     {
