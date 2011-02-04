@@ -383,7 +383,8 @@ bool Scene::flushMessages()
         for (iter = connections_.begin(); iter != connections_.end(); ++iter)
         {
             Connection* conn = (*iter).get();
-            translator_->pushOSCMessages(conn);
+            if (conn->active())
+                translator_->pushOSCMessages(conn);
         }
         return true;
     }
