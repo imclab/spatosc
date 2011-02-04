@@ -60,5 +60,5 @@ libspatosc_@SPATOSC_API_VERSION@_la_include_HEADERS = \
     $(top_srcdir)/include/translator.h \
     $(top_srcdir)/include/version.h
 
-EXTRA_DIST=$(top_srcdir)/include/config.h
+EXTRA_DIST=$(top_srcdir)/include/config.h $(top_srcdir)/include/vectors.h
 
