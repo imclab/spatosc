@@ -138,8 +138,7 @@ class Node
         }
 
         /**
-         * Set to true if this node's new position has been sent
-         * @return boolean
+         * Notify this node that it's new position has been sent
          */
         void positionSent()
         {
