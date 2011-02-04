@@ -138,8 +138,8 @@ GUI::GUI() :
     createStage();
     connectMouseCallbacks();
     connectKeyCallbacks();
-    sound_ = scene_->createSoundSource("sound1");
-    scene_->createListener("listener");
+    sound_ = scene_->createSoundSource("source1");
+    scene_->createListener("listener1");
     moveSourceToOrigin();
 }
 

@@ -102,7 +102,7 @@ void AudioScene::createSource()
 
     if (alGetError() != AL_NO_ERROR)
         throw(std::runtime_error("OpenAL error")); 
-    soundNode_ = scene_.createSoundSource("sound1");
+    soundNode_ = scene_.createSoundSource("source1");
 }
 
 void AudioScene::createListener()
@@ -122,7 +122,7 @@ void AudioScene::createListener()
     alListenerfv(AL_POSITION, listenerPos_);
     alListenerfv(AL_VELOCITY, listenerVel);
     alListenerfv(AL_ORIENTATION, listenerOri);
-    scene_.createListener("listener");
+    scene_.createListener("listener1");
 }
 
 AudioScene::~AudioScene()

@@ -26,11 +26,11 @@ SpatApplication::SpatApplication() :
 
 void SpatApplication::createAudioScene()
 {
-    audioScene_.setSynchronous(false); // we will need to call flushMessages() once in a while
+    //audioScene_.setSynchronous(false); // we will need to call flushMessages() once in a while
     audioScene_.setTranslator<spatosc::SpatdifTranslator>("127.0.0.1", spatosc::SpatdifTranslator::DEFAULT_SEND_PORT);
-    soundSourceOne_ = audioScene_.createSoundSource("1");
-    soundSourceTwo_ = audioScene_.createSoundSource("2");
-    listener_ = audioScene_.createListener("1");
+    soundSourceOne_ = audioScene_.createSoundSource("source1");
+    soundSourceTwo_ = audioScene_.createSoundSource("source2");
+    listener_ = audioScene_.createListener("listener1");
 }
 
 bool SpatApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
@@ -58,13 +58,21 @@ bool SpatApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
     {
         nodeOneTransVector.x += move; // Move entity one right
     }
-    if (mKeyboard->isKeyDown(OIS::KC_W) || mKeyboard->isKeyDown(OIS::KC_UP))
+    if (mKeyboard->isKeyDown(OIS::KC_W))
     {
         nodeOneTransVector.y -= move; // Move entity one up
     }
-    if (mKeyboard->isKeyDown(OIS::KC_S) || mKeyboard->isKeyDown(OIS::KC_DOWN))
+    if (mKeyboard->isKeyDown(OIS::KC_S))
     {
         nodeOneTransVector.y += move; // Move entity one down
+    }
+    if (mKeyboard->isKeyDown(OIS::KC_UP))
+    {
+        nodeOneTransVector.z -= move; // Move entity one up
+    }
+    if (mKeyboard->isKeyDown(OIS::KC_DOWN))
+    {
+        nodeOneTransVector.z += move; // Move entity one down
     }
     // -----------------------------------hjkl: move entity two -----------------
     if (mKeyboard->isKeyDown(OIS::KC_H))
@@ -89,15 +97,15 @@ bool SpatApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
     nodeTwoTransVector *= evt.timeSinceLastFrame;
     // translate the nodes:
     headNode_->translate(nodeOneTransVector, Ogre::Node::TS_LOCAL);
-    soundSourceOne_->setPosition(nodeOneTransVector.x, nodeOneTransVector.y, nodeOneTransVector.z);
     nodeTwo_->translate(nodeTwoTransVector, Ogre::Node::TS_LOCAL);
-    soundSourceOne_->setPosition(nodeTwoTransVector.x, nodeTwoTransVector.y, nodeTwoTransVector.z);
+    std::cout << headNode_->getPosition() << std::endl;
+    soundSourceOne_->setPosition(headNode_->getPosition().x, headNode_->getPosition().y, headNode_->getPosition().z);
     // We can avoid flushing OSC messages too often by calling spatosc::Scene::setSynchronous(false), like we did. We then need to call flushMessages() every now and then.
     timeLeftBeforeOscFlush -= evt.timeSinceLastFrame;
     if (timeLeftBeforeOscFlush < 0.0)
     {
         timeLeftBeforeOscFlush = OSC_FLUSH_INTERVAL;
-        audioScene_.flushMessages();
+        //audioScene_.flushMessages();
     }
     return true;
 }
