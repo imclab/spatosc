@@ -6,6 +6,7 @@ pd \
     -path /usr/lib/pd/extra/oscrxtx \
     -helppath /usr/lib/pd/extra/oscrxtx \
     -outchannels 8 \
-    -alsa \
+    -r 48000 \
+    -jack \
     spatosc.vbap.8~-help.pd
 
