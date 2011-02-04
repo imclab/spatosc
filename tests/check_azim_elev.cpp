@@ -28,11 +28,11 @@
 #include <cmath>
 #include "spatosc.h"
 
-static const bool VERBOSE = true;
+static const bool VERBOSE = false;
 static const double EPSILON = 0.0001;
 
 /**
- *
+ * 
  */
 static bool checkAngles(spatosc::Connection *conn, double azim, double elev, const char *description="")
 {
@@ -47,8 +47,7 @@ static bool checkAngles(spatosc::Connection *conn, double azim, double elev, con
 		std::cout << "  got: "
 			<< conn->azimuth() * spatosc::TO_DEGREES << "," << (conn->elevation() * spatosc::TO_DEGREES)
 			<< ", expecting: " << azim << "," << elev
-			<< " deltas: " << dAzim << "," << dElev
-			<< (success ? " passed!" : " failed!") << std::endl;
+			<< (success ? " passed!" : " failed!") << std::endl << std::endl;
 	}
     return success;
 }
@@ -69,31 +68,50 @@ int main(int /*argc*/, char ** /*argv*/)
         return 1;
     }
 
+    bool b = 0;
+
     listener->setPosition(0.0, 0.0, 0.0);
     source->setPosition(0.0, 1.0, 0.0);
     if (! checkAngles(conn, 0, 0, "source in front"))
-        return 1;
+        b=1;
     source->setPosition(0.0, -1.0, 0.0);
-    if (! checkAngles(conn, 0, 180, "source behind"))
-        return 1;
+    if (! checkAngles(conn, -180, 0, "source behind"))
+        b=1;
     source->setPosition(0.0, 0.0, 1.0);
-    if (! checkAngles(conn, 0, 90, "source up above"))
-        return 1;
+    //if (! checkAngles(conn, 0, 90, "source up above")) // TODO (mikewoz): why not this?
+    if (! checkAngles(conn, -90, 90, "source up above"))
+        b=1;
     source->setPosition(1.0, 0.0, 0.0);
-    if (! checkAngles(conn, 0, -90, "source to the right"))
-        return 1;
+    if (! checkAngles(conn, -90, 0, "source to the right"))
+        b=1;
     source->setPosition(1.0, 1.0, 0.0);
-    if (! checkAngles(conn, 0, -45, "source front-right on XY plane"))
-        return 1;
+    if (! checkAngles(conn, -45, 0, "source front-right on XY plane"))
+        b=1;
     source->setPosition(1.0, 1.0, 1.0);
-    if (! checkAngles(conn, 45, -45, "source front-right and up"))
-        return 1;
+    if (! checkAngles(conn, -45, 45, "source front-right and up"))
+        b=1;
     source->setPosition(1.0, 0.0, 1.0);
-    if (! checkAngles(conn, 45, -90, "source right and up"))
-        return 1;
+    if (! checkAngles(conn, -90, 45, "source right and up"))
+        b=1;
+    source->setPosition(1.0, 0.0, 0.5);
+    if (! checkAngles(conn, -90, atan2(0.5,1.0)*TO_DEGREES, "source right and half up"))
+        b=1;
+    source->setPosition(1.0, 0.0, 2.0);
+    if (! checkAngles(conn, -90, atan2(1.0,0.5)*TO_DEGREES, "source right and double high up"))
+        b=1;
     source->setPosition(1.0, -1.0, 1.0);
-    if (! checkAngles(conn, 45, -135, "source back-right and up"))
-        return 1;
-    return 0;
+    if (! checkAngles(conn, -135, 45, "source back-right and up"))
+        b=1;
+
+    // NOW WE MOVE THE LISTENER:
+    listener->setOrientation(0.0, 0.0, 45.0);
+
+    // TODO: (mikewoz) why the -180 for pitch?!
+    source->setPosition(1.0, 0.0, 0.0);
+    if (! checkAngles(conn, -135, -180, "listener 45deg left, source to the right"))
+        b=1;
+
+
+    return b;
 }
 
