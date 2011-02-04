@@ -1,4 +1,4 @@
-#N canvas 594 110 883 655 10;
+#N canvas 171 25 883 655 10;
 #X obj 24 204 delwrite~ \$0-dop 1500;
 #X obj 75 403 vd~ \$0-dop;
 #X obj 75 381 line~;
@@ -90,17 +90,19 @@
 #X text 492 82 spread: float [0 \, 100];
 #X text 495 121 Speakers are in a circle. #0 is north and they go clockwise.
 ;
-#X obj 275 -39 inlet osc;
+#X obj 275 -59 inlet osc;
 #X obj 275 -13 OSCparse /\$1;
 #X obj 248 204 loadbang;
 #X obj 248 226 tgl 15 0 empty empty empty 17 7 0 10 -258113 -1 -1 1
 1;
 #X text 494 101 Dependencies: [vbap] \, OSCrxtx;
 #X obj 355 205 pack 0 0;
-#X obj 376 283 print;
 #X obj 270 287 vbap 0 0;
 #X msg 193 109 1 0;
 #X obj 275 12 OSCrouter /gainDB /aed /delay;
+#X obj 275 -35 OSCparse /source;
+#X obj 376 283 print to_vbap_\$1;
+#X obj 143 324 print from_vbpa;
 #X connect 1 0 4 0;
 #X connect 1 0 8 0;
 #X connect 1 0 11 0;
@@ -143,7 +145,7 @@
 #X connect 26 0 53 0;
 #X connect 27 0 26 1;
 #X connect 28 0 27 0;
-#X connect 29 0 63 0;
+#X connect 29 0 62 0;
 #X connect 30 0 33 0;
 #X connect 31 0 29 0;
 #X connect 32 0 33 1;
@@ -154,16 +156,19 @@
 #X connect 37 0 40 0;
 #X connect 37 1 38 0;
 #X connect 38 0 61 1;
+#X connect 38 0 62 2;
 #X connect 40 0 61 0;
-#X connect 41 0 63 0;
-#X connect 56 0 57 0;
-#X connect 57 0 65 0;
+#X connect 40 0 62 1;
+#X connect 41 0 62 0;
+#X connect 56 0 65 0;
+#X connect 57 0 64 0;
 #X connect 58 0 59 0;
 #X connect 59 0 41 0;
-#X connect 61 0 62 0;
-#X connect 61 0 63 0;
-#X connect 63 0 7 0;
-#X connect 64 0 63 0;
-#X connect 65 0 36 0;
-#X connect 65 1 37 0;
-#X connect 65 2 3 0;
+#X connect 61 0 66 0;
+#X connect 62 0 7 0;
+#X connect 62 0 67 0;
+#X connect 63 0 62 0;
+#X connect 64 0 36 0;
+#X connect 64 1 37 0;
+#X connect 64 2 3 0;
+#X connect 65 0 57 0;
