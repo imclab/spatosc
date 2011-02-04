@@ -217,10 +217,8 @@ int main(int argc, char *argv[])
     clutter_actor_add_action(app.foo_actor, drag_action);
 #endif
 
-    app.foo_sound = scene.getOrCreateSoundSource("foo_sound");
-    app.foo_sound->setChannelID(1);
-    shared_ptr<Translator> translator(new DmitriTranslator("192.168.2.26"));
-    scene.setTranslator(translator);
+    app.foo_sound = scene.createSoundSource("1");
+    scene.setTranslator<SpatdifTranslator>();
     app.foo_sound->setPosition(clutter_actor_get_x(app.foo_actor),
             clutter_actor_get_y(app.foo_actor), 0);
     scene.debugPrint();
