@@ -47,13 +47,45 @@ Connection::Connection(SoundSource *source, Listener *sink) :
 
 void Connection::recomputeConnection()
 {
-    Vector3 vect = src_->getPosition() - snk_->getPosition();
-    distance_ = static_cast<double>(vect.Mag());
+    Vector3 connVec = src_->getPosition() - snk_->getPosition();
+    distance_ = static_cast<double>(connVec.Mag());
     double distanceScalar = 1 / (1.0 + pow(distance_, static_cast<double>(distanceEffect_) * 0.01));
-    azim_ = atan2(vect.y, vect.x);
-    elev_ = atan2(sqrt(pow(vect.x, 2) + pow(vect.y, 2)), vect.z);
+
+    Quaternion snkQuat = EulerToQuat(snk_->getOrientation());
+    Vector3 snkDir = snkQuat * Vector3(0.0, 1.0, 0.0);
+
+    elev_ = AngleBetweenVectors(snkDir, connVec, 2);
+    azim_ = AngleBetweenVectors(snkDir, connVec, 3);
+
+    // ensure elevation is in range [-pi,pi]
+	/*
+    if (elev_ < -M_PI/2)
+    {
+    	elev_ += M_PI;
+    	if (azim_>0) azim_ -= M_PI;
+    	else azim_ += M_PI;
+    }
+    else if (elev_ > M_PI/2)
+    {
+    	elev_ -= M_PI;
+    	if (azim_>0) azim_ -= M_PI;
+    	else azim_ += M_PI;
+    }
+    */
+
+    /*
+	std::cout << "src: "<<src_->getPosition() << ", snk: "<<snk_->getPosition() << std::endl;
+	std::cout << "connVec: "<<connVec << ", length=" << distance_ << std::endl;
+	std::cout << "snkOrient = " << snk_->getOrientation() << std::endl;
+	std::cout << "snkQuat = " << snkQuat << std::endl;
+	std::cout << "QuatToEuler = " << QuatToEuler(RotationBetweenVectors(snkDir,connVec)) << std::endl;
+	std::cout << "snkDir  = " << snkDir << std::endl;
+	std::cout << "azim = " << azim_*TO_DEGREES << " elev = " << elev_*TO_DEGREES << std::endl;
+    */
+
     // for now, force sources to be above equator
-    elev_ = std::max(elev_, 0.0);
+    //elev_ = std::max(elev_, 0.0);
+
     // now from distance, compute gain and variable delay:
     vdel_ = distance_ * (1 / SPEED_OF_SOUND) * .01 * dopplerEffect_;
     gainDB_ = 20 * log10(distanceScalar);

@@ -98,10 +98,6 @@ double computeAngle(double dx, double dy)
     return angle;
 }
 
-/**
- * Returns an absolute angle difference between v1 and v2 (with no notion of
- * which is ahead or behind the other). Returned angle is from 0 to PI
- */
 double AngleBetweenVectors(Vector3 v1, Vector3 v2)
 {
     // normalize vectors
@@ -129,10 +125,6 @@ double AngleBetweenVectors(Vector3 v1, Vector3 v2)
     return( angle );
 }
 
-/**
- * Returns a signed angle of rotation that describes the rotation from v1 to v2,
- * assuming that one axis is null. 1=X_AXIS, 2=Y_AXIS, 3=Z_AXIS
- */
 double AngleBetweenVectors(Vector3 v1, Vector3 v2, int nullAxis)
 {
     // normalize vectors
@@ -179,6 +171,113 @@ Quaternion RotationBetweenVectors(Vector3 v1, Vector3 v2)
 
     return Quaternion(crossProduct.x, crossProduct.y, crossProduct.z, qw);
 }
+/**
+ * This is from OSG's Quat::makeRotate
+ * by Nicolas Brodu
+ * http://logiciels.cnes.fr/MARMOTTES/marmottes-mathematique.pdf
+ */
+Quaternion RotationBetweenVectors2(Vector3 v1, Vector3 v2)
+{
+	const float epsilon = 0.0000001;
+	Quaternion q;
+
+	Vector3 sourceVector = v1;
+	Vector3 targetVector = v2;
+	sourceVector.Normalize();
+	targetVector.Normalize();
+
+    double dotProdPlus1 = (sourceVector * targetVector) + 1.0;
+
+    if (dotProdPlus1 < epsilon)
+    {
+    	// Vectors are opposite, so we need to find an orthogonal vector to v1
+    	// around which to rotate, and give it an angle of pi
+    	// The trick is to realize one value at least is >0.6 for a normalized
+    	// vector
+        if (fabs(sourceVector.x) < 0.6) {
+            const double norm = sqrt(1.0 - (sourceVector.x*sourceVector.x));
+            q.x = 0.0;
+            q.y = sourceVector.z / norm;
+            q.z = -sourceVector.y / norm;
+            q.w = 0.0;
+        } else if (fabs(sourceVector.y) < 0.6) {
+            const double norm = sqrt(1.0 - (sourceVector.y*sourceVector.y));
+            q.x = -sourceVector.z / norm;
+            q.y = 0.0;
+            q.z = sourceVector.x / norm;
+            q.w = 0.0;
+        } else {
+            const double norm = sqrt(1.0 - (sourceVector.z*sourceVector.z));
+            q.x = sourceVector.y / norm;
+            q.y = -sourceVector.x / norm;
+            q.z = 0.0;
+            q.w = 0.0;
+        }
+    }
+
+    else {
+        // Find the shortest angle quaternion that transforms normalized vectors
+        // into one other. Formula is still valid when vectors are colinear
+        const double s = sqrt(0.5 * dotProdPlus1);
+        const Vector3 tmp = (sourceVector ^ targetVector) / (2.0*s);
+        q.x = tmp.x;
+        q.y = tmp.y;
+        q.z = tmp.z;
+        q.w = s;
+    }
+
+    return q;
+}
+
+Quaternion RotationBetweenVectors3(Vector3 v1, Vector3 v2)
+{
+	const float epsilon = 0.0000001;
+
+	double length1 = v1.Mag();
+	double length2 = v2.Mag();
+	double cosangle = (v1 * v2) / (length1 * length2);
+
+	if (fabs(cosangle-1.0) < epsilon)
+	{
+		// near co-linear vectors
+		return Quaternion(0.0, 0.0, 0.0, 1.0);
+	}
+
+	else if (fabs(cosangle+1.0) < epsilon)
+	{
+		// vectors are opposite, so we need to find an orthogonal vector to v1
+		// around which to rotate
+
+        Vector3 tmp;
+
+        if (fabs(v1.x)<fabs(v1.y))
+            if (fabs(v1.x)<fabs(v1.z))
+            	tmp = Vector3(1.0,0.0,0.0); // use x axis.
+            else
+            	tmp = Vector3(0.0,0.0,1.0);
+        else if (fabs(v1.y)<fabs(v1.z))
+        	tmp = Vector3(0.0,1.0,0.0);
+        else
+        	tmp = Vector3(0.0,0.0,1.0);
+
+        // find orthogonal axis.
+        Vector3 axis = v2^tmp;
+        axis.Normalize();
+
+        // cos of half angle of PI is zero.
+        return QuatFromAxis(axis, 0.0);
+	}
+
+	else {
+
+		// this is the usual case: take a cross-product of v1 and v2
+        // and that is the axis around which to rotate
+
+		Vector3 axis = v1^v2;
+		double angle = acos( cosangle );
+		return QuatFromAxis(axis, angle);
+	}
+}
 
 //Quaternion EulerToQuat (double roll, double pitch, double yaw)
 Quaternion EulerToQuat (Vector3 v)
@@ -186,6 +285,7 @@ Quaternion EulerToQuat (Vector3 v)
     double cr, cp, cy, sr, sp, sy, cpcy, spsy;
 
     // IMPORTANT: note pitch/roll flip for these equations:
+    // TODO: isn't it wrong to flip these? see commented section below
     double pitch = v.y * TO_RADIANS;
     double roll  = v.x * TO_RADIANS;
     double yaw   = v.z * TO_RADIANS;
@@ -206,20 +306,73 @@ Quaternion EulerToQuat (Vector3 v)
                     cr * sp * cy + sr * cp * sy,
                     cr * cp * sy - sr * sp * cy,
                     cr * cpcy + sr * spsy );
+
+    /*
+    double angle = pitch * 0.5;
+    const double sr = sin(angle);
+    const double cr = cos(angle);
+
+    angle = roll * 0.5;
+    const double sp = sin(angle);
+    const double cp = cos(angle);
+
+    angle = yaw * 0.5;
+    const double sy = sin(angle);
+    const double cy = cos(angle);
+
+    const double cpcy = cp * cy;
+    const double spcy = sp * cy;
+    const double cpsy = cp * sy;
+    const double spsy = sp * sy;
+
+    q.x = (double)(sr * cpcy - cr * spsy);
+    q.y = (double)(cr * spcy + sr * cpsy);
+    q.z = (double)(cr * cpsy - sr * spcy);
+    q.w = (double)(cr * cpcy + sr * spsy);
+
+    return q.Normalize();
+    */
+
 }
 
 Vector3 QuatToEuler(Quaternion q)
 {
-    // based on:
-    // en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+	//q.Normalize();
 
     double pitch, roll, yaw;
 
-    roll = asin( 2* (q.x*q.z - q.w*q.y) );
-    yaw = atan2( 2* (q.x*q.y + q.z*q.w) , 1 - (2* (q.y*q.y + q.z*q.z)) );
-    pitch =  atan2( 2* (q.x*q.w + q.y*q.z) , 1 - (2* (q.z*q.z + q.w*q.w)) );
 
+    const double sqw = q.w*q.w;
+	const double sqx = q.x*q.x;
+    const double sqy = q.y*q.y;
+    const double sqz = q.z*q.z;
+
+    pitch = atan2( 2.0 * (q.y*q.z + q.x*q.w),(-sqx - sqy + sqz + sqw));
+    roll =  asinf(-2.0 * (q.x*q.z - q.y*q.w));
+    //if (roll>1) roll = 1.0; if (roll<-1) roll = -1.0;
+    yaw =   atan2( 2.0 * (q.x*q.y + q.z*q.w), (sqx - sqy - sqz + sqw));
+
+    return Vector3(roll,pitch,yaw);
+    //return Vector3(pitch,roll,yaw);
+
+    /*
+    // x-convension 3-1-3 euler angles
+    // http://en.wikipedia.org/wiki/Rotation_representation
+    roll = acos( -(q.x*q.x) - (q.y*q.y) + (q.z*q.z) + (q.z*q.z));
+    yaw = atan2( q.x*q.z + q.y*q.w , q.y*q.z - q.x*q.w );
+    pitch =  -atan2( q.x*q.z - q.y*q.w , q.y*q.z + q.x*q.w );
+    */
+
+    /*
+    // based on:
+    // en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+    roll = asin( 2.0* ((q.x*q.z) - (q.w*q.y)) );
+    yaw =   atan2( 2.0* ((q.x*q.y) + (q.z*q.w)) , 1.0 - (2.0* ((q.y*q.y) + (q.z*q.z))) );
+    pitch = atan2( 2.0* ((q.x*q.w + q.y*q.z)) , 1.0 - (2.0* ((q.z*q.z) + (q.w*q.w))) );
     return Vector3(M_PI-pitch,-roll,yaw);
+    */
+
+
 }
 
 Vector3 sphericalToCartesian(Vector3 aed)

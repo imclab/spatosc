@@ -142,7 +142,7 @@ class Vector3
         return out << "(" << v.x << "," << v.y << "," << v.z << ")";
     }
 
-    public:
+	public:
         double x;
         double y;
         double z;
@@ -222,7 +222,7 @@ class Vector3
          */
         Vector3 operator^ (Vector3 &v)
         {
-            return Vector3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
+            return Vector3( (y*v.z) - (z*v.y), (z*v.x) - (x*v.z), (x*v.y) - (y*v.x));
         }
 };
 
@@ -527,8 +527,10 @@ inline Quaternion operator*(Quaternion &a, Quaternion &b)
 
 inline Quaternion QuatFromAxis(Vector3 &axis, double angle)
 {
-    double sa=sinf(angle*0.5f*TO_RADIANS);
-    double ca=cosf(angle*0.5f*TO_RADIANS);
+    //double sa=sinf(angle*0.5f*TO_RADIANS);
+    //double ca=cosf(angle*0.5f*TO_RADIANS);
+    double sa=sinf(angle*0.5f);
+    double ca=cosf(angle*0.5f);
     return Quaternion(axis.x*sa, axis.y*sa, axis.z*sa, ca).Norm();
 }
 
@@ -547,11 +549,21 @@ double distance3(Vector3 v1, Vector3 v2);
 double computeAngle(double dx, double dy);
 
 /**
- * Returns the angle between two 3D vectors.
+ * Returns an absolute angle difference between two 3D vectors (with no notion
+ * as to which is ahead or behind the other). Returned angle is from 0 to PI.
  * @param v1 First vector
  * @param v2 Second vector
  */
 double AngleBetweenVectors(Vector3 v1, Vector3 v2);
+
+/**
+ * Returns a signed angle of rotation that describes the rotation from v1 to v2,
+ * assuming that one axis is null.
+ * @param v1 First vector
+ * @param v2 Second vector
+ * @param null axis (1=X_AXIS, 2=Y_AXIS, 3=Z_AXIS)
+ */
+double AngleBetweenVectors(Vector3 v1, Vector3 v2, int nullAxis);
 
 /**
  * Returns the rotation between two 3D vectors.
@@ -559,12 +571,20 @@ double AngleBetweenVectors(Vector3 v1, Vector3 v2);
  * @param v2 Second vector
  */
 Quaternion RotationBetweenVectors(Vector3 v1, Vector3 v2);
+Quaternion RotationBetweenVectors2(Vector3 v1, Vector3 v2);
 
 /**
  * Converts Euler angles to a Quaternion.
  */
 Quaternion EulerToQuat (Vector3 eulerAngles);
 //Quaternion EulerToQuat (double r, double p, double y);
+
+/**
+ * Converts a quaternion into euler angles, assuming the following order:
+ * 1) apply a positive rotation about Y axis for roll,
+ * 2) then apply a positive rotation about X for pitch,
+ * 3) finally apply a negative rotation about the Z axis for yaw.
+ */
 Vector3 QuatToEuler(Quaternion q);
 /**
  * Converts spherical coordinates to 3D cartesian coordinates.

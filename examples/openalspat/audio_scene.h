@@ -19,7 +19,11 @@
 #ifndef _AudioScene_H_
 #define _AudioScene_H_
 
+#ifdef DARWIN
+#include <al.h>
+#else
 #include <AL/al.h>
+#endif
 #include <AL/alut.h>
 #include <tr1/memory>
 #include <glib/gtypes.h>
