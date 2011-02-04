@@ -58,29 +58,29 @@ void Connection::recomputeConnection()
     azim_ = AngleBetweenVectors(snkDir, connVec, 3);
 
     // ensure elevation is in range [-pi,pi]
-	/*
+    /*
     if (elev_ < -M_PI/2)
     {
-    	elev_ += M_PI;
-    	if (azim_>0) azim_ -= M_PI;
-    	else azim_ += M_PI;
+        elev_ += M_PI;
+        if (azim_>0) azim_ -= M_PI;
+        else azim_ += M_PI;
     }
     else if (elev_ > M_PI/2)
     {
-    	elev_ -= M_PI;
-    	if (azim_>0) azim_ -= M_PI;
-    	else azim_ += M_PI;
+        elev_ -= M_PI;
+        if (azim_>0) azim_ -= M_PI;
+        else azim_ += M_PI;
     }
     */
 
     /*
-	std::cout << "src: "<<src_->getPosition() << ", snk: "<<snk_->getPosition() << std::endl;
-	std::cout << "connVec: "<<connVec << ", length=" << distance_ << std::endl;
-	std::cout << "snkOrient = " << snk_->getOrientation() << std::endl;
-	std::cout << "snkQuat = " << snkQuat << std::endl;
-	std::cout << "QuatToEuler = " << QuatToEuler(RotationBetweenVectors(snkDir,connVec)) << std::endl;
-	std::cout << "snkDir  = " << snkDir << std::endl;
-	std::cout << "azim = " << azim_*TO_DEGREES << " elev = " << elev_*TO_DEGREES << std::endl;
+    std::cout << "src: "<<src_->getPosition() << ", snk: "<<snk_->getPosition() << std::endl;
+    std::cout << "connVec: "<<connVec << ", length=" << distance_ << std::endl;
+    std::cout << "snkOrient = " << snk_->getOrientation() << std::endl;
+    std::cout << "snkQuat = " << snkQuat << std::endl;
+    std::cout << "QuatToEuler = " << QuatToEuler(RotationBetweenVectors(snkDir,connVec)) << std::endl;
+    std::cout << "snkDir  = " << snkDir << std::endl;
+    std::cout << "azim = " << azim_*TO_DEGREES << " elev = " << elev_*TO_DEGREES << std::endl;
     */
 
     // for now, force sources to be above equator

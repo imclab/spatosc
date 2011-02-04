@@ -109,8 +109,10 @@ double AngleBetweenVectors(Vector3 v1, Vector3 v2)
 
     // for acos, the value has to be between -1.0 and 1.0, but due to numerical
     // imprecisions it sometimes comes outside this range
-    if (dotProduct > 1.0) dotProduct = 1.0;
-    if (dotProduct < -1.0) dotProduct = -1.0;
+    if (dotProduct > 1.0)
+        dotProduct = 1.0;
+    if (dotProduct < -1.0)
+        dotProduct = -1.0;
 
     // Get the angle in radians between the 2 vectors
     // (should this be -acos ? ie, negative?)
@@ -178,22 +180,22 @@ Quaternion RotationBetweenVectors(Vector3 v1, Vector3 v2)
  */
 Quaternion RotationBetweenVectors2(Vector3 v1, Vector3 v2)
 {
-	const float epsilon = 0.0000001;
-	Quaternion q;
+    const float epsilon = 0.0000001;
+    Quaternion q;
 
-	Vector3 sourceVector = v1;
-	Vector3 targetVector = v2;
-	sourceVector.Normalize();
-	targetVector.Normalize();
+    Vector3 sourceVector = v1;
+    Vector3 targetVector = v2;
+    sourceVector.Normalize();
+    targetVector.Normalize();
 
     double dotProdPlus1 = (sourceVector * targetVector) + 1.0;
 
     if (dotProdPlus1 < epsilon)
     {
-    	// Vectors are opposite, so we need to find an orthogonal vector to v1
-    	// around which to rotate, and give it an angle of pi
-    	// The trick is to realize one value at least is >0.6 for a normalized
-    	// vector
+        // Vectors are opposite, so we need to find an orthogonal vector to v1
+        // around which to rotate, and give it an angle of pi
+        // The trick is to realize one value at least is >0.6 for a normalized
+        // vector
         if (fabs(sourceVector.x) < 0.6) {
             const double norm = sqrt(1.0 - (sourceVector.x*sourceVector.x));
             q.x = 0.0;
@@ -231,34 +233,34 @@ Quaternion RotationBetweenVectors2(Vector3 v1, Vector3 v2)
 
 Quaternion RotationBetweenVectors3(Vector3 v1, Vector3 v2)
 {
-	const float epsilon = 0.0000001;
+    const float epsilon = 0.0000001;
 
-	double length1 = v1.Mag();
-	double length2 = v2.Mag();
-	double cosangle = (v1 * v2) / (length1 * length2);
+    double length1 = v1.Mag();
+    double length2 = v2.Mag();
+    double cosangle = (v1 * v2) / (length1 * length2);
 
-	if (fabs(cosangle-1.0) < epsilon)
-	{
-		// near co-linear vectors
-		return Quaternion(0.0, 0.0, 0.0, 1.0);
-	}
+    if (fabs(cosangle-1.0) < epsilon)
+    {
+        // near co-linear vectors
+        return Quaternion(0.0, 0.0, 0.0, 1.0);
+    }
 
-	else if (fabs(cosangle+1.0) < epsilon)
-	{
-		// vectors are opposite, so we need to find an orthogonal vector to v1
-		// around which to rotate
+    else if (fabs(cosangle+1.0) < epsilon)
+    {
+        // vectors are opposite, so we need to find an orthogonal vector to v1
+        // around which to rotate
 
         Vector3 tmp;
 
         if (fabs(v1.x)<fabs(v1.y))
             if (fabs(v1.x)<fabs(v1.z))
-            	tmp = Vector3(1.0,0.0,0.0); // use x axis.
+                tmp = Vector3(1.0,0.0,0.0); // use x axis.
             else
-            	tmp = Vector3(0.0,0.0,1.0);
+                tmp = Vector3(0.0,0.0,1.0);
         else if (fabs(v1.y)<fabs(v1.z))
-        	tmp = Vector3(0.0,1.0,0.0);
+            tmp = Vector3(0.0,1.0,0.0);
         else
-        	tmp = Vector3(0.0,0.0,1.0);
+            tmp = Vector3(0.0,0.0,1.0);
 
         // find orthogonal axis.
         Vector3 axis = v2^tmp;
@@ -266,17 +268,17 @@ Quaternion RotationBetweenVectors3(Vector3 v1, Vector3 v2)
 
         // cos of half angle of PI is zero.
         return QuatFromAxis(axis, 0.0);
-	}
+    }
 
-	else {
+    else {
 
-		// this is the usual case: take a cross-product of v1 and v2
+        // this is the usual case: take a cross-product of v1 and v2
         // and that is the axis around which to rotate
 
-		Vector3 axis = v1^v2;
-		double angle = acos( cosangle );
-		return QuatFromAxis(axis, angle);
-	}
+        Vector3 axis = v1^v2;
+        double angle = acos( cosangle );
+        return QuatFromAxis(axis, angle);
+    }
 }
 
 //Quaternion EulerToQuat (double roll, double pitch, double yaw)
@@ -337,13 +339,13 @@ Quaternion EulerToQuat (Vector3 v)
 
 Vector3 QuatToEuler(Quaternion q)
 {
-	//q.Normalize();
+    //q.Normalize();
 
     double pitch, roll, yaw;
 
 
     const double sqw = q.w*q.w;
-	const double sqx = q.x*q.x;
+    const double sqx = q.x*q.x;
     const double sqy = q.y*q.y;
     const double sqz = q.z*q.z;
 
