@@ -16,7 +16,7 @@ This source file is part of the
 */
 #include "spat_application.h"
 
-static const double OSC_FLUSH_INTERVAL = 0.5; // How many second between each OSC flushing
+static const double OSC_FLUSH_INTERVAL = 0.15; // How many second between each OSC flushing
  
 SpatApplication::SpatApplication() :
     headNode_(0)
@@ -26,7 +26,7 @@ SpatApplication::SpatApplication() :
 
 void SpatApplication::createAudioScene()
 {
-    //audioScene_.setSynchronous(false); // we will need to call flushMessages() once in a while
+    audioScene_.setSynchronous(false); // we will need to call flushMessages() once in a while
     audioScene_.setTranslator<spatosc::SpatdifTranslator>("127.0.0.1", spatosc::SpatdifTranslator::DEFAULT_SEND_PORT);
     soundSourceOne_ = audioScene_.createSoundSource("source1");
     soundSourceTwo_ = audioScene_.createSoundSource("source2");
@@ -98,14 +98,14 @@ bool SpatApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
     // translate the nodes:
     headNode_->translate(nodeOneTransVector, Ogre::Node::TS_LOCAL);
     nodeTwo_->translate(nodeTwoTransVector, Ogre::Node::TS_LOCAL);
-    std::cout << headNode_->getPosition() << std::endl;
+    //std::cout << headNode_->getPosition() << std::endl;
     soundSourceOne_->setPosition(headNode_->getPosition().x, headNode_->getPosition().y, headNode_->getPosition().z);
     // We can avoid flushing OSC messages too often by calling spatosc::Scene::setSynchronous(false), like we did. We then need to call flushMessages() every now and then.
     timeLeftBeforeOscFlush -= evt.timeSinceLastFrame;
-    if (timeLeftBeforeOscFlush < 0.0)
+    if (timeLeftBeforeOscFlush <= 0.0)
     {
         timeLeftBeforeOscFlush = OSC_FLUSH_INTERVAL;
-        //audioScene_.flushMessages();
+        audioScene_.flushMessages();
     }
     return true;
 }

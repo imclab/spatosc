@@ -84,7 +84,6 @@ void Node::notifyScene()
 {
     sendNewPosition_ = true;
     onNodeChanged();
-    sendNewPosition_ = false;
 }
 
 
