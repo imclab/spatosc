@@ -15,6 +15,7 @@ This source file is part of the
 -----------------------------------------------------------------------------
 */
 #include "spat_application.h"
+#include "spatosc/geotransform.h"
 
 static const double OSC_FLUSH_INTERVAL = 1 / 15.0; // How many seconds between position updates being sent over OSC 
 SpatApplication::SpatApplication() :
@@ -27,6 +28,7 @@ void SpatApplication::createAudioScene()
 {
     audioScene_.setSynchronous(false); // we will need to call flushMessages() once in a while
     audioScene_.setTranslator<spatosc::SpatdifTranslator>("127.0.0.1", spatosc::SpatdifTranslator::DEFAULT_SEND_PORT);
+    audioScene_.getTransform().rotate(90.0, 0.0, 0.0);
     soundSourceOne_ = audioScene_.createSoundSource("source1");
     soundSourceTwo_ = audioScene_.createSoundSource("source2");
     listener_ = audioScene_.createListener("listener1");
@@ -90,6 +92,13 @@ bool SpatApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
     {
         nodeTwoTransVector.y += move; // Move entity two down
     }
+    // return to origin
+    if (mKeyboard->isKeyDown(OIS::KC_O))
+    {
+        headNode_->setPosition(0.0, 0.0, 0.0);
+        soundSourceOne_->setPosition(0.0, 0.0, 0.0);
+        return true;
+    }
     // make sure that we scale the translation by the framerate, 
     // to avoid movement varying with the framerate
     nodeOneTransVector *= evt.timeSinceLastFrame;
@@ -97,7 +106,6 @@ bool SpatApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
     // translate the nodes:
     headNode_->translate(nodeOneTransVector, Ogre::Node::TS_LOCAL);
     nodeTwo_->translate(nodeTwoTransVector, Ogre::Node::TS_LOCAL);
-    //std::cout << headNode_->getPosition() << std::endl;
     soundSourceOne_->setPosition(headNode_->getPosition().x, headNode_->getPosition().y, headNode_->getPosition().z);
     // We can avoid flushing OSC messages too often by calling spatosc::Scene::setSynchronous(false), like we did. We then need to call flushMessages() every now and then.
     timeLeftBeforeOscFlush -= evt.timeSinceLastFrame;
@@ -105,6 +113,10 @@ bool SpatApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
     {
         timeLeftBeforeOscFlush = OSC_FLUSH_INTERVAL;
         audioScene_.flushMessages();
+        //spatosc::Connection *connection = audioScene_.getConnection(soundSourceOne_, listener_);
+        //std::cout << soundSourceOne_->getPosition() << std::endl;
+        //std::cerr << "azim:" << connection->azimuth() * spatosc::TO_DEGREES << ", elevation:" << 
+            //connection->elevation() * spatosc::TO_DEGREES << std::endl;
     }
     return true;
 }

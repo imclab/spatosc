@@ -19,7 +19,7 @@
 
 #include "application.h"
 #include "gui.h"
-#include "audio_scene.h"
+#include "openal_renderer.h"
     
 void Application::initSubsystems()
 {

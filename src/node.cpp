@@ -33,10 +33,12 @@ Node::Node(const std::string &nodeID, Scene &scene) :
     id_(nodeID),
     scene_(scene),
     pos_(),
-    orientation_(),
+    orientation_(0.0, 0.0, 0.0, 1.0),
     active_(true),
     sendNewPosition_(true)
 {
+    setPosition(0.0, 0.0, 0.0);
+    setOrientation(0.0, 0.0, 0.0);
 }
 
 Node::~Node()
@@ -75,11 +77,10 @@ void Node::setPositionAED(double angle, double elevation, double distance)
 
 void Node::setOrientation(double pitch, double roll, double yaw)
 {
-    if (pitch != orientation_.x || roll != orientation_.y || yaw != orientation_.z)
+    Quaternion quat(EulerToQuat(Vector3(pitch, roll, yaw)));
+    if (quat.x != orientation_.x || quat.y != orientation_.y || quat.z != orientation_.z || quat.w != orientation_.w)
     {
-        orientation_.x = pitch;
-        orientation_.y = roll;
-        orientation_.z = yaw;
+        orientation_ = quat;
         notifyScene();
     }
 }

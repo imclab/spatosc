@@ -51,8 +51,7 @@ void Connection::recomputeConnection()
     distance_ = static_cast<double>(connVec.Mag());
     double distanceScalar = 1 / (1.0 + pow(distance_, static_cast<double>(distanceEffect_) * 0.01));
 
-    Quaternion snkQuat = EulerToQuat(snk_->getOrientation());
-    Vector3 snkDir = snkQuat * Vector3(0.0, 1.0, 0.0);
+    Vector3 snkDir = snk_->getOrientation() * Vector3(0.0, 1.0, 0.0);
 
     elev_ = AngleBetweenVectors(snkDir, connVec, 2);
     azim_ = AngleBetweenVectors(snkDir, connVec, 3);
@@ -73,15 +72,13 @@ void Connection::recomputeConnection()
     }
     */
 
-    /*
     std::cout << "src: "<<src_->getPosition() << ", snk: "<<snk_->getPosition() << std::endl;
     std::cout << "connVec: "<<connVec << ", length=" << distance_ << std::endl;
     std::cout << "snkOrient = " << snk_->getOrientation() << std::endl;
-    std::cout << "snkQuat = " << snkQuat << std::endl;
+    //std::cout << "snkQuat = " << snkQuat << std::endl;
     std::cout << "QuatToEuler = " << QuatToEuler(RotationBetweenVectors(snkDir,connVec)) << std::endl;
     std::cout << "snkDir  = " << snkDir << std::endl;
     std::cout << "azim = " << azim_*TO_DEGREES << " elev = " << elev_*TO_DEGREES << std::endl;
-    */
 
     // for now, force sources to be above equator
     //elev_ = std::max(elev_, 0.0);

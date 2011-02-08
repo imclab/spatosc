@@ -123,7 +123,7 @@ class Node
          * @return A Vector3 with pitch, roll, and yaw (in radians)
          *
          */
-        Vector3 getOrientation() const
+        Quaternion getOrientation() const
         {
             return orientation_;
         }
@@ -155,7 +155,7 @@ class Node
         std::string id_;
         Scene &scene_;
         Vector3 pos_;
-        Vector3 orientation_;
+        Quaternion orientation_;
         bool active_;
         bool sendNewPosition_;
         // FIXME: Thu Jan 27 15:03:58 EST 2011 :tmatth:
