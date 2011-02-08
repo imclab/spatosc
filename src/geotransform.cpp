@@ -32,13 +32,15 @@ void GeoTransform::apply(double &x, double &y, double &z) const
     if (hasTransformation_)
     {
         // translation, rotation, then scale 
-        // FIXME:Tue Feb  8 14:02:51 EST 2011:tmatth:only does translation right now
+        // FIXME:Tue Feb  8 14:02:51 EST 2011:tmatth:only does translation and scaling right now
         // translation
         x += translation_[0];
         y += translation_[1];
         z += translation_[2];
 
         // rotation
+        // TODO
+        
         // scaling
         x *= scaling_[0];
         y *= scaling_[1];

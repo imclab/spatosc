@@ -48,9 +48,28 @@ bool check_translation()
     return true;
 }
 
+bool check_scaling()
+{
+    Scene scene;
+    SoundSource *node = scene.createSoundSource("bob");
+    double x = 0.5;
+    double y = 0.75;
+    double z = 1.5;
+    double scaling = 2.0;
+
+    // translate by offset in x, y and z;
+    scene.getTransform().scale(scaling, scaling, scaling);
+
+    // now set the position and make sure it's been offset
+    node->setPosition(x, y, z);
+    if (node->getPosition().x != x * scaling || node->getPosition().y != y * scaling || node->getPosition().z != z * scaling)
+        return false;
+    return true;
+}
+
 int main(int /*argc*/, char ** /*argv*/)
 {
-    if (! check_translation())
+    if (! check_translation() or ! check_scaling())
         return 1;
     return 0;
 }
