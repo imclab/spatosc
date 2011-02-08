@@ -492,7 +492,7 @@ class Quaternion
             w*=s;
         }
 
-        Vector3 operator*(Vector3 v)
+        Vector3 operator*(Vector3 v) const
         {
             // nVidia SDK implementation (taken from OSG)
             Vector3 uv, uuv;

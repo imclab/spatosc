@@ -16,12 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+#include <iostream>
+
 #include "geotransform.h"
+#include "maths.h"
+
 namespace spatosc
 {
 
 GeoTransform::GeoTransform() : 
     translation_(3, 0.0), 
+    rotation_(0, 0, 0, 1), 
     scaling_(3, 1.0), 
     hasTransformation_(false)
 {
@@ -31,15 +37,19 @@ void GeoTransform::apply(double &x, double &y, double &z) const
 {
     if (hasTransformation_)
     {
-        // translation, rotation, then scale 
-        // FIXME:Tue Feb  8 14:02:51 EST 2011:tmatth:only does translation and scaling right now
+        // apply translation, rotation, then scale 
         // translation
         x += translation_[0];
         y += translation_[1];
         z += translation_[2];
 
         // rotation
-        // TODO
+        Vector3 tmp(x, y, z);
+        tmp = rotation_ * tmp;
+
+        x = tmp.x;
+        y = tmp.y;
+        z = tmp.z;
         
         // scaling
         x *= scaling_[0];
@@ -62,6 +72,22 @@ void GeoTransform::translate(double tx, double ty, double tz)
     translation_[0] = tx;
     translation_[1] = ty;
     translation_[2] = tz;
+}
+
+void GeoTransform::rotate(double pitch, double roll, double yaw)
+{
+    hasTransformation_ = true;
+    Vector3 rot(pitch, roll, yaw);
+    rotation_ = EulerToQuat(rot);
+}
+
+void GeoTransform::rotate(double x, double y, double z, double w)
+{
+    hasTransformation_ = true;
+    rotation_.x = x;
+    rotation_.y = y;
+    rotation_.z = z;
+    rotation_.w = w;
 }
 
 } // end namespace spatosc

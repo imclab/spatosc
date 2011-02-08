@@ -26,6 +26,7 @@
 #include "geotransform.h"
 #include "scene.h"
 #include "soundsource.h"
+#include <iostream>
 
 using namespace spatosc;
 
@@ -46,6 +47,37 @@ bool check_translation()
     if (node->getPosition().x != x + offset || node->getPosition().y != y + offset || node->getPosition().z != z + offset)
         return false;
     return true;
+}
+
+bool check_rotation()
+{
+    Scene scene;
+    SoundSource *node = scene.createSoundSource("bob");
+    double x = 1.5;
+    double y = 1.5;
+    double z = 1.5;
+    double pitch = 90.0;
+    double roll = 0.0;
+    double yaw = 0.0;
+    double rotatedX = 1.5;
+    double rotatedY = -1.5;
+    double rotatedZ = 1.5;
+
+    scene.getTransform().rotate(pitch, roll, yaw);
+
+    // now set the position and make sure it's been offset
+    node->setPosition(x, y, z);
+
+    // we can't check for equality due to loss of precision, 
+    // so we just make sure the calculated and expected values
+    // are within a tolerance, EPSILON
+    static const double EPSILON = 0.0001;
+    if (fabs(node->getPosition().x - rotatedX) > EPSILON || 
+        fabs(node->getPosition().y - rotatedY) > EPSILON || 
+        fabs(node->getPosition().z - rotatedZ) > EPSILON)
+        return false;
+    else
+        return true;
 }
 
 bool check_scaling()
@@ -69,8 +101,22 @@ bool check_scaling()
 
 int main(int /*argc*/, char ** /*argv*/)
 {
-    if (! check_translation() or ! check_scaling())
+    if (!check_translation())
+    {
+        std::cerr << "Check translation failed" << std::endl;
         return 1;
-    return 0;
+    }
+    else if (!check_rotation())
+    {
+        std::cerr << "Check rotation failed" << std::endl;
+        return 1;
+    }
+    else if (!check_scaling())
+    {
+        std::cerr << "Check scaling failed" << std::endl;
+        return 1;
+    }
+    else
+        return 0;
 }
 

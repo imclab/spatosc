@@ -24,6 +24,7 @@
 #define __GEOTRANSFORM_H__
 
 #include <vector>
+#include "maths.h"
 
 namespace spatosc {
 class GeoTransform 
@@ -33,10 +34,12 @@ class GeoTransform
         /** Maps a given point to transformed coordinates */
         void apply(double &x, double &y, double &z) const;
         void translate(double tx, double ty, double tz);
+        void rotate(double pitch, double roll, double yaw);
+        void rotate(double x, double y, double z, double w);
         void scale(double sx, double sy, double sz);
     private:
         std::vector<double> translation_;
-        std::vector<double> rotation_;
+        Quaternion rotation_;
         std::vector<double> scaling_;
         bool hasTransformation_;
 };
