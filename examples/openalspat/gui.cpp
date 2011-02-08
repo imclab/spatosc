@@ -22,6 +22,7 @@
 #include <spatosc/translator.h>
 #include <spatosc/spatdif_translator.h>
 #include <spatosc/soundsource.h>
+#include <spatosc/geotransform.h>
 #include <spatosc/listener.h>
 #include <cassert>
 #include <sstream>
@@ -135,6 +136,7 @@ GUI::GUI() :
     sound_(0)
 {
     scene_->setTranslator<spatosc::SpatdifTranslator>("127.0.0.1", spatosc::SpatdifTranslator::DEFAULT_SEND_PORT, true);
+    scene_->getTransform().scale(INV_PIXELS_PER_METER, INV_PIXELS_PER_METER, INV_PIXELS_PER_METER);
     createStage();
     connectMouseCallbacks();
     connectKeyCallbacks();
@@ -364,10 +366,6 @@ void GUI::actorPosToSpatPos(float &x, float &y, float &z)
     x = clutter_actor_get_x(sourceActor_) - halfWindowWidth;
     y = clutter_actor_get_y(sourceActor_) - halfWindowHeight;
     z = clutter_actor_get_depth(sourceActor_);
-    // FIXME: replace with scale transform
-    x *= INV_PIXELS_PER_METER;
-    y *= INV_PIXELS_PER_METER;
-    z *= INV_PIXELS_PER_METER;
 }
 
 void GUI::updateSoundPosition()
