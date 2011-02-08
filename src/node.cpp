@@ -23,6 +23,7 @@
 #include <lo/lo.h>
 #include "scene.h"
 #include "connection.h"
+#include "geotransform.h"
 
 
 namespace spatosc
@@ -40,6 +41,8 @@ Node::Node(const std::string &nodeID, Scene &scene) :
 
 Node::~Node()
 {
+    // FIXME: Tue Feb  8 11:56:52 EST 2011:tmatth
+    // only osc-enabled scenes should have to be unsubscribed.
     // remove osc handler for this node
     scene_.unsubscribe(this);
 }
@@ -54,6 +57,7 @@ void Node::debugPrint() const
 
 void Node::setPosition(double x, double y, double z)
 {
+    scene_.getTransform().apply(x, y, z);
     if (x != pos_.x || y != pos_.y || z != pos_.z)
     {
         pos_.x = x;
@@ -83,7 +87,7 @@ void Node::setOrientation(double pitch, double roll, double yaw)
 void Node::notifyScene()
 {
     sendNewPosition_ = true;
-    onNodeChanged();
+    onNodeChanged(); // let subclasses decide what to do
 }
 
 

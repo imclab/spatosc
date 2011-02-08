@@ -12,7 +12,8 @@ check_PROGRAMS = \
     check_spatdif \
     check_spatdif_osc \
     check_unique \
-    check_wrapper
+    check_wrapper \
+    check_geotransform
 
 TESTS = $(check_PROGRAMS)
 
@@ -27,3 +28,4 @@ check_spatdif_SOURCES = check_spatdif.cpp
 check_spatdif_osc_SOURCES = check_spatdif_osc.cpp
 check_unique_SOURCES = check_unique.cpp
 check_wrapper_SOURCES = check_wrapper.cpp
+check_geotransform_SOURCES = check_geotransform.cpp

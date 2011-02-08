@@ -37,6 +37,7 @@ class SoundSource;
 class Connection;
 class Translator;
 class SpatdifReceiver;
+class GeoTransform;
 
 /**
  * Manages the nodes and their connections.
@@ -45,6 +46,7 @@ class SpatdifReceiver;
 class Scene
 {
     public:
+        GeoTransform &getTransform();
         // FIXME: Thu Feb  3 12:33:48 EST 2011 : tmatth: this only belongs in osc_scene
         virtual void unsubscribe(Node * /*node*/) {};
         virtual ~Scene() {}
@@ -232,6 +234,7 @@ class Scene
         // private handle class
         struct RegexHandle;
         std::tr1::shared_ptr<RegexHandle> connectRegex_;
+        std::tr1::shared_ptr<GeoTransform> transform_;
 
         /**
          * Returns a list of all connections that "directly involve" a node (ie, as the source or the sink):

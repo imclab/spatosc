@@ -30,7 +30,8 @@ libspatosc_@SPATOSC_API_VERSION@_la_SOURCES = \
     spatdif_receiver.cpp \
     spatdif_translator.cpp \
     translator.cpp \
-    soundsource.cpp
+    soundsource.cpp \
+    geotransform.cpp 
 
 ## Instruct libtool to include ABI version information in the generated shared
 ## library file (.so).  The library ABI version is defined in configure.ac, so
@@ -58,6 +59,7 @@ libspatosc_@SPATOSC_API_VERSION@_la_include_HEADERS = \
     $(top_srcdir)/include/spatdif_translator.h \
     $(top_srcdir)/include/spatosc.h \
     $(top_srcdir)/include/translator.h \
+    $(top_srcdir)/include/geotransform.h \
     $(top_srcdir)/include/version.h
 
 EXTRA_DIST=$(top_srcdir)/include/config.h $(top_srcdir)/include/vectors.h

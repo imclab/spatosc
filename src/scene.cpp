@@ -34,6 +34,7 @@
 #include "node.h"
 #include "soundsource.h"
 #include "translator.h"
+#include "geotransform.h"
 
 namespace spatosc
 {
@@ -68,6 +69,7 @@ static bool nodeSortFunction (Node *n1, Node *n2)
 // for now, create a basic (CONSOLE) translator:
 Scene::Scene() :
     connectRegex_(new Scene::RegexHandle),
+    transform_(new GeoTransform),
     translator_(new Translator(false)),
     autoConnect_(true),
     connectFilter_(),
@@ -433,6 +435,11 @@ void Scene::deleteAllNodes()
     std::vector<std::tr1::shared_ptr<Connection> >().swap(connections_);
     std::vector<std::tr1::shared_ptr<Listener> >().swap(listeners_);
     std::vector<std::tr1::shared_ptr<SoundSource> >().swap(soundSources_);
+}
+
+GeoTransform& Scene::getTransform()
+{
+    return *transform_;
 }
 
 } // end namespace spatosc
