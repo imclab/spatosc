@@ -17,7 +17,7 @@
  * along with spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "audio_scene.h"
+#include "openal_renderer.h"
 #include <stdexcept>
 #include <iostream>
 #include <spatosc/scene.h>
