@@ -33,10 +33,11 @@ Node::Node(const std::string &nodeID, Scene &scene) :
     id_(nodeID),
     scene_(scene),
     pos_(),
-    orientation_(0.0, 0.0, 0.0, 1.0),
+    orientation_(),
     active_(true),
     sendNewPosition_(true)
 {
+    // we call this in case a geotransform has already been applied to the scene
     setPosition(0.0, 0.0, 0.0);
     setOrientation(0.0, 0.0, 0.0);
 }
