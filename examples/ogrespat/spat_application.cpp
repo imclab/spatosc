@@ -16,8 +16,7 @@ This source file is part of the
 */
 #include "spat_application.h"
 
-static const double OSC_FLUSH_INTERVAL = 0.15; // How many second between each OSC flushing
- 
+static const double OSC_FLUSH_INTERVAL = 1 / 15.0; // How many seconds between position updates being sent over OSC 
 SpatApplication::SpatApplication() :
     headNode_(0)
 {
