@@ -20,26 +20,46 @@
 namespace spatosc
 {
 
-GeoTransform::GeoTransform() : mat_(spatosc::Matrix4Identity()), hasTransformation_(false)
-{}
+GeoTransform::GeoTransform() : 
+    translation_(3, 0.0), 
+    scaling_(3, 1.0), 
+    hasTransformation_(false)
+{
+}
 
 void GeoTransform::apply(double &x, double &y, double &z) const
 {
     if (hasTransformation_)
     {
+        // translation, rotation, then scale 
         // FIXME:Tue Feb  8 14:02:51 EST 2011:tmatth:only does translation right now
-        x += mat_._41;
-        y += mat_._42;
-        z += mat_._43;
+        // translation
+        x += translation_[0];
+        y += translation_[1];
+        z += translation_[2];
+
+        // rotation
+        // scaling
+        x *= scaling_[0];
+        y *= scaling_[1];
+        z *= scaling_[2];
     }
+}
+        
+void GeoTransform::scale(double sx, double sy, double sz)
+{
+    hasTransformation_ = true;
+    scaling_[0] = sx;
+    scaling_[1] = sy;
+    scaling_[2] = sz;
 }
 
 void GeoTransform::translate(double tx, double ty, double tz)
 {
     hasTransformation_ = true;
-    mat_._41 = tx;
-    mat_._42 = ty;
-    mat_._43 = tz;
+    translation_[0] = tx;
+    translation_[1] = ty;
+    translation_[2] = tz;
 }
 
 } // end namespace spatosc
