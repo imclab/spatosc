@@ -19,7 +19,7 @@ This source file is part of the
 
 //-------------------------------------------------------------------------------------
 BaseApplication::BaseApplication()
-    : mRoot(0),
+    : mRoot(),
     mCamera(0),
     mSceneMgr(0),
     mWindow(0),
@@ -39,7 +39,6 @@ BaseApplication::~BaseApplication()
     //Remove ourself as a Window listener
     Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
     windowClosed(mWindow);
-    delete mRoot;
 }
 
 //-------------------------------------------------------------------------------------
@@ -201,7 +200,7 @@ void BaseApplication::go()
 //-------------------------------------------------------------------------------------
 bool BaseApplication::setup()
 {
-    mRoot = new Ogre::Root(mPluginsCfg);
+    mRoot.reset(new Ogre::Root(mPluginsCfg));
 
     setupResources();
 
@@ -325,7 +324,9 @@ void BaseApplication::windowClosed(Ogre::RenderWindow* rw)
         if( mInputManager )
         {
             mInputManager->destroyInputObject( mMouse );
+            mMouse = 0;
             mInputManager->destroyInputObject( mKeyboard );
+            mKeyboard = 0;
 
             OIS::InputManager::destroyInputSystem(mInputManager);
             mInputManager = 0;

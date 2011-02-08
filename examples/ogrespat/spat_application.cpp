@@ -44,7 +44,7 @@ bool SpatApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 bool SpatApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
 {
-    if (headNode_ == 0)
+    if (mKeyboard == 0)
         return false;
     static double timeLeftBeforeOscFlush = 0.0;
     const static double move = 10.0;

@@ -17,6 +17,7 @@ This source file is part of the
 #ifndef __BaseApplication_h_
 #define __BaseApplication_h_
 
+#include <tr1/memory>
 #include <OgreCamera.h>
 #include <OgreEntity.h>
 #include <OgreLogManager.h>
@@ -75,7 +76,7 @@ class BaseApplication :
         //Unattach OIS before window shutdown (very important under Linux)
         virtual void windowClosed(Ogre::RenderWindow* rw);
 
-        Ogre::Root *mRoot;
+        std::tr1::shared_ptr<Ogre::Root> mRoot;
         Ogre::Camera* mCamera;
         Ogre::SceneManager* mSceneMgr;
         Ogre::RenderWindow* mWindow;
