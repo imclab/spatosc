@@ -35,6 +35,7 @@ class GeoTransform
         void translate(double tx, double ty, double tz);
     private:
         spatosc::Matrix4 mat_;
+        bool hasTransformation_;
 };
 
 } // end namespace spatosc
