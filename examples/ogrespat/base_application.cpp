@@ -39,6 +39,7 @@ BaseApplication::~BaseApplication()
     //Remove ourself as a Window listener
     Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
     windowClosed(mWindow);
+    std::cerr << "DESTROYED BASE APPLICATION\n";
 }
 
 //-------------------------------------------------------------------------------------

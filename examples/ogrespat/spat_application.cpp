@@ -14,10 +14,22 @@ This source file is part of the
       http://www.ogre3d.org/tikiwiki/
 -----------------------------------------------------------------------------
 */
+
+#include <signal.h>
 #include "spat_application.h"
 #include "spatosc/geotransform.h"
 
+namespace {
+volatile int interrupted = 0; // caught signals will be stored here
+
+void terminateSignalHandler(int sig)
+{
+    interrupted = sig;
+}
+} // end anonymous namespace
+
 static const double OSC_FLUSH_INTERVAL = 1 / 15.0; // How many seconds between position updates being sent over OSC 
+
 SpatApplication::SpatApplication() :
     headNode_(0)
 {
@@ -44,7 +56,12 @@ bool SpatApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 
 bool SpatApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
 {
-    if (mKeyboard == 0)
+    if (interrupted)
+    {
+        std::cerr << "Got interrupt signal...exittting." << std::endl;  
+        return false;
+    }
+    else if (mKeyboard == 0)
         return false;
     static double timeLeftBeforeOscFlush = 0.0;
     const static double move = 10.0;
@@ -99,6 +116,12 @@ bool SpatApplication::processUnbufferedInput(const Ogre::FrameEvent &evt)
         soundSourceOne_->setPosition(0.0, 0.0, 0.0);
         return true;
     }
+    if (mKeyboard->isKeyDown(OIS::KC_1))
+    {
+        headNode_->setPosition(1.0, 1.0, 1.0);
+        soundSourceOne_->setPosition(1.0, 1.0, 1.0);
+        return true;
+    }
     // make sure that we scale the translation by the framerate, 
     // to avoid movement varying with the framerate
     nodeOneTransVector *= evt.timeSinceLastFrame;
@@ -150,6 +173,10 @@ void SpatApplication::createScene()
 
 int main(int argc, char *argv[])
 {
+    // attach interrupt handlers
+    signal(SIGINT, &terminateSignalHandler);
+    signal(SIGTERM, &terminateSignalHandler);
+
     // Create application object
     SpatApplication app;
 

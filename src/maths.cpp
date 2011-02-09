@@ -148,9 +148,10 @@ double angleBetweenVectors(Vector3 v1, Vector3 v2, int nullAxis)
     }
 
     // angle will be from -90 to 270 for some reason, so convert to -PI,PI
-    if (angle>M_PI) angle -= 2 * M_PI;
+    if (angle > M_PI)
+        angle -= 2 * M_PI;
 
-    return(angle);
+    return angle;
 }
 
 /**
