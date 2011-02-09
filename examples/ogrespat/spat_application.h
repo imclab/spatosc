@@ -30,6 +30,7 @@ class SpatApplication : public BaseApplication
     public: 
         SpatApplication();
     private:
+        void drawAxes();
         void createAudioScene();
         virtual bool processUnbufferedInput(const Ogre::FrameEvent& evt);
         virtual bool frameRenderingQueued(const Ogre::FrameEvent& evt);
