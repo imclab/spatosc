@@ -98,7 +98,7 @@ double computeAngle(double dx, double dy)
     return angle;
 }
 
-double AngleBetweenVectors(Vector3 v1, Vector3 v2)
+double angleBetweenVectors(Vector3 v1, Vector3 v2)
 {
     // normalize vectors
     v1.Normalize();
@@ -124,7 +124,7 @@ double AngleBetweenVectors(Vector3 v1, Vector3 v2)
         return 0;
 
     // Return the angle in radians
-    return( angle );
+    return angle;
 }
 
 double AngleBetweenVectors(Vector3 v1, Vector3 v2, int nullAxis)

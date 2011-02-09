@@ -53,8 +53,8 @@ void Connection::recomputeConnection()
 
     Vector3 snkDir = snk_->getOrientation() * Vector3(0.0, 1.0, 0.0);
 
-    elev_ = AngleBetweenVectors(snkDir, connVec, 2);
-    azim_ = AngleBetweenVectors(snkDir, connVec, 3);
+    elev_ = angleBetweenVectors(snkDir, connVec, 2);
+    azim_ = angleBetweenVectors(snkDir, connVec, 3);
 
     // ensure elevation is in range [-pi,pi]
     /*

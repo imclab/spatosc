@@ -552,7 +552,7 @@ double computeAngle(double dx, double dy);
  * @param v1 First vector
  * @param v2 Second vector
  */
-double AngleBetweenVectors(Vector3 v1, Vector3 v2);
+double angleBetweenVectors(Vector3 v1, Vector3 v2);
 
 /**
  * Returns a signed angle of rotation that describes the rotation from v1 to v2,
@@ -561,7 +561,7 @@ double AngleBetweenVectors(Vector3 v1, Vector3 v2);
  * @param v2 Second vector
  * @param null axis (1=X_AXIS, 2=Y_AXIS, 3=Z_AXIS)
  */
-double AngleBetweenVectors(Vector3 v1, Vector3 v2, int nullAxis);
+double angleBetweenVectors(Vector3 v1, Vector3 v2, int nullAxis);
 
 /**
  * Returns the rotation between two 3D vectors.
