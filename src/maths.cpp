@@ -127,7 +127,7 @@ double angleBetweenVectors(Vector3 v1, Vector3 v2)
     return angle;
 }
 
-double AngleBetweenVectors(Vector3 v1, Vector3 v2, int nullAxis)
+double angleBetweenVectors(Vector3 v1, Vector3 v2, int nullAxis)
 {
     // normalize vectors
     v1.Normalize();

@@ -30,6 +30,10 @@ namespace spatosc
 Listener::Listener(const std::string &nodeID, Scene &scene) :
     Node(nodeID, scene)
 {
+    // must be called in this derived class' constructor as it calls a pure virtual function.
+    // we call this in case a geotransform has already been applied to the scene
+    setPosition(0.0, 0.0, 0.0);
+    setOrientation(0.0, 0.0, 0.0);
 }
 
 void Listener::debugPrint() const
