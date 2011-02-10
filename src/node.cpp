@@ -70,7 +70,7 @@ Vector3 Node::getPosition() const
 {
     // TODO: Thu Feb 10 14:51:02 EST 2011: tmatth: cache these values
     Vector3 result(pos_);
-    scene_.getTransform().apply(result);
+    scene_.applyTransformation(result);
     return result;
 }
 

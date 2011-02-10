@@ -437,10 +437,36 @@ void Scene::deleteAllNodes()
     std::vector<std::tr1::shared_ptr<SoundSource> >().swap(soundSources_);
 }
 
-GeoTransform& Scene::getTransform()
+        
+void Scene::translate(double tx, double ty, double tz)
 {
-    return *transform_;
+    transform_->translate(tx, ty, tz);
 }
 
+void Scene::rotate(double pitch, double roll, double yaw)
+{
+    transform_->rotate(pitch, roll, yaw);
+}
+
+void Scene::rotate(double x, double y, double z, double w)
+{
+    transform_->rotate(x, y, z, w);
+}
+
+void Scene::scale(double sx, double sy, double sz)
+{
+    transform_->scale(sx, sy, sz);
+}
+
+void Scene::applyTransformation(Vector3 &vec) const
+{
+    transform_->apply(vec);
+}
+
+
+void Scene::applyTransformation(double &x, double &y, double &z) const
+{
+    transform_->apply(x, y, z);
+}
 } // end namespace spatosc
 
