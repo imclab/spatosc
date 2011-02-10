@@ -32,10 +32,10 @@ namespace spatosc
 Node::Node(const std::string &nodeID, Scene &scene) :
     id_(nodeID),
     scene_(scene),
-    pos_(),
     orientation_(),
     active_(true),
-    sendNewPosition_(true)
+    sendNewPosition_(true),
+    pos_()
 {}
 
 Node::~Node()
@@ -56,7 +56,7 @@ void Node::debugPrint() const
 
 void Node::setPosition(double x, double y, double z)
 {
-    scene_.getTransform().apply(x, y, z);
+//    scene_.getTransform().apply(x, y, z);
     if (x != pos_.x || y != pos_.y || z != pos_.z)
     {
         pos_.x = x;
@@ -64,6 +64,14 @@ void Node::setPosition(double x, double y, double z)
         pos_.z = z;
         notifyScene();
     }
+}
+
+Vector3 Node::getPosition() const
+{
+    // TODO: Thu Feb 10 14:51:02 EST 2011: tmatth: cache these values
+    Vector3 result(pos_);
+    scene_.getTransform().apply(result);
+    return result;
 }
 
 void Node::setPositionAED(double angle, double elevation, double distance)

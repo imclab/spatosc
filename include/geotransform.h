@@ -33,6 +33,7 @@ class GeoTransform
         GeoTransform();
         /** Maps a given point to transformed coordinates */
         void apply(double &x, double &y, double &z) const;
+        void apply(Vector3 &pos) const;
         void applyToOrientation(Quaternion &orientation) const;
 
         void translate(double tx, double ty, double tz);

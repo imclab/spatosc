@@ -57,6 +57,11 @@ void GeoTransform::apply(double &x, double &y, double &z) const
         z *= scaling_[2];
     }
 }
+
+void GeoTransform::apply(Vector3 &pos) const
+{
+    apply(pos.x, pos.y, pos.z);
+}
         
 void GeoTransform::scale(double sx, double sy, double sz)
 {
