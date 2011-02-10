@@ -437,25 +437,34 @@ void Scene::deleteAllNodes()
     std::vector<std::tr1::shared_ptr<SoundSource> >().swap(soundSources_);
 }
 
+void Scene::onTransformChanged()
+{
+    for (ConnIterator iter = connections_.begin(); iter != connections_.end(); ++iter)
+        (*iter)->recomputeConnection();
+}
         
 void Scene::translate(double tx, double ty, double tz)
 {
     transform_->translate(tx, ty, tz);
+    onTransformChanged();
 }
 
 void Scene::rotate(double pitch, double roll, double yaw)
 {
     transform_->rotate(pitch, roll, yaw);
+    onTransformChanged();
 }
 
 void Scene::rotate(double x, double y, double z, double w)
 {
     transform_->rotate(x, y, z, w);
+    onTransformChanged();
 }
 
 void Scene::scale(double sx, double sy, double sz)
 {
     transform_->scale(sx, sy, sz);
+    onTransformChanged();
 }
 
 void Scene::applyTransformation(Vector3 &vec) const

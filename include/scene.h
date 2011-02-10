@@ -250,6 +250,7 @@ class Scene
          */
         std::vector<Connection*> getConnectionsForNode(const Node *node);
         bool disconnectNodeConnections(const Node *node);
+        void onTransformChanged();
 
         std::tr1::shared_ptr<Translator> translator_;
         bool autoConnect_;

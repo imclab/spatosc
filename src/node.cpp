@@ -56,7 +56,6 @@ void Node::debugPrint() const
 
 void Node::setPosition(double x, double y, double z)
 {
-//    scene_.getTransform().apply(x, y, z);
     if (x != pos_.x || y != pos_.y || z != pos_.z)
     {
         pos_.x = x;
