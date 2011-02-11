@@ -129,29 +129,33 @@ double angleBetweenVectors(Vector3 v1, Vector3 v2)
 
 double angleBetweenVectors(Vector3 v1, Vector3 v2, int nullAxis)
 {
-    // normalize vectors
-    v1.Normalize();
-    v2.Normalize();
-
-    double angle = 0;
+	Vector2 tmp1, tmp2;
     switch (nullAxis)
     {
         case 1: // X_AXIS is ignored (ELEV)
-            angle = atan2(v2.z,v2.y) - atan2(v1.z,v1.y);
-            break;
+			tmp1 = Vector2(v1.y,v1.z);
+			tmp2 = Vector2(v2.y,v2.z);
+			break;
         case 2: // Y_AXIS is ignored (ROLL)
-            angle = atan2(v2.z,v2.x) - atan2(v1.z,v1.x);
+            tmp1 = Vector2(v1.x,v1.z);
+			tmp2 = Vector2(v2.x,v2.z);
             break;
         case 3: // Z_AXIS is ignored (AZIM)
-            angle = atan2(v2.y,v2.x) - atan2(v1.y,v1.x);
+            tmp1 = Vector2(v1.x,v1.y);
+			tmp2 = Vector2(v2.x,v2.y);
             break;
     }
 
-    // angle will be from -90 to 270 for some reason, so convert to -PI,PI
-    if (angle > M_PI)
-        angle -= 2 * M_PI;
+    tmp1.Normalize();
+    tmp2.Normalize();
 
-    return angle;
+    double angle = atan2(tmp2.y,tmp2.x) - atan2(tmp1.y,tmp1.x);
+    if (angle > M_PI)
+	angle -= 2 * M_PI;
+    else if (angle < -M_PI)
+	angle += 2 * M_PI;
+
+    return(angle);
 }
 
 /**
@@ -338,14 +342,99 @@ Quaternion EulerToQuat (Vector3 v)
 
 }
 
-Vector3 QuatToEuler(Quaternion q)
+inline int signof(double a) { return (a == 0) ? 0 : (a<0 ? -1 : 1); }
+/*
+	std::cout << copysign(1.0,-4.4) << std::endl;
+    std::cout << copysign(1.0,4.4) << std::endl;
+    std::cout << copysign(1.0,0.0) << std::endl;
+*/
+
+
+Vector3 QuatToEuler(Quaternion q1)
 {
-    //q.Normalize();
+	// http://www.euclideanspace.com/maths/geometry/rotations/conversions/quaternionToEuler
+
+	double pitch, roll, yaw;
+	
+    double sqw = q1.w*q1.w;
+    double sqx = q1.x*q1.x;
+    double sqy = q1.y*q1.y;
+    double sqz = q1.z*q1.z;
+	double unit = sqx + sqy + sqz + sqw; // if normalised is one, otherwise is correction factor
+	double test = q1.x*q1.y + q1.z*q1.w;
+
+	// singularity at north pole:
+	if (test > 0.499*unit) {
+		yaw = 2 * atan2(q1.x,q1.w);
+		pitch = M_PI/2;
+		roll = 0;
+	}
+
+	// singularity at south pole:
+	else if (test < -0.499*unit) {
+		yaw = -2 * atan2(q1.x,q1.w);
+		pitch = -M_PI/2;
+		roll = 0;
+	}
+
+	// normal case:
+	else {
+		yaw = atan2(2*q1.y*q1.w-2*q1.x*q1.z , sqx - sqy - sqz + sqw);
+		pitch = asin(2*test/unit);
+		roll = atan2(2*q1.x*q1.w-2*q1.y*q1.z , -sqx + sqy - sqz + sqw);
+	}
+	return Vector3(pitch,roll,yaw);
+}
+
+Vector3 QuatToEuler_unknown(Quaternion q)
+{
+	q.Normalize();
 
     double pitch, roll, yaw;
+	
+    const double epsilon = 0.0009765625f; 
+    const double threshold = 0.5f - epsilon; 
+ 
+    double xy = q.x * q.y; 
+    double zw = q.z * q.w; 
+ 
+    double test = xy + zw; 
+ 
+	if (test < -threshold || test > threshold) 
+	{
+		int sign = signof(test);
+		yaw = sign * 2 * (double)atan2(q.x, q.w);
+		pitch = sign * M_PI/2;
+		roll = 0.0; 
+	}
+	else
+	{ 
+
+		double xx = q.x * q.x; 
+		double xz = q.x * q.z; 
+		double xw = q.x * q.w; 
+
+		double yy = q.y * q.y; 
+		double yw = q.y * q.w; 
+		double yz = q.y * q.z; 
+
+		double zz = q.z * q.z; 
+
+		yaw = (double)atan2(2 * yw - 2 * xz, 1 - 2 * yy - 2 * zz); 
+		pitch = (double)atan2(2 * xw - 2 * yz, 1 - 2 * xx - 2 * zz); 
+		roll = (double)asin(2 * test); 
+	} 
 
 
-    const double sqw = q.w*q.w;
+	return Vector3(pitch,roll,yaw);
+}
+
+Vector3 QuatToEuler_OSG(Quaternion q)
+{
+	double pitch, roll, yaw;
+	//q.Normalize(); // ???
+
+	const double sqw = q.w*q.w;
     const double sqx = q.x*q.x;
     const double sqy = q.y*q.y;
     const double sqz = q.z*q.z;
@@ -355,33 +444,36 @@ Vector3 QuatToEuler(Quaternion q)
     //if (roll>1) roll = 1.0; if (roll<-1) roll = -1.0;
     yaw =   atan2( 2.0 * (q.x*q.y + q.z*q.w), (sqx - sqy - sqz + sqw));
 
-    return Vector3(roll,pitch,yaw);
-    //return Vector3(pitch,roll,yaw);
+    //return Vector3(roll,pitch,yaw);
+    return Vector3(pitch,roll,yaw);
 
-    /*
+}
+
+Vector3 QuatToEuler313(Quaternion q)
+{
     // x-convension 3-1-3 euler angles
     // http://en.wikipedia.org/wiki/Rotation_representation
-    roll = acos( -(q.x*q.x) - (q.y*q.y) + (q.z*q.z) + (q.z*q.z));
-    yaw = atan2( q.x*q.z + q.y*q.w , q.y*q.z - q.x*q.w );
-    pitch =  -atan2( q.x*q.z - q.y*q.w , q.y*q.z + q.x*q.w );
-    */
+    double roll =   acos( -(q.x*q.x) - (q.y*q.y) + (q.z*q.z) + (q.z*q.z));
+    double yaw  =    atan2( q.x*q.z + q.y*q.w , q.y*q.z - q.x*q.w );
+    double pitch =  -atan2( q.x*q.z - q.y*q.w , q.y*q.z + q.x*q.w );
 
-    /*
+	return Vector3(pitch,roll,yaw);
+}
+
+Vector3 QuatToEulerWiki(Quaternion q)
+{
     // based on:
     // en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
-    roll = asin( 2.0* ((q.x*q.z) - (q.w*q.y)) );
-    yaw =   atan2( 2.0* ((q.x*q.y) + (q.z*q.w)) , 1.0 - (2.0* ((q.y*q.y) + (q.z*q.z))) );
-    pitch = atan2( 2.0* ((q.x*q.w + q.y*q.z)) , 1.0 - (2.0* ((q.z*q.z) + (q.w*q.w))) );
+    double roll = asin( 2.0* ((q.x*q.z) - (q.w*q.y)) );
+    double yaw =   atan2( 2.0* ((q.x*q.y) + (q.z*q.w)) , 1.0 - (2.0* ((q.y*q.y) + (q.z*q.z))) );
+    double pitch = atan2( 2.0* ((q.x*q.w + q.y*q.z)) , 1.0 - (2.0* ((q.z*q.z) + (q.w*q.w))) );
     return Vector3(M_PI-pitch,-roll,yaw);
-    */
-
-
 }
 
 Vector3 sphericalToCartesian(Vector3 aed)
 {
     // http://en.wikipedia.org/wiki/Spherical_coordinate_system
-
+	// TODO: varify convention
     double x = aed.z * sin(aed.y) * cos(aed.x);
     double y = aed.z * sin(aed.y) * sin(aed.x);
     double z = aed.z * cos(aed.y);
@@ -389,6 +481,31 @@ Vector3 sphericalToCartesian(Vector3 aed)
     return Vector3(x,y,z);
 }
 
+Vector3 cartesianToSpherical(Vector3 v)
+{
+	// http://en.wikipedia.org/wiki/Spherical_coordinate_system
+	// but modified, since ground ref is the XY plane
+
+	double azim, elev, dist;
+	
+	dist = v.Mag();
+	azim = atan2(v.y,v.x) - M_PI/2;
+
+	// put in range of [-pi,pi]
+	if (azim > M_PI)
+		azim -= 2 * M_PI;
+    else if (azim < -M_PI)
+		azim += 2 * M_PI;
+	
+	if (dist > 0.000001)
+		elev = M_PI/2 - acos(v.z/dist);
+	else
+		elev = 0.0;
+	
+	return Vector3(azim, elev, dist);
+}
+
+	
 Vector3 rotateAroundAxis(Vector3 v, Vector3 axis, double angle)
 {
     double c, s, t;

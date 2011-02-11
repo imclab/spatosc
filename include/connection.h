@@ -25,6 +25,7 @@
 
 #include <string>
 #include <lo/lo_osc_types.h> // for lo_arg
+#include "maths.h"
 
 namespace spatosc
 {
@@ -50,19 +51,19 @@ public:
      * A distance is always positive.
      * @return Distance in meters between its two nodes.
      */
-    double distance() const { return distance_; }
+    double distance() const { return aed_.z; }
 
     /**
      * Returns the azimuth (horizontal rotation) between the source and the sink node.
      * @return Angle value in radians.
      */
-    double azimuth() const { return azim_; }
+    double azimuth() const { return aed_.x; }
 
     /**
      * Returns the elevation (vertical angle) between the source and the sink node.
      * @return Angle value in radians.
      */
-    double elevation() const { return elev_; }
+    double elevation() const { return aed_.y; }
 
     /**
      * Returns the factor for the gain of the audio for the source as it should be heard by the sink node,
@@ -115,9 +116,12 @@ private:
     std::string id_;
     SoundSource *src_;
     Listener *snk_;
+	Vector3 aed_;
+	/*
     double distance_;
     double azim_;
     double elev_;
+	*/
     double gain_;
     double gainDB_;
     double vdel_;

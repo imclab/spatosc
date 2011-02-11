@@ -55,6 +55,8 @@ void SpatApplication::createAudioScene()
     soundSourceOne_ = audioScene_.createSoundSource("source1");
     soundSourceTwo_ = audioScene_.createSoundSource("source2");
     listener_ = audioScene_.createListener("listener1");
+	// listener is looking forward along Y axis (camera is above, looking down)
+	listener_->setOrientation(-90.0, 0.0, 0.0);
 }
 
 bool SpatApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)

@@ -88,7 +88,7 @@ int main(int /*argc*/, char ** /*argv*/)
     if (! checkAngles(conn, -45, 0, "source front-right on XY plane"))
         b=1;
     source->setPosition(1.0, 1.0, 1.0);
-    if (! checkAngles(conn, -45, 45, "source front-right and up"))
+    if (! checkAngles(conn, -45, asin(1/sqrt(3))*TO_DEGREES, "source front-right and up"))
         b=1;
     source->setPosition(1.0, 0.0, 1.0);
     if (! checkAngles(conn, -90, 45, "source right and up"))
@@ -100,7 +100,7 @@ int main(int /*argc*/, char ** /*argv*/)
     if (! checkAngles(conn, -90, atan2(1.0,0.5)*TO_DEGREES, "source right and double high up"))
         b=1;
     source->setPosition(1.0, -1.0, 1.0);
-    if (! checkAngles(conn, -135, 45, "source back-right and up"))
+    if (! checkAngles(conn, -135, asin(1/sqrt(3))*TO_DEGREES, "source back-right and up"))
         b=1;
 
     // NOW WE MOVE THE LISTENER:
@@ -108,7 +108,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
     // TODO: (mikewoz) why the -180 for pitch?!
     source->setPosition(1.0, 0.0, 0.0);
-    if (! checkAngles(conn, -135, -180, "listener 45deg left, source to the right"))
+    if (! checkAngles(conn, -135, 0, "listener 45deg left, source to the right"))
         b=1;
 
 

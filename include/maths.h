@@ -584,11 +584,18 @@ Quaternion EulerToQuat (Vector3 eulerAngles);
  * 3) finally apply a negative rotation about the Z axis for yaw.
  */
 Vector3 QuatToEuler(Quaternion q);
+
 /**
  * Converts spherical coordinates to 3D cartesian coordinates.
- * @param aed Angle-elevation-distance coordinates.
+ * @param aed azimuth-elevation-distance coordinates.
  */
 Vector3 sphericalToCartesian(Vector3 aed);
+
+/**
+ * Converts cartesian coordinates to AED (azimuth, elevation, distance).
+ * @param v cartesian coordinate.
+ */
+Vector3 cartesianToSpherical(Vector3 v);
 
 /**
  * Rotates a cartesian (?) 3D coordinate around a 3D axis.
