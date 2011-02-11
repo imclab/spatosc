@@ -18,7 +18,6 @@
  */
 
 #include "gui.h"
-#include <iostream>
 #include <spatosc/scene.h>
 #include <spatosc/translator.h>
 #include <spatosc/spatdif_translator.h>
@@ -125,18 +124,15 @@ namespace
 
         // draw "hair"
         static const int NUM_POINTS = 4;
-        float points[NUM_POINTS * 2];
+        gfloat points[NUM_POINTS * 2];
         points[0] = 0.0;
         points[1] = -radius;
-        points[2] = radius * 0.5;
+        points[2] = radius * 0.5f;
         points[3] = radius;
-        points[4] = radius * 1.5;
+        points[4] = radius * 1.5f;
         points[5] = radius;
-        points[6] = (2.0*radius);
+        points[6] = 2.0f * radius;
         points[7] = -radius;
-
-        for (int i = 0; i < (NUM_POINTS*2); i++)
-            std::cout << points[i] << "," << points[i+1] << std::endl;
 
         cogl_set_source_color4ub(0xff, 0x00, 0x00, 0xFF);
         cogl_path_polygon(points, NUM_POINTS);
