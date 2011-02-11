@@ -20,6 +20,7 @@
  */
 
 #include "spatdif_receiver.h"
+#include "osc_scene.h"
 #include "oscreceiver.h"
 #include "node.h"
 #include <cstring>
@@ -85,6 +86,28 @@ std::string getTypeName(const std::string &path)
 }
 
 } // end anonymous namespace
+
+
+int SpatdifReceiver::onSceneMessage(const char * path, const char * /*types*/,
+        lo_arg ** argv, int argc, void * /*data*/, void *user_data)
+{
+    OscScene *scene = static_cast<OscScene*>(user_data);
+
+    // check if the path prefix is in /spatosc/core namespace
+    if (wrongNamespace(path))
+        return 1;
+
+    if (getTypeName(path) != "scene")
+        return 1;
+
+    // get method name:
+    std::string method(getMethodName(path));
+
+    // then call scene's handleMessage and perhaps return true if handled?
+    scene->handleMessage(method, argc, argv);
+
+    return 1;
+}
 
 int SpatdifReceiver::onNodeMessage(const char * path, const char * /*types*/,
         lo_arg ** argv, int argc, void * /*data*/, void *user_data)

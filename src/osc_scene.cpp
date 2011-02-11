@@ -18,6 +18,7 @@
  */
 
 #include <iostream>
+#include <cassert>
 #include "osc_scene.h"
 #include "spatdif_receiver.h"
 
@@ -30,6 +31,28 @@ OscScene::OscScene(const std::string &receiverPort) :
 {
     receiver_.reset(new SpatdifReceiver(receiverPort));
     std::cout << "Scene receiving on port " << receiverPort << std::endl;
+    receiver_->addHandler(NULL, NULL, SpatdifReceiver::onSceneMessage, this);
+}
+
+OscScene::~OscScene()
+{
+    receiver_->removeGenericHandler(this);
+}
+
+void OscScene::handleMessage(const std::string &method, int argc, lo_arg **argv)
+{
+    if (method == "create_source")
+    {
+        assert(argc == 1);
+        createSoundSource(reinterpret_cast<const char*>(argv[0]));
+    }
+    else if (method == "create_listener")
+    {
+        assert(argc == 1);
+        createListener(reinterpret_cast<const char *>(argv[0]));
+    }
+    else
+        std::cerr << "Unknown method " << method << std::endl;
 }
 
 SoundSource* OscScene::createSoundSource(const std::string &id)

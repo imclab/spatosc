@@ -24,6 +24,7 @@
 #ifndef __OSC_SCENE_H__
 #define __OSC_SCENE_H__
 
+#include <lo/lo_osc_types.h> // for lo_arg
 #include "memory.h"
 #include "scene.h"
 
@@ -49,6 +50,8 @@ class OscScene : public Scene
          * @param receiverPort Optional port to specify if the scene's nodes should receive OSC messages
          */
         OscScene(const std::string &receiverPort);
+        
+        virtual ~OscScene();
 
         /**
          * Called when a node should stop receiving OSC messages.
@@ -82,6 +85,7 @@ class OscScene : public Scene
          */
         bool poll();
 
+        virtual void handleMessage(const std::string &method, int argc, lo_arg ** argv);
 
     private:
         std::tr1::shared_ptr<SpatdifReceiver> receiver_;
