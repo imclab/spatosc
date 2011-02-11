@@ -77,7 +77,7 @@ case "$host" in *-darwin* | *-macos10*)
 esac
 
 #CXXFLAGS+=" -g3 -ggdb -Wall -Wextra -Wfatal-errors"
-CXXFLAGS+=" -Wall -Wextra -Wfatal-errors -Werror -Wnon-virtual-dtor"
+CXXFLAGS+=" -Wall -Wextra -Wfatal-errors -Werror -Wnon-virtual-dtor -pedantic "
 # FIXME:2011-01-26: That one is for Mac OSX only, right?
 
 #Set LIBLO with pkg-config

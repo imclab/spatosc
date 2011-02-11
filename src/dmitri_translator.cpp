@@ -41,25 +41,27 @@ DmitriTranslator::DmitriTranslator(const std::string &ip,
         const std::string &toPort,
         bool verbose = true) :
     Translator(verbose),
-    sender_(new OscSender(ip, toPort))
-    {
-        if (verbose)
-            std::cout << "D-Mitri translator sending to: " << sender_->toString() << std::endl;
-    }
+    sender_(new OscSender(ip, toPort)),
+    verbose_(verbose)
+{
+    if (verbose_)
+        std::cout << "D-Mitri translator sending to: " << sender_->toString() << std::endl;
+}
 
 DmitriTranslator::DmitriTranslator(const std::string &ip,
-        const std::string &toPort,
-        const std::string &fromPort,
-        bool verbose = false) :
-    Translator(verbose),
-    sender_(new OscSender(ip, toPort, fromPort))
+    const std::string &toPort,
+    const std::string &fromPort,
+    bool verbose = false) :
+Translator(verbose),
+sender_(new OscSender(ip, toPort, fromPort)),
+verbose_(verbose)
+{
+    if (verbose_)
     {
-        if (verbose_)
-        {
-            //std::cout << "Sending to D-Mitri on: " << lo_address_get_url(destAddr_) << std::endl;
-            //std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
-        }
+        //std::cout << "Sending to D-Mitri on: " << lo_address_get_url(destAddr_) << std::endl;
+        //std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
     }
+}
 
 void DmitriTranslator::pushOSCMessages(Connection *conn)
 {

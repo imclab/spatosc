@@ -34,6 +34,7 @@ class GUI
         std::tr1::shared_ptr<spatosc::Scene> scene_;
         float radius_;
         ClutterActor *sourceActor_;
+        ClutterActor *listenerActor_;
         gfloat default_stage_width_;
         gfloat default_stage_height_;
         ClutterActor *stage_;
@@ -42,7 +43,7 @@ class GUI
         void createStage();
         void connectMouseCallbacks();
         void connectKeyCallbacks();
-        void moveSourceToOrigin();
+        void moveActorToOrigin(ClutterActor *actor);
         void sendSourcePosition();
 
         // callbacks

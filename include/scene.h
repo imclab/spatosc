@@ -37,7 +37,6 @@ class Node;
 class SoundSource;
 class Connection;
 class Translator;
-class SpatdifReceiver;
 class GeoTransform;
 
 /**
@@ -47,8 +46,11 @@ class GeoTransform;
 class Scene
 {
     public:
+        // these two methods are only used by Node
         void applyTransformation(Vector3 &vec) const;
         void applyTransformation(double &x, double &y, double &z) const;
+        
+        // these are called by clients
         void translate(double tx, double ty, double tz);
         void rotate(double pitch, double roll, double yaw);
         void rotate(double x, double y, double z, double w);
@@ -255,8 +257,6 @@ class Scene
         std::tr1::shared_ptr<Translator> translator_;
         bool autoConnect_;
         std::string connectFilter_;
-
-        std::tr1::shared_ptr<SpatdifReceiver> receiver_;
 
         //FIXME:2011-01-25:aalex:Would maps be faster?
         std::vector<std::tr1::shared_ptr<Listener> >  listeners_;

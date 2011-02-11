@@ -30,6 +30,7 @@ Connection::Connection(SoundSource *source, Listener *sink) :
     id_(source->getID() + "->" + sink->getID()),
     src_(source),
     snk_(sink),
+    aed_(),
     gain_(0.0),
     gainDB_(0.0),
     vdel_(0.0),
@@ -60,8 +61,6 @@ void Connection::recomputeConnection()
     std::cout << "snkDir  = " << snkDir << std::endl;
 	std::cout << "rotConnVec: "<<rotConnVec << ", length=" << distance() << std::endl;
 	std::cout << "AED: " << azimuth()*TO_DEGREES <<","<< elevation()*TO_DEGREES <<","<< distance() << std::endl;
-	*/
-	/*
 	Quaternion q = RotationBetweenVectors(snkDir,connVec);		
 	std::cout << "QuatToEuler? = " << QuatToEuler(q)*TO_DEGREES << std::endl;
 	*/

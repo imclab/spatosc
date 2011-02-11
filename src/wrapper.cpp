@@ -157,6 +157,26 @@ bool Wrapper::setPosition(const std::string &nodeName, double x, double y, doubl
     }
 }
 
+void Wrapper::translate(double tx, double ty, double tz)
+{
+    scene_->translate(tx, ty, tz);
+}
+        
+void Wrapper::rotate(double pitch, double roll, double yaw)
+{
+    scene_->rotate(pitch, roll, yaw);
+}
+
+void Wrapper::rotate(double x, double y, double z, double w)
+{
+    scene_->rotate(x, y, z, w);
+}
+
+void Wrapper::scale(double sx, double sy, double sz)
+{
+    scene_->scale(sx, sy, sz);
+}
+
 bool Wrapper::setTranslator(const std::string &translatorName, const std::string &sendToAddress, const std::string &port)
 {
     if (translatorName == "SpatdifTranslator")

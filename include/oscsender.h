@@ -57,6 +57,9 @@ class OscSender
           */
         void sendMessage(const std::string &OSCpath, const char *types, ...) const;
     private:
+        // not implemented
+        OscSender(const OscSender&);
+        const OscSender& operator=(const OscSender&);
         void sendMessage(const std::string &OSCpath, const char *types, va_list ap) const;
         void sendMessage(const std::string &OSCpath, lo_message msg) const;
         std::string host_;

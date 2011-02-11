@@ -108,6 +108,37 @@ namespace
         cogl_path_fill();
     }
 
+    void paintHead(ClutterActor *actor)
+    {
+        gfloat radius = std::min(clutter_actor_get_width(actor), 
+                clutter_actor_get_height(actor)) * 0.5;
+        cogl_set_source_color4ub(0xff, 0xcc, 0x33, 0xcc);
+        cogl_path_arc(radius, radius, radius, radius, 0, 360);
+        cogl_path_fill();
+
+        // draw ears
+        cogl_path_arc(0, radius, radius*0.2, radius*0.2, 90, 270);
+        cogl_path_fill();
+        cogl_path_arc(2*radius, radius, radius*0.2, radius*0.2, 90, -90);
+        cogl_path_fill();
+
+        // draw "hair"
+        static const int NUM_POINTS = 4;
+        gfloat points[NUM_POINTS * 2];
+        points[0] = 0.0;
+        points[1] = -radius;
+        points[2] = radius * 0.5f;
+        points[3] = radius;
+        points[4] = radius * 1.5f;
+        points[5] = radius;
+        points[6] = 2.0f * radius;
+        points[7] = -radius;
+
+        cogl_set_source_color4ub(0xff, 0x00, 0x00, 0xFF);
+        cogl_path_polygon(points, NUM_POINTS);
+        cogl_path_fill();
+    }
+
     /// FIXME: use clutter_cairo, it looks much nicer
     ClutterActor *createCircle(gfloat radius)
     {
@@ -120,6 +151,18 @@ namespace
         g_signal_connect(circle, "paint", G_CALLBACK(paintCircle), NULL);
         return circle;
     }
+    
+    ClutterActor *createHead(gfloat radius)
+    {
+        const ClutterColor transp = {0, 0, 0, 0};
+        /// HACK: create a rectangle, then override its paint method to draw a head 
+        ClutterActor *head = clutter_rectangle_new_with_color(&transp);
+        clutter_actor_set_anchor_point_from_gravity(head,
+                CLUTTER_GRAVITY_CENTER);
+        clutter_actor_set_size(head, radius * 2, radius * 2);
+        g_signal_connect(head, "paint", G_CALLBACK(paintHead), NULL);
+        return head;
+    }
 } // end anonymous namespace
 
 void GUI::clutterInit()
@@ -131,6 +174,7 @@ GUI::GUI() :
     scene_(new spatosc::Scene),
     radius_(20.0),
     sourceActor_(createCircle(radius_)),
+    listenerActor_(createHead(radius_)),
     default_stage_width_(600.0f), 
     default_stage_height_(600.0f),
     sound_(0)
@@ -142,18 +186,19 @@ GUI::GUI() :
     connectKeyCallbacks();
     sound_ = scene_->createSoundSource("source1");
     scene_->createListener("listener1");
-    moveSourceToOrigin();
+    moveActorToOrigin(sourceActor_);
+    moveActorToOrigin(listenerActor_);
 }
 
-void GUI::moveSourceToOrigin()
+void GUI::moveActorToOrigin(ClutterActor *actor)
 {
     float windowWidth = clutter_actor_get_width(stage_);
     float windowHeight = clutter_actor_get_height(stage_);
-    // move sourceActor to middle
-    clutter_actor_set_position(sourceActor_, windowWidth * 0.5f,
+    // move actor to middle
+    clutter_actor_set_position(actor, windowWidth * 0.5f,
             windowHeight * 0.5f);
-    clutter_actor_set_depth(sourceActor_, 0.0f);
-    clutter_actor_set_size(sourceActor_, 2 * radius_, 2 * radius_);
+    clutter_actor_set_depth(actor, 0.0f);
+    clutter_actor_set_size(actor, 2 * radius_, 2 * radius_);
     updatePosition();
 }
 
@@ -229,6 +274,7 @@ void GUI::createStage()
     ClutterColor black = { 0x00, 0x00, 0x00, 0xff };
     clutter_stage_set_color(CLUTTER_STAGE(stage_), &black);
     clutter_container_add_actor(CLUTTER_CONTAINER(stage_), sourceActor_);
+    clutter_container_add_actor(CLUTTER_CONTAINER(stage_), listenerActor_);
     ClutterColor grid_color = { 0xff, 0xff, 0xff, 0x33 };
     create_grid(CLUTTER_CONTAINER(stage_), PIXELS_PER_METER, PIXELS_PER_METER, &grid_color);
     ClutterColor origin_color = { 0xff, 0xff, 0xff, 0xcc };
@@ -237,6 +283,10 @@ void GUI::createStage()
     sourcePosLabel_ = clutter_text_new_full("Sans semibold 10px", "", &text_color);
     clutter_container_add_actor(CLUTTER_CONTAINER(stage_), sourcePosLabel_);
     clutter_actor_set_position(sourcePosLabel_, 10.0f, 10.0f);
+    ClutterActor *wordBubble = clutter_text_new_full("Sans semibold 14px", "", &text_color);
+    clutter_text_set_text(CLUTTER_TEXT(wordBubble), "This is the back of the listener.\nHe has a mohawk.");
+    clutter_container_add_actor(CLUTTER_CONTAINER(stage_), wordBubble);
+    clutter_actor_set_position(wordBubble, default_stage_width_ / 2, default_stage_height_ / 3);
     clutter_actor_show(stage_);
 }
 
@@ -286,7 +336,7 @@ gboolean GUI::keyPressCb(ClutterActor * /*actor*/,
 
         case CLUTTER_KEY_o:
         case CLUTTER_KEY_O:
-            context->moveSourceToOrigin();
+            context->moveActorToOrigin(context->sourceActor_);
             return TRUE;
 
         default:
