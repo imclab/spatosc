@@ -47,8 +47,11 @@ class GeoTransform;
 class Scene
 {
     public:
+        // these two methods are only used by Node
         void applyTransformation(Vector3 &vec) const;
         void applyTransformation(double &x, double &y, double &z) const;
+        
+        // these are called by clients
         void translate(double tx, double ty, double tz);
         void rotate(double pitch, double roll, double yaw);
         void rotate(double x, double y, double z, double w);
