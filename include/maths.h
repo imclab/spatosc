@@ -575,7 +575,6 @@ Quaternion RotationBetweenVectors2(Vector3 v1, Vector3 v2);
  * Converts Euler angles to a Quaternion.
  */
 Quaternion EulerToQuat (Vector3 eulerAngles);
-//Quaternion EulerToQuat (double r, double p, double y);
 
 /**
  * Converts a quaternion into euler angles, assuming the following order:
