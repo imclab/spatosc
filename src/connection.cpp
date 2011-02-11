@@ -30,6 +30,7 @@ Connection::Connection(SoundSource *source, Listener *sink) :
     id_(source->getID() + "->" + sink->getID()),
     src_(source),
     snk_(sink),
+    aed_(),
     gain_(0.0),
     gainDB_(0.0),
     vdel_(0.0),

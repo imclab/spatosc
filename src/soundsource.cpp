@@ -26,7 +26,8 @@ namespace spatosc
 
 // *****************************************************************************
 SoundSource::SoundSource(const std::string &nodeID, Scene &scene) :
-    Node(nodeID, scene)
+    Node(nodeID, scene),
+    connectTO_()
 {
     // must be called in this derived class' constructor as it calls a pure virtual function.
     // we call this in case a geotransform has already been applied to the scene

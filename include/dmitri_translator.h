@@ -51,7 +51,7 @@ private:
     // not implemented
     DmitriTranslator(const DmitriTranslator&);
     const DmitriTranslator& operator=(const DmitriTranslator&);
-    bool verbose;
+    bool verbose_;
 };
 
 } // end namespace spatosc

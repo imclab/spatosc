@@ -37,7 +37,6 @@ class Node;
 class SoundSource;
 class Connection;
 class Translator;
-class SpatdifReceiver;
 class GeoTransform;
 
 /**
@@ -258,8 +257,6 @@ class Scene
         std::tr1::shared_ptr<Translator> translator_;
         bool autoConnect_;
         std::string connectFilter_;
-
-        std::tr1::shared_ptr<SpatdifReceiver> receiver_;
 
         //FIXME:2011-01-25:aalex:Would maps be faster?
         std::vector<std::tr1::shared_ptr<Listener> >  listeners_;

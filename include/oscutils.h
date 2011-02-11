@@ -105,7 +105,7 @@ namespace OSCutil
      */
     bool wildcardMatch(const char *path, const char *str);
     // TODO:2011-01-17:aalex:Please someone document wildcardMatch() well.
-};
+}
 
 } // end namespace spatosc
 

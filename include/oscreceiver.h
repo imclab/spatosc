@@ -40,7 +40,7 @@ class OscReceiver
          * Constructor. Note that the port is a string, not an int.
          */
         OscReceiver(const std::string &port);
-        ~OscReceiver();
+        virtual ~OscReceiver();
         /**
          * Returns the port as a C string.
          */
