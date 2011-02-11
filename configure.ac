@@ -62,10 +62,10 @@ case "$host" in *-darwin* | *-macos10*)
   LDFLAGS+=" -undefined dynamic_lookup -Wl,-headerpad_max_install_names"
   if test -d /opt/local ; then
     CXXFLAGS+=" -I/usr/local/include -I/opt/local/include"
-    LDFLAGS+=" -L/usr/local/lib -L/opt/local/lib"
+    #LDFLAGS+=" -L/usr/local/lib -L/opt/local/lib"
   elif test -d /sw ; then
     CXXFLAGS+=" -I/sw/include"
-    LDFLAGS+=" -L/sw/lib"
+    #LDFLAGS+=" -L/sw/lib"
   fi
   #TODO: is this going to mess up with GNU/Linux systems?
   # OSX does not include /usr/local/lib/pkgconfig path, so we export it here
