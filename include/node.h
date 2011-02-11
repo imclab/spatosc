@@ -110,13 +110,10 @@ class Node
         virtual void setOrientation(double pitch, double roll, double yaw);
 
         /**
-         * Returns this node's position.
+         * Returns this node's position, which may be transformed by a geotransform.
          * @return A Vector3 with its position as x, y and z coordinates.
          */
-        Vector3 getPosition() const
-        {
-            return pos_;
-        }
+        Vector3 getPosition() const;
 
         /**
          * Returns this node's orientation.
@@ -154,7 +151,6 @@ class Node
         void notifyScene();
         std::string id_;
         Scene &scene_;
-        Vector3 pos_;
         Quaternion orientation_;
         bool active_;
         bool sendNewPosition_;
@@ -162,6 +158,7 @@ class Node
         // A source shouldn't have a connectFROM_ and a
         // sink should not have a connectTO_
     private:
+        Vector3 pos_;
         virtual void onNodeChanged() = 0;
         virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv) = 0;
 };

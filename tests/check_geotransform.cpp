@@ -40,7 +40,7 @@ bool check_translation()
     double offset = 1.0;
 
     // translate by offset in x, y and z;
-    scene.getTransform().translate(offset, offset, offset);
+    scene.translate(offset, offset, offset);
 
     // now set the position and make sure it's been offset
     node->setPosition(x, y, z);
@@ -63,7 +63,7 @@ bool check_rotation()
     double rotatedY = -1.5;
     double rotatedZ = 1.5;
 
-    scene.getTransform().rotate(pitch, roll, yaw);
+    scene.rotate(pitch, roll, yaw);
 
     // now set the position and make sure it's been offset
     node->setPosition(x, y, z);
@@ -90,10 +90,31 @@ bool check_scaling()
     double scaling = 2.0;
 
     // translate by offset in x, y and z;
-    scene.getTransform().scale(scaling, scaling, scaling);
+    scene.scale(scaling, scaling, scaling);
 
     // now set the position and make sure it's been offset
     node->setPosition(x, y, z);
+    if (node->getPosition().x != x * scaling || node->getPosition().y != y * scaling || node->getPosition().z != z * scaling)
+        return false;
+    return true;
+}
+
+// tests if preexisting nodes are transformed correctly if we apply a transofrmation after creating them
+bool check_late_transformation()
+{
+    Scene scene;
+    SoundSource *node = scene.createSoundSource("bob");
+    double x = 0.5;
+    double y = 0.75;
+    double z = 1.5;
+    double scaling = 2.0;
+    
+    // now set the position and make sure it's been offset
+    node->setPosition(x, y, z);
+
+    // translate by offset in x, y and z;
+    scene.scale(scaling, scaling, scaling);
+
     if (node->getPosition().x != x * scaling || node->getPosition().y != y * scaling || node->getPosition().z != z * scaling)
         return false;
     return true;
@@ -114,6 +135,11 @@ int main(int /*argc*/, char ** /*argv*/)
     else if (!check_scaling())
     {
         std::cerr << "Check scaling failed" << std::endl;
+        return 1;
+    }
+    else if (!check_late_transformation())
+    {
+        std::cerr << "Check late transformation failed" << std::endl;
         return 1;
     }
     else

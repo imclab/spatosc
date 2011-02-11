@@ -136,7 +136,7 @@ GUI::GUI() :
     sound_(0)
 {
     scene_->setTranslator<spatosc::SpatdifTranslator>("127.0.0.1", spatosc::SpatdifTranslator::DEFAULT_SEND_PORT, true);
-    scene_->getTransform().scale(INV_PIXELS_PER_METER, INV_PIXELS_PER_METER, INV_PIXELS_PER_METER);
+    scene_->scale(INV_PIXELS_PER_METER, INV_PIXELS_PER_METER, INV_PIXELS_PER_METER);
     createStage();
     connectMouseCallbacks();
     connectKeyCallbacks();
