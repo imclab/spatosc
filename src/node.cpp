@@ -95,13 +95,27 @@ void Node::notifyScene()
     onNodeChanged(); // let subclasses decide what to do
 }
 
+// FIXME:Sun Feb 13 12:11:29 EST 2011:tmatth:put this in a separate component
+namespace {
+bool correctNumberOfArguments(const std::string &method, int expected, int actual)
+{
+    if (actual != expected)
+    {
+        std::cerr << method << " expects " << expected << " arguments , got " <<
+            actual << std::endl;
+        return false;
+    }
+    else
+        return true;
+}
+} // end anonymous namespace
 
 void Node::handleMessage(const std::string &method, int argc, lo_arg **argv)
 {
     if (method == "xyz")
     {
-        assert(argc == 3);
-        setPosition(argv[0]->f, argv[1]->f, argv[2]->f);
+        if (correctNumberOfArguments(method, 3, argc))
+            setPosition(argv[0]->f, argv[1]->f, argv[2]->f);
     }
     else if (method == "aed")
     {

@@ -39,17 +39,32 @@ OscScene::~OscScene()
     receiver_->removeGenericHandler(this);
 }
 
+// FIXME:Sun Feb 13 12:11:29 EST 2011:tmatth:put this in a separate component
+namespace {
+bool correctNumberOfArguments(const std::string &method, int expected, int actual)
+{
+    if (actual != expected)
+    {
+        std::cerr << method << " expects " << expected << " arguments , got " <<
+            actual << std::endl;
+        return false;
+    }
+    else
+        return true;
+}
+} // end anonymous namespace
+
 void OscScene::handleMessage(const std::string &method, int argc, lo_arg **argv)
 {
     if (method == "create_source")
     {
-        assert(argc == 1);
-        createSoundSource(reinterpret_cast<const char*>(argv[0]));
+        if (correctNumberOfArguments(method, 1, argc))
+            createSoundSource(reinterpret_cast<const char*>(argv[0]));
     }
     else if (method == "create_listener")
     {
-        assert(argc == 1);
-        createListener(reinterpret_cast<const char *>(argv[0]));
+        if (correctNumberOfArguments(method, 1, argc))
+            createListener(reinterpret_cast<const char *>(argv[0]));
     }
     else
         std::cerr << "Unknown method " << method << std::endl;
