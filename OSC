@@ -4,16 +4,18 @@ SpatDIF
 Here is the spatosc flavour of spatdif. It's inspired by it, but not quite the same.
 
 The <node_id> can be any ASCII alpha-numeric string. Underscores and hyphens are OK.
-<s:node_type> denotes one of "source" or "listener".
+<s:receiver_type> denotes one of "source", "listener", "connection" or "scene".
 
- * /spatosc/core/<s:node_type>/<s:node_id>/xyz f:x f:y f:z
- * /spatosc/core/<s:node_type>/<s:node_id>/aed f:azimuth f:elevation f:distance_meters
- * /spatosc/core/<s:node_type>/<s:node_id>/xy f:x f:y (projected position on xy plane)
- * /spatosc/core/<s:node_type>/<s:node_id>/delay f:delay_ms
- * /spatosc/core/<s:node_type>/<s:node_id>/gain f:gain
- * /spatosc/core/<s:node_type>/<s:node_id>/gainDB f:gain_DB
- * /spatosc/core/<s:node_type>/<s:node_id>/spread f:spread
- * /spatosc/core/<s:node_type>/<s:node_id>/spreadAE f:azim_spread f:elev_spread
+ * /spatosc/core/<s:receiver_type>/<s:node_id>/xyz f:x f:y f:z
+ * /spatosc/core/<s:receiver_type>/<s:node_id>/xy f:x f:y (projected position on xy plane)
+ * /spatosc/core/<s:receiver_type>/<s:node_id>/spread f:spread
+ * /spatosc/core/<s:receiver_type>/<s:node_id>/spreadAE f:azim_spread f:elev_spread
+ * /spatosc/core/connection/<s:connection_id>/aed f:azimuth f:elevation f:distance_meters
+ * /spatosc/core/connection/<s:connection_id>/delay f:delay_ms
+ * /spatosc/core/connection/<s:connection_id>/gain f:gain
+ * /spatosc/core/connection/<s:connection_id>/gainDB f:gain_DB
+ * /spatosc/core/scene/create_source s:id
+ * /spatosc/core/scene/create_listener s:id
 
  The geotransform extension allows clients to specify a coordinate space transformation to be done on 
  the rendering side. For example, if a client want all of its coordinates to be shifted 5 units up in y,
