@@ -67,5 +67,15 @@ int main()
         std::cerr << "Unexpected listener position " << pos << std::endl;
         return 1;
     }
+
+    // test that we can create nodes over OSC
+    sender.sendMessage("/spatosc/core/scene/create_source", "s", "foo", LO_ARGS_END);
+    sender.sendMessage("/spatosc/core/scene/create_listener", "s", "bar", LO_ARGS_END);
+    scene.poll();
+    if (scene.getNode("foo") == 0 || scene.getNode("bar") == 0)
+    {
+        std::cerr << "FAIL: Was not able to create nodes over OSC" << std::endl;
+        return 1;
+    }
     return 0;
 }
