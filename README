@@ -41,5 +41,4 @@ On GNU/Linux, you need to install the following software:
 On Mac OS X, you should use MacPorts. Next, install liblo:
  $ sudo port install liblo +universal
 
-On Windows, you must install MinGW and MSYS. Next, build liblo.
-We didn't go to go further yet.
+On Windows, you must follow the instructions in the build directory.
