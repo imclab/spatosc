@@ -27,6 +27,9 @@
 
 /**
  * @namespace spatosc
+ *
+ * C++ library to communicate with various 3D audio spatializers.
+ * 
  * The whole library is within this single namespace.
  */
 

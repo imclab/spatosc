@@ -1,4 +1,4 @@
-Spatosc is a C/C++ library that facilitates communication with various 3D audio spatializers.
+Spatosc is a C++ library useful to communicate with various 3D audio spatializers.
 
 Support is planned for:
  * Zirkonium         http://ima.zkm.de/~cramakri/zirkonium
