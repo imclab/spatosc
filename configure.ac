@@ -74,7 +74,6 @@ case "$host" in *-darwin* | *-macos10*)
     CXXFLAGS+=" -I/sw/include"
     #LDFLAGS+=" -L/sw/lib"
   fi
-  #TODO: is this going to mess up with GNU/Linux systems?
   # OSX does not include /usr/local/lib/pkgconfig path, so we export it here
   # (for everyone, just in case)
   PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
@@ -85,7 +84,6 @@ esac
 
 #CXXFLAGS+=" -g3 -ggdb -Wall -Wextra -Wfatal-errors"
 CXXFLAGS+=" -Wall -Wextra -Wfatal-errors -Werror -Wnon-virtual-dtor -pedantic "
-# FIXME:2011-01-26: That one is for Mac OSX only, right?
 
 #Set LIBLO with pkg-config
 PKG_CHECK_MODULES(LIBLO, liblo, have_liblo=true, have_liblo=false)
@@ -98,11 +96,12 @@ fi
 # However, this means invoking executables, which we generally cannot do
 # when cross-compiling, so we test to avoid that (the variable
 # "cross_compiling" is set by AC_PROG_CC).
-if test $cross_compiling = no; then
-    AM_MISSING_PROG(HELP2MAN, help2man)
-else
-    HELP2MAN=:
-fi
+dnl (not used right now)
+dnl if test $cross_compiling = no; then
+dnl     AM_MISSING_PROG(HELP2MAN, help2man)
+dnl else
+dnl     HELP2MAN=:
+dnl fi
 
 # Override the template file name of the generated .pc file, so that there
 # is no need to rename the template file when the API version changes.
@@ -118,3 +117,4 @@ AC_CONFIG_FILES([
         ])
 
 AC_OUTPUT
+

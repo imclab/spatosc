@@ -24,6 +24,7 @@ A stable series means that the command-line options and the interactive keyboard
 
 In contrast, unstable branches consist of tags which are developer snapshots. They are not expected to be compatible with any other version. Some features might change between different stable branches.
 
+
 Installing
 ----------
 
@@ -42,3 +43,12 @@ On Mac OS X, you should use MacPorts. Next, install liblo:
  $ sudo port install liblo +universal
 
 On Windows, you must follow the instructions in the build directory.
+
+
+Documentation
+-------------
+
+We use Doxygen to build the HTML documentation. To build it, install doxygen and type:
+
+ $ make html
+
