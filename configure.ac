@@ -13,8 +13,11 @@ AC_CANONICAL_HOST # fills $host variable
 # For information on how to properly maintain the library version information,
 # refer to the libtool manual, section "Updating library version information":
 # http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
+# see http://sourceware.org/autobook/autobook/autobook_91.html
+# format is [current:revision:age]
+AC_SUBST([SPATOSC_SO_VERSION], [0:0:0])
+
 # The version of the API. Should be major.minor and not change until not backward-compatible
-AC_SUBST([SPATOSC_SO_VERSION], [0:1:1])
 AC_SUBST([SPATOSC_API_VERSION], [0.1])
 
 # Checks for programs.
