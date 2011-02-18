@@ -7,15 +7,20 @@ AC_MSG_NOTICE([Configuring spatosc])
 AM_INIT_AUTOMAKE([subdir-objects -Wno-portability])
 AC_CONFIG_HEADERS([include/config.h])
 AC_CANONICAL_HOST # fills $host variable
-# AC_CONFIG_MACRO_DIR([m4])
 
 # Define these substitions here to keep all version information in one place.
 # For information on how to properly maintain the library version information,
 # refer to the libtool manual, section "Updating library version information":
 # http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
 # The version of the API. Should be major.minor and not change until not backward-compatible
-AC_SUBST([SPATOSC_SO_VERSION], [0:1:1])
 AC_SUBST([SPATOSC_API_VERSION], [0.1])
+
+# libtool versioning is different than the project's versioning. It's for the ABI and API.
+# It's in the form "current:revision:age" where:
+#  * current: Increment when the interface changes. (and set revision to 0)
+#  * revision: Increment when the implementation changes, but not the interface.
+#  * age: Backward-compatible with how many interface numbers.
+AC_SUBST([SPATOSC_SO_VERSION], [0:1:0])
 
 # Checks for programs.
 AC_PROG_CXX
