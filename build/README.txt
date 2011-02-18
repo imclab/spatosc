@@ -1,6 +1,8 @@
 This directory contains tools to build spatosc on with Visual Studio Microsoft Windows.
 
 Here is how to do this.
+ 
+ * Download premake4.exe from http://industriousone.com/premake/download and put it in this directory.
 
  * Install the pthreads-win32 library using the exe installer.
 
@@ -27,4 +29,3 @@ Here is how to do this.
  * Build the library (press F5)
 
 See http://industriousone.com/premake for more info on how to use Premake.
-
