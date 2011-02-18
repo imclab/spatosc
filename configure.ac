@@ -14,17 +14,15 @@ AC_CANONICAL_HOST # fills $host variable
 # http://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
 # see http://sourceware.org/autobook/autobook/autobook_91.html
 # format is [current:revision:age]
-AC_SUBST([SPATOSC_SO_VERSION], [0:0:0])
-
-# The version of the API. Should be major.minor and not change until not backward-compatible
-AC_SUBST([SPATOSC_API_VERSION], [0.1])
-
 # libtool versioning is different than the project's versioning. It's for the ABI and API.
 # It's in the form "current:revision:age" where:
 #  * current: Increment when the interface changes. (and set revision to 0)
 #  * revision: Increment when the implementation changes, but not the interface.
 #  * age: Backward-compatible with how many interface numbers.
-AC_SUBST([SPATOSC_SO_VERSION], [0:1:0])
+AC_SUBST([SPATOSC_SO_VERSION], [0:0:0])
+
+# The version of the API. Should be major.minor and not change until not backward-compatible
+AC_SUBST([SPATOSC_API_VERSION], [0.1])
 
 # Checks for programs.
 AC_PROG_CXX
