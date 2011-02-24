@@ -162,7 +162,7 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv)
     else
     {
         // delegate to derived classes
-        if (not handleMessage_(method, argc, argv))
+        if (!handleMessage_(method, argc, argv))
             std::cerr << "Unknown method " << method << std::endl;
     }
 }

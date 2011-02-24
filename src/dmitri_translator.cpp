@@ -31,7 +31,8 @@ namespace spatosc
 
 const char *DmitriTranslator::DEFAULT_SEND_PORT = "18033";
 const char *DmitriTranslator::DEFAULT_RECEIVER_PORT = "18099";
-const double DmitriTranslator::SPACEMAP_RADIUS = 750.0;
+const double DmitriTranslator::SPACEMAP_EQUATOR_RADIUS = 700.0;
+const double DmitriTranslator::SPACEMAP_POLE_RADIUS = 1000.0;
 
 // ************************************************
 // FIXME: Wed Jan 19 14:12:24 EST 2011: tmatth
@@ -76,9 +77,19 @@ void DmitriTranslator::pushOSCMessages(Connection *conn)
 
     if (src->sendNewPosition())
     {
-        float r = conn->elevation() / (M_PI / 2);
-        float spacemapX = cos(conn->azimuth()) * r * SPACEMAP_RADIUS;
-        float spacemapY = sin(conn->azimuth()) * r * SPACEMAP_RADIUS;
+        float r = 1.0 - fabs( conn->elevation() / (M_PI/2) );
+        float spacemapX, spacemapY;
+        if (conn->elevation() >= 0)
+        {
+            spacemapX = -sin(conn->azimuth()) * r * SPACEMAP_EQUATOR_RADIUS;
+            spacemapY =  cos(conn->azimuth()) * r * SPACEMAP_EQUATOR_RADIUS;
+        } else {
+            spacemapX = -sin(conn->azimuth()) * (SPACEMAP_EQUATOR_RADIUS + ((1-r) * (SPACEMAP_POLE_RADIUS-SPACEMAP_EQUATOR_RADIUS)));
+            spacemapY =  cos(conn->azimuth()) * (SPACEMAP_EQUATOR_RADIUS + ((1-r) * (SPACEMAP_POLE_RADIUS-SPACEMAP_EQUATOR_RADIUS)));
+        }
+
+        //std::cout << "azim="<<conn->azimuth()<<" elev="<<conn->elevation()<<" r="<<r<<std::endl;
+        //std::cout << "Sending spacemap: " << spacemapX << "," << spacemapY << std::endl;
 
         str = "/spacemap/" + src->getID() + "/x";
         //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);

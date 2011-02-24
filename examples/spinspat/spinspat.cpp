@@ -70,7 +70,14 @@ int node_callback(const char *path, const char *types, lo_arg **argv, int argc, 
                 stringArgs.push_back( (const char*) argv[i] );
             }
         }
-	
+
+    	if ((method=="global6DOF") && (floatArgs.size()==6))
+    	{
+    		node->setPosition(floatArgs[0], floatArgs[1], floatArgs[2]);
+    		node->setOrientation(floatArgs[3], floatArgs[4], floatArgs[5]);
+    	}
+
+        /*
     	if ((method=="setTranslation") && (floatArgs.size()==3))
     	{
     		node->setPosition(floatArgs[0], floatArgs[1], floatArgs[2]);
@@ -79,6 +86,7 @@ int node_callback(const char *path, const char *types, lo_arg **argv, int argc, 
     	{
     		node->setOrientation(floatArgs[0], floatArgs[1], floatArgs[2]);
     	}
+        */
     }
 
     return 1;
@@ -91,6 +99,8 @@ int main(int argc, char **argv)
 	std::cout << "spinspat launching ..." << std::endl;
 
 	double maxFrameRate = 60;
+    bool dmitri = false;
+    std::string remoteIP = "127.0.0.1";
 
 	// *************************************************************************
 	// set up SPIN:
@@ -117,6 +127,8 @@ int main(int argc, char **argv)
 	arguments.getApplicationUsage()->setCommandLineUsage(arguments.getApplicationName()+" [options]");
 	arguments.getApplicationUsage()->addCommandLineOption("-h or --help", "Display this information");
 	arguments.getApplicationUsage()->addCommandLineOption("--scene-id <uniqueID>", "Specify the scene ID to listen to (Default: '" + sceneID + "')");
+	arguments.getApplicationUsage()->addCommandLineOption("--remote-ip <IP address>", "Specify the remote IP address of the spatializer (Default: '" + remoteIP + "')");
+	arguments.getApplicationUsage()->addCommandLineOption("--dmitri <IP address>", "Use the D-Mitri translator and send messages to the specified DCP address (requires a properly configured spacemap and OSC mapping control defined in CueStation");
 
 	if (arguments.read("-h") || arguments.read("--help"))
 	{
@@ -128,6 +140,8 @@ int main(int argc, char **argv)
 	arguments.read("--scene-id", param_spinID);
 	spin.setSceneID(sceneID);
 
+	osg::ArgumentParser::Parameter param_dmitri(remoteIP);
+	if (arguments.read("--dmitri", param_dmitri)) dmitri = true;
 
 	// *************************************************************************
 	// add extra handlers for spatosc:
@@ -179,9 +193,17 @@ int main(int argc, char **argv)
 	// *************************************************************************
 	// create test scene:
 
-	//audioScene_.setSynchronous(false); // we will need to call flushMessages() once in a while
-	audioScene_.setTranslator<spatosc::SpatdifTranslator>("127.0.0.1", spatosc::SpatdifTranslator::DEFAULT_SEND_PORT);
-	//audioScene_.rotate(90.0, 0.0, 0.0);
+    if (dmitri)
+    {
+	    audioScene_.setTranslator<spatosc::DmitriTranslator>(remoteIP.c_str(), spatosc::DmitriTranslator::DEFAULT_SEND_PORT, spatosc::DmitriTranslator::DEFAULT_RECEIVER_PORT);
+    }
+    else {
+        //audioScene_.setSynchronous(false); // we will need to call flushMessages() once in a while
+        audioScene_.setTranslator<spatosc::SpatdifTranslator>(remoteIP.c_str(), spatosc::SpatdifTranslator::DEFAULT_SEND_PORT);
+    }
+
+    
+    //audioScene_.rotate(90.0, 0.0, 0.0);
 	audioScene_.createSoundSource("Source01");
 	audioScene_.createSoundSource("Source02");
 	audioScene_.createListener("Listener");
@@ -199,7 +221,12 @@ int main(int argc, char **argv)
 
 	usleep(500); // add a delay to make sure node is created
 
-	spin.NodeMessage("Source01", "si",   "setShape", (int)ShapeNode::SPHERE, LO_ARGS_END);
+    // important: need to setReportMode so that 6DOF messages are received
+	spin.NodeMessage("Source01", "si",   "setReportMode", (int)GroupNode::GLOBAL_6DOF, LO_ARGS_END);
+	spin.NodeMessage("Source02", "si",   "setReportMode", (int)GroupNode::GLOBAL_6DOF, LO_ARGS_END);
+	
+    
+    spin.NodeMessage("Source01", "si",   "setShape", (int)ShapeNode::SPHERE, LO_ARGS_END);
 	spin.NodeMessage("Source01", "si",   "setInteractionMode", (int)GroupNode::DRAG, LO_ARGS_END);
 	spin.NodeMessage("Source01", "sfff", "setTranslation", 0.0, 2.0, 0.0, LO_ARGS_END);
 	spin.NodeMessage("Source01", "sfff", "setScale", 0.2, 0.2, 0.2, LO_ARGS_END);

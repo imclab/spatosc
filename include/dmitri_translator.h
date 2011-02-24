@@ -46,7 +46,8 @@ public:
     static const char *DEFAULT_RECEIVER_PORT;
 
 private:
-    static const double SPACEMAP_RADIUS;
+    static const double SPACEMAP_EQUATOR_RADIUS;
+    static const double SPACEMAP_POLE_RADIUS;
     std::tr1::shared_ptr<OscSender> sender_;
     // not implemented
     DmitriTranslator(const DmitriTranslator&);
