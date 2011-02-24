@@ -450,25 +450,25 @@ void Scene::onTransformChanged()
         (*iter)->recomputeConnection();
 }
         
-void Scene::translate(double tx, double ty, double tz)
+void Scene::setTranslation(double tx, double ty, double tz)
 {
     transform_->translate(tx, ty, tz);
     onTransformChanged();
 }
 
-void Scene::rotate(double pitch, double roll, double yaw)
+void Scene::setOrientation(double pitch, double roll, double yaw)
 {
     transform_->rotate(pitch, roll, yaw);
     onTransformChanged();
 }
 
-void Scene::rotate(double x, double y, double z, double w)
+void Scene::setOrientation(double x, double y, double z, double w)
 {
     transform_->rotate(x, y, z, w);
     onTransformChanged();
 }
 
-void Scene::scale(double sx, double sy, double sz)
+void Scene::setScale(double sx, double sy, double sz)
 {
     transform_->scale(sx, sy, sz);
     onTransformChanged();

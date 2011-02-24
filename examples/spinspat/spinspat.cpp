@@ -203,7 +203,7 @@ int main(int argc, char **argv)
     }
 
     
-    //audioScene_.rotate(90.0, 0.0, 0.0);
+    //audioScene_.setOrientation(90.0, 0.0, 0.0);
 	audioScene_.createSoundSource("Source01");
 	audioScene_.createSoundSource("Source02");
 	audioScene_.createListener("Listener");

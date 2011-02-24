@@ -40,7 +40,7 @@ bool check_translation()
     double offset = 1.0;
 
     // translate by offset in x, y and z;
-    scene.translate(offset, offset, offset);
+    scene.setTranslation(offset, offset, offset);
 
     // now set the position and make sure it's been offset
     node->setPosition(x, y, z);
@@ -63,7 +63,7 @@ bool check_rotation()
     double rotatedY = -1.5;
     double rotatedZ = 1.5;
 
-    scene.rotate(pitch, roll, yaw);
+    scene.setOrientation(pitch, roll, yaw);
 
     // now set the position and make sure it's been offset
     node->setPosition(x, y, z);
@@ -90,7 +90,7 @@ bool check_scaling()
     double scaling = 2.0;
 
     // translate by offset in x, y and z;
-    scene.scale(scaling, scaling, scaling);
+    scene.setScale(scaling, scaling, scaling);
 
     // now set the position and make sure it's been offset
     node->setPosition(x, y, z);
@@ -113,7 +113,7 @@ bool check_late_transformation()
     node->setPosition(x, y, z);
 
     // translate by offset in x, y and z;
-    scene.scale(scaling, scaling, scaling);
+    scene.setScale(scaling, scaling, scaling);
 
     if (node->getPosition().x != x * scaling || node->getPosition().y != y * scaling || node->getPosition().z != z * scaling)
         return false;

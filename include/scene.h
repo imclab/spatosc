@@ -54,10 +54,10 @@ class Scene
         void applyTransformation(double &x, double &y, double &z) const;
         
         // these are called by clients
-        void translate(double tx, double ty, double tz);
-        void rotate(double pitch, double roll, double yaw);
-        void rotate(double x, double y, double z, double w);
-        void scale(double sx, double sy, double sz);
+        void setTranslation(double tx, double ty, double tz);
+        void setOrientation(double pitch, double roll, double yaw);
+        void setOrientation(double x, double y, double z, double w);
+        void setScale(double sx, double sy, double sz);
         
         // FIXME: Thu Feb  3 12:33:48 EST 2011 : tmatth: this only belongs in osc_scene
         virtual void unsubscribe(Node * /*node*/) {};
