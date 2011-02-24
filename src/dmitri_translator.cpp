@@ -99,7 +99,7 @@ void DmitriTranslator::pushOSCMessages(Connection *conn)
         //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
         sender_->sendMessage(str.c_str(), "f", spacemapY, SPATOSC_ARGS_END);
 
-        str = "Input " + src->getID() + " Level";
+        str = "Bus " + src->getID() + " Level";
         //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
         sender_->sendMessage("/set", "sf", str.c_str(), conn->gainDB(), SPATOSC_ARGS_END);
         src->positionSent();
