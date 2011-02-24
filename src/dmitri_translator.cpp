@@ -106,5 +106,10 @@ void DmitriTranslator::pushOSCMessages(Connection *conn)
     }
 }
 
+OscSender &DmitriTranslator::getSender() const
+{
+    return *sender_;
+}
+
 } // end namespace spatosc
 

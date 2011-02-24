@@ -44,6 +44,7 @@ public:
     virtual void pushOSCMessages(Connection *conn);
     static const char *DEFAULT_SEND_PORT;
     static const char *DEFAULT_RECEIVER_PORT;
+    OscSender &getSender() const;
 
 private:
     static const double SPACEMAP_EQUATOR_RADIUS;
