@@ -34,6 +34,8 @@ This library uses the GNU Autotools. It should be easy to build and install it l
  $ make
  $ sudo make install
 
+NOTE: If building from a git checkout, you should run ./autogen.sh first.
+
 On GNU/Linux, you need to install the following software: 
  * The GNU Autotools
  * liblo-dev
