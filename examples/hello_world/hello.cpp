@@ -30,39 +30,28 @@ int main(int /*argc*/, char ** /*argv*/)
     using namespace spatosc;
     if (VERBOSE)
         std::cout << "\nRunning spatoscTest ...\n" << std::endl;
-    
+
+    // The spatosc library provides an API structured around one scene class
+    // which  maintains lists of listeners and sound
+    // sources, and provides methods to get and create instances of these items.
+
     // create the scene
     Scene scene;
 
     // set verbosity of info messages:
     scene.setVerbose(VERBOSE);
 
-    // The spatosc library provides an API structured around one singleton class
-    // called Scene. This class maintains lists of listeners and sound
-    // sources, and provides methods to get and create instances of these items.
-
-
     // Each scene needs to have at least one Listener:
-    //Listener *listener = scene.createListener("listener");
-
-    // A variable number of SoundSource instances can then be generated. Note
-    // that a bus number must be assigned to each source in order to render in
-    // D-Mitri. Setting the bus to -1 will effectively disable computation for
-    // that node:
     scene.createListener("listener");
+
+    // A variable number of SoundSource instances can then be generated.
     SoundSource *foo = scene.createSoundSource("foo");
     SoundSource *bar = scene.createSoundSource("bar");
 
     // In order to send OSC, some output plugin must be specified. In this case,
-    // we choose D-Mitri, and provide the IP address of the server on the
-    // control network. Note that D-Mitri uses 2 interfaces, a control network
-    // (typically IPv4) and an audio network (AVB):
-    //scene.setTranslator<DmitriTranslator>("127.0.0.1");
-    
-    
+    // we choose the SpatdifTranslator, which can be rendered, for example, by
+    // the pd-vbap example
     scene.setTranslator<SpatdifTranslator>("127.0.0.1", "9999");
-
-
 
     // The Scene class can print out everything to the console:
     if (VERBOSE)
