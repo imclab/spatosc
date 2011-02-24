@@ -98,7 +98,9 @@ class Wrapper
          * @param translatorName Must be the name of a valid child of the Translator class.
          * @return Success or not.
         */
-        bool setTranslator(const std::string &translatorName, const std::string &sendToAddress, const std::string &port);
+        bool addTranslator(const std::string &name, const std::string &translatorName, const std::string &sendToAddress, const std::string &port);
+
+        bool removeTranslator(const std::string &name);
         /**
          * @warning Not implemented.
          * @return Success or not.

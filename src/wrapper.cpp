@@ -177,20 +177,25 @@ void Wrapper::scale(double sx, double sy, double sz)
     scene_->scale(sx, sy, sz);
 }
 
-bool Wrapper::setTranslator(const std::string &translatorName, const std::string &sendToAddress, const std::string &port)
+bool Wrapper::addTranslator(const std::string &name, const std::string &translatorName, const std::string &sendToAddress, const std::string &port)
 {
-    if (translatorName == "SpatdifTranslator")
-        scene_->setTranslator<SpatdifTranslator>(sendToAddress, port);
+    if (translatorName == "spatdiftranslator")
+        return scene_->addTranslator<SpatdifTranslator>(name, sendToAddress, port);
     else if (translatorName == "DmitriTranslator")
-        scene_->setTranslator<DmitriTranslator>(sendToAddress, port);
+        return scene_->addTranslator<DmitriTranslator>(name, sendToAddress, port);
     else if (translatorName == "ConsoleTranslator")
-        scene_->setTranslator<ConsoleTranslator>(sendToAddress, port);
+        return scene_->addTranslator<ConsoleTranslator>(name, sendToAddress, port);
     else
     {
         std::cerr << "No such translator: " << translatorName << std::endl;
         return false;
     }
     return true;
+}
+
+bool Wrapper::removeTranslator(const std::string &name)
+{
+    return scene_->removeTranslator(name);
 }
 
 } // end of namespace spatosc

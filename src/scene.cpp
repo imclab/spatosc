@@ -70,7 +70,7 @@ static bool nodeSortFunction (Node *n1, Node *n2)
 Scene::Scene() :
     connectRegex_(new Scene::RegexHandle),
     transform_(new GeoTransform),
-    translator_(new Translator(false)),
+    translators_(),
     autoConnect_(true),
     connectFilter_(),
     listeners_(),
@@ -365,10 +365,13 @@ void Scene::onConnectionChanged(Connection *conn)
     // has just happened)
     if (conn->active())
     {
-        assert(translator_);
         conn->recomputeConnection();
         if (synchronous_)
-            translator_->pushOSCMessages(conn);
+        {
+            std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
+            for (iter = translators_.begin(); iter != translators_.end(); iter++)
+                iter->second->pushOSCMessages(conn);
+        }
     }
 }
 
@@ -386,7 +389,11 @@ bool Scene::flushMessages()
         {
             Connection* conn = (*iter).get();
             if (conn->active())
-                translator_->pushOSCMessages(conn);
+            {
+                std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
+                for (iter = translators_.begin(); iter != translators_.end(); iter++)
+                    iter->second->pushOSCMessages(conn);
+            }
         }
         return true;
     }
