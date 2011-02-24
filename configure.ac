@@ -92,7 +92,7 @@ case "$host" in *-darwin* | *-macos10*)
 esac
 
 #CXXFLAGS+=" -g3 -ggdb -Wall -Wextra -Wfatal-errors"
-CXXFLAGS+=" -Wall -Wextra -Wfatal-errors -Werror -Wnon-virtual-dtor -pedantic "
+CXXFLAGS+=" -Wall -Wextra -Wfatal-errors -Werror -Wnon-virtual-dtor "
 
 #Set LIBLO with pkg-config
 PKG_CHECK_MODULES(LIBLO, liblo, have_liblo=true, have_liblo=false)

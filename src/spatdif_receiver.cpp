@@ -121,7 +121,7 @@ int SpatdifReceiver::onNodeMessage(const char * path, const char * /*types*/,
     std::string id(getID(path));
 
     // then check that 2nd last path component matches source->getID() or wildcard
-    if (id != node->getID() and id != "*")
+    if (id != node->getID() && id != "*")
         return 1;
 
     // then get method name:
