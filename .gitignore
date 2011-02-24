@@ -61,3 +61,4 @@ m4/lt~obsolete.m4
 *.pd_linux
 doxyfile.stamp
 man/
+examples/pd-external/run
