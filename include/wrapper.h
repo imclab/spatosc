@@ -106,10 +106,10 @@ class Wrapper
         bool setTranslatorProperty(const std::string &key, const std::string &value);
         
         // these are called by clients
-        void translate(double tx, double ty, double tz);
-        void rotate(double pitch, double roll, double yaw);
-        void rotate(double x, double y, double z, double w);
-        void scale(double sx, double sy, double sz);
+        void setTranslation(double tx, double ty, double tz);
+        void setOrientation(double pitch, double roll, double yaw);
+        void setOrientation(double x, double y, double z, double w);
+        void setScale(double sx, double sy, double sz);
     private:
         std::tr1::shared_ptr<Scene> scene_;
 };
