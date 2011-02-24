@@ -195,11 +195,11 @@ int main(int argc, char **argv)
 
     if (dmitri)
     {
-	    audioScene_.setTranslator<spatosc::DmitriTranslator>(remoteIP.c_str(), spatosc::DmitriTranslator::DEFAULT_SEND_PORT, spatosc::DmitriTranslator::DEFAULT_RECEIVER_PORT);
+	    audioScene_.addTranslator<spatosc::DmitriTranslator>("dmitri", remoteIP.c_str(), spatosc::DmitriTranslator::DEFAULT_SEND_PORT, spatosc::DmitriTranslator::DEFAULT_RECEIVER_PORT);
     }
     else {
         //audioScene_.setSynchronous(false); // we will need to call flushMessages() once in a while
-        audioScene_.setTranslator<spatosc::SpatdifTranslator>(remoteIP.c_str(), spatosc::SpatdifTranslator::DEFAULT_SEND_PORT);
+        audioScene_.addTranslator<spatosc::SpatdifTranslator>("spatdif", remoteIP.c_str(), spatosc::SpatdifTranslator::DEFAULT_SEND_PORT);
     }
 
     

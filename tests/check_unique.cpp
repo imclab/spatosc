@@ -65,6 +65,42 @@ bool test_unique_mixed_node_types()
     return true;
 }
 
+bool test_multiple_translators()
+{
+    Scene scene;
+    if (! scene.addTranslator<ConsoleTranslator>("default"))
+    {
+        std::cout << "FAIL: could not add a first translator." << std::endl;
+        return false;
+    }
+    if (scene.addTranslator<ConsoleTranslator>("default"))
+    {
+        std::cout << "FAIL: could add a second translator with same name." << std::endl;
+        return false;
+    }
+    if (! scene.hasTranslator("default"))
+    {
+        std::cout << "FAIL: could not find translator." << std::endl;
+        return false;
+    }
+    if (! scene.removeTranslator("default"))
+    {
+        std::cout << "FAIL: could not remove translator." << std::endl;
+        return false;
+    }
+    if (scene.removeTranslator("default"))
+    {
+        std::cout << "FAIL: could remove translator twice." << std::endl;
+        return false;
+    }
+    if (scene.hasTranslator("default"))
+    {
+        std::cout << "FAIL: still has translator." << std::endl;
+        return false;
+    }
+    return true;
+}
+
 int main(int /*argc*/, char ** /*argv*/)
 {
     if (! test_unique_listener())

@@ -51,7 +51,7 @@ int main(int /*argc*/, char ** /*argv*/)
     // In order to send OSC, some output plugin must be specified. In this case,
     // we choose the SpatdifTranslator, which can be rendered, for example, by
     // the pd-vbap example
-    scene.setTranslator<SpatdifTranslator>("127.0.0.1", "9999");
+    scene.addTranslator<SpatdifTranslator>("spatdif", "127.0.0.1", "9999");
 
     // The Scene class can print out everything to the console:
     if (VERBOSE)

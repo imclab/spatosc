@@ -58,7 +58,7 @@ int main(int /*argc*/, char ** /*argv*/)
     if (VERBOSE)
         std::cout << std::endl << "Running test: check_azim_elev" << std::endl;
     Scene scene;
-    scene.setTranslator<DmitriTranslator>("127.0.0.1", DmitriTranslator::DEFAULT_SEND_PORT);
+    scene.addTranslator<DmitriTranslator>("dmitri", "127.0.0.1", DmitriTranslator::DEFAULT_SEND_PORT);
     SoundSource *source = scene.createSoundSource("source");
     Listener *listener = scene.createListener("listener");
     Connection *conn = scene.getConnection(source, listener);

@@ -53,7 +53,7 @@ bool test_async()
 {
     using namespace spatosc;
     Scene scene;
-    scene.setTranslator<DummyTranslator>("address", "port");
+    scene.addTranslator<DummyTranslator>("dummy", "address", "port");
     scene.setAutoConnect(false);
     scene.setSynchronous(false);
     SoundSource *source = scene.createSoundSource("source");

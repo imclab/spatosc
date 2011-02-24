@@ -26,6 +26,9 @@
 
 #include <string>
 #include <vector>
+#include <map>
+#include <iostream>
+#include <tr1/memory>
 #include "memory.h"
 #include "maths.h"
 
@@ -84,16 +87,43 @@ class Scene
          * Template method that sets the renderer plugin.
          *
          * The template argument must be a child of Translator.
+         * 
+         * Each translator must have an identifier, so that you can remove it later. You can have many translators for a single scene.
          * Here is an example:
          * \code
          * Scene scene();
-         * scene.setTranslator<SpatdifTranslator>("127.0.0.1", "11111");
+         * scene.addTranslator<SpatdifTranslator>("spatdif", "127.0.0.1", "11111");
          * \endcode
          */
         template <typename T>
-        void setTranslator(const std::string &address="", const std::string &port="", bool verbose = true)
+        bool addTranslator(const std::string &name, const std::string &address="", const std::string &port="", bool verbose = true)
         {
-            translator_.reset(new T(address, port, verbose));
+            if (hasTranslator(name))
+            {
+                std::cout << "Warning: There is already a translator named " << name << std::endl;
+                return false;
+            }
+            else
+            {
+                translators_[name] = std::tr1::shared_ptr<Translator>(new T(address, port, verbose));
+                return true;
+            }
+        }
+        
+        bool removeTranslator(const std::string &name)
+        {
+            if (hasTranslator(name))
+            {
+                translators_.erase(name);
+                return true;
+            }
+            else
+                return false;
+        }
+
+        bool hasTranslator(const std::string &name)
+        {
+            return translators_.find(name) != translators_.end();
         }
 
         /**
@@ -254,7 +284,7 @@ class Scene
         bool disconnectNodeConnections(const Node *node);
         void onTransformChanged();
 
-        std::tr1::shared_ptr<Translator> translator_;
+        std::map<std::string, std::tr1::shared_ptr<Translator> > translators_;
         bool autoConnect_;
         std::string connectFilter_;
 
