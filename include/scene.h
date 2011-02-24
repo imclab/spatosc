@@ -87,6 +87,8 @@ class Scene
          * Template method that sets the renderer plugin.
          *
          * The template argument must be a child of Translator.
+         * 
+         * Each translator must have an identifier, so that you can remove it later. You can have many translators for a single scene.
          * Here is an example:
          * \code
          * Scene scene();

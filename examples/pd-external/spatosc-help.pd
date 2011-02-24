@@ -9,7 +9,7 @@
 #X floatatom 307 76 5 0 0 0 - - -;
 #X floatatom 346 76 5 0 0 0 - - -;
 #X floatatom 385 76 5 0 0 0 - - -;
-#X msg 411 215 setTranslator SpatdifTranslator localhost 18032;
+#X msg 411 215 addTranslator SpatdifTranslator localhost 18032;
 #X text 34 -26 [spatosc] Creates a spatosc audio scene and allows one
 to create sound source nodes and listeners in a 3D virtual audio environment.
 ;

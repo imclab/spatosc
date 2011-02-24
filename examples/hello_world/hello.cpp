@@ -60,7 +60,7 @@ int main(int /*argc*/, char ** /*argv*/)
     //scene.setTranslator<DmitriTranslator>("127.0.0.1");
     
     
-    scene.setTranslator<SpatdifTranslator>("127.0.0.1", "9999");
+    scene.addTranslator<SpatdifTranslator>("spatdif", "127.0.0.1", "9999");
 
 
 

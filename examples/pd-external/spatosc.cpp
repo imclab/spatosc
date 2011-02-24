@@ -105,10 +105,10 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
     {
         post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
     }
-    bool success = x->wrapper.setTranslator(translatorName, sendToAddress, sendToPort);
+    bool success = x->wrapper.addTranslator("default", translatorName, sendToAddress, sendToPort);
     if (! success)
     {
-        post("[spatosc]: ERROR calling setTranslator from the constructor.");
+        post("[spatosc]: ERROR calling addTranslator from the constructor.");
     }
     
     // create outlets
@@ -138,7 +138,7 @@ static void spatosc_setConnectFilter(t_spatosc *x, t_symbol *filter);
 static void spatosc_setOrientation(t_spatosc *x, t_symbol *node, t_floatarg pitch, t_floatarg roll, t_floatarg yaw);
 static void spatosc_setPosition(t_spatosc *x, t_symbol *node, t_floatarg xPos, t_floatarg yPos, t_floatarg zPos);
 static void spatosc_setAutoConnect(t_spatosc *x, t_floatarg enabled);
-static void spatosc_setTranslator(t_spatosc *x, t_symbol *translator, t_symbol *host, t_floatarg port);
+static void spatosc_addTranslator(t_spatosc *x, t_symbol *translator, t_symbol *host, t_floatarg port);
 
 extern "C" void spatosc_setup(void)
 {
@@ -153,7 +153,7 @@ extern "C" void spatosc_setup(void)
 	class_addmethod(spatosc_class, (t_method) spatosc_setConnectFilter, gensym("setConnectFilter"), A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setOrientation, gensym("setOrientation"), A_SYMBOL, A_FLOAT, A_FLOAT, A_FLOAT, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setPosition, gensym("setPosition"), A_SYMBOL, A_FLOAT, A_FLOAT, A_FLOAT, 0);
-	class_addmethod(spatosc_class, (t_method) spatosc_setTranslator, gensym("setTranslator"), A_SYMBOL, A_SYMBOL, A_FLOAT, 0);
+	class_addmethod(spatosc_class, (t_method) spatosc_addTranslator, gensym("addTranslator"), A_SYMBOL, A_SYMBOL, A_FLOAT, 0);
     if (SPATOSC_DEBUG)
         post("[spatosc] loaded");
 }
@@ -210,7 +210,7 @@ static void spatosc_setAutoConnect(t_spatosc *x, t_floatarg enabled)
     output_success(x, x->wrapper.setAutoConnect(enabled != 0.0f));
 }
 
-static void spatosc_setTranslator(t_spatosc *x, t_symbol *translator, t_symbol *host, t_floatarg port)
+static void spatosc_addTranslator(t_spatosc *x, t_symbol *translator, t_symbol *host, t_floatarg port)
 {
     std::string translatorName = "ConsoleTranslator";
     std::string sendToAddress = "localhost";
@@ -234,5 +234,6 @@ static void spatosc_setTranslator(t_spatosc *x, t_symbol *translator, t_symbol *
         printf("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
         post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
     }
-    output_success(x, x->wrapper.setTranslator(translatorName, sendToAddress, sendToPort));
+    // FIXME: we can only have one translator right now. Could have any number of them.
+    output_success(x, x->wrapper.addTranslator("default", translatorName, sendToAddress, sendToPort));
 }
