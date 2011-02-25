@@ -23,7 +23,7 @@
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
 
-#ifdef _WIN32
+#ifdef WIN32
 #include <memory>
 #else
 #include <tr1/memory>
