@@ -46,6 +46,38 @@ public:
     void recomputeConnection();
 
     /**
+     * Sets the distance factor for this connection as a percentage, affecting
+     * the attenuation of gain with respect to distance. This is an exponential
+     * decay factor according to the formula:
+     *
+     * \verbatim
+     * gainScalar = 1 / (1 - (pow(distance,distanceFactor))
+     * \endverbatim
+     *
+     * Thus, a value of 0% means no gain attenuation, a factor of 100% results
+     * in linear gain (default), and 200% is the natural inverse square law.
+     */
+    void setDistanceFactor(double f);
+
+    /**
+     * Sets the doppler factor for this connection as a percentage. A value of
+     * 0% means no Doppler, a value of 100% provides realistic / natural delays
+     * according to the speed of sound. NOTE: it is possible to provide values
+     * above 100% to create a hyper-doppler effect (useful for dramatic effect).
+     */
+    void setDopplerFactor(double f);
+
+    /**
+     * Sets the rolloff factor for this connection as a percentage, affecting
+     * the attenuation of gain with respect to the angular rolloff from a the
+     * source orientation. A value of 05 means no gain attenuation, while 100%
+     * results in full attenuation according to the rolloff table.
+     *
+     * NOTE: ROLLOFFS NOT YET IMPLEMENTED
+     */
+    void setRolloffFactor(double f);
+
+    /**
      * Returns the distance between the source and sink nodes.
      *
      * A distance is always positive.
@@ -117,20 +149,12 @@ private:
     SoundSource *src_;
     Listener *snk_;
 	Vector3 aed_;
-	/*
-    double distance_;
-    double azim_;
-    double elev_;
-	*/
     double gain_;
     double gainDB_;
     double vdel_;
-//    FIXME:2010-01-15:aalex: Should thode effects be vector of shared_ptr to objects?
-    float distanceEffect_;
-    float rolloffEffect_;
-    float dopplerEffect_;
-    float diffractionEffect_;
-    // not implemented
+    float distanceFactor_;
+    float rolloffFactor_;
+    float dopplerFactor_;
     Connection(const Connection&);
     const Connection& operator=(const Connection&);
 };

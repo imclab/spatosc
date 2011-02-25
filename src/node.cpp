@@ -34,7 +34,7 @@ Node::Node(const std::string &nodeID, Scene &scene) :
     scene_(scene),
     orientation_(),
     active_(true),
-    sendNewPosition_(true),
+    nodeChanged_(true),
     pos_()
 {}
 
@@ -91,7 +91,7 @@ void Node::setOrientation(double pitch, double roll, double yaw)
 
 void Node::notifyScene()
 {
-    sendNewPosition_ = true;
+    nodeChanged_ = true;
     onNodeChanged(); // let subclasses decide what to do
 }
 

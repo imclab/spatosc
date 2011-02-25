@@ -34,10 +34,9 @@ Connection::Connection(SoundSource *source, Listener *sink) :
     gain_(0.0),
     gainDB_(0.0),
     vdel_(0.0),
-    distanceEffect_(100.0),
-    rolloffEffect_(100.0),
-    dopplerEffect_(100.0),
-    diffractionEffect_(100.0)
+    distanceFactor_(100.0),
+    rolloffFactor_(100.0),
+    dopplerFactor_(100.0)
 {
     // calculate and store distance, azimuth and elevation
     recomputeConnection();
@@ -67,9 +66,30 @@ void Connection::recomputeConnection()
 
 
     // now from distance, compute gain and variable delay:
-   	double distanceScalar = 1 / (1.0 + pow(distance(), static_cast<double>(distanceEffect_) * 0.01));
-    vdel_ = distance() * (1 / SPEED_OF_SOUND) * .01 * dopplerEffect_;
+   	double distanceScalar = 1 / (1.0 + pow(distance(), static_cast<double>(distanceFactor_) * 0.01));
+    vdel_ = distance() * (1 / SPEED_OF_SOUND) * .01 * dopplerFactor_;
     gainDB_ = 20 * log10(distanceScalar);
+}
+
+void Connection::setDistanceFactor(double f)
+{
+	if (f<0) f = 0.0;
+	distanceFactor_ = f;
+	recomputeConnection();
+}
+
+void Connection::setDopplerFactor(double f)
+{
+	if (f<0) f = 0.0;
+	dopplerFactor_ = f;
+	recomputeConnection();
+}
+
+void Connection::setRolloffFactor(double f)
+{
+	if (f<0) f = 0.0;
+	rolloffFactor_ = f;
+	recomputeConnection();
 }
 
 bool Connection::active() const
@@ -80,10 +100,13 @@ bool Connection::active() const
 void Connection::debugPrint() const
 {
     std::cout << "  Connection " << id_ << ":" << std::endl;
-    std::cout << "    distanceEffect:\t" << distanceEffect_ << "%" << std::endl;
-    std::cout << "    rolloffEffect:\t" << rolloffEffect_ << "%" << std::endl;
-    std::cout << "    dopplerEffect:\t" << dopplerEffect_ << "%" << std::endl;
-    std::cout << "    diffractionEffect:\t" << diffractionEffect_ << "%" << std::endl;
+    std::cout << "    azim,elev:\t" << aed_.x*TO_DEGREES <<","<< aed_.y*TO_DEGREES << std::endl;
+    std::cout << "    distance:\t" << aed_.z << std::endl;
+    std::cout << "    gain:\t" << gainDB_ << "dB" << std::endl;
+    std::cout << "    delay:\t" << vdel_ << "ms" << std::endl;
+    std::cout << "    distanceFactor:\t" << distanceFactor_ << "%" << std::endl;
+    std::cout << "    rolloffFactor:\t" << rolloffFactor_ << "%" << std::endl;
+    std::cout << "    dopplerFactor:\t" << dopplerFactor_ << "%" << std::endl;
 }
 
 void Connection::handleMessage(const std::string &method, int argc, lo_arg **argv)
