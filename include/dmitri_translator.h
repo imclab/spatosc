@@ -33,21 +33,82 @@ class OscSender;
 class Connection;
 
 /**
- * Translator for the proprietary D-Mitri system.
- * Note that nodes need a positive channel ID. If not set, their coordinates will not be sent to D-Mitri.
+ * Translator for the proprietary D-Mitri system from Meyer Sound
+ * (http://www.meyersound.com), and works in conjunction with a spacemap defined
+ * in the CueStation software.
+ *
+ * This translator requires the following configuration in CueStation:
+ *
+ * 1) You must define a spacemap that performs spherical panning of audio. The
+ *    The assumption is that the sphere is viewed from the center, looking up,
+ *    and is projected on a plane. The lower hemisphere is unfolded and mapped
+ *    along the outside of the resuling circular projection. Positive elevations
+ *    result in spacemap positions ranging from (0,0) to SPACEMAP_EQUATOR_RADIUS
+ *    and ngative elevations range from the SPACEMAP_EQUATOR_RADIUS to the
+ *    SPACEMAP_POLE_RADUIS.
+ *
+ *    Examples:
+ *    -> a sound source in front (0,1,0) will have
+ *       a spacemap position of: (0,-SPACEMAP_EQUATOR_RADIUS)
+ *    -> a sound source above (0,0,1) will have
+ *       a spacemap position of: (0,0)
+ *
+ * 2) You must create an OSC Map Command that takes a spacemap message with two
+ *    floats and sends to the control points for the X and Y position on the
+ *    spacemap.
+
+ *    See below for a screenshot of the OSC Map Command
+ *    \image html doc/images/CueStation_OSC_map_command.png
+ *
+ *    NOTE: it is possible to send an OSC message directly to the
+ *    spacemap, but you need to send a 'P' type, which is non-standard, not
+ *    included in any OSC library, and proprietary to Meyer. There is a request
+ *    to change this (Fogbugz #6798), which will remove this requirement in the
+ *    future.
+ *
+ *
  */
 class DmitriTranslator : public Translator
 {
 public:
     DmitriTranslator(const std::string &ip, const std::string &toPort, const std::string &fromPort, bool verbose);
     DmitriTranslator(const std::string &ip, const std::string &toPort, bool verbose);
+
+    /**
+     * This is where we customize messages for D-Mitri's OSC protocol.
+     */
     virtual void pushOSCMessages(Connection *conn);
+
+    /**
+     * The DEFAULT_SEND_PORT should always be 18033 (as of CueStation 5.0)
+     */
     static const char *DEFAULT_SEND_PORT;
+
+    /**
+     * The DEFAULT_RECEIVER_PORT is specified in CueStation when defining an
+     * OSC Map Command. Only messages from this outgoing port will be accepted.
+     */
     static const char *DEFAULT_RECEIVER_PORT;
+
+    /**
+     * Gets the OscSender object so that you can send arbitrary commands to the
+     * D-Mitri input socket. For example, you could send
+     * \verbatim /set "Input 1 Level" 40 \endverbatim
+     * to set an input level (independent of the Bus level that is controlled by
+     * SpatOSC).
+     */
     OscSender &getSender() const;
 
+    /**
+     * Set the equator radius in the spacemap.
+     *
+     * NOTE: You must call scene::pushOSCMessagesForTranslator with force=true
+     * to ensure that all nodes are properly updated afterwards
+     */
+    void setEquatorRadius(double radius);
+
 private:
-    static const double SPACEMAP_EQUATOR_RADIUS;
+    static double SPACEMAP_EQUATOR_RADIUS;
     static const double SPACEMAP_POLE_RADIUS;
     std::tr1::shared_ptr<OscSender> sender_;
     // not implemented
