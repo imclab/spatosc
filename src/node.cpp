@@ -110,12 +110,23 @@ bool correctNumberOfArguments(const std::string &method, int expected, int actua
 }
 } // end anonymous namespace
 
+// FIXME: need to provide the types as well.
 void Node::handleMessage(const std::string &method, int argc, lo_arg **argv)
 {
     if (method == "xyz")
     {
         if (correctNumberOfArguments(method, 3, argc))
+        {
+            // TODO: validate types
             setPosition(argv[0]->f, argv[1]->f, argv[2]->f);
+        }
+    }
+    else if (method == "setStringProperty")
+    {
+        if (correctNumberOfArguments(method, 2, argc))
+        {
+            setStringProperty(std::string(static_cast<const char *>(&argv[0]->s)), std::string(static_cast<const char *>(&argv[1]->s)));
+        }
     }
     else if (method == "aed")
     {
@@ -177,7 +188,7 @@ std::ostream &operator<<(std::ostream &out, const spatosc::Node &n)
     return out << n.id_;
 }
 
-bool Node::setProperty(const std::string &key, const std::string &value)
+bool Node::setStringProperty(const std::string &key, const std::string &value)
 {
     if (! properties_.hasProperty(key))
         properties_.addProperty(key, value);
@@ -187,7 +198,7 @@ bool Node::setProperty(const std::string &key, const std::string &value)
     return true;
 }
 
-bool Node::getProperty(const std::string &key, std::string &value)
+bool Node::getStringProperty(const std::string &key, std::string &value)
 {
     if (! properties_.hasProperty(key))
     {

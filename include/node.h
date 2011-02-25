@@ -149,17 +149,17 @@ class Node
         friend std::ostream &operator<<(std::ostream &out, const Node &n);
 
         /**
-         * Sets a property for this node.
+         * Sets a string property for this node.
          * Creates it if it does not exist.
          * Right now, there is no way to delete a Node Property.
          * @return Success.
          */
-        bool setProperty(const std::string &key, const std::string &value);
+        bool setStringProperty(const std::string &key, const std::string &value);
         /**
-         * Retrieves a property value for this node.
+         * Retrieves a string property value for this node.
          * @return Success.
          */
-        bool getProperty(const std::string &key, std::string &value);
+        bool getStringProperty(const std::string &key, std::string &value);
 
     protected:
         void notifyScene();
