@@ -1,7 +1,9 @@
 /*
  * This file is part of Spatosc.
  *
- * Copyright (c) 2010 Society for Arts and Technologies <info@sat.qc.ca>
+ * Copyright (c) 2010 Alexandre Quessy <alexandre@quessy.net>
+ * Copyright (c) 2010 Tristan Matthews <le.businessman@gmail.com>
+ * Copyright (c) 2011 Society for Arts and Technologies <info@sat.qc.ca>
  *
  * Spatosc is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,16 +23,17 @@
  * The Property class.
  */
 
-/** The Property template class holds a single value. */
-
 #ifndef __PROPERTY_H__
 #define __PROPERTY_H__
 
 #include <string>
 #include <functional>
 
+namespace spatosc
+{
+
 /**
- * Property value
+ * A Property holds a single value and has a name.
  *
  * Can hold a value of a type such as int, float, etc.
  */
@@ -48,19 +51,19 @@ class Property
         /**
          * Returns the current value of this property.
          */
-        T get_value() const
+        T getValue() const
         {
             return value_;
         }
         /**
          * Returns the name of this property.
          */
-        const std::string &get_name() const
+        const std::string &getName() const
         {
             return name_;
         }
 
-        void set_value(T value)
+        void setValue(T value)
         {
             value_ = value;
             //TODO: trigger signal / callback
@@ -70,5 +73,7 @@ class Property
         std::string name_;
         T value_;
 };
+
+} // end namespace spatosc
 
 #endif

@@ -43,6 +43,8 @@
 #include "dmitri_translator.h"
 #include "translator.h"
 #include "connection.h"
+#include "property.h"
+#include "properties.h"
 #include "soundsource.h"
 #include "spatdif_translator.h"
 #include "version.h"
