@@ -32,8 +32,9 @@
 #include <stdexcept>
 #include <string>
 #include <iostream>
-#include <tr1/memory>
+
 #include "property.h"
+#include "memory.h"
 
 namespace spatosc
 {
