@@ -180,17 +180,16 @@ void Wrapper::setScale(double sx, double sy, double sz)
 bool Wrapper::addTranslator(const std::string &name, const std::string &translatorName, const std::string &sendToAddress, const std::string &port)
 {
     if (translatorName == "SpatdifTranslator")
-        return scene_->addTranslator<SpatdifTranslator>(name, sendToAddress, port);
+        return scene_->addTranslator<SpatdifTranslator>(name, sendToAddress, port) != 0;
     else if (translatorName == "DmitriTranslator")
-        return scene_->addTranslator<DmitriTranslator>(name, sendToAddress, port);
+        return scene_->addTranslator<DmitriTranslator>(name, sendToAddress, port) != 0;
     else if (translatorName == "ConsoleTranslator")
-        return scene_->addTranslator<ConsoleTranslator>(name, sendToAddress, port);
+        return scene_->addTranslator<ConsoleTranslator>(name, sendToAddress, port) != 0;
     else
     {
         std::cerr << "No such translator: " << translatorName << std::endl;
         return false;
     }
-    return true;
 }
 
 bool Wrapper::removeTranslator(const std::string &name)

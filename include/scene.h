@@ -94,37 +94,41 @@ class Scene
          * Scene scene();
          * scene.addTranslator<SpatdifTranslator>("spatdif", "127.0.0.1", "11111");
          * \endcode
+         * 
+         * @return A Translator pointer. Null if there was already one with that name, or if an error occurred. Never free this pointer.
          */
         template <typename T>
-        bool addTranslator(const std::string &name, const std::string &address="", const std::string &port="", bool verbose = true)
+        Translator *addTranslator(const std::string &name, const std::string &address="", const std::string &port="", bool verbose = true)
         {
             if (hasTranslator(name))
             {
                 std::cout << "Warning: There is already a translator named " << name << std::endl;
-                return false;
+                return 0;
             }
             else
             {
                 translators_[name] = std::tr1::shared_ptr<Translator>(new T(address, port, verbose));
-                return true;
+                return getTranslator(name);
             }
-        }
-        
-        bool removeTranslator(const std::string &name)
-        {
-            if (hasTranslator(name))
-            {
-                translators_.erase(name);
-                return true;
-            }
-            else
-                return false;
         }
 
-        bool hasTranslator(const std::string &name)
-        {
-            return translators_.find(name) != translators_.end();
-        }
+        /**
+         * Returns a pointer to a given Translator or a null pointer if not found.
+         * @return A Translator pointer. Never free it.
+         */
+        Translator *getTranslator(const std::string &name);
+        
+        /**
+         * Removes a translator given its name.
+         * @return success or not.
+         */
+        bool removeTranslator(const std::string &name);
+
+        /**
+         * Checks for the existence of a translator given its name.
+         * @return It exists or not.
+         */
+        bool hasTranslator(const std::string &name);
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.

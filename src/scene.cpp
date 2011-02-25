@@ -484,5 +484,30 @@ void Scene::applyTransformation(double &x, double &y, double &z) const
 {
     transform_->apply(x, y, z);
 }
+
+Translator *Scene::getTranslator(const std::string &name)
+{
+    if (! hasTranslator(name))
+        return 0;
+    else
+        return translators_.find(name)->second.get();
+}
+
+bool Scene::removeTranslator(const std::string &name)
+{
+    if (hasTranslator(name))
+    {
+        translators_.erase(name);
+        return true;
+    }
+    else
+        return false;
+}
+
+bool Scene::hasTranslator(const std::string &name)
+{
+    return translators_.find(name) != translators_.end();
+}
+
 } // end namespace spatosc
 
