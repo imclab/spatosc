@@ -143,7 +143,7 @@ class Node
             sendNewPosition_ = false;
         }
 
-        virtual void handleMessage(const std::string &method, int argc, lo_arg ** argv);
+        virtual void handleMessage(const std::string &method, int argc, lo_arg ** argv, const char *types);
         bool active() const { return active_; }
         bool hasID(const std::string &id) const;
         friend std::ostream &operator<<(std::ostream &out, const Node &n);
@@ -174,7 +174,7 @@ class Node
     private:
         Vector3 pos_;
         virtual void onNodeChanged() = 0;
-        virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv) = 0;
+        virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv, const char *types) = 0;
         Properties<std::string> properties_;
 };
 

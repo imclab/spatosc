@@ -61,6 +61,7 @@ libspatosc_@SPATOSC_API_VERSION@_la_include_HEADERS = \
     $(top_srcdir)/include/spatdif_translator.h \
     $(top_srcdir)/include/spatosc.h \
     $(top_srcdir)/include/translator.h \
+    $(top_srcdir)/include/unused.h \
     $(top_srcdir)/include/geotransform.h \
     $(top_srcdir)/include/version.h
 

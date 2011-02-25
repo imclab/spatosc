@@ -42,7 +42,7 @@ class SoundSource : public Node
     private:
         std::vector<std::tr1::shared_ptr<Connection> > connectTO_;
         virtual void onNodeChanged();
-        virtual bool handleMessage_(const std::string &/*method*/, int argc, lo_arg ** /*argv*/);
+        virtual bool handleMessage_(const std::string &/*method*/, int argc, lo_arg ** /*argv*/, const char *types);
 };
 
 } // end namespace spatosc

@@ -52,7 +52,7 @@ void Listener::debugPrint() const
     std::cout << std::endl;
 }
 
-bool Listener::handleMessage_(const std::string &/*method*/, int /*argc*/, lo_arg ** /*argv*/)
+bool Listener::handleMessage_(const std::string &/*method*/, int /*argc*/, lo_arg ** /*argv*/, const char * /*types*/)
 {
     return false;
 }

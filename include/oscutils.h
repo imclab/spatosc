@@ -102,9 +102,16 @@ namespace OSCutil
 
     /**
      * Returns whether a given path matches or not a given string.
+     * @return success or not
      */
     bool wildcardMatch(const char *path, const char *str);
     // TODO:2011-01-17:aalex:Please someone document wildcardMatch() well.
+
+    /**
+     * Checks whether a given argument type matches the desired type.
+     * @return success or not
+     */
+    bool argMatchesType(int argc, const char *types, int arg_index, char desiredType);
 }
 
 } // end namespace spatosc

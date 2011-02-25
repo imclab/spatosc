@@ -25,6 +25,7 @@
 #include "connection.h"
 #include "geotransform.h"
 
+#define UNUSED(x) ((void) (x))
 
 namespace spatosc
 {
@@ -111,8 +112,9 @@ bool correctNumberOfArguments(const std::string &method, int expected, int actua
 } // end anonymous namespace
 
 // FIXME: need to provide the types as well.
-void Node::handleMessage(const std::string &method, int argc, lo_arg **argv)
+void Node::handleMessage(const std::string &method, int argc, lo_arg **argv, const char *types)
 {
+    UNUSED(types);
     if (method == "xyz")
     {
         if (correctNumberOfArguments(method, 3, argc))
@@ -173,7 +175,7 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv)
     else
     {
         // delegate to derived classes
-        if (!handleMessage_(method, argc, argv))
+        if (! handleMessage_(method, argc, argv, types))
             std::cerr << "Unknown method " << method << std::endl;
     }
 }
