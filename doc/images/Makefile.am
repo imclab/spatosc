@@ -1,1 +1,1 @@
-EXTRA_DIST=logo_sat.jpg
+EXTRA_DIST = *.jpg *.png

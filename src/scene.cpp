@@ -371,6 +371,35 @@ void Scene::onConnectionChanged(Connection *conn)
     }
 }
 
+void Scene::pushOSCMessagesForTranslator(Translator *translator, bool force=false)
+{
+    ConnConstIterator iter;
+    for (iter = connections_.begin(); iter != connections_.end(); ++iter)
+    {
+        Connection* conn = (*iter).get();
+        if (conn->active())
+        {
+        	SoundSource *src = conn->getSource();
+			Listener *sink = conn->getSink();
+
+			if (! src)
+			{
+				std::cerr << __FUNCTION__ << "This connection does not have a valid source node." << std::endl;
+				return;
+			}
+			if (! sink)
+			{
+				std::cerr << __FUNCTION__ << "This connection does not have a valid sink node." << std::endl;
+				return;
+			}
+			if (force || src->sendNewPosition() || sink->sendNewPosition())
+			{
+				translator->pushOSCMessages(conn);
+			}
+        }
+    }
+}
+
 void Scene::pushOSCMessagesViaAllTranslators(Connection *conn)
 {
     SoundSource *src = conn->getSource();

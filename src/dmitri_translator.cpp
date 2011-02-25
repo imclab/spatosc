@@ -31,7 +31,7 @@ namespace spatosc
 
 const char *DmitriTranslator::DEFAULT_SEND_PORT = "18033";
 const char *DmitriTranslator::DEFAULT_RECEIVER_PORT = "18099";
-const double DmitriTranslator::SPACEMAP_EQUATOR_RADIUS = 700.0;
+double DmitriTranslator::SPACEMAP_EQUATOR_RADIUS = 700.0;
 const double DmitriTranslator::SPACEMAP_POLE_RADIUS = 1000.0;
 
 // ************************************************
@@ -83,7 +83,7 @@ void DmitriTranslator::pushOSCMessages(Connection *conn)
     //std::cout << "azim="<<conn->azimuth()<<" elev="<<conn->elevation()<<" r="<<r<<std::endl;
     //std::cout << "Sending spacemap: " << spacemapX << "," << spacemapY << std::endl;
 
-    str = "/spacemap/" + src->getID() + "/x";
+    str = "/spacemap/" +  src->getID() + "/x";
     //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
     sender_->sendMessage(str.c_str(), "f", spacemapX, SPATOSC_ARGS_END);
 
@@ -99,6 +99,11 @@ void DmitriTranslator::pushOSCMessages(Connection *conn)
 OscSender &DmitriTranslator::getSender() const
 {
     return *sender_;
+}
+
+void DmitriTranslator::setEquatorRadius(double radius)
+{
+	SPACEMAP_EQUATOR_RADIUS = radius;
 }
 
 } // end namespace spatosc

@@ -299,6 +299,14 @@ class Scene
          * @warning Clients should not call this directly.
          */
         void onPropertyChanged(Node *node, const std::string &key, const std::string &value);
+
+        /**
+         * Allows a translator to be completely refreshed. For example, if the
+         * remote spatializer crashes and restarts, this function can be called
+         * with the force flag set to true to send updates for all nodes.
+         */
+        void pushOSCMessagesForTranslator(Translator *translator, bool force);
+
     private:
         // private handle class
         struct RegexHandle;
