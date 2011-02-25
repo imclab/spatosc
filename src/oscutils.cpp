@@ -20,7 +20,7 @@
 #include <string>
 #include <cstdlib>
 
-#ifndef _WIN32
+#ifndef WIN32
 #include <sys/utsname.h>
 #include <ifaddrs.h>
 #include <arpa/inet.h>
@@ -35,7 +35,7 @@ namespace spatosc
 // networking functions
 std::string OSCutil::getMyIPaddress()
 {
-#ifdef _WIN32
+#ifdef WIN32
     return "127.0.0.1";
 #else
     using std::string;
@@ -73,7 +73,7 @@ std::string OSCutil::getMyIPaddress()
 
 std::string OSCutil::getMyBroadcastAddress()
 {
-#ifndef _WIN32
+#ifndef WIN32
     std::string myIP(getMyIPaddress());
 #else
     std::string myIP("255.255.255.255");
