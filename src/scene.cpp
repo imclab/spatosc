@@ -367,9 +367,7 @@ void Scene::onConnectionChanged(Connection *conn)
     {
         conn->recomputeConnection();
         if (synchronous_)
-        {
             pushOSCMessagesViaAllTranslators(conn);
-        }
     }
 }
 
@@ -391,7 +389,7 @@ void Scene::pushOSCMessagesViaAllTranslators(Connection *conn)
     if (src->sendNewPosition() || sink->sendNewPosition())
     {
         std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
-        for (iter = translators_.begin(); iter != translators_.end(); iter++)
+        for (iter = translators_.begin(); iter != translators_.end(); ++iter)
             iter->second->pushOSCMessages(conn);
         src->positionSent();
         sink->positionSent();
@@ -412,9 +410,7 @@ bool Scene::flushMessages()
         {
             Connection* conn = (*iter).get();
             if (conn->active())
-            {
                 pushOSCMessagesViaAllTranslators(conn);
-            }
         }
         return true;
     }
