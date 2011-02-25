@@ -128,7 +128,7 @@
  * @author Alexandre Quessy <alexandre@quessy.net>
  *
  *
- * \image html logo_SAT.jpg
+ * \image html doc/images/logo_SAT.jpg
  */
 
 
@@ -139,8 +139,6 @@
  * @htmlonly </pre>@endhtmlonly
  *
  */
-
-
 
 
 #endif // __SPATOSC_H__

@@ -2,7 +2,7 @@
 ACLOCAL_AMFLAGS = -I m4
 AUTOMAKE_OPTIONS = foreign
 
-SUBDIRS = src tests build
+SUBDIRS = src tests build doc
 
 EXTRA_DIST = \
     LICENSE \

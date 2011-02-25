@@ -123,6 +123,8 @@ AC_CONFIG_FILES([
         doxyfile 
         spatosc-${SPATOSC_API_VERSION}.pc:spatosc.pc.in
         build/Makefile
+        doc/Makefile
+        doc/images/Makefile
         ])
 
 AC_OUTPUT
