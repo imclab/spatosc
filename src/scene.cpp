@@ -369,7 +369,7 @@ void Scene::onConnectionChanged(Connection *conn)
         if (synchronous_)
         {
             std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
-            for (iter = translators_.begin(); iter != translators_.end(); iter++)
+            for (iter = translators_.begin(); iter != translators_.end(); ++iter)
                 iter->second->pushOSCMessages(conn);
         }
     }
@@ -391,7 +391,7 @@ bool Scene::flushMessages()
             if (conn->active())
             {
                 std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
-                for (iter = translators_.begin(); iter != translators_.end(); iter++)
+                for (iter = translators_.begin(); iter != translators_.end(); ++iter)
                     iter->second->pushOSCMessages(conn);
             }
         }
