@@ -148,8 +148,8 @@ class Properties
          */
         void printProperties()
         {
-            typename std::map<std::string, PropertyPtr>::iterator iter;
-            for (iter = properties_.begin(); iter != properties_.end(); iter++)
+            typename std::map<std::string, PropertyPtr>::const_iterator iter;
+            for (iter = properties_.begin(); iter != properties_.end(); ++iter)
                 std::cout << " * " << iter->second->getName() << " = " << iter->second->getValue() << std::endl;
         }
 
