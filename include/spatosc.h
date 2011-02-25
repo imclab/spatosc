@@ -120,9 +120,25 @@
  * You should have received a copy of the GNU General Public License
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  *
+ *
  * @author Mike Wozniewski <mike@mikewoz.com>
  * @author Tristan Matthews <le.businessman@gmail.com>
  * @author Alexandre Quessy <alexandre@quessy.net>
+ *
+ *
+ * \image html logo_SAT.jpg
  */
+
+
+/** @page README README
+ * 
+ * @htmlonly <pre style="white-space: pre-wrap;">@endhtmlonly
+ * \htmlinclude ../README
+ * @htmlonly </pre>@endhtmlonly
+ *
+ */
+
+
+
 
 #endif // __SPATOSC_H__
