@@ -19,6 +19,7 @@
 
 #include <string>
 #include <cstdlib>
+#include <iostream>
 
 #ifndef WIN32
 #include <sys/utsname.h>
@@ -203,6 +204,38 @@ bool OSCutil::wildcardMatch(const char *path, const char *str)
             return *str && wildcardMatch(path + 1, str + 1);
         default:
             return (*path == *str) && (wildcardMatch(path + 1, str + 1));
+    }
+}
+
+bool OSCutil::argMatchesType(int argc, const char *types, int arg_index, char desiredType)
+{
+    if (arg_index >= argc)
+    {
+        std::cerr << "There are " << argc << " OSC arguments, but you need argument index " << arg_index << std::endl;
+        return false;
+    }
+    else
+    {
+        if (types[arg_index] != desiredType)
+        {
+            std::cerr << "OSC argument number " << arg_index << " has type " << types[arg_index] << ", but we're looking should be of type " << desiredType << "." << std::endl;
+            return false;
+        }
+        else
+            return true;
+    }
+}
+
+bool OSCutil::typeTagsMatch(const char *types, const std::string &desiredTypes)
+{
+    if (desiredTypes != types)
+    {
+        std::cerr << "Expected OSC typetags " << desiredTypes << " but got " << types << "." << std::endl;
+        return false;
+    }
+    else
+    {
+        return true;
     }
 }
 

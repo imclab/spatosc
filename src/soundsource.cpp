@@ -35,7 +35,7 @@ SoundSource::SoundSource(const std::string &nodeID, Scene &scene) :
     setOrientation(0.0, 0.0, 0.0);
 }
 
-bool SoundSource::handleMessage_(const std::string & /*method*/, int /*argc*/, lo_arg ** /*argv*/)
+bool SoundSource::handleMessage_(const std::string & /*method*/, int /*argc*/, lo_arg ** /*argv*/, const char * /* types */)
 {
     return false;
 }

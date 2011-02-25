@@ -49,7 +49,7 @@ int main()
     args[1]->f = y;
     args[2]->f = z;
 
-    source->handleMessage("xyz", num_args, args);
+    source->handleMessage("xyz", num_args, args, "fff");
 
     for (int i = 0 ; i != num_args; ++i)
         delete args[i];

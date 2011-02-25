@@ -24,7 +24,9 @@
 #include "scene.h"
 #include "connection.h"
 #include "geotransform.h"
+#include "oscutils.h"
 
+#define UNUSED(x) ((void) (x))
 
 namespace spatosc
 {
@@ -110,12 +112,23 @@ bool correctNumberOfArguments(const std::string &method, int expected, int actua
 }
 } // end anonymous namespace
 
-void Node::handleMessage(const std::string &method, int argc, lo_arg **argv)
+// FIXME: need to provide the types as well.
+void Node::handleMessage(const std::string &method, int argc, lo_arg **argv, const char *types)
 {
+    UNUSED(types);
+    using namespace OSCutil; // argMatchesType
     if (method == "xyz")
     {
-        if (correctNumberOfArguments(method, 3, argc))
+        if (argMatchesType(argc, types, 0, 'f') &&
+            argMatchesType(argc, types, 1, 'f') &&
+            argMatchesType(argc, types, 2, 'f'))
             setPosition(argv[0]->f, argv[1]->f, argv[2]->f);
+    }
+    else if (method == "setStringProperty")
+    {
+        if (argMatchesType(argc, types, 0, 's') &&
+            argMatchesType(argc, types, 1, 's'))
+            setStringProperty(std::string(static_cast<const char *>(&argv[0]->s)), std::string(static_cast<const char *>(&argv[1]->s)));
     }
     else if (method == "aed")
     {
@@ -162,7 +175,7 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv)
     else
     {
         // delegate to derived classes
-        if (!handleMessage_(method, argc, argv))
+        if (! handleMessage_(method, argc, argv, types))
             std::cerr << "Unknown method " << method << std::endl;
     }
 }
@@ -177,7 +190,7 @@ std::ostream &operator<<(std::ostream &out, const spatosc::Node &n)
     return out << n.id_;
 }
 
-bool Node::setProperty(const std::string &key, const std::string &value)
+bool Node::setStringProperty(const std::string &key, const std::string &value)
 {
     if (! properties_.hasProperty(key))
         properties_.addProperty(key, value);
@@ -187,7 +200,7 @@ bool Node::setProperty(const std::string &key, const std::string &value)
     return true;
 }
 
-bool Node::getProperty(const std::string &key, std::string &value)
+bool Node::getStringProperty(const std::string &key, std::string &value)
 {
     if (! properties_.hasProperty(key))
     {

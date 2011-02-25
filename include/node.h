@@ -143,23 +143,23 @@ class Node
             nodeChanged_ = false;
         }
 
-        virtual void handleMessage(const std::string &method, int argc, lo_arg ** argv);
+        virtual void handleMessage(const std::string &method, int argc, lo_arg ** argv, const char *types);
         bool active() const { return active_; }
         bool hasID(const std::string &id) const;
         friend std::ostream &operator<<(std::ostream &out, const Node &n);
 
         /**
-         * Sets a property for this node.
+         * Sets a string property for this node.
          * Creates it if it does not exist.
          * Right now, there is no way to delete a Node Property.
          * @return Success.
          */
-        bool setProperty(const std::string &key, const std::string &value);
+        bool setStringProperty(const std::string &key, const std::string &value);
         /**
-         * Retrieves a property value for this node.
+         * Retrieves a string property value for this node.
          * @return Success.
          */
-        bool getProperty(const std::string &key, std::string &value);
+        bool getStringProperty(const std::string &key, std::string &value);
 
     protected:
         void notifyScene();
@@ -174,7 +174,7 @@ class Node
     private:
         Vector3 pos_;
         virtual void onNodeChanged() = 0;
-        virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv) = 0;
+        virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv, const char *types) = 0;
         Properties<std::string> properties_;
 };
 

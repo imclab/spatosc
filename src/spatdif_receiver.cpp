@@ -88,7 +88,7 @@ std::string getTypeName(const std::string &path)
 } // end anonymous namespace
 
 
-int SpatdifReceiver::onSceneMessage(const char * path, const char * /*types*/,
+int SpatdifReceiver::onSceneMessage(const char * path, const char * types,
         lo_arg ** argv, int argc, void * /*data*/, void *user_data)
 {
     OscScene *scene = static_cast<OscScene*>(user_data);
@@ -104,12 +104,12 @@ int SpatdifReceiver::onSceneMessage(const char * path, const char * /*types*/,
     std::string method(getMethodName(path));
 
     // then call scene's handleMessage and perhaps return true if handled?
-    scene->handleMessage(method, argc, argv);
+    scene->handleMessage(method, argc, argv, types);
 
     return 1;
 }
 
-int SpatdifReceiver::onNodeMessage(const char * path, const char * /*types*/,
+int SpatdifReceiver::onNodeMessage(const char * path, const char * types,
         lo_arg ** argv, int argc, void * /*data*/, void *user_data)
 {
     Node *node = static_cast<Node*>(user_data);
@@ -128,7 +128,7 @@ int SpatdifReceiver::onNodeMessage(const char * path, const char * /*types*/,
     std::string method(getMethodName(path));
 
     // then call node's handleMessage and perhaps return true if handled?
-    node->handleMessage(method, argc, argv);
+    node->handleMessage(method, argc, argv, types);
 
     return 1;
 }

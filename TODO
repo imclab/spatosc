@@ -9,6 +9,10 @@ Features
  * Support specifying the network interface to listen from
  * Each node has a map<string,string> of attributes and they're pushed when updated
  * Implement Translator::getSender to allow sending custom messages (already implemented in dmitriTranslator. should return NULL in base class)
+ * support either int, float, double for numerical OSC typetags. use those:
+   * int lo_is_numerical_type(lo_type a)
+   * int lo_is_string_type(lo_type a)
+   * lo_hires lo_hires_val(lo_type type, lo_arg * p)
 
 Examples
 --------

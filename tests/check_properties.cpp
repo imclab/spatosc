@@ -132,7 +132,7 @@ bool test_notification()
         std::cerr <<" should not have received a property update yet.\n";
         return false;
     }
-    source->setProperty("foo", "bar");
+    source->setStringProperty("foo", "bar");
     if (! DummyTranslator::updated)
     {
         std::cerr <<" should have received a property update.\n";

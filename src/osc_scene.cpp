@@ -21,6 +21,8 @@
 #include <cassert>
 #include "osc_scene.h"
 #include "spatdif_receiver.h"
+#include "unused.h"
+#include "oscutils.h"
 
 namespace spatosc
 {
@@ -54,16 +56,17 @@ bool correctNumberOfArguments(const std::string &method, int expected, int actua
 }
 } // end anonymous namespace
 
-void OscScene::handleMessage(const std::string &method, int argc, lo_arg **argv)
+void OscScene::handleMessage(const std::string &method, int argc, lo_arg **argv, const char *types)
 {
+    UNUSED(types);
     if (method == "create_source")
     {
-        if (correctNumberOfArguments(method, 1, argc))
+        if (OSCutil::argMatchesType(argc, types, 0, 's'))
             createSoundSource(reinterpret_cast<const char*>(argv[0]));
     }
     else if (method == "create_listener")
     {
-        if (correctNumberOfArguments(method, 1, argc))
+        if (OSCutil::argMatchesType(argc, types, 0, 's'))
             createListener(reinterpret_cast<const char *>(argv[0]));
     }
     else
