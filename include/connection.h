@@ -50,9 +50,7 @@ public:
      * the attenuation of gain with respect to distance. This is an exponential
      * decay factor according to the formula:
      *
-     * \verbatim
-     * gainScalar = 1 / (1 - (pow(distance,distanceFactor))
-     * \endverbatim
+     * \f$\mbox{gain(linear)} = \frac{1}{1 - \mbox{distance}^f}\f$
      *
      * Thus, a value of 0% means no gain attenuation, a factor of 100% results
      * in linear gain (default), and 200% is the natural inverse square law.
