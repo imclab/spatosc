@@ -45,6 +45,57 @@ bool test_property()
     return true;
 }
 
+bool test_properties()
+{
+    Properties<std::string> properties;
+    if (properties.addProperty("foo", "bar")->getValue() != "bar")
+    {
+        std::cout << __FUNCTION__ << ": its value should be the same as the one given." << std::endl;
+        return false;
+    }
+    if (properties.getProperty("foo")->getValue() != "bar")
+    {
+        std::cout << __FUNCTION__ << ": its value should be the same as the one given." << std::endl;
+        return false;
+    }
+    if (! properties.setPropertyValue("foo", "spam"))
+    {
+        std::cout << __FUNCTION__ << ": could not set the property's value." << std::endl;
+        return false;
+    }
+    if (properties.getPropertyValue("foo") != "spam")
+    {
+        std::cout << __FUNCTION__ << ": its value should be the same as the one given." << std::endl;
+        return false;
+    }
+
+    if (! properties.hasProperty("foo"))
+    {
+        std::cout << __FUNCTION__ << ": could not find a property it should have." << std::endl;
+        return false;
+    }
+    if (properties.hasProperty("I don't exist"))
+    {
+        std::cout << __FUNCTION__ << ": could find a property it should not have." << std::endl;
+        return false;
+    }
+
+    bool gotError = false;
+    try
+    {
+        properties.getPropertyValue("qwoeiuqowiueoqiweuoqwiue");
+    } catch (const NoSuchPropertyError &e)
+    {
+        gotError = true;
+    }
+    if (! gotError)
+    {
+        std::cout << __FUNCTION__ << ": should have raised an exception when trying to access a property that does not exist.." << std::endl;
+        return false;
+    }
+    return true;
+}
+
 int main(int /*argc*/, char ** /*argv*/)
 {
     if (! test_property())

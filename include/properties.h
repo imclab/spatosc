@@ -29,6 +29,7 @@
 
 #include <map>
 // TODO: use tr1:unordered_map, since lookup is faster with it
+#include <stdexcept>
 #include <string>
 #include <iostream>
 #include <tr1/memory>
@@ -36,6 +37,17 @@
 
 namespace spatosc
 {
+
+/**
+ * Exception thrown when client tries to access property that does not exist.
+ */
+class NoSuchPropertyError : public std::runtime_error
+{
+    public:
+        NoSuchPropertyError(const char *message) :
+            std::runtime_error(message)
+        {}
+};
 
 /**
  * Holds a set of properties identified by their name.
@@ -71,6 +83,7 @@ class Properties
 
         /**
          * Returns a property.
+         * @return A Property pointer, or null if not found. Never free this pointer.
          */
         Property<T> *getProperty(const std::string &name) const
         {
@@ -96,16 +109,20 @@ class Properties
 
         /**
          * Returns the value of a property.
+         * 
+         * You should always call hasProperty before calling this method in order to avoid having to catch the exception it may throw if the given property does not exist.
+         * @throw NoSuchPropertyError if the given property does not exist.
          */
-        T getPropertyValue(const std::string &name)
+        T getPropertyValue(const std::string &name) throw (NoSuchPropertyError)
         {
             if (not hasProperty(name))
             {
-                std::cout << "No such property \"" << name << "\"" << std::endl;
-                return 0;
+                std::string message = "No such property: \"" + name + "\".";
+                std::cout << message << std::endl;
+                throw NoSuchPropertyError(message.c_str());
             }
-            else
-                return properties_[name]->getValue();
+                
+            return properties_[name]->getValue();
         }
 
         /**
