@@ -49,15 +49,35 @@ class GeoTransform;
 class Scene
 {
     public:
-        // these two methods are only used by Node
+        /**
+         * This method should be only used by the Node class.
+         * @warning Clients should not need to call this method.
+         */
         void applyTransformation(Vector3 &vec) const;
+        /**
+         * This method should be only used by the Node class.
+         * @warning Clients should not need to call this method.
+         */
         void applyTransformation(double &x, double &y, double &z) const;
         
-        // these are called by clients
-        void setTranslation(double tx, double ty, double tz);
+        /**
+         * Sets the scene's translation.
+         */
+        void setTranslation(double x, double y, double z);
+        /**
+         * Sets the scene's orientation.
+         * Using a Euler's angle.
+         */
         void setOrientation(double pitch, double roll, double yaw);
+        /**
+         * Sets the scene's orientation.
+         * Using a quaternion.
+         */
         void setOrientation(double x, double y, double z, double w);
-        void setScale(double sx, double sy, double sz);
+        /**
+         * Sets the scene's scale.
+         */
+        void setScale(double x, double y, double z);
         
         // FIXME: Thu Feb  3 12:33:48 EST 2011 : tmatth: this only belongs in osc_scene
         virtual void unsubscribe(Node * /*node*/) {};

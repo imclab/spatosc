@@ -471,9 +471,9 @@ void Scene::onTransformChanged()
         (*iter)->recomputeConnection();
 }
         
-void Scene::setTranslation(double tx, double ty, double tz)
+void Scene::setTranslation(double x, double y, double z)
 {
-    transform_->translate(tx, ty, tz);
+    transform_->translate(x, y, z);
     onTransformChanged();
 }
 
@@ -489,9 +489,9 @@ void Scene::setOrientation(double x, double y, double z, double w)
     onTransformChanged();
 }
 
-void Scene::setScale(double sx, double sy, double sz)
+void Scene::setScale(double x, double y, double z)
 {
-    transform_->scale(sx, sy, sz);
+    transform_->scale(x, y, z);
     onTransformChanged();
 }
 
@@ -499,7 +499,6 @@ void Scene::applyTransformation(Vector3 &vec) const
 {
     transform_->apply(vec);
 }
-
 
 void Scene::applyTransformation(double &x, double &y, double &z) const
 {

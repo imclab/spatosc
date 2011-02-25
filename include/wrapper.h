@@ -99,7 +99,10 @@ class Wrapper
          * @return Success or not.
         */
         bool addTranslator(const std::string &name, const std::string &translatorName, const std::string &sendToAddress, const std::string &port);
-
+        /**
+         * Removes a translator.
+         * @return Success or not.
+         */
         bool removeTranslator(const std::string &name);
         /**
          * Returns whether we have a translator with that name or not.
@@ -111,11 +114,28 @@ class Wrapper
          * @return Success or not.
          */
         bool setTranslatorProperty(const std::string &key, const std::string &value);
-        
-        // these are called by clients
+        /**
+         * @warning Not implemented.
+         * @return Success or not.
+         */
+        bool setNodeProperty(const std::string &key, const std::string &value);
+        /**
+         * Sets the scene's translation.
+         */
         void setTranslation(double tx, double ty, double tz);
+        /**
+         * Sets the scene's orientation.
+         * Using a Euleur's angle.
+         */
         void setOrientation(double pitch, double roll, double yaw);
+        /**
+         * Sets the scene's orientation.
+         * Using a quaternion.
+         */
         void setOrientation(double x, double y, double z, double w);
+        /**
+         * Sets the scene's scale.
+         */
         void setScale(double sx, double sy, double sz);
     private:
         std::tr1::shared_ptr<Scene> scene_;
