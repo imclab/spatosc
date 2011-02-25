@@ -504,7 +504,7 @@ bool Scene::removeTranslator(const std::string &name)
         return false;
 }
 
-bool Scene::hasTranslator(const std::string &name)
+bool Scene::hasTranslator(const std::string &name) const
 {
     return translators_.find(name) != translators_.end();
 }

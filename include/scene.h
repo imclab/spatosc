@@ -128,7 +128,7 @@ class Scene
          * Checks for the existence of a translator given its name.
          * @return It exists or not.
          */
-        bool hasTranslator(const std::string &name);
+        bool hasTranslator(const std::string &name) const;
 
         /**
          * Returns a sound source node in the scene identified by its identifier. Creates it if it does not exist yet.
