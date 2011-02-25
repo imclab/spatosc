@@ -27,6 +27,7 @@ Refactoring
  * convert aed-style orientation into quaternions. (or at least support also quaternions)
  * Should we warn clients that we disconnected some nodes?
  * Add property map to translators
+ * Rename SoundSource to Source and Listener to Sink.
 
 Error handling
 --------------

@@ -74,17 +74,11 @@ void SpatdifTranslator::pushOSCMessages(Connection * conn)
 {
     SoundSource *src = conn->getSource();
     Listener *snk = conn->getSink();
-    assert(src);
-    assert(snk);
-
-    // FIXME:Wed Jan 19 16:22:42 EST 2011:tmatth
-    // do we want node-type/node-id or just node-id?
-    //
+    
     bool newPositions = false;
     if (snk->sendNewPosition())
     {
         sendPosition("/spatosc/core/listener/" + snk->getID(), snk);
-        snk->positionSent();
         newPositions = true;
     }
 
@@ -93,12 +87,9 @@ void SpatdifTranslator::pushOSCMessages(Connection * conn)
     if (src->sendNewPosition())
     {
         sendPosition(srcPath, src);
-        src->positionSent();
         newPositions = true;
     }
 
-    // FIXME: Thu Jan 27 15:35:29 EST 2011:tmatth
-    // maybe this should be in connection? Probably not though.
     if (newPositions)
     {
         std::string connectionPath = "/spatosc/core/connection/" + conn->getID();
