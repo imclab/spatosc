@@ -226,4 +226,17 @@ bool OSCutil::argMatchesType(int argc, const char *types, int arg_index, char de
     }
 }
 
+bool OSCutil::typeTagsMatch(const char *types, const std::string &desiredTypes)
+{
+    if (desiredTypes != types)
+    {
+        std::cerr << "Expected OSC typetags " << desiredTypes << " but got " << types << "." << std::endl;
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
 } // end namespace spatosc

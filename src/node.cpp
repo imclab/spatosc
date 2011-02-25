@@ -24,6 +24,7 @@
 #include "scene.h"
 #include "connection.h"
 #include "geotransform.h"
+#include "oscutils.h"
 
 #define UNUSED(x) ((void) (x))
 
@@ -115,20 +116,19 @@ bool correctNumberOfArguments(const std::string &method, int expected, int actua
 void Node::handleMessage(const std::string &method, int argc, lo_arg **argv, const char *types)
 {
     UNUSED(types);
+    using namespace OSCutil; // argMatchesType
     if (method == "xyz")
     {
-        if (correctNumberOfArguments(method, 3, argc))
-        {
-            // TODO: validate types
+        if (argMatchesType(argc, types, 0, 'f') &&
+            argMatchesType(argc, types, 1, 'f') &&
+            argMatchesType(argc, types, 2, 'f'))
             setPosition(argv[0]->f, argv[1]->f, argv[2]->f);
-        }
     }
     else if (method == "setStringProperty")
     {
-        if (correctNumberOfArguments(method, 2, argc))
-        {
+        if (argMatchesType(argc, types, 0, 's') &&
+            argMatchesType(argc, types, 1, 's'))
             setStringProperty(std::string(static_cast<const char *>(&argv[0]->s)), std::string(static_cast<const char *>(&argv[1]->s)));
-        }
     }
     else if (method == "aed")
     {

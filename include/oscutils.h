@@ -112,6 +112,10 @@ namespace OSCutil
      * @return success or not
      */
     bool argMatchesType(int argc, const char *types, int arg_index, char desiredType);
+    /**
+     * Checks that a typetag matches a desired one.
+     */
+    bool typeTagsMatch(const char *types, const std::string &desiredTypes);
 }
 
 } // end namespace spatosc
