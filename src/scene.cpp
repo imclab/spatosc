@@ -367,11 +367,32 @@ void Scene::onConnectionChanged(Connection *conn)
     {
         conn->recomputeConnection();
         if (synchronous_)
-        {
-            std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
-            for (iter = translators_.begin(); iter != translators_.end(); ++iter)
-                iter->second->pushOSCMessages(conn);
-        }
+            pushOSCMessagesViaAllTranslators(conn);
+    }
+}
+
+void Scene::pushOSCMessagesViaAllTranslators(Connection *conn)
+{
+    SoundSource *src = conn->getSource();
+    Listener *sink = conn->getSink();
+
+    if (! src)
+    {
+        std::cerr << __FUNCTION__ << "This connection does not have a valid source node." << std::endl;
+        return;
+    }
+    if (! sink)
+    {
+        std::cerr << __FUNCTION__ << "This connection does not have a valid sink node." << std::endl;
+        return;
+    }
+    if (src->sendNewPosition() || sink->sendNewPosition())
+    {
+        std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
+        for (iter = translators_.begin(); iter != translators_.end(); ++iter)
+            iter->second->pushOSCMessages(conn);
+        src->positionSent();
+        sink->positionSent();
     }
 }
 
@@ -389,11 +410,7 @@ bool Scene::flushMessages()
         {
             Connection* conn = (*iter).get();
             if (conn->active())
-            {
-                std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
-                for (iter = translators_.begin(); iter != translators_.end(); ++iter)
-                    iter->second->pushOSCMessages(conn);
-            }
+                pushOSCMessagesViaAllTranslators(conn);
         }
         return true;
     }

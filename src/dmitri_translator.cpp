@@ -69,41 +69,31 @@ void DmitriTranslator::pushOSCMessages(Connection *conn)
     std::string str;
     SoundSource *src = conn->getSource();
 
-    if (! src)
+    float r = 1.0 - fabs( conn->elevation() / (M_PI/2) );
+    float spacemapX, spacemapY;
+    if (conn->elevation() >= 0)
     {
-        std::cerr << __FUNCTION__ << "This connection does not have a valid source node." << std::endl;
-        return;
+        spacemapX = -sin(conn->azimuth()) * r * SPACEMAP_EQUATOR_RADIUS;
+        spacemapY =  cos(conn->azimuth()) * r * SPACEMAP_EQUATOR_RADIUS;
+    } else {
+        spacemapX = -sin(conn->azimuth()) * (SPACEMAP_EQUATOR_RADIUS + ((1-r) * (SPACEMAP_POLE_RADIUS-SPACEMAP_EQUATOR_RADIUS)));
+        spacemapY =  cos(conn->azimuth()) * (SPACEMAP_EQUATOR_RADIUS + ((1-r) * (SPACEMAP_POLE_RADIUS-SPACEMAP_EQUATOR_RADIUS)));
     }
 
-    if (src->sendNewPosition())
-    {
-        float r = 1.0 - fabs( conn->elevation() / (M_PI/2) );
-        float spacemapX, spacemapY;
-        if (conn->elevation() >= 0)
-        {
-            spacemapX = -sin(conn->azimuth()) * r * SPACEMAP_EQUATOR_RADIUS;
-            spacemapY =  cos(conn->azimuth()) * r * SPACEMAP_EQUATOR_RADIUS;
-        } else {
-            spacemapX = -sin(conn->azimuth()) * (SPACEMAP_EQUATOR_RADIUS + ((1-r) * (SPACEMAP_POLE_RADIUS-SPACEMAP_EQUATOR_RADIUS)));
-            spacemapY =  cos(conn->azimuth()) * (SPACEMAP_EQUATOR_RADIUS + ((1-r) * (SPACEMAP_POLE_RADIUS-SPACEMAP_EQUATOR_RADIUS)));
-        }
+    //std::cout << "azim="<<conn->azimuth()<<" elev="<<conn->elevation()<<" r="<<r<<std::endl;
+    //std::cout << "Sending spacemap: " << spacemapX << "," << spacemapY << std::endl;
 
-        //std::cout << "azim="<<conn->azimuth()<<" elev="<<conn->elevation()<<" r="<<r<<std::endl;
-        //std::cout << "Sending spacemap: " << spacemapX << "," << spacemapY << std::endl;
+    str = "/spacemap/" + src->getID() + "/x";
+    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
+    sender_->sendMessage(str.c_str(), "f", spacemapX, SPATOSC_ARGS_END);
 
-        str = "/spacemap/" + src->getID() + "/x";
-        //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
-        sender_->sendMessage(str.c_str(), "f", spacemapX, SPATOSC_ARGS_END);
+    str = "/spacemap/" + src->getID() + "/y";
+    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
+    sender_->sendMessage(str.c_str(), "f", spacemapY, SPATOSC_ARGS_END);
 
-        str = "/spacemap/" + src->getID() + "/y";
-        //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
-        sender_->sendMessage(str.c_str(), "f", spacemapY, SPATOSC_ARGS_END);
-
-        str = "Bus " + src->getID() + " Level";
-        //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
-        sender_->sendMessage("/set", "sf", str.c_str(), conn->gainDB(), SPATOSC_ARGS_END);
-        src->positionSent();
-    }
+    str = "Bus " + src->getID() + " Level";
+    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
+    sender_->sendMessage("/set", "sf", str.c_str(), conn->gainDB(), SPATOSC_ARGS_END);
 }
 
 OscSender &DmitriTranslator::getSender() const
