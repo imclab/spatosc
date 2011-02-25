@@ -24,11 +24,13 @@
 #define __TRANSLATOR_H__
 
 #include <string>
+#define UNUSED(x) ((void) (x))
 
 namespace spatosc
 {
 
 class Connection;
+class Node;
 
 /**
  * Base class for translator which send OSC messages to audio rendering engines.
@@ -52,6 +54,16 @@ class Translator
          * messages to control some audio engine, or by rendering audio by itself.
          */
         virtual void pushOSCMessages(Connection *conn);
+
+        /**
+         * Called when it's time to push OSC messages when a Node property has changed.
+         */
+        virtual void pushPropertyChange(Node *node, const std::string &key, const std::string &value)
+        {
+            UNUSED(node);
+            UNUSED(key);
+            UNUSED(value);
+        }
 
         /**
          * Virtual classes should have virtual destructors.

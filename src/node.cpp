@@ -177,4 +177,28 @@ std::ostream &operator<<(std::ostream &out, const spatosc::Node &n)
     return out << n.id_;
 }
 
+bool Node::setProperty(const std::string &key, const std::string &value)
+{
+    if (! properties_.hasProperty(key))
+        properties_.addProperty(key, value);
+    else
+        properties_.setPropertyValue(key, value);
+    scene_.onPropertyChanged(this, key, value);
+    return true;
+}
+
+bool Node::getProperty(const std::string &key, std::string &value)
+{
+    if (! properties_.hasProperty(key))
+    {
+        std::cout << "No such property: " << key << std::endl;
+        return false;
+    }
+    else
+    {
+        value = properties_.getPropertyValue(key);
+        return true;
+    }
+}
+
 } // end namespace spatosc

@@ -293,6 +293,12 @@ class Scene
          * Called when a new connection is made or when its node position change, so that the scene updates all its sibling nodes, and the translator may push some OSC messages.
          */
         void onConnectionChanged(Connection *conn);
+        /**
+         * Called when a Node Property value has changed.
+         * Tells all the translators that the given property has changed.
+         * @warning Clients should not call this directly.
+         */
+        void onPropertyChanged(Node *node, const std::string &key, const std::string &value);
     private:
         // private handle class
         struct RegexHandle;

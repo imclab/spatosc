@@ -96,6 +96,51 @@ bool test_properties()
     return true;
 }
 
+#define UNUSED(x) ((void) (x))
+
+class DummyTranslator : public spatosc::Translator
+{
+    public:
+        DummyTranslator(const std::string &ip,
+                const std::string &toPort,
+                bool verbose = false) :
+            spatosc::Translator(verbose)
+        {
+            UNUSED(ip);
+            UNUSED(toPort);
+        }
+        virtual void pushPropertyChange(spatosc::Node *node, const std::string &key, const std::string &value)
+        {
+            UNUSED(node);
+            UNUSED(key);
+            UNUSED(value);
+            updated = true;
+        }
+    static bool updated;
+};
+
+bool DummyTranslator::updated = false;
+
+bool test_notification()
+{
+    using namespace spatosc;
+    Scene scene;
+    scene.addTranslator<DummyTranslator>("dummy", "address", "port");
+    SoundSource *source = scene.createSoundSource("source");
+    if (DummyTranslator::updated)
+    {
+        std::cerr <<" should not have received a property update yet.\n";
+        return false;
+    }
+    source->setProperty("foo", "bar");
+    if (! DummyTranslator::updated)
+    {
+        std::cerr <<" should have received a property update.\n";
+        return false;
+    }
+    return true;
+}
+
 int main(int /*argc*/, char ** /*argv*/)
 {
     if (! test_property())
