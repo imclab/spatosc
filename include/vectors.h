@@ -28,7 +28,10 @@
 #include "memory.h"
 
 namespace spatosc {
-    // useful to search and delete in a vector of shared_ptr
+    /** 
+     * Useful to search and delete in a vector of shared_ptr
+     * Used by eraseFromVector.
+     */
     template <typename T>
     class IsEqual
     {
@@ -41,6 +44,7 @@ namespace spatosc {
         private:
             const T *a_;
     };
+
     /**
      * Removes an element from a vector of shared pointers if
      * the given pointer matches.
