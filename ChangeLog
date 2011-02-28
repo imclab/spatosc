@@ -1,0 +1,4782 @@
+commit f7e8b31818adb5538181465da6e195c7abd81c8b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 14:09:25 2011 -0500
+
+    Pushed some smart algos from Node to Properties.
+
+commit 0f00901862e99907cb88bc9bd55922fad2ddd38b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 13:28:14 2011 -0500
+
+    more comments
+
+commit 6e8e9a7265824abce46f22a284c2dc11b8662108
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Feb 25 18:26:54 2011 -0500
+
+    small update to doc
+
+commit 4a6266e074b4f877884057a8f13d53107850aceb
+Merge: 02c2fb4 f537d5c
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Feb 25 18:00:40 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit 02c2fb4fdd2e36d286d34f97bb9afdf3eeedcbd5
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Feb 25 18:00:36 2011 -0500
+
+    added setter methods for distanceFactor, dopplerFactor, etc
+
+commit f537d5cfb5c0b721d2bb8b55e4c96c72f05a8066
+Merge: 7366826 cbfa9e2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 17:48:04 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit 73668269cbc79511b7e0a1ee8d241aaea8595d68
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 17:47:56 2011 -0500
+
+    updated TODO
+
+commit cbfa9e27cc59f2a7a352b8c5238d990b35e7c8d0
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 25 17:47:05 2011 -0500
+
+    properties: use const_iterator, preincrement it
+
+commit c8613136f5ba5390196b0152278cbc64a91d01a3
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 17:43:31 2011 -0500
+
+    check for osc types - should be improved soon
+
+commit 185da0acaf8e4b35ad06b0ec39655b5c6e40cc93
+Merge: b35ed9c 213ad3a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 17:13:05 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit b35ed9c90a780980fe024e4d825e2fe1a34d6f7a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 17:12:50 2011 -0500
+
+    validate that OSC args match desired types
+
+commit 213ad3a2e1060b3cd4539f3ce2f9ce67ca21300b
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Feb 25 16:51:55 2011 -0500
+
+    updates to dmitri translator, including documentation and ability to change spacemap radius
+
+commit 3ebe70fb4b0813214ff8ac7e7464cf16e147b353
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 16:49:05 2011 -0500
+
+    Named setStringProperty not setProperty
+
+commit 05805d7a626a385091b7c3803ce1868e4a02b9b9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 15:18:39 2011 -0500
+
+    notify translators when a property changes
+
+commit 15a464440b0b7cab101f6ce15f64dbc7aa33a412
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 14:42:09 2011 -0500
+
+    adding a doc image to EXTRA_DIST
+
+commit 4a999fd4231c071b2aedab8f3b74edcaa2e7abd3
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 14:05:31 2011 -0500
+
+    should not include <tr1/memory> directly
+
+commit 02b04470f39cd9a0e377094c4896802cc3c71ccc
+Merge: 78e9b00 cccc52c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 14:04:10 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit 78e9b006867293dd3d8c13502e19551ab6b5e78a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 14:03:53 2011 -0500
+
+    getPropertyValue throws an exception
+
+commit cccc52c75dd7c9b059ebb4216d14145786ff84ca
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Feb 25 14:03:33 2011 -0500
+
+    fixes for WIN32 build, and some updates to spinspat example
+
+commit e7b86d5006a8061358231d2c211a2e9d36d4eb7e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 13:30:48 2011 -0500
+
+    Refactored properties to include in the library.
+    
+     * put properties classes in the right namespace.
+     * Made methods names camelCase.
+     * added the check_properties test
+
+commit 2626faeaeff6e20a79f481a1f725e14c917e992c
+Merge: 28bf32c b6d0e78
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 13:13:49 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit 28bf32c7626785b3d63085365b664064e2d38662
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 13:13:30 2011 -0500
+
+    improved the doc of some methods
+
+commit b6d0e78bde68d10c0260bf05e4e286f130767d45
+Merge: 7d80baa 2b1f868
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 25 13:08:43 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit 7d80baa0581547dd100bfd7a69a20051dae97420
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 25 13:07:10 2011 -0500
+
+    scene: preincrement iterators
+    
+    avoids an extra copy
+
+commit 2b1f868e331ccf60529640509bdc672253353ab2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 11:48:21 2011 -0500
+
+    adding properties to the build system
+
+commit 6e56daf452ce18890f7bba16ac9ec66050fb7147
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 11:45:55 2011 -0500
+
+    adding properties from Toonloop.
+
+commit 98db547e28c9f5a6d79bc159bbb3ece2f4da58e9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 11:30:57 2011 -0500
+
+    Fix bug with multiple translators not all pushing
+
+commit 0f5497f4c66b1ccd5efeae977545aeacdbbd838a
+Merge: 82c709d 67c5e9a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 11:19:07 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit 82c709dfca558ddf4308e42cd7848cf186e320cb
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 11:18:56 2011 -0500
+
+    new private method to flush osc messages for a conn
+
+commit 67c5e9a4f23a1e73c7e3f6540f9882fe9ccf5224
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 25 11:04:32 2011 -0500
+
+    scene: hasTranslator should be const
+
+commit 861d8ab4874b7f8d9e9d9100774a9ee6f06fc388
+Merge: 84bed77 0813961
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 10:58:36 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit 84bed772e67f2ddb2a847fbbf3d19f2cbe90730b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 25 10:58:22 2011 -0500
+
+    addTranslator returns a pointer
+
+commit 0813961efb4da067964f6029febe3ea4e79e3874
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Feb 25 10:46:12 2011 -0500
+
+    updated TODOs
+
+commit 78e0f099a0bfe17173b44acf4c2c5de083949131
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Thu Feb 24 19:13:30 2011 -0500
+
+    added SAT logo to doc
+
+commit 63db324f7eab007f423c00776157366c9ad170a8
+Merge: 91d5fc2 2aa4389
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 24 18:41:51 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit 91d5fc24865977d4a4e2f1e7f50a50dd38734a00
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 24 18:41:08 2011 -0500
+
+    updated TODO
+
+commit 2aa43894402d8b83cf19fa473bfe2662ad67e1df
+Merge: 78a4621 545aba5
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Thu Feb 24 18:20:56 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit 78a462155883a0d86f916d08fcbfd5539d71c778
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Thu Feb 24 18:20:36 2011 -0500
+
+    changed distance gain attenuation to control Bus level, instead of Input level
+
+commit 545aba5af4a8c5c5954ddb9db5a2a40263453d0e
+Merge: f537e22 0bb5284
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 24 18:19:11 2011 -0500
+
+    Merge branch 'master' into multi-translator
+
+commit f537e222e7768813e4558044a36ac7f406de3f8c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 24 18:15:10 2011 -0500
+
+    use addTranslator, not setTranslator in example
+
+commit f9a0d39f810377530eb47a3f5425ae46f0033b02
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 24 18:12:25 2011 -0500
+
+    updated .gitignore
+
+commit d0740d0471f15e33baa3b609eeac3f1668412c2b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 24 18:12:02 2011 -0500
+
+    can add/remove translators in the pd patch
+
+commit 22b215a05e4b4cf065f81e2d5ce082db13d9349a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 24 18:10:11 2011 -0500
+
+    fixed missing implementation in wrapper.cpp
+
+commit 3e0e85c3cd6130d3bd65a115f52cf9c984abe5a9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 24 17:54:34 2011 -0500
+
+    added test_multiple_translators
+
+commit 4bda2e4e138393de642d12710c2d14d7339755de
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 24 17:46:39 2011 -0500
+
+    updated examples for multiple translators
+
+commit 49b8823c9e476d4ffec861f59d811095eb843c99
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 24 17:36:21 2011 -0500
+
+    fixed tests
+
+commit 63f3541cdefc559a235faf4462ff3fa3e75ce47e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 24 17:33:55 2011 -0500
+
+    using a map of translators
+
+commit 0bb52846cc3d9cea26037a423b7765d78218ac10
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Thu Feb 24 17:21:32 2011 -0500
+
+    updated debug messages in hello_world example
+
+commit 3f8baffdf9d0f58518c30062545ead105a339048
+Merge: 0e61c2e 19e4dba
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Thu Feb 24 17:17:16 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit 0e61c2ee3255fa86fb8c017dceb06f07f6e52965
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Thu Feb 24 17:17:06 2011 -0500
+
+    changed scene transform methods to setTranslation, setOrientation, setScale (instead of translate, rotate, scale)
+
+commit 19e4dba99499a8bc5b1db34fe9ab6a8052015656
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Feb 24 16:48:19 2011 -0500
+
+    DmitriTranslator: added getSender method
+    
+    This let's us send arbitrary messages to the Dmitri translator.
+
+commit e920403e9f77e424707076ed717b2c9547c9cdd9
+Merge: fe2e625 c7dba99
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Feb 24 11:48:48 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit fe2e625b9e7226b5796b5514c9a849b9c9fe85ae
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Feb 24 11:48:27 2011 -0500
+
+    README: added note about building from git
+
+commit c7dba99b63406a6e478f17beee703908ad1faeb8
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 24 09:35:49 2011 -0500
+
+    fixed a typo
+
+commit c80c9a97c6e5ec89f6924be2ceca3a114ba162d6
+Merge: acc29cd 854ae82
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 24 09:24:35 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 854ae828d06f7086603b800654958e152c11a743
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Feb 23 16:57:12 2011 -0500
+
+    updated HACKING
+
+commit 3bec4678007f7703072f19d49ac8aaadf43b9f41
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Tue Feb 22 18:19:44 2011 -0500
+
+    fixed below-equator mapping for D-Mitri translator, and added D-Mitri option to spinspat example
+
+commit f79ba60778c993a62e7c64fd046b5778f4dea817
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Tue Feb 22 13:55:54 2011 -0500
+
+    changed a couple 'and' and 'not' into && and ! for compatibility with windows
+
+commit 62e7086e160a9fed551874676ad9b838d8824c23
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 22 13:33:48 2011 -0500
+
+    configure: drop pedantic flag
+
+commit acc29cd89baf9c30d22d7b60f51e0742ad52e887
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 18 16:56:46 2011 -0500
+
+    post-release version bump
+
+commit 680840e784535894525ba94540548dabde910de9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 18 16:10:13 2011 -0500
+
+    version number bumped for a release
+
+commit 9b7dede4da75aacb5548f255d47ed38f3f9740dd
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 18 15:42:29 2011 -0500
+
+    Makefile.am: fixed clean-local target
+    
+    make distcheck needs to clean files in the topbuilddir, not topsrcdir
+
+commit 0a29228b79cba467f9f156129059a5390660b317
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 18 15:32:32 2011 -0500
+
+    removed .exe in Makefile.am
+
+commit 5dfa5d1c3fd8f9969aa67ea273d3c6a61cbf1f71
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 18 15:21:11 2011 -0500
+
+    packaging the man pages
+
+commit 6769e025cacbf52d03797b081721fee425c39c50
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 18 14:56:41 2011 -0500
+
+    updated version number for a release
+
+commit 2af4357488f6847ecd11a878507aaf7045c4b9fc
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 18 14:55:06 2011 -0500
+
+    updated NEWS
+
+commit 7cd5b44111f9abb2cd9a6e56cb003a16614602fd
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 18 14:28:36 2011 -0500
+
+    updated packaging and doc
+
+commit b9f1014dee76ce053381f83744fcde030f14c342
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 18 14:13:47 2011 -0500
+
+    updated NEWS. Never forget to update it for tags
+
+commit 9b7ab30643b009fa98877d37b376d0574b5ec294
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 18 14:11:12 2011 -0500
+
+    removed premake4.exe and updated doc for win32.
+
+commit 2985a717ae9407f9848c49ccf5ff0ee2a1743f67
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 18 14:09:03 2011 -0500
+
+    re-updated libtool versining doc
+
+commit f9d081adb1b02d721662db9ac37a5ec4921e3b94
+Merge: 39373e4 8344d1a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 18 14:07:16 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 39373e4f584e924db068bed63b283c51908b6cd3
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 18 14:07:07 2011 -0500
+
+    document libtool versioning
+
+commit 3620c04417a93f0a61bf950f0e5f7666e05a2844
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 18 13:45:08 2011 -0500
+
+    added notes for win32
+
+commit 8344d1a14f305a6d3b5d3e1539b5cdd2c9e7f121
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 18 12:27:10 2011 -0500
+
+    configure: fixed SPATOSC_SO_VERSION
+    
+    Should be in format [current:revision:age]. Since this is the first public
+    release, it starts at [0:0:0].
+
+commit 6cbcf7d22510292c796a4b474f15ca1fe7e514e8
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 15 13:51:49 2011 -0500
+
+    configure: incremented version number
+
+commit a363b17655dec89737d41b910d40489c70bbcce0
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 15 11:29:23 2011 -0500
+
+    updated OSC document
+
+commit edffaaec4c5553f3d672e5b10a755a7ac75c98bd
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 15 11:23:50 2011 -0500
+
+    tests: check that we can create nodes over osc
+
+commit 062cf0040bf71ffc42818fc4f31bc9f616da9b27
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Sun Feb 13 12:14:27 2011 -0500
+
+    Node,OscScene: use checks rather than assertions
+    
+    If we send the wrong message, the client shouldn't crash.
+
+commit 02c36d6723f2069c7c9094b05e7418062a7c63ea
+Merge: 8ecdbad 5d31f27
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 11 16:59:03 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 8ecdbad53dae82743b9b88f12eb12be983f158c9
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 11 16:58:13 2011 -0500
+
+    osc_scene: the scene itself can receive osc commands
+    
+    So far only does create_sound_source and create_listener
+
+commit 5d31f27f808749041b99243573dd0e1ee392d6bd
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Feb 11 16:57:33 2011 -0500
+
+    updated vbap example to work with spinspat example
+
+commit e9af9980e0571ff0f9e60957e6cdba633a9ca18c
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Feb 11 16:36:18 2011 -0500
+
+    added spinspat example (see www.spinframework.org)
+
+commit ecb3d5974d00cb525180517afa237a5704be6357
+Merge: c8e8409 0327ab9
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Feb 11 16:34:47 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit c8e8409deb710dd5c00148ee2d344654af44c379
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Feb 11 16:34:40 2011 -0500
+
+    twearked configure.ac for OSX
+
+commit 0327ab95b2beec595b8ea96c5c731fa8f8ca78d1
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 11 16:31:44 2011 -0500
+
+    openalspat: don't print so much
+
+commit 9e948116e9bd33e795d06cb2476bb54092953714
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 11 16:27:14 2011 -0500
+
+    openalspat: draw listener
+
+commit 7626f6d46e03988e3b94339d5328df9f92a1e355
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 11 14:47:33 2011 -0500
+
+    added README for examples
+
+commit 286226a6bebfa2d067c8eccbfdc377089d09137e
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 11 14:42:54 2011 -0500
+
+    flushed unused QuatToEuler_* functions
+
+commit e767f97406510f93563ebb3360d99bee0100c57a
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 11 14:35:31 2011 -0500
+
+    spatosc: passes -Weffc++ and -pedantic warning levels
+    
+    -Weffc++ was not left in configure since it can be difficult to maintain.
+
+commit 8e7236b2cbccee51b193e9276d6a5fe1e6c50a91
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 11 14:15:24 2011 -0500
+
+    wrapper: added transform-related functions
+
+commit 7dbcfeb89cdf913ac9f21cda398ac20eb3f2b75a
+Merge: 36b8cbf 25cd85b
+Author: Mike Wozniewski <mikewoz@thinkPad5.(none)>
+Date:   Thu Feb 10 19:16:19 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 36b8cbfc217de1cbe85a9ac2804e1f5b8e13b344
+Author: Mike Wozniewski <mikewoz@thinkPad5.(none)>
+Date:   Thu Feb 10 19:15:58 2011 -0500
+
+    finally fixed the euler/quaternion conventions in connection.cpp
+
+commit 25cd85ba49e9244fc269e16f19b661928f766b08
+Merge: 60a9b52 334e11b
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Feb 10 16:51:07 2011 -0500
+
+    Merge branch 'master' into store_coords
+
+commit 60a9b52b775bb0982889dea131a6b9ee1a69b2a4
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Feb 10 16:50:30 2011 -0500
+
+    transforms will retroactively be applied to existing nodes.
+
+commit 65867565aca090fc7510f762d4e4cdb16a2ecc73
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Feb 10 16:04:22 2011 -0500
+
+    get rid of getTransform, simply forward a few calls.
+
+commit 36a3ffaf82b8da319d8e0d39bbaae17162bae016
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Feb 10 15:03:47 2011 -0500
+
+    node: getPosition will transform the coordinates
+    
+    This is more stable than transforming them when calling setPosition, as the transformation might change, in which
+    case the node's position would be inconsistent.
+
+commit 334e11b320f2f2625e2a5ea7196708f1b56006b7
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Feb 9 18:11:12 2011 -0500
+
+    ogrespat: added initial labels
+
+commit 65eb17031724c6925a147f54bef21d6173940e41
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Feb 9 15:37:07 2011 -0500
+
+    ogrespat: added interrupt handlers
+    
+    This ensures proper cleanup on exitting.
+    Also minor cleanup in maths.
+
+commit 9cc8cf0b3b81af4c1cc3f040c6a1d2a70b672baa
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Feb 9 14:21:05 2011 -0500
+
+    node: ctor shouldn't call pure virtual functions
+
+commit e6143841112bc91fe96563b9352faf7a6955ffe8
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Feb 9 14:05:40 2011 -0500
+
+    minor cleanup
+
+commit 4f5d47cea5e0578b762f9da37a48256d47edb176
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 8 18:34:19 2011 -0500
+
+    node: added comment
+
+commit f20db093ad3fce80aff31cb53bec553a740f81af
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 8 18:11:29 2011 -0500
+
+    ogrespat: fixed segfault on window close
+    
+    need to set input pointers to 0 after destroying them.
+
+commit 81ca4916dee7f282e979bafba29702ea0ef0b3ee
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 8 17:45:29 2011 -0500
+
+    orientation also gets changed by transform
+    
+    elevation calculation still wrong
+
+commit eb369fd804141dfc15f4f7fa230e995cd0db7049
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 8 16:32:47 2011 -0500
+
+    openalspat: renamed audio_scene->openal_renderer
+
+commit c254a29329e68871285c28f038db932707426c7b
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 8 16:28:58 2011 -0500
+
+    openalspat: use geotransform
+
+commit 6ec7a053d7d4053997ae45ae209c6cba53661d21
+Merge: 61e7b68 4bf26fa
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 8 16:19:28 2011 -0500
+
+    Merge branch 'master' into geotransform
+
+commit 61e7b680efd2597df3303c6e13452bcfb01e4eca
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 8 16:18:53 2011 -0500
+
+    geotransform: added rotation, and test for it
+
+commit 47d3198e94a8b5ad32c31ddae21eed9f71579fe3
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 8 15:24:07 2011 -0500
+
+    added test for scaling
+
+commit a7f95c9d0fb8f49f008ae407f2c71e0a4244f0e7
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 8 15:13:26 2011 -0500
+
+    geotransform: added scaling, now one vector per transformation
+
+commit 4bf26fa299cb3e7e2f720611dc6ad22cdafcaac8
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 8 14:53:31 2011 -0500
+
+    ogrespat: increase OSC flush frequency
+
+commit bd28365b25fa1e495404ab0d7d11aa69dde7e4ef
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 8 14:46:09 2011 -0500
+
+    added flag to check the transformation is more than an identity
+
+commit 4b06d799241bb825701c4b9f668e0ac1942b107d
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 8 13:53:56 2011 -0500
+
+    added geotransform class, test for translation only
+
+commit b1da59957d81a4b7aa0244350e56ed8e868fecc0
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Feb 7 14:16:42 2011 -0500
+
+    Node: fixed asynchronous mode.
+    
+    In node, we shouldn't assume that the new position has been sent after calling onNodeChanged.
+
+commit ed108a1f0c5b25007f06347762d03988bd2dd401
+Merge: c052fe6 e9dd232
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Feb 4 18:43:22 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit c052fe6b247f3a55687b04c9c3f32e0f3769780e
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Feb 4 18:41:51 2011 -0500
+
+    slightly tweaked example for vbap
+
+commit e9dd2326d537c4b27043d5580076505127c86cb0
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 4 18:40:16 2011 -0500
+
+    only push messages if connection is active
+
+commit 0e404bc6cdcea9d51b5fa72bf4de986ab1e06e8c
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 4 18:16:33 2011 -0500
+
+    ogrespat client can now control our openal renderer
+    
+    flush method does not work though.
+
+commit 1fbdf33f35e890b2d06bdaebcb794f8b96a2337a
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 4 17:39:26 2011 -0500
+
+    ogrespat: renamed classes
+
+commit cb8e7caf3a6eb3451ab0b3ed4ad0f7e2f3577507
+Merge: ae7ddae b97352d
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 4 17:32:56 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit ae7ddae1eb421a81581395eaf9b4c052e5241007
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 4 17:32:43 2011 -0500
+
+    fixed make distcheck
+
+commit b97352ddaa5d5a44c3b579dadaf6c0ae14e4b86d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 4 17:30:00 2011 -0500
+
+    somehow improved the pd-vbap examples
+
+commit d0e2c933ceb74749472cb700465c3e47ca8ed1af
+Merge: 55d60de dbcf352
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 4 17:29:52 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 55d60deaccecb531c898e991a946cfc8c835a882
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 4 17:17:42 2011 -0500
+
+    updated old clutter-only example
+
+commit dbcf352c00843a5e2119cd79524601bc68dc1d00
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Feb 4 16:56:48 2011 -0500
+
+    node: updated comment
+
+commit 4c33f6f4df4a400afb6d6432c544ca3c4f41c776
+Merge: 25f7dca e167bc3
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Feb 4 16:31:10 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 25f7dca0423829f4e8db2bfd2a351fa727bffa40
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Feb 4 16:31:01 2011 -0500
+
+    the correct azim_elev test
+
+commit e167bc35b1cb25b217f4fb469d6ad5459be5ec89
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Feb 4 16:10:08 2011 -0500
+
+    got rid of some tabs
+
+commit 8445b360ae6b9b6146e99eccdf3d6aad8c138e34
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Thu Feb 3 20:59:05 2011 -0500
+
+    changed a bunch of math stuff, specifically euler-quat convention
+
+commit 6bf8f0e938d5c852f5631478c589eaec9e9bb7a1
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 18:34:31 2011 -0500
+
+    actually implemented the pd extern's setTranslator
+
+commit ddea0ba6bb9eff6cace67fcb48c2473d100500a3
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 18:31:07 2011 -0500
+
+    use UNUSED macro
+
+commit 7e478069db5d4530bf79b9ea578a7a81898e6b12
+Merge: 1f3a4ed 7d49c52
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 18:23:44 2011 -0500
+
+    Merge branch 'master' into pd-external
+
+commit 7d49c525d216f1675649bb0d69e0e510850c5df6
+Merge: b417e7e 0817622
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 18:23:30 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 1f3a4edbe1a3ef4c046f9e2b0fc98dadcaa47be6
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 18:22:44 2011 -0500
+
+    No ctor args in pd patch
+
+commit 972021dbddffd4ce674a0ff450cc3b70b8851018
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 18:22:31 2011 -0500
+
+    Default translator is console
+
+commit 7aa6b17f7824172f8a20442f599652bed2baf091
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 18:19:03 2011 -0500
+
+    added a ConsoleTranslator
+
+commit 1ea2668ab8deef127047518d38c8998d26e874fc
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 18:10:40 2011 -0500
+
+    support ConsoleTranslator in wrapper
+
+commit 8ef48bea88bdd9109d3022fc9c1d7f9845da6c4c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 17:57:07 2011 -0500
+
+    updated pd patches with new order of args
+
+commit 710bdf755df47ea350b711a2c6c4a946938225f3
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 17:54:52 2011 -0500
+
+    changed order of the args
+
+commit ca268cd2d38e8662c7ce127ac69c6b7016b21d4a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 17:53:22 2011 -0500
+
+    implemented setTranslator
+
+commit 3ca6efc18e3964a41ca3ab658913d103a7c8ff58
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 17:53:09 2011 -0500
+
+    updated pd patches
+
+commit e6b7a78bda92026f2cdffe956e26d34286d5fb22
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 17:37:48 2011 -0500
+
+    now call setTranslator in ctor (again?)
+
+commit d523c0988bd74cf7d12de9f5f28d461cbb98f79b
+Merge: 9017e10 f4f3e93
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 17:34:18 2011 -0500
+
+    Merge branch 'pd-external' of github.com:mikewoz/spatosc into pd-external
+
+commit f4f3e93a6a55fc906f0e68f5eaeea2e9fcd40f33
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Feb 3 17:32:00 2011 -0500
+
+    fixed pd external example
+
+commit 9017e105b81eb36cf4efd7c4d786bcbf9c9c48ae
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 17:31:10 2011 -0500
+
+    pd-external: clearScene works
+
+commit 0aa880984c51634fe3513eb813be84e4527021e7
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 17:18:13 2011 -0500
+
+    [spatosc] can set translator in ctor
+
+commit 983a04c95fcf25e4f09e7312e7ee2299a8e61333
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 17:03:08 2011 -0500
+
+    [spatosc] externals doesn't segfault anymore
+
+commit 0817622641726cd8ab7f207db5a15eea5e2f18ab
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Feb 3 17:00:11 2011 -0500
+
+    more constness
+
+commit 4df4dfec12965e1d06e6a397623fe50eef377a39
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 16:49:20 2011 -0500
+
+    [spatosc] external: builds but segfaults
+
+commit fbee86e25328e5a7ce5a9bcec7f4582a1988dfcc
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Feb 3 16:49:03 2011 -0500
+
+    cleanup regex stuff a bit
+
+commit e7fa4d55c649fb2611b6422e4fea16358b32455a
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Feb 3 16:18:49 2011 -0500
+
+    Node: use API rather then getters
+
+commit b4c0bfe2ec7f3e0a2505d82f2bd8a4f28cbc97b0
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 15:42:08 2011 -0500
+
+    adding a bunch of files for the spatosc pd object
+
+commit 86cb873f881c8d72245080da77add15988cb231b
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Feb 3 15:24:23 2011 -0500
+
+    connection can now handle osc messages
+
+commit b417e7e792eb191620237dfdec6b922d3cfb1cdc
+Merge: 554bc60 7128e79
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 15:22:19 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 7128e79b06492ef64ae785566d573345854bf671
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Feb 3 12:47:16 2011 -0500
+
+    created new subclass of scene that can receive OSC messages
+
+commit 554bc60cefad919db578d2378465e1d135de2b8c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 12:44:56 2011 -0500
+
+    adding a TODO for ogrespat example
+
+commit 88586d88d874ddaf24d3e544961cc5f96f52d617
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 12:43:25 2011 -0500
+
+    trivial change
+
+commit 563fd123341dfe5ad2b3480ddf63371d46565a97
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Feb 3 12:22:19 2011 -0500
+
+    renamed *.{cpp,h} files in ogrespat example
+
+commit 2d4df5ad4283db178311b2deb8cee247e97c9645
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Feb 3 12:13:00 2011 -0500
+
+    updated TODO
+
+commit dbdd8dad4c8b572559d26ac00bfcbc20a70dfdaa
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Feb 3 12:05:23 2011 -0500
+
+    connection-dependent messages have connection dependent path
+    
+    Instead of sending things that depend on source and listener as source messages, they are now connection messages.
+
+commit d9a32b9d2031c9e6e8ccfe7b47f2370143bb5676
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Feb 2 17:28:28 2011 -0500
+
+    scene: fixed error messages, extended test.
+
+commit f945fc525f83162edb7f8ab778fcae5c0660582b
+Merge: 440a2ac 4a46d49
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Feb 2 15:31:28 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 440a2ac4ce9abb6c0c314467fda1535e1b6b5300
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Feb 2 15:31:14 2011 -0500
+
+    updated doc namespace (not used, though)
+
+commit 4a46d497ba8463463a10565715e51541c7953a55
+Merge: c2dd874 6af1592
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Feb 2 15:18:35 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit c2dd8741bd004e32297c0363e0075177763ecada
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Feb 2 15:18:15 2011 -0500
+
+    tests: also check listener in check_spatdif_osc
+
+commit 6af15924aba6807d172b2f417360d94026f6a41f
+Merge: 9515ef9 cf15d0f
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Feb 2 15:07:27 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 9515ef9b70c3340153abbb7175fe6dc16d1bd867
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Feb 2 15:07:06 2011 -0500
+
+    added check_osc.cpp
+
+commit cf15d0f82e97dbab0a8c7d0b825de4d01d000bf6
+Merge: 45728b0 b21020f
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Feb 2 15:04:04 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 45728b0be893615b2c637410170515a75775bdcf
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Feb 2 15:03:13 2011 -0500
+
+    remove osc handler for node when node is destroyed.
+    
+    also fix whitespace, and create handler for listener.
+
+commit b21020f0914f6915b6859bead7723463447deb1e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Feb 2 14:13:40 2011 -0500
+
+    use "||", not "or"
+
+commit 27e342a144a6065b77055baf161a928a1c032f49
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 1 16:52:02 2011 -0500
+
+    TODO: updated
+
+commit 2895cb9bc867423de965068faae8dd7dd10c2971
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 1 16:42:03 2011 -0500
+
+    tests: added check_spatdif_osc
+    
+    Also cleaned up tests/Makefile.am
+
+commit 099f72844d86b410c571791df2a2e096e4003212
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 1 16:41:36 2011 -0500
+
+    ogrespat: cleaned up comment
+
+commit 4d8b645d9effb8fbf1560147eec9004a56d4abf7
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Feb 1 14:09:43 2011 -0500
+
+    node: added ostreamer operator
+
+commit 9d372c11c5c4ed46c4ccc9e4ab9868b1ad7174bc
+Merge: 5ce99e6 ab71b8b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Feb 1 10:54:58 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 5ce99e69ccf1290f15689e3df4fe0448078420c9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Feb 1 10:53:26 2011 -0500
+
+    ogrespat: added a 2nd Ogre node
+
+commit 6b4637298317a5d5ebe00ac8608166b11452a911
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Feb 1 10:53:01 2011 -0500
+
+    don't quit upon Q pressed
+
+commit b914614ac6af3ac417197e7fa47580ada77be538
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Feb 1 10:50:11 2011 -0500
+
+    spatdif_translator.h was not in the main header
+
+commit a35ad7e630be31ee9e1e5df5d802eeaf15192282
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Feb 1 09:05:08 2011 -0500
+
+    ogrespat: style changes
+
+commit ab71b8bc9773ba6da3871da608eb6b5a5bbe0552
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 18:03:05 2011 -0500
+
+    connectFROM and connectTO push down to derived classes
+
+commit 5ee1f492f6fe7deb0499668b3b8ba9c46ac325a3
+Merge: bd45564 46a4d74
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 17:57:48 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit bd45564873cd49f48cb84bca2e14ba709f263c9b
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 17:54:17 2011 -0500
+
+    Scene is no longer friend class of node
+
+commit 46a4d74cf547b34dde7b14ae2ffc88e349366e32
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 17:30:24 2011 -0500
+
+    updated doc
+
+commit 946af5249d3f48f9fb70a730434476e64b6f8e31
+Merge: 095de18 d6490b0
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 17:24:45 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 095de18b27f8a80b45aceef1f2bc77f5e10abf01
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 17:24:34 2011 -0500
+
+    using more getters
+
+commit c6b5b4100474a40466538df391d577c6248fd5a2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 17:19:47 2011 -0500
+
+    less friends
+
+commit afd26e6b36bd8e0ca1522b519cad40e9531b6dba
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 17:17:45 2011 -0500
+
+    fewer friends
+
+commit d6490b031fa71bee718a888b9a55b338d175e6bf
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 17:15:03 2011 -0500
+
+    hello_world: updated example
+
+commit d2c1b348b254dae0f38c27d6cd9e7bfddb50cef8
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 17:14:06 2011 -0500
+
+    openalspat: fixed default port name
+
+commit eebbfb7d1b3bbae98d04ee0ef68a8c3cbf3ea3ae
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 17:08:29 2011 -0500
+
+    getSource and getSource return Node pointers
+
+commit 333b89e958e6abdd1b5dadb62ca088c31cda2e67
+Merge: 7258c07 de82a69
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 17:06:35 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 7258c070c263b11b54d25dad8236542bae758def
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 17:06:25 2011 -0500
+
+    more cleanup, removed unused header
+
+commit 1261f831284afecf67aa7ae6150c0b82c8e83c7b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 17:05:28 2011 -0500
+
+    updated TODO
+
+commit de82a693bb60e69554dc7b8529ad79bba7c1be47
+Merge: d7ec684 0bd4347
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 17:03:02 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit d7ec6847618e274902e76d5ed15df33ef15a1d2b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 17:02:42 2011 -0500
+
+    Moved default ports to the concrete translators
+
+commit 0bd4347094d761fd9b90a71a0b7a9a6e68e60679
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 17:00:30 2011 -0500
+
+    maths.h: doesn't need the iostream header
+
+commit bc438fc8ee40cb9b3ae09bfee4309a909f780132
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 16:53:42 2011 -0500
+
+    updated TODO
+
+commit bd11863e24e2602918edb0758964ed4bdeec8837
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 16:48:20 2011 -0500
+
+    Added a test for AED positions
+
+commit 2a1bdfd5b5c9846666f54e59bb8d7befc38b4c7f
+Merge: 715aac6 64e32c7
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 16:31:34 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 715aac642f704332da2de6ec48ce9b839652ff13
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 16:31:23 2011 -0500
+
+    removed some todo
+
+commit 64e32c76d36acf46b766caf063aa8404cfb9c490
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 16:29:58 2011 -0500
+
+    updated TODO
+
+commit a61210e3094db620529091f09184d5c9b0dd9b6d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 16:29:44 2011 -0500
+
+    Added Node.setPositionAED()
+
+commit 83ed2ef3353cebd1e54a53375396387eca5509d2
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 16:22:33 2011 -0500
+
+    node: warnings should be redirected to cerr
+
+commit bd94f5bc456fad08b0a86222f7212c6d86cecef4
+Merge: 9d2951d 5c58323
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 16:19:47 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 9d2951d1c309fd715cde297cb88d51a625121758
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 16:19:30 2011 -0500
+
+    node: delegate unknown method calls to derived classes
+
+commit 5c58323b8006d5f089af32b3b303f485a735b2f4
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 16:15:08 2011 -0500
+
+    fixed missing namespace prefix
+
+commit ee2c55804e8916ef11a67f9d3933312adf095f3e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 16:14:56 2011 -0500
+
+    renamed rot_ to orientation_
+
+commit 8e886b3359773fc3c57f190d1836b80d9b9e6570
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 16:12:01 2011 -0500
+
+    some osc handlers are not implemented
+
+commit 0c04ca11a705c1f844d457d20f01052230ac164c
+Merge: a95326f f300860
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 16:08:19 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit a95326f12b05b9966d63f03eba53fc94c62b59b7
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 16:07:55 2011 -0500
+
+    const variables must be in namespace too
+
+commit f300860d9e04d34203ab41b194770b87aa64d810
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 15:55:51 2011 -0500
+
+    openalspat: added some comments
+
+commit 442afacee9a8c54a7abd6fbad90f897c6fc35f9c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 15:53:33 2011 -0500
+
+    don't extract local classes in doxygen
+
+commit b6678db5ad6c3d2e9763a89a7684b95605ecf4b5
+Merge: b7c7c5d 8f9ef16
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 15:45:16 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 8f9ef1622cbbdb8f7f83bde45e8b78b021f17bf4
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 15:33:05 2011 -0500
+
+    node: removed verbose message
+
+commit b7c7c5d5959e1136f7b5fc20405264befd0fcbd2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 15:31:06 2011 -0500
+
+    style improvements
+
+commit 8b4284b2f0c83a69f2d8dd2ef651f930de1e14dd
+Merge: 2373662 5e92202
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 15:30:26 2011 -0500
+
+    Merge branch 'master' into osc-receive-nodes
+
+commit 237366250d4845cac6b75a49200e371c41446d0e
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 15:28:23 2011 -0500
+
+    tests: cleanup in check_spatdif
+
+commit e026f4ed1e55a3e468e975dabc364e8bac99403b
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 15:26:29 2011 -0500
+
+    tests: fixed unit test for check_spatdif
+
+commit 5e922029910a515c9f78c4305a2d1d6bc1cf5a8c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 14:40:38 2011 -0500
+
+    my most beautiful line of doc
+
+commit 7e0ebe66ba304840ecaa29b386ce769d2c6c329a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 11:26:03 2011 -0500
+
+    removed unused includes in tests
+
+commit f0cc74f47eeafc9f4276863024bd9aa6ac235dc2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 11:23:12 2011 -0500
+
+    fixed check_azim_elev test so that it builds
+
+commit d1d4af92208ef068595bf2f68e6fcbd0491f2cc1
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 11:21:43 2011 -0500
+
+    simplified win32 doc a bit
+
+commit 835ca70d98b2b2591f0720feed2f01032606dbe6
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 31 11:18:08 2011 -0500
+
+    ogrespat: Fixed ogre example for new API
+
+commit 7df92edba0c5f454977ad067fc25741e986ca5b3
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 11:17:26 2011 -0500
+
+    adding configure.ac to EXTRA_DIST
+
+commit bb2a585fef516ab1be97b7558ead12d1d51d5e04
+Merge: 9a875f4 7534e03
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 31 11:08:17 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 7534e03cef41a488ce468a711b0fe77885dcffdd
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Mon Jan 31 01:06:07 2011 -0500
+
+    added azim-elev test, and realized that our connection computation is wrong. will need to make the coordinate system and handedness very clear and fix the errors
+
+commit 992681b3fd90b7639a77b08a7df7021feb8eeb73
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 28 18:36:29 2011 -0500
+
+    Nodes can now handle messages directly
+    
+    Client must specify a receiver port for the scene if it is to handle
+    incoming messages and dispatch them to nodes. The check_spatdif test
+    is currently broken.
+
+commit 9a875f49b4ad1cdad5af2bb9adc19179f1a755a0
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 16:13:13 2011 -0500
+
+    updated doc once more
+
+commit a52b69407c57c8b29ff7a123fe6051bee3a14889
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 16:10:09 2011 -0500
+
+    updated lua once more
+
+commit 69f8a5c27add43ec35ed13a8d85dd7e50b6f32b0
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 16:00:20 2011 -0500
+
+    updated win32 doc
+
+commit a181dfc8bc50d9777c638df84d15be779df4a1f2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 15:50:52 2011 -0500
+
+    updated doc
+
+commit 77ed46e2b4b0b75b77971932a580cd50fd50caab
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 15:41:07 2011 -0500
+
+    removed .lib suffix in lua script
+
+commit 2e64084b8a71dd23dabda9d4d89f05a0d492b6bf
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 15:38:45 2011 -0500
+
+    bug fixes in premake4.lua
+
+commit 4aced93d17d48b4dae44360a47cde15c2547a610
+Merge: 746abe0 7402be5
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 15:25:44 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 746abe0a9e1c1bcd237631dab7e74d2efb53b849
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 15:25:22 2011 -0500
+
+    updated win32 doc
+
+commit 107372f6be2ace2d6d741dd02b59cfc838b70303
+Merge: d040ca6 7402be5
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 28 15:24:26 2011 -0500
+
+    Merge branch 'master' into osc-receive-nodes
+
+commit 7402be5a64e9bd7e1d6458b3b04c391bcb802e89
+Merge: 9772571 83ff262
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 28 15:16:55 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit d040ca627dc7008b4682bfb090dbea512cd42a3d
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Jan 28 15:16:55 2011 -0500
+
+    towards adding handlers for each node, to be parsed in spatdif_receiver
+
+commit 97725710d702026c3dd11b1bb32195f5cfdbb72c
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 28 15:16:13 2011 -0500
+
+    removed channelID, use ID
+
+commit bf8722210240a190e4d7b267132de1155d1573dc
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 15:12:58 2011 -0500
+
+    updated doc for win32
+
+commit 83ff2629b84338543de8bd02e4a1b91615065678
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 15:08:05 2011 -0500
+
+    updated doc for win32
+
+commit bc8b983fba2a45aea948b6439d7f80bfee434707
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 15:02:53 2011 -0500
+
+    implementing our own isNan
+
+commit 1855e5c13e39d4eb2b0596d9c365fe95b8c42324
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 12:39:30 2011 -0500
+
+    updated doc about Euler's angles
+
+commit a9016daa61c84be7cd40fd7f3b5b8a0e1cf987b0
+Merge: e5f4a23 f6931c8
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 12:37:57 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit e5f4a23a5d2c381d51e14b2c8d3a93958cd5cdd7
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 12:23:22 2011 -0500
+
+    more doc
+
+commit f6931c85144c546d2f7b0b6aa41cef46c335c444
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 28 12:12:04 2011 -0500
+
+    updated OSC
+
+commit 9252ac26b1add0deca5f79d0d775fdff2aeb5d41
+Merge: bdb1fb0 1d9c7d6
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 28 11:59:58 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit bdb1fb037153fb2a7b44f59187e1223656ae450b
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 28 11:59:48 2011 -0500
+
+    added some doc
+
+commit 1d9c7d6dd1ab178bf6c83150a9d7ae33af6c1043
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 11:56:15 2011 -0500
+
+    more doc
+
+commit 6cb251f5210a496677e0a544cec86090c5ae6fbc
+Merge: 8523824 3e082f1
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 11:55:35 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 85238248b9b6ced495eabe66547f60289bd5242d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 28 11:54:11 2011 -0500
+
+    more doc
+
+commit 3e082f178b927e069486a040e405047498c03426
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 28 11:50:09 2011 -0500
+
+    spatdif_receiver: receive more than one message at a time
+
+commit cdda9b40380d5044492b7ea96cbb3ddaaf4289bb
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 16:38:55 2011 -0500
+
+    translator: use gainDB in reporting
+
+commit 9caea65f18cd0f48ae32e28b12a67eed5bb2ee2b
+Merge: 14bb308 19910f6
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 16:14:45 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 14bb308aa7e1a01d2d4e3d82550fce75ff83c32c
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 16:12:22 2011 -0500
+
+    dmitri_translator: only pushOSCmessages when state has changed
+
+commit 19910f683b9e59e6525cf5e831c258565c9d6335
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 16:14:18 2011 -0500
+
+    more doc for asynchronous mode
+
+commit a4e4c2c75b8b405a2bc31eb4896759d9a4dbe04c
+Merge: 3cdaa54 7250fa3
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 16:09:21 2011 -0500
+
+    Merge branch 'async' of github.com:mikewoz/spatosc into async
+
+commit 3cdaa541ba1fc650a423f00b3ea9b8615b6855bf
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 16:09:11 2011 -0500
+
+    critical typo fix
+
+commit 7250fa3b661b449d0d8566d55dc0c469f0d1cf2a
+Merge: 4d4440b 04eccca
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 16:08:27 2011 -0500
+
+    Merge branch 'master' into async
+
+commit 04eccca59bb29f72d63fa4d76a0ebfc5c05dcea9
+Merge: dd4cb0f 601e6b0
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 16:08:20 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 4d4440bd06d20170443ff25e8dbbfee60ae527bf
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 16:06:43 2011 -0500
+
+    added tests/check_asynchronous
+
+commit 601e6b0dce544fcf07813585e3f86b793c37d6d5
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 15:56:24 2011 -0500
+
+    setTranslator can be use to set the translator's verbosity
+
+commit dd4cb0f3e6e291f91099c387b7975bcb700425cc
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 15:52:39 2011 -0500
+
+    added asynchronous mode
+
+commit 81ae0840c8535b4d987bc13e2c8f539e18766e68
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 15:51:27 2011 -0500
+
+    dmitri_translator: gain is supposed to be in dB
+
+commit 8ae3ecd3b65cc1d68870dbe2b987585158dce891
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 15:37:03 2011 -0500
+
+    spatdif_receiver: better comment
+
+commit 14720e7f1d6e714390d0de86eeb8c361fbb4a420
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 15:36:15 2011 -0500
+
+    spatdif_translator: only send computed values as needed
+
+commit 5411d737713615a6418e3811ef7d0c578cf24889
+Merge: 33f2acd 20966ae
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 15:27:34 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 33f2acdef23ef5860218bd773114a3f418ab781a
+Merge: 6f872b0 c8dc137
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 15:27:23 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 20966aeb830038927c7d12a50fbc6bf27ce8e29b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 15:27:15 2011 -0500
+
+    updated TODO
+
+commit 6f872b0da4ce4cac4ec99cc7663b1ab1df5f65e5
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 15:26:58 2011 -0500
+
+    node: only send new position if it hasn't already been sent
+
+commit c8dc137a656f2149e576856728e1b871ababab95
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 15:24:10 2011 -0500
+
+    setConnectFilter returns success or not
+
+commit c8cfcb897ec7367f8871191c208c6d942f520ad8
+Merge: c0f7421 cfe98cd
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 14:54:17 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit c0f7421726ff4bfcee0444db4398dc230b76954c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 14:53:56 2011 -0500
+
+    Make sure HAVE_REGEX is set before include regex.h
+
+commit cde2c1230994cba96417b271844535793c6bcd52
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 14:53:21 2011 -0500
+
+    Mac OSX hacks should not be effective on GNU/Linux
+
+commit cfe98cdfc0e71ff37fda9b2e37385cf09d538952
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 14:52:34 2011 -0500
+
+    fixed HAVE_REGEX checks
+
+commit 0d4f4092cbc9be147f22b5e52064611cac9ad493
+Merge: d49f4d0 22800fd
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 14:50:02 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit d49f4d017016045ad60ff79f9f40c448ecbe42b7
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 14:49:42 2011 -0500
+
+    fixed check_spatdif
+
+commit 22800fd69383595af00fa226dd5aeb6cc0f0aaf6
+Merge: 5c70a9c a3cbc8b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 14:42:25 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 5c70a9c4ce7ced094b9ea7ab76cea769c138ca4d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 14:42:17 2011 -0500
+
+    updated TODO
+
+commit 1246f9766f464d8e45efd9cd2c862961d51d6cd3
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 14:24:30 2011 -0500
+
+    removed deprecated TODO
+
+commit a3cbc8bda9f5b4aa39b490037c1f257ce8745b5e
+Merge: 114fead 665df19
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 14:05:12 2011 -0500
+
+    Merge branch 'master' into strict_node
+
+commit 114fead974fe0152a9a9e2c1b48031a071e6fa99
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 14:01:56 2011 -0500
+
+    use source and listener pointers when you should
+    
+    avoids lots of downcasts, potential pitfalls.
+
+commit 665df19e70b5ec459477af6bd2ea877c7a226699
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 13:33:28 2011 -0500
+
+    renamed a badly named iterator
+
+commit f6c0653c57fc04a9f2bcd61d4a55488c1bba49f3
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 13:31:14 2011 -0500
+
+    renamed iterator typedefs to CamelCase.
+
+commit 7b4f738d83f4a2c8e05e4f7713a656e8c74c0b51
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 13:19:43 2011 -0500
+
+    Better names for vector members of Scene
+
+commit bb11ed5397d91f43a1f05e397683693d81aa3213
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 13:10:50 2011 -0500
+
+    Improved how we clear the vectors
+
+commit 2f34fb396fe10257b22cd14bfb75ee1a8a1d4a66
+Merge: 2ec5257 be3d7dd
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 13:04:28 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 2ec52578e4c58fc6753127d0480a0dfdf9f8b2aa
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 13:02:16 2011 -0500
+
+    wrote Wrapper.clearScene and Scene.deleteAllNodes
+
+commit be3d7ddbd50f41f7a77b3ac70fe4233fb5dee2d2
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 12:49:56 2011 -0500
+
+    added more details about geotransform
+
+commit 3db47a02e7ad592908e94e50bfc86209ac9a29c8
+Merge: 63fb422 5cb89f5
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 12:46:14 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 63fb422607bd5b6f74992569e3709587a311fbc1
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 12:45:46 2011 -0500
+
+    updated TODO and OSC
+
+commit 5cb89f55c8a7d9f3b001a7b7aaad9bb5e68d06bf
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 12:42:13 2011 -0500
+
+    adding a little svg file
+
+commit 7db947fcc769c679093df2179b3a55bb339ef154
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 12:41:54 2011 -0500
+
+    removed some white spaces
+
+commit 23aae2ccab8aac75a91befff2f4f0cb34dd4ab49
+Merge: eec4cfa 979de21
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 12:22:04 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit eec4cfa1eda3f4b5fd3a2030ef927bd3a0b0c6d2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 12:21:48 2011 -0500
+
+    really exclude some dirs from doxygen
+
+commit 979de215c5907f17178931c9b33ab4c26f8b5df0
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 12:20:37 2011 -0500
+
+    spatdif_receiver: fixed getID method, and example
+
+commit b5b5bad733d4b1995d7dff84388cee1a54a60f46
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 11:57:17 2011 -0500
+
+    tell about windows doc in main doc.
+
+commit 1bd8908f245cb4f546030e3d76da7f4b74f7d5cd
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 11:50:06 2011 -0500
+
+    ignore .git and tests directories for doxygen
+
+commit 61f5b9063fc0d19614d32b2fc76b59298a07d843
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 11:45:17 2011 -0500
+
+    hide private data in doxygen doc
+
+commit 179a176f8ee950854555e41a87ae0986d701359a
+Merge: 4f69dcf e3822f0
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 11:42:07 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 4f69dcfd482b572767cee0da51866f53074d52e2
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 27 11:40:47 2011 -0500
+
+    hide regex dependency properly, fixes segfault
+
+commit e3822f070db680500cc22eacd04b257427c7982e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 11:29:54 2011 -0500
+
+    more to do
+
+commit 60a5d917615891d6b06beb9c0cf842a15d7df4f9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 11:29:44 2011 -0500
+
+    some windows doc
+
+commit 9f0feea4a08fa5f765bf3adb67969db9abd29fae
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 27 11:29:31 2011 -0500
+
+    more doc strings
+
+commit 31e7c85dee66a08d92c056e56d9d3bc80ae2144c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 18:27:51 2011 -0500
+
+    adding tests/check_connectfilter.cpp
+
+commit 24587d33f17713046735cbd18b14be179a6babe1
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 18:07:41 2011 -0500
+
+    adding debugging symbols to hello_world example
+
+commit 05292b9ad485fecb0c5eb8f833a7ae763d1051b4
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 16:43:43 2011 -0500
+
+    doc for function not win32-ok
+
+commit 52c5ec0fa5d1895b9f70990d637586c45a6ae3bf
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 16:36:30 2011 -0500
+
+    re-added config-msvc.h to DIST files
+
+commit fd97fecf92176c3c91b81e0b72996aff39f22ec2
+Author: Gabriel Morin <gab@sat.qc.ca>
+Date:   Wed Jan 26 15:03:53 2011 -0500
+
+    Need config.msvc.h for win32 build
+
+commit 285234d24314965cc9b05935463823c604e4e9b9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 16:26:30 2011 -0500
+
+    really need <lo/lo.h> in spatdif_receiver.h
+
+commit e3f6bf0be5eab1d55d9a6eeb9ffd78f479fdf9d5
+Merge: 8758b2f af022f3
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 16:24:50 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 8758b2f8ffbe49a27fb0fb14eb657e7a61a1514b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 16:20:08 2011 -0500
+
+    updatd coding style documentation
+
+commit 015f26e13fe5f4ad6d6e929f352be27687cbb7d7
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 16:19:11 2011 -0500
+
+    Use "&&", not "and" for Win32 portability
+
+commit 838dd757e44834fde9c0bac94affd2ae2a7edba5
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 16:15:08 2011 -0500
+
+    Use "||", not "or" for Windows portability
+
+commit af022f3922c0717dfd6d9bc915347babb292dae1
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 26 16:13:02 2011 -0500
+
+    updated TODO
+
+commit 581b5a5cb23d2829c6c1f2af672f3425e6142c8e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 16:11:56 2011 -0500
+
+    created memory.h, which wraps <tr1/memory>
+
+commit 5a5ff1e7fe4853210f24b1ba874e33686e567404
+Merge: a08d2d3 0293b84
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 26 16:10:33 2011 -0500
+
+    Merge branch 'master' into spatdif_handler
+
+commit a08d2d303aff0658bfdddff012d7af7da77e5097
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 26 16:09:50 2011 -0500
+
+    implemented spatdif_receiver tests
+
+commit 0293b849a05d7b18a2cb986e4f466d4e26809608
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 26 16:01:06 2011 -0500
+
+    configure: fixed AX_PTHREAD typo
+
+commit b0c940d11bc52672b8e021922f9bcd67443102c9
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 26 15:26:16 2011 -0500
+
+    toward a working spatdif handler
+
+commit 831247a743a8df19c9b944e57bb357b2688f6354
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 26 13:36:44 2011 -0500
+
+    added comment
+
+commit 43c5fb98dd9e16dc3a5654a8c756daffa6f08b91
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 11:56:40 2011 -0500
+
+    make sure we dont mess up flags before most checks
+
+commit 3ad8d44c53ab0148572d66d3eca90ae0818778ff
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 11:52:42 2011 -0500
+
+    removed more trailing spaces
+
+commit 2e046c944cfb79e0b3986d5128ec070bb475336c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 11:52:24 2011 -0500
+
+    remove_trailing_spaces.sh should also edit tests
+
+commit 22acadd91ab74089a83b0c1058cc1c6a576f98ec
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 11:50:20 2011 -0500
+
+    Compile with HAVE_REGEX if found. (was never used)
+
+commit ae16b19e8ec9522898752319fffc0437984620d6
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 11:43:06 2011 -0500
+
+    removed all trailing whitespaces in source files
+
+commit b31b124ba2862b725a86567a9e5991e32beeeefd
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 11:42:57 2011 -0500
+
+    add utils/remove_trailing_spaces.sh
+
+commit 0507700dbd78b08ed019407d2d82cba99c58870a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 11:37:28 2011 -0500
+
+    updated doc string in wrapper.h
+
+commit e5d95d6b53d92f544e646df8a88ba600d850ac88
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 10:58:15 2011 -0500
+
+    more cross-compiling notes
+
+commit 7aa0729f80768a97e120fea33b0aff8a54f4e4df
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 10:39:50 2011 -0500
+
+    updated win32_cross_compile script
+
+commit 2995a1c4ec89380ac25ad3cbe772c8cce3e0341a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 10:39:36 2011 -0500
+
+    guessing IP not supported on win32
+
+commit 1e4ece45aab13b9d7cc358142f89427bf10a0752
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 02:22:45 2011 -0500
+
+    check for pthread
+
+commit fedac1221abcbf41bca309696a30942954a36df3
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 02:02:22 2011 -0500
+
+    adding utils/win32_cross_compile.sh
+
+commit cd3841e04c1288cb91935538317b5e33f8ee3647
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 02:01:05 2011 -0500
+
+    less to do
+
+commit 378c0723c12b3186892a0e0ea1b0759382dd2125
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 26 01:58:44 2011 -0500
+
+    check for regex support
+
+commit 2d7604d7f2e0f9b856cf777f09c1e070a10d4081
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 18:22:13 2011 -0500
+
+    less to do
+
+commit c1f3f32270a156ce3b1e4aacfa1770517155d3d2
+Merge: e47afa5 68b9dde
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 18:09:25 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit e47afa514498946d47dd78bc2327de5c367131cc
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 18:09:08 2011 -0500
+
+    Define M_PI if not defined
+
+commit 68b9dde477efa6e03a076e05017c088563c361be
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Tue Jan 25 17:56:03 2011 -0500
+
+    updates to vbap example
+
+commit aa5e6b8da08a4e961d67bfb798c247a083ba2d24
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 17:54:41 2011 -0500
+
+    declared spatdif_handler interface
+
+commit af2d18f74feb9c09f33f0e25a1bd1e3fc9ba3312
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 17:46:15 2011 -0500
+
+    more to do
+
+commit ed9f6e104c7c28d9e56166c4c57f04843f54e433
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 17:38:06 2011 -0500
+
+    removed non-working build/config-msvc.h.in
+
+commit 1010ee8bb21a7631075864dbcc709e9b08ab4a84
+Merge: 001de22 e4e4721
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 17:18:49 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit e4e47210281ef57a3adefd5693f5c61e72755562
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 17:13:53 2011 -0500
+
+    check for programs and libs before changing cflags
+
+commit 9f810caae1bb0f633298d40c34bab60ad3342510
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 16:57:03 2011 -0500
+
+    Adding win32 packaging files
+
+commit 001de220037caa606931655016bb5b45f263dded
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 16:18:33 2011 -0500
+
+    OSC: transforms should not be in core
+
+commit 2c77f06b075322b3cad87addd9f9e5e7bbff25c9
+Merge: e317ed1 dc15ec1
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 16:17:23 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit e317ed17ba0099c62c882eafb8d12a3ecd6b24ea
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 16:17:03 2011 -0500
+
+    spatdif_receiver: removed extra include
+
+commit dc15ec17c1bcbdd2a94ac7cf0af340f32afad67f
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Tue Jan 25 15:28:01 2011 -0500
+
+    added transform to OSC doc
+
+commit cd222908e8f630faf085aa8ee4c68de5aac6ce01
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 15:17:16 2011 -0500
+
+    put back omitted string header
+
+commit 5a5f87384ed7fcf5959ca97e8cdacc977d4b208a
+Merge: 5864d1d 74429f0
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 15:00:11 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+    
+    Conflicts:
+    	src/spatdif_translator.cpp
+
+commit 5864d1dede6c681396d7b1b49e0f80917f4d6d2b
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 14:59:09 2011 -0500
+
+    hide OscSender from translator headers
+
+commit 74429f03bd54656e2d85028f6a6d781a9bf6e780
+Merge: f496eaf da83d99
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 14:40:43 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit f496eaf05d634bca837d768a0cdf42e56c9674da
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 14:40:27 2011 -0500
+
+    adding utils/remove_tabs.sh
+
+commit 243ef8ec8ef059f08a4324a2c9998f3cb15f9386
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 14:38:09 2011 -0500
+
+    no tabs, please. if on a second line, if possible.
+
+commit da83d99c2d1c6d5704737790d331ddcc30689d89
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 14:35:39 2011 -0500
+
+    spatdif_translator: use SPATOSC_ARGS_END
+
+commit abc0729c5d83d98b63763e604928e2e6afc11f68
+Merge: 5d81c1e 15b1825
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Tue Jan 25 14:33:24 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 5d81c1e8f963149499d8289c754571185a050abc
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Tue Jan 25 14:33:14 2011 -0500
+
+    added a bunch of outputs to spatdif_translator to support vbap example
+
+commit 15b18252ec1542598d94f5fdf0dfd7d3026bfaf2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 13:18:22 2011 -0500
+
+    Fixed critical error in Wrapper. Wrote some tests.
+
+commit 685451bea866d3b5ec0596c6ee77421d57498dc2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 13:05:37 2011 -0500
+
+    renamed facade.{h,cpp} to wrapper.{h,cpp}
+    
+    Fixed for new setTranslator signature
+
+commit d4f285a61736a76c941779152639c97acf67c857
+Merge: f25048a fa62eab
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 13:00:59 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit f25048afc2bd805b67a343ea4c920e8ad771c98a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 13:00:20 2011 -0500
+
+    added check_wrapper test. (does nothing yet)
+
+commit fa62eabb5ce25dec6fd887cc42cc2e3dfe46fae0
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 12:59:15 2011 -0500
+
+    removed unused destructors
+
+commit fb1a7c9d2ab505fd3a3450952fb6e7a1f8ecbbfe
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 12:57:57 2011 -0500
+
+    implemented the Wrapper facade
+
+commit 356503a23101626c3afa337581f501cc0fb8c0ca
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 12:55:46 2011 -0500
+
+    spatdif_translator: use SPATOSC_ARGS_END
+
+commit 7ede971df65f9d6c9ce25bca97de3fc8049acfab
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 12:52:17 2011 -0500
+
+    dmitri_translator: use oscsender in dmitri_translator
+
+commit 0d76a4896bb40169e1d1d7aa70946e86e75a212a
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 12:31:00 2011 -0500
+
+    oscsender: allow user to specify server port
+
+commit 627f28b0ec1618acb7935e485bcff4e894e88ad8
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 12:19:59 2011 -0500
+
+    added SPATOSC_ARGS_END macro
+
+commit 7476bd710b7097311fa3d2bece27428016e93fda
+Merge: 21cf237 10e04a9
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 12:04:07 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 21cf2375477f80fc2354f1eb1bdc4d8d544bcd84
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 12:03:45 2011 -0500
+
+    translator: osc port is settable
+
+commit 10e04a97691a82a61ffa9d62748896f8fdcf99d2
+Merge: d2a67a5 d99da38
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Tue Jan 25 11:47:15 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit d2a67a58835eb5631ecd4d9e1634948657f46a2f
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Tue Jan 25 11:35:03 2011 -0500
+
+    changed hello_world example to use spatdif_translator, and added more interesting movement (oribiting, swinging motions)
+
+commit d99da38691b370e598eb6116c5af160d98a5a3cc
+Merge: 3eb9f61 f50e5e2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 11:44:53 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 3eb9f617e7ba84b815f938c4f7a2f205b162bc44
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 11:44:34 2011 -0500
+
+    started to work on the facade.
+
+commit f50e5e26b1f0e1a715d8c88ce02434c075d0ec85
+Merge: 88bea1e ec22479
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Tue Jan 25 11:41:28 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit bffb6ad738851fd673df2d09af19ffcd88d93600
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 11:33:28 2011 -0500
+
+    oscreceiver: renamed oscReceiver_ -> receiver_
+
+commit d49811c7d741f5bed36e264b10f56cd76449b68c
+Merge: da32131 ec22479
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 11:29:05 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit da3213116a23ed466721a561c3851fe22c5e46fa
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 25 11:28:53 2011 -0500
+
+    openalspat: cleanup
+
+commit ec22479b8a0acd94ec5bbb62e05d0dfe90c33e84
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 25 09:45:08 2011 -0500
+
+    return bool when delete all node connections
+
+commit 8a25219c776017aa2e79cbe21e0830211940b2bb
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 17:47:59 2011 -0500
+
+    more doc
+
+commit f407de219a804e6c3e08e52772523f6a4d16eea5
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 17:40:30 2011 -0500
+
+    adding spatdif_receiver.{h,cpp}
+
+commit 22182f2595b2b7e27b9ba47d390cf5358ece132d
+Merge: e93736e b43eff3
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 17:03:52 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit e93736e0fa9c7a064c7cb5f9e5e1ab868fcb332b
+Merge: 23fb883 9710753
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 17:02:53 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit b43eff30e5e8fdab4739debfd3c47385463b7f1c
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 24 17:02:17 2011 -0500
+
+    openalspat added debug symbol
+
+commit 97107536aff73cf3b373e4f62083e9e92816642c
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 24 16:57:51 2011 -0500
+
+    openalspat: added optimization flags
+
+commit 56bba1f8ea22a7cdeb453973479e36f9d71644a5
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 24 16:47:57 2011 -0500
+
+    replaced extraneous checks with asserts
+
+commit 23fb8837df0d23527fce879634d6cb8fb2b67da8
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 16:41:36 2011 -0500
+
+    adding hello_world example
+
+commit 3058aaa56201994164a703bce8af7599400be505
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 14:38:54 2011 -0500
+
+    updated TODO
+
+commit d7064d0f0b3e6fa52f15c0eb1a11bdd68fb248de
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 14:14:26 2011 -0500
+
+    updated TODO
+
+commit 1700bc4f9e2c003753e0601c25e23409661f3244
+Merge: 803c9a2 2d923ae
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 13:58:32 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 803c9a2e83748ad6c435ef5d7c3bd075379de9f0
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 13:58:17 2011 -0500
+
+    added Scene::setVerbose
+
+commit 2d923aea30511c5e01fcdca0c856a2d9dca70a05
+Merge: e34e12e 4d71fa3
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 24 13:56:27 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit e34e12e9ed1c10541c2f4a685f93ac2ec1a56df6
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 24 13:56:09 2011 -0500
+
+    removed getVerbose
+
+commit 4d71fa3da25c6f5504e3cf7c08d0e51b39d036c8
+Merge: cb4a110 13eba0d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 13:49:02 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit cb4a110b9db1202170ab8cf9aadaf417b2ef5164
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 13:47:40 2011 -0500
+
+    more compact layout
+
+commit 13eba0d68b108deb84da280956365567f3a514d2
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 24 13:42:37 2011 -0500
+
+    scene: removed unused getTranslator
+
+commit acd263deaeeb94a00b3a42a94f20c4aab106d2b2
+Merge: b9b80e6 583cfb0
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 24 13:38:07 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit b9b80e6b3131e32088fa97464220d501f2437eef
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 24 13:36:22 2011 -0500
+
+    spatdif_translator: renamed update pushOSCMessages
+    
+    fixes broken example
+
+commit 583cfb02f5f966a0c04aea460c055c3a236a9d9c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 13:36:10 2011 -0500
+
+    Removed Node::needsRefresh()
+
+commit 89d6332f5b6a21eb9ff89c39844a9e2e8e6da175
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 13:29:41 2011 -0500
+
+    removed Position from  onNodePositionChanged
+
+commit a2926046f24e5454e4c0df584fae4d9edcb7d53e
+Merge: b12e09b bd8b6de
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 24 13:26:08 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc into facade
+
+commit bd8b6dee2c7a9bd53ece93bb5198ab3f73724b42
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 13:24:36 2011 -0500
+
+    renamed updateFlag_ to needsRefresh_
+
+commit dcf2904f7e83956f3f04500e0e6434258ab74fd6
+Merge: 2a03df2 b6e73c1
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 13:17:49 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 2a03df2f588c7354eb31783ffced0a93449f77c5
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 13:17:18 2011 -0500
+
+    renamed all update methods to more meaningful
+
+commit af7fea794bf2bf868eecdc2229ce6b7e8206f9fe
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 13:17:07 2011 -0500
+
+    fixed path of a header file
+
+commit b12e09bb057c64fa15d496c165c550911a980ded
+Merge: cad38cb b6e73c1
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 24 12:42:21 2011 -0500
+
+    Merge branch 'master' into facade
+
+commit b6e73c12d19941c02ad27e5560997ec27dfc118d
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 24 12:41:08 2011 -0500
+
+    configure: added flag to check virtual destructors
+
+commit cad38cb6c3e69c0dadb9ab7fcf1140cba7fcdc5f
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 12:25:08 2011 -0500
+
+    added facade.{cpp,h}
+
+commit 258d8b831fe1c09388c3b93b238f87161d4ca298
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 24 12:04:24 2011 -0500
+
+    renamed dmitritranslator to dmitri_translator
+
+commit 9de22e72ef80bf129ee4776caf453d45910ac865
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Sun Jan 23 14:52:12 2011 -0500
+
+    openalspat: removed extra includes
+
+commit 6b3a2d03a25be0025a48bfecc0ace396a5dcdb45
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Sat Jan 22 11:06:01 2011 -0500
+
+    check if really cannot delete a node twice
+
+commit 4e93a85b63dc700489142d6049e5127053cd6015
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Sat Jan 22 11:04:55 2011 -0500
+
+    deleteNode returns success bool
+
+commit d816c25340a6e0ee813f2ce5a490dfe3bb13c11d
+Merge: d7bce8a 20096d1
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 17:03:35 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit d7bce8a476066afff25515421fd501fd997775fd
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 17:03:19 2011 -0500
+
+    implemented Scene::deleteNode
+
+commit 36da09ff2b0efc623d286f00eaadeb09fa8bce5f
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 16:35:55 2011 -0500
+
+    added a todo
+
+commit 1c5e9dd0c36d078ebde58dc81518b7dd21f06475
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 16:34:43 2011 -0500
+
+    check if really cannot disconnect twice
+
+commit 20096d171782c7bd08b1a15ba4ec34807577c7e6
+Merge: d53de38 f5e6ecc
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 21 16:32:27 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit d53de387f2925f9e7fd5af8566619e0ab1cca9d0
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 21 16:32:12 2011 -0500
+
+    openalspat: fixed broken includes
+
+commit f5e6ecc9395d062bbd4e01c340709d943547ae20
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 16:29:13 2011 -0500
+
+    added a TODO
+
+commit c762b3826781376ffccc8bfce973935a1a7c99c6
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 21 16:19:02 2011 -0500
+
+    scene: renamed helper function
+
+commit 014599ee5e0c395f2e7438219af0ce60fa128858
+Merge: dec597d 7d7fa58
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 21 16:00:48 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 7d7fa58ec651b0048c01694cf8848723409fd0f6
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 16:00:07 2011 -0500
+
+    implemented disconnect
+
+commit dec597dcff0be058806f20ae67d1c47cc09e77a9
+Merge: 6510778 8a48136
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 21 15:05:28 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 8a481369c28a4f4921a8fbd139887ef74c85bc67
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 15:04:02 2011 -0500
+
+    update of the OSC specs by Mike
+
+commit 88bea1e5cefcbc20f683581d546c339ce7914a4e
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Jan 21 14:55:58 2011 -0500
+
+    updated OSC spec
+
+commit 6510778a691a2b6b3d39b9c6b42d85ceef3186dc
+Merge: 94f5460 4107dfc
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 21 14:55:42 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 94f54609b6591555541cae8c13f9dfcc0581f071
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 21 14:43:59 2011 -0500
+
+    node: only update position or rotation if it has changed
+
+commit 4107dfc50121a0370bc09e0e4aa19a746cc3c5ca
+Merge: 414ce3c 73c9174
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 12:47:43 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 414ce3c2bf90aa2f31e31715b0c20e31162e02b2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 12:44:13 2011 -0500
+
+    Added setAutoConnect(). Adding check_connections
+
+commit 73c9174b73fc70a367150662db344faefa81a131
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 21 12:33:38 2011 -0500
+
+    openalspat: use new create instead of getOrCreate
+
+commit f1f6d84d52a124265f82b1d7159f950dc5973757
+Merge: fa07ec8 abc9029
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 21 12:31:20 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit fa07ec8bfa41e681198d1987081d2326743cf2eb
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 21 12:29:26 2011 -0500
+
+    openalspat: scale grid appropriately
+
+commit abc9029c1d02a9fb1646a479f68048f661abddd3
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Jan 21 12:19:51 2011 -0500
+
+    tweaked autogen.sh for OSX
+
+commit 635f7a807d8bd462ce0b83b4d06daaeea172dfd2
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 21 12:17:42 2011 -0500
+
+    openalspat: fixed label calculation, added coordinate mapping function
+
+commit 1402b7fffa5d9f2510fc139c7382b29d13042021
+Merge: f3bbf3c 42e9bfa
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Jan 21 12:15:31 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit f3bbf3c30418768902ecba860c20348d32ab64dd
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Jan 21 12:15:24 2011 -0500
+
+    switched liblo autoconf to use pkg-config
+
+commit 2bfcc3cfe705ef54cd3b9388c5ca49259acd51a6
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 21 12:07:06 2011 -0500
+
+    openalspat: other members of gui just call updatePosition
+
+commit be9c47e17fc1fd163dc4b7c7cf3bac0ebe878389
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 21 12:02:35 2011 -0500
+
+    openalspat: move sound in z
+
+commit 42e9bfa8d44312af05673e9e02d174d17419fe11
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 11:54:51 2011 -0500
+
+    updated TODO
+
+commit 46aaa2c253252a5c80f72dcc7fe1b9729ed0fef5
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 11:54:28 2011 -0500
+
+    updated README
+
+commit 244048bfed595c43238cb5a93ac851f143eb47e1
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 11:12:50 2011 -0500
+
+    fixed missing white spaces
+
+commit dacdaee1b1f855f095ae1be56f8a4bef93e5ae68
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 11:12:03 2011 -0500
+
+    improved test_unique.cpp
+
+commit 231101ba82fa1dc50ab08eed24780ad4b043c0b8
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 10:56:34 2011 -0500
+
+    added default verbose param to translator ctor
+
+commit 592fd66862870cffbf3bc7f0068758d4c098d542
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 10:39:06 2011 -0500
+
+    Added setVerbose and getVerbose to translators.
+    
+    Also added a contructor argument for them.
+
+commit e940190a72c58212f245068cd8f49d14f3ec433d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 10:10:42 2011 -0500
+
+    disconnect returns bool. More doc.
+
+commit 9aece5d6b9029f096e829e2b6015db4d8bd844b8
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 10:06:26 2011 -0500
+
+    less verbose tests
+
+commit f3521f333fcf72f712e2a235c6125cdcf6d6af9e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 10:03:48 2011 -0500
+
+    need to actually add check_unique.cpp
+
+commit 7b378bd7b9fb984c21ea1aa64c2b991367cf6b7d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 10:03:30 2011 -0500
+
+    added check_unique test
+
+commit ad9bad2aa515eb7140184bf4f5f95948010ef7ed
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 21 09:54:25 2011 -0500
+
+    updated doc a bit
+
+commit 51f0f6142f3e3b640e1eb422010b5bf3141e44e9
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 20 18:51:00 2011 -0500
+
+    connection: fix distance calculation
+
+commit a40709c1433b4474820813441b3bc142d3eeea07
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 20 18:48:04 2011 -0500
+
+    openalspat: increase warning level
+
+commit 5569ba5a540a09e384c95f747105f61990b3dbba
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 18:35:29 2011 -0500
+
+    fixed ogre example
+
+commit 1fda5e00caecb2a3feb3504dacf9b853728e3e84
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 18:30:23 2011 -0500
+
+    added version.h to build system
+
+commit 3071a12dc707e732c6c76a0de1ec87fea80cf799
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 18:26:14 2011 -0500
+
+    updated TODO
+
+commit 029c99bb0a344d095d595ff25787903d885d8f4e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 18:22:59 2011 -0500
+
+    updated doc
+
+commit 04b217b8d19dcb17f3678b8e6e443832fba99da0
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 18:18:13 2011 -0500
+
+    updated TODO
+
+commit 4bcb24803ab6655bc7f9003dc5d5e6092f32e392
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 20 18:16:44 2011 -0500
+
+    openalspat: poll osc receiver more frequently
+
+commit 0dc978baa0c3ce99efc9d8f64c06a117ee3fdd90
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 18:13:21 2011 -0500
+
+    Changed Scene::disconnect's signature
+
+commit e1a44790ba9836b1ee409e7b2793ad1f75062788
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 18:10:21 2011 -0500
+
+    less verbose
+
+commit d10af61c675e74ab759408495598427d1078e0b7
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 18:09:56 2011 -0500
+
+    create a listener in check_it_works test
+
+commit a260f9fe847307c234cb6ba5373bb78bae6a410d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 18:05:11 2011 -0500
+
+    Scene::getConnection now takes two Node* as args
+
+commit 6d662c4d346d08e7c234e694e3b4f22ffc8929b4
+Merge: 720e060 d0f32f5
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 17:47:05 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 720e060166183816e2a232869255bfc4e2772793
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 17:45:29 2011 -0500
+
+    fixed tests
+
+commit 3654195bbfc3a8d1a9906864f4cd9c96f8992bd5
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 17:42:02 2011 -0500
+
+    renamed getOrCreateListener to createListener
+
+commit 5361074f9c571b5a8afc2c1f30522100b0f84f7c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 17:35:05 2011 -0500
+
+    renamed getOrCreateSoundSource to getSoundSource
+
+commit d0f32f5fc56d59f34e533b228ff08b8d10299feb
+Merge: 9ca96fa 3f0110e
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 20 17:27:29 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 9ca96fa54f8ef2fb7fda3ba6be79803fa6d8571e
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 20 17:25:59 2011 -0500
+
+    spatosc: fixed oscsender, spatdif_translator::update
+    
+    spatdif_translator::update was downcasting snk to SoundSource instead of Listener, which gave a null pointer.
+    oscsender: LO_ARGS_END needed to terminate variable length argument list
+
+commit 48e3ed970d38590ad2f271177eb450211adfaca5
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 20 16:51:32 2011 -0500
+
+    openalspat: osc still not being sent by translator
+
+commit 3f0110e5962e6c798d25ce26d6acd28a7e11f796
+Merge: c307e74 c7d81b6
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 16:34:53 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit c307e74a51e09cdf019281c9b4ca9d9d581b097e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 16:34:37 2011 -0500
+
+    updated TODO with decision we took
+
+commit 7f6944f0abb9bca95cd2d64e576040457e6030e5
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 16:34:20 2011 -0500
+
+    updated doc strings for changes that will occur soon
+
+commit c9a729175a36dfcaa79dc140ab2c308c41fc55af
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 20 16:12:30 2011 -0500
+
+    openalspat: osc communication is not working
+
+commit 5bc75ff4aa9568a805d38ff874a3a7d1a4fe79c4
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 16:07:30 2011 -0500
+
+    Renamed Node::setRotation for setOrientation
+
+commit 48e4e8a038d23fd60f4c0ab48802a65ae2057f3d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 16:06:21 2011 -0500
+
+    added some design choices to HACKING
+
+commit 24082811015ed29066adeccf2c0267f86f30f9a4
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 16:05:53 2011 -0500
+
+    added OSC file
+
+commit f0cf011b8c495d5aac922551b960f5bfc7556f2a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 20 15:45:29 2011 -0500
+
+    Improved doc strings about returned pointers.
+
+commit f4e292c69d57f427957ffb203ce6bdad9bc69b33
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 20 15:02:46 2011 -0500
+
+    openalspat: removed pointer motion callback
+
+commit c7d81b637c264921d62938274c12888634dbda08
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 20 14:56:30 2011 -0500
+
+    openalspat: don't print so much
+
+commit b3a27092f1234c2389b0d8ca35c6a48d214dc804
+Merge: 5c5cdb0 af5d00f
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 20 14:33:18 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+    
+    Conflicts:
+    	examples/openalspat/gui.cpp
+    	examples/openalspat/gui.h
+
+commit af5d00f53e03d7bf4c7bcbac8e3f7eb5c3ae0495
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 23:14:53 2011 -0500
+
+    updated TODO
+
+commit da95ad856a42bc034d34f94f1a1faf5110b52fed
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 23:13:39 2011 -0500
+
+    more doc
+
+commit d4c1d781fcb8ea7d3a1b46b6dd474524e3679307
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 23:09:09 2011 -0500
+
+    more doc
+
+commit 05d2628f044a47e6bbefd716a0aabcc2ec3c1b01
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 23:06:48 2011 -0500
+
+    more doc
+
+commit 8b48e4b267e1224c5bdaef265cf02b60b7e70554
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 23:00:31 2011 -0500
+
+    documented the mainpage
+
+commit c0d96d160f93daceba575c0175c0ef1a749e7961
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 22:49:49 2011 -0500
+
+    deprecated a few Scene methods
+
+commit a2ca535d23a8bbd99caa331cc0458b8fec228538
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 22:43:52 2011 -0500
+
+    more return values documented
+
+commit 59d5809f161bc29306ee203ca95742847cc80dc8
+Merge: 3ee1fb6 de5558d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 22:38:08 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 3ee1fb67e5433b1ea4638205ac57b3b7f6f866b5
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 22:37:49 2011 -0500
+
+    document return values for Scene's methods
+
+commit 5c5cdb047b0e150a1c3283735544a4dc4b432504
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 18:36:21 2011 -0500
+
+    openalspat: toward a working spatdif example
+
+commit de5558d2ce226df92eba5348673becab3fe7f3a1
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 18:29:23 2011 -0500
+
+    added sendSourcePosition, which updated the label
+
+commit 217b8a122b060125252a64a74de454dcdbaf1567
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 18:15:31 2011 -0500
+
+    audio_scene: respond to position changes over osc
+
+commit 81476f1184669ecec522c1ade06146d08c1696a1
+Merge: 73d24ea 8a33075
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 17:58:50 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 73d24ea17b3fc19ce016acd5697e38cfe8fea20c
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 17:58:38 2011 -0500
+
+    openalspat: fixed include statement
+
+commit 8a33075a92d210e7680f287b4a49108d0025f8f3
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 17:56:45 2011 -0500
+
+    Use AudioScene.moveSourceBy and actor.set_depth
+
+commit 42f8660c5c6dd1479cce6c70322ae4882fd20520
+Merge: 9ef1108 da94ab9
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 17:48:36 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 9ef1108b1d866e579d14d2e0502533c927c36e0d
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 17:48:18 2011 -0500
+
+    openalspat: add receiver, remove prints
+
+commit 9f66d974c07029f6326b76881c483ae120510981
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 17:43:29 2011 -0500
+
+    changed default stage size and grid color
+
+commit da94ab95dd723f6f1884baf538945dab37abc6e0
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 17:39:00 2011 -0500
+
+    mulitply actor's size instead of adding to it
+
+commit 95ed97e164f6be778e6acdeb882455742629b6f9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 17:33:14 2011 -0500
+
+    updated TODO
+
+commit bf543fa97253425730f3ceee5f5741e05136950b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 17:24:11 2011 -0500
+
+    changed receiving port in pd patch
+
+commit 1123371ef8c78d2f276f9ddfe4b3cb2b9496ab4b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 17:22:44 2011 -0500
+
+    using OscSender for SpatdifTranslator
+
+commit 680d1e1fd458f3d5aef715d6e1e59be552fcdff2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 17:22:07 2011 -0500
+
+    updated TODO
+
+commit 06af88eb148c6537df7c4fc531e53a600296ac99
+Merge: dcf60ec 86db94e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 16:44:33 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit dcf60ec09f9694d5c83c9f51e411354888d182c1
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 16:44:19 2011 -0500
+
+    added Connection::getSource and getSink
+
+commit 86db94ed1af2559ed3db1e313eb28b7f0cc287b7
+Merge: eff77b8 8266ac9
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 16:28:41 2011 -0500
+
+    Merge branch 'master' into spatdif
+
+commit eff77b8def5ce7b23f10c29a678ea877cf2f3a8a
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 16:23:08 2011 -0500
+
+    set position
+
+commit 8266ac9d17492e12b61d846300e648cdc323bf1a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 16:06:57 2011 -0500
+
+    improved doc for Scene.setTranslator
+
+commit 09182128b9a43cf7faab797b7d61c34970bc7c17
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 15:42:37 2011 -0500
+
+    Adding spatosc.vbap.8~.pd and its help patch
+
+commit 569e9e4da1e314d305b9099c0fd4189c06645a99
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 14:48:43 2011 -0500
+
+    added spatdif translator
+
+commit af970ad998714eb8f1f67aaea62fc7dec3721c37
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 14:12:20 2011 -0500
+
+    added version.h to the common header file
+
+commit bd6301afa52267f0d0c42b9ce94b491b6f4670a8
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 14:10:54 2011 -0500
+
+    removed a todo
+
+commit d0898ec8aaa05d8edb25b0dc378c9f95b2cd86d9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 14:04:06 2011 -0500
+
+    added oscsender.h to Makefile.am
+
+commit 77f3d36484c0c9772ea6a71900f2555087dc5261
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 14:03:00 2011 -0500
+
+    not tabs please
+
+commit 33ca76e3941e51288784e439fef8f181d2c365fb
+Merge: 8b1c935 9d6bd4a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 14:02:06 2011 -0500
+
+    Merge branch 'oscsender'
+
+commit 8b1c93540405c92aa7dc7cfbe7f1800d2d54beaa
+Merge: a2b78ec 0fccfd5
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 13:57:23 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit a2b78ec6f13a3fd8b22e075fe71379ee7f4d24f8
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 13:57:11 2011 -0500
+
+    more to do - splitted it in sections
+
+commit 0fccfd517f44d6c81e364b5206fb6a9638eca193
+Merge: 9b00a86 eed108c
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 13:48:30 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 9b00a8654384249007e71152367ccabec5f8b37b
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 13:47:51 2011 -0500
+
+    Scene::setTranslator: changed API
+
+commit eed108c2cb2d4af5d14778e2a9667c8e322dac30
+Merge: 5de8cd4 b44714e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 13:43:26 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 5de8cd4f47c5523d5840dc8158571f4b6984894b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 13:42:21 2011 -0500
+
+    more to do
+
+commit b44714e939e7c7fa03e2527027ab6a3b3ecec4b9
+Merge: 355cffa 8fd2f6f
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 13:27:49 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 355cffa25dbd40b83bb5a6324b007d836f5204cf
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 13:27:19 2011 -0500
+
+    oscreceiver: removed extra whitespace
+
+commit 8fd2f6fab8859d8922e042ffe1c7b7d71b94a2f7
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 13:25:22 2011 -0500
+
+    stronger lines at origin
+
+commit d2f69794b277de19186e05615613fe4bec819065
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 12:48:20 2011 -0500
+
+    openalspat: Added grid. Grab center. Black bg.
+
+commit 2b0f18915099c7a72e0adf9d9df75dc9e2561b3d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 12:20:37 2011 -0500
+
+    updated license info for spatosc example
+
+commit 286b060f79fc5db1a1123ec2af5078a54033d412
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 12:09:24 2011 -0500
+
+    added a grid in clutterspat
+
+commit 3c1589c249cdd9608bcab95320c55bc0008a8ce7
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 11:52:06 2011 -0500
+
+    fixed a doc string
+
+commit b94da1bb075bd3d33b3de05c97dfd6ae918e1659
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 19 11:47:53 2011 -0500
+
+    Indentation now looks nicer in maths.h
+
+commit f63fc66a9a6e450621304c9ffb8da3be061d5d23
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 10:12:54 2011 -0500
+
+    removed extraneous whitespace
+
+commit 18b68a19be2dcaae315252b9966e8f0939297dca
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 10:02:02 2011 -0500
+
+    maths.h: restored indentation
+
+commit f690782d81ce59ab5ec367426236a2dc853917ce
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 09:59:44 2011 -0500
+
+    maths.h: restore indentation
+
+commit b5267fb34d77e6890728a0b50754b0d655c9ebae
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 02:04:03 2011 -0500
+
+    various fixes to avoid Weffc++ warnings
+
+commit 94ab2976c5405f6b09a8c58fc10f6d82218f0f55
+Merge: b96a1a0 87180e5
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 19 00:57:27 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 87180e50776686f5bb7c3e1da1ae54e8b4416afd
+Merge: 520938f 9bcbc74
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Tue Jan 18 23:51:06 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 520938fe157c131b224263deda11c0add4c0b1f3
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Tue Jan 18 23:49:03 2011 -0500
+
+    added pd vbap example
+
+commit 9bcbc741d80bff7d5a1f642a1c8a72628d8fe183
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 18 18:53:03 2011 -0500
+
+    virtual classes should have virtual destructors
+
+commit b96a1a0de5bd9aacdab1ec3f023873b89d75aa2b
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 18 17:55:20 2011 -0500
+
+    openalspat : radius is constant
+
+commit 360eadf49927ce81d06a66517d4388cc65d070e7
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 18 17:45:32 2011 -0500
+
+    openalspat: more movement API
+
+commit 6090e3eb664467079b6ff75db06867420ee6e7c6
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 18 17:09:24 2011 -0500
+
+    Makefile: cleanup
+
+commit 90dff526fb43a0c58f00d4a406572487c7041943
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 18 17:07:09 2011 -0500
+
+    openalspat: create listener, play sound source
+
+commit f993045cb8d3625618f9c5ad76d063e6faadf9e8
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 18 16:58:45 2011 -0500
+
+    added alutExit to avoid weird dl error
+
+commit 9b2219a80388161f8546910a30276952c2b43e3c
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 18 16:33:57 2011 -0500
+
+    gui: using simpler key events
+
+commit 8b9140d6eba5450d06e35fa590fcc246a3758469
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 18 16:28:24 2011 -0500
+
+    node, connection: rename hasChanged to updateFlag
+
+commit e360b46219296db3623bc3b9aa0b11aa842639e3
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 18 16:07:05 2011 -0500
+
+    openalspat: renaming
+
+commit 1d03b996b81d73469415352bb11d82cc1eb5c4b0
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 18 12:56:01 2011 -0500
+
+    added TODO and oscsend script
+
+commit 2a4a6b6effa620084b29de101fee6f2f34bef58f
+Merge: d756879 28fadc4
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Tue Jan 18 12:49:18 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit d756879252947d9b40b2ffee333de5da9b9b3fa0
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Tue Jan 18 12:45:31 2011 -0500
+
+    fixed isnan bug on OSX
+
+commit 28fadc4d7dc0dc064864fbca98b471868d88f84a
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 18 12:44:30 2011 -0500
+
+    ogrespat, Scene: some cleanup
+
+commit a5adeca42d636399593d28f8913243fa44bde370
+Author: Tristan Matthews <le.businessman@gmail.com>
+Date:   Tue Jan 18 10:21:55 2011 -0500
+
+    ogrespat removed print statement
+
+commit 1a864061b91975cb0cca072213f1ada43ae8112e
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 17 16:49:21 2011 -0500
+
+    use nonblocking, nonthreaded osc receiver
+
+commit fbac46cff45ea7736cc2542ababd252a88145798
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 17 16:11:25 2011 -0500
+
+    openalspat: micro-optimization is the root of all evil
+
+commit f32cbf16db88a0793b77da4f2c20fa7ddbfef306
+Merge: 414fd7c 2a22d2e
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 17 15:35:31 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 2a22d2edb0b87e54d568b8de36fe2bceda507b96
+Merge: a66c07e 1301b76
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 15:35:16 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 414fd7c7196bf7a22c34a0d6ff9fabbe6d34a03e
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 17 15:35:15 2011 -0500
+
+    get rid of old blocking keyboard input method
+
+commit a66c07e41050aa89c7014e2220498f5ab9e6fdbe
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 15:35:08 2011 -0500
+
+    updated TODO
+
+commit 1301b761addc69f98b048a74949ee6c5e4494731
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 17 15:12:24 2011 -0500
+
+    translator: fixed typo
+
+commit c29140968dbf15a46d9abbb94e9580108ff286cf
+Merge: be17521 22bed52
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 17 15:11:02 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit be1752153403dcd73de0d39b8ae46b04ba224753
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 17 15:10:42 2011 -0500
+
+    updated header include guards
+
+commit 22bed52615cfbf9e8090aaf0ae9a847753af82b3
+Merge: 3675d1d 6eee06e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 14:42:02 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 3675d1dba5abb74686ed21b1a03240db8032387a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 14:41:43 2011 -0500
+
+    Documenting a little Vector2 and Vector3
+
+commit 6e063880b7e185135764c4c9bec63b226b375134
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 14:25:31 2011 -0500
+
+    modernized a bit the doc strings
+
+commit 6eee06e25ff8d3b49b27c4e9bb127a5133af1635
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 17 14:25:24 2011 -0500
+
+    ogrespat: more logical key bindings
+
+commit e5086c00a3b83f786128e789f8f01844786b4edb
+Merge: ec6eecf a1d4038
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Jan 17 14:14:53 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit a1d4038c1a1c677d83a31671c086ca8bef3bba30
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 13:23:44 2011 -0500
+
+    make debugPrint virtual and const everywhere
+
+commit 64a426a8478f9ea0f26046d15cb3d2998588def8
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 13:19:55 2011 -0500
+
+    more doc
+
+commit 1f6055acf517af20cd786116b2b9280b28d67e60
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 13:00:00 2011 -0500
+
+    ignore more files
+
+commit 62ee1197fc6002cbd63bb53225d4ea1b7d71c3da
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 12:59:09 2011 -0500
+
+    updated the example for the new prefix for header
+
+commit 77275e711414a540c36f616237b926e6b634613d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 12:41:50 2011 -0500
+
+    put prefix path to header files
+
+commit fc7bce810ba8854980fb3c11648cbd8d1e1db32d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 12:28:22 2011 -0500
+
+    better doc
+
+commit eaf06cb6e9f2e33425e061e805e996bef1982520
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 12:20:52 2011 -0500
+
+    more doc - and a correct one for getConnections
+
+commit 612485c1582010c6140a32dd902ec3528a2cf2b3
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 12:07:53 2011 -0500
+
+    more doc
+
+commit cbf22680efed8478e154bf7e7e56e7af1f6e3cc8
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 12:03:55 2011 -0500
+
+    removed a non-defined function
+
+commit 2f0586cb1530008702767607665fff9fdc53d649
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 12:03:37 2011 -0500
+
+    removed a useless note
+
+commit 496be6d0d63850cb9c60231f4b206f89bfe16d12
+Merge: d6311aa f1e4819
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 11:53:02 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit d6311aa282a76fee85b590601bc34aa2f2c02308
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 11:52:48 2011 -0500
+
+    more doc
+
+commit f1e4819284695777ac673c4ef7c90bba604347e8
+Author: Tristan Matthews <le.businessman@gmail.com>
+Date:   Mon Jan 17 11:15:22 2011 -0500
+
+    node: add some constness
+
+commit 538fd9196152b6f88c552408e7e681ec579984d3
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 10:03:52 2011 -0500
+
+    Node is not friend with DmitriTranslator
+
+commit 8c6443f0e9e869cba3e7f84016859d3e47754ea7
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 10:02:16 2011 -0500
+
+    Node is not friend anoymore with Translator
+
+commit abaff1b423fe95ebf4535684038233ce435cd635
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 10:00:43 2011 -0500
+
+    Node is not friend anymore with Connection
+
+commit a4b63cd2934041b0f48ac6306f53bf689ee5f44e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 09:38:40 2011 -0500
+
+    constructor init list look bettwe on a new line
+
+commit 3b3a2b1b0c1fe20efa00de696b0a6e8ec92bb417
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Jan 17 09:36:48 2011 -0500
+
+    more doc in connection.h
+
+commit ec6eecff8e287a46665f005a84a51fe5e2b8ff0e
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Sat Jan 15 19:35:51 2011 -0500
+
+    ogrespat: use unbuffered input
+
+commit c7f72c639783e4ad1e6bf4f0d2263b7390cce03b
+Author: Tristan Matthews <le.businessman@gmail.com>
+Date:   Sat Jan 15 12:12:04 2011 -0500
+
+    update ode example for new pkg-config
+
+commit d7d9235bb25feb7c230f8514ff56267784cefbe9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Sat Jan 15 10:17:44 2011 -0500
+
+    added a TODO
+
+commit 56e5f2b7623d602f0ab547ddcfa775931f82f0fe
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Sat Jan 15 09:59:52 2011 -0500
+
+    added project URL to configure.ac, thus to .pc file
+
+commit 3e45d81f9a2f5c5139e016b33df1f44fb2bec1b7
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Sat Jan 15 09:48:43 2011 -0500
+
+    fixed project info in NEWS file
+
+commit 4d6cfa5a05a3fc07d613cb288b9fe58cf03e9fd6
+Merge: f8fef3e 62183da
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Sat Jan 15 09:46:07 2011 -0500
+
+    Merge branch 'master' into ode-example
+
+commit 62183dadb55280914fc2de34e1a6fe37eb42c621
+Author: Tristan Matthews <le.businessman@gmail.com>
+Date:   Fri Jan 14 20:01:31 2011 -0500
+
+    ogrespat: renamed executable
+
+commit df511f040d3502ed3de46dcf462c1ad2894bebd4
+Author: Tristan Matthews <le.businessman@gmail.com>
+Date:   Fri Jan 14 20:00:36 2011 -0500
+
+    TutorialApplication: scale and rotate
+
+commit ea24f87137e603f2da60838457c61b71150e9044
+Author: Tristan Matthews <le.businessman@gmail.com>
+Date:   Fri Jan 14 19:54:15 2011 -0500
+
+    added foreign flag since it's just a simple example
+
+commit d0f1e5ab7b5a22024cda293551e8c3568d8ce307
+Merge: 7b69e3d e91653f
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 18:29:24 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 7b69e3d80112acfa1d4e40a36070e56405ccac43
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 18:29:09 2011 -0500
+
+    removed useless include path in .pc file
+
+commit e91653f8ffd32ddabcbca2b56aa909cedafc5a51
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 14 18:25:01 2011 -0500
+
+    ogrespat: don't default to fullscreen, fix include
+
+commit f15277b4c982d2d1fb865ace20452041ee6b8153
+Merge: cb36889 8f5316f
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 18:22:14 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit cb36889af15526ce7f08e96d4220df8068bb521c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 18:21:29 2011 -0500
+
+    fixed gitignore file
+
+commit 8f5316fbff487031e636ea37e8bd53f65d520c5a
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 14 18:21:27 2011 -0500
+
+    modified gitignore
+
+commit 477ce0fd9a08a624b59e0d7559e94a1cd0a16192
+Merge: c1fa875 440c673
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 18:21:23 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit c1fa875120165b465865fe23dd136e708c3e84e5
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 18:20:03 2011 -0500
+
+    two more examples converted to the new versioned pkg-config
+
+commit 440c673797a093b34974e3db2a7ca37e5cf9a6c7
+Merge: 01f1541 821150f
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 14 18:15:08 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 01f1541e71f9b9d71b073a57af66772a1d2a41f6
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 14 18:14:50 2011 -0500
+
+    disable ogre splash screen
+
+commit ebe81cc2d9f327378146f995b58a9fbc350ec4b7
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 18:13:54 2011 -0500
+
+    fixed pkg-config file's path.
+    
+    Use pkg-config for clutter proto
+
+commit 2791d1c2d717ec18246d8d487b725cd3a5833f38
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 18:10:14 2011 -0500
+
+    create .la and .pc files with a version number
+
+commit 821150f840d846f29db038952e0ee457e67f849d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 17:50:52 2011 -0500
+
+    ignore some tests
+
+commit 1f901668efdc3be91461f04a4a441ac630be40e3
+Merge: 9111409 17444e9
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 14 17:41:19 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 9111409cfd1a3e6b65812479c15b07296b4fbf29
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 14 17:39:39 2011 -0500
+
+    ogrespat: initial checkin
+
+commit 17444e9b4f687785f5f041cc668c5117eb21c15a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 17:30:42 2011 -0500
+
+    no parenthesis around version constant
+
+commit f28e4a7ce251556a714687d022b98915912c5837
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 17:25:43 2011 -0500
+
+    ignore all .deps and .libs dirs
+
+commit 10bd597e273155252ebfabd70e69025189760fab
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 17:25:18 2011 -0500
+
+    ignore the right files
+
+commit fc6770a9788b2171c4ef94eae598c2520c1504a9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 17:25:11 2011 -0500
+
+    faster, please
+
+commit cc390201c040a2220011237ebdd7cede74fc31da
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 17:22:35 2011 -0500
+
+    moved tests to the tests directory
+
+commit f8fef3ede65ae3b4165ebc76eb7434ca28375250
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 16:30:18 2011 -0500
+
+    added spat-ode example - not much useful
+
+commit 505f81b3967ae668e6ced53d995838c47b659c9a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 12:59:06 2011 -0500
+
+    more doc
+
+commit dde38f687282e8b55a0c58cbdf7d82c37cff63dd
+Merge: d7fd481 560fc60
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 12:57:49 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit d7fd4817e61804bf9bb808c93ad45530c80c9c7c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 12:57:38 2011 -0500
+
+    added tests to make check
+
+commit 560fc602fbe0d4044ac9a1e5fa24467d230aa13e
+Merge: 19eee6d 70439be
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 14 12:55:29 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 19eee6d372450f184bc907ba21f2cd87e9574b6a
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 14 12:55:10 2011 -0500
+
+    updated demo for new api
+
+commit 70439becc4877538543a3035704fff28a87b311b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 12:50:54 2011 -0500
+
+    more doc
+
+commit 62dfaf7175c70690b4d9c55032415e33888085a2
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 14 12:45:38 2011 -0500
+
+    Makefile.am: removed tabs, don't install config.h
+
+commit 82cabaea736166f5769e14f512ebab06d133189d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 12:41:33 2011 -0500
+
+    more to do
+
+commit b85811cd619e961515ab769cddcfb53574a38fe8
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 12:35:29 2011 -0500
+
+    ignore more files
+
+commit bc80d4717da1d1407308004ce04a98948a6309af
+Merge: f5d8493 e95bb96
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 12:33:48 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+    
+    Conflicts:
+    	src/check_distance.cpp
+
+commit f5d8493bd47d04544291ae8e47cea089efb86d79
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 12:32:27 2011 -0500
+
+    set translator before adding nodes
+
+commit e95bb964120d3435407e798caa6ac2f95683ae71
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 14 12:29:56 2011 -0500
+
+    merged master into unsingleton branch
+
+commit a367ccca3139b547032ebc55f3b08bab33a9191d
+Merge: 6ebf9cc 9ec35b5
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 14 12:29:03 2011 -0500
+
+    Merge branch 'master' into unsingleton
+
+commit 9ec35b51e5f9cba9e2026cdd14eb1e03dcdd7c1c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 12:27:24 2011 -0500
+
+    added src/check_distance test
+
+commit 6ebf9cca7898036b5cce1a1a6d6ab705921f741b
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 14 12:17:35 2011 -0500
+
+    Scene: no longer a singleton
+
+commit 558dd1aa44b6afd6a97da90198ad6511b96aa302
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 14 11:54:38 2011 -0500
+
+    added version header
+
+commit 9d6bd4a8e9cca985f03e6b5f936f9db0a4a81c30
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 11:45:51 2011 -0500
+
+    added oscsender.h
+
+commit 484f4d1dad2e254033a5222c69cffde721ef025b
+Merge: 6e627bb 9133653
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 14 11:26:40 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 6e627bba07ab983b08eaf7d23c28b482066bcd52
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Jan 14 11:25:58 2011 -0500
+
+    removed extra semicolons at end of namespace
+
+commit 913365379458f29149868a15f2f5280ae1a3d570
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 10:30:28 2011 -0500
+
+    updated doc about version numbers
+
+commit fcbb3bfab5750323d1911a31a2e569f964d74e44
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 10:22:21 2011 -0500
+
+    updated more doc strings
+
+commit a9476560218c7a486ca33bddebcf5d2bfdda7005
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 10:18:48 2011 -0500
+
+    updated a doc string
+
+commit 3408322309a69522110fcebdb3471b41e78a6222
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 10:16:08 2011 -0500
+
+    updated TODO
+
+commit 6bc827b08987bf641f7e70e87c808a0a3ad2deb6
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 10:15:51 2011 -0500
+
+    renamed vSoundConn to Connection
+
+commit 44b5fc42b095fdf46977502ac3249c95e689ac47
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 10:14:53 2011 -0500
+
+    renamed vAudioManager to Scene
+
+commit b27775a243e820598091438fbf2df92426a97c04
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 10:14:06 2011 -0500
+
+    renamed vListener to Listener
+
+commit 3e5a89207e76f0f4da731f98b69c4ec4ff41209b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 10:13:02 2011 -0500
+
+    renamed vSoundSource to SoundSource
+
+commit ce7b740d82e0e0ac77d936e04d455275cc757ef5
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 09:58:36 2011 -0500
+
+    added doc/mass_renamer.sh for how to rename files
+
+commit a1055c145839527d800fa6a5bafcc9711a47025e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 09:56:55 2011 -0500
+
+    renamed OSCutil.h to oscutils.h
+
+commit 1264a7caa5c5e94c7af2f639936a32711bf524ff
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Jan 14 09:55:22 2011 -0500
+
+    renamed vMath.h to maths.h
+
+commit b56de8373780b08407d2b3244c68dfb4bf4d3558
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 18:54:16 2011 -0500
+
+    renamed vSoundConn.h to connection.h
+
+commit f45bfd507b5660db11d670b7b5fba517c68e734d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 18:53:04 2011 -0500
+
+    renamed vAudioManager.h to scene.h
+
+commit 92efbe687fd48b446d89f0c230ec197be8d33629
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 18:51:58 2011 -0500
+
+    renamed vSoundSource.h to soundsource.h
+
+commit 81ba41ff970efc7d92bd89d4a13e0b188430a07f
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 18:50:52 2011 -0500
+
+    renamed vListener.h to listener.h
+
+commit 4aadc6d74269ef5b48a1a042d1216959d3c415f8
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 18:47:27 2011 -0500
+
+    updated TODO
+
+commit 6ad8578dc1d7e07cad86ea0739146cdbbbde5f8a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 18:46:19 2011 -0500
+
+    renamed vPlugin_dmitri.h to dmitritranslator.h
+
+commit 02be0140694f21d49f4b4eb81c916f3c17d506c7
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 18:41:45 2011 -0500
+
+    updated TODO
+
+commit e5828ca0df0382b05406c02b37d8b88ea04c5ce3
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 18:41:33 2011 -0500
+
+    renamed vPlugin.h to translator.h
+
+commit 65c069cea9e48b39f87c04de051334f59730cd09
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 18:36:54 2011 -0500
+
+    Renamed vBaseNode to Node.
+
+commit 26cc04f29433e97a09406f4793f1c84109d2f857
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 17:15:04 2011 -0500
+
+    updated TODO
+
+commit d077fc3e793ef81d1afe9ec4eb517afcb20ad0a9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 17:14:07 2011 -0500
+
+    enclosed everything in the spatosc namespace
+
+commit 57c45cd620885fd49a1cdbfefd3ad5a3d7ed349d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 17:07:46 2011 -0500
+
+    more to do
+
+commit 24de773b3a24141a6ed56ab947a97fc1863a3611
+Merge: d9992c7 1f1277d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 17:01:45 2011 -0500
+
+    Merge branch 'master' into openal
+
+commit 1f1277d4263dcfd00ed4e8f9ff247d975e8b508d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 17:01:29 2011 -0500
+
+    updated TODO
+
+commit f6fe4348ab015ed3d158e60eedcf9205749ec3f9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 16:59:35 2011 -0500
+
+    changed tabs for spaces
+
+commit 7dbfec5134560a9347e4b0fff27cdd6aebe9593e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 16:56:33 2011 -0500
+
+    renamed vPlugin to Translator
+
+commit abc4d4689f35eb89cde3febf9d44651b65c032ea
+Merge: b8f0a8e 5cf3535
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 16:35:24 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit b8f0a8ea9246746b3f6d9208175b91159e3268f2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 16:34:59 2011 -0500
+
+    more doc and add disconnect methods in class dia
+
+commit 5cf35354ecaa676430ffafd3e300393d421a8480
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 13 16:20:39 2011 -0500
+
+    minor cleanup
+
+commit fc7a127f6257c1534d46cce5ade6e1b2ab3d6b3f
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 13 16:12:01 2011 -0500
+
+    spatoscTest: always wrap calls to new with shared_ptr
+
+commit 2a344f375300f2f9b5a2077e80f2b685e49584d6
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 13 16:03:34 2011 -0500
+
+    Makefile.am: fixed make distcheck
+    
+    CPPFLAGS didn't actually have -I (include) paths
+
+commit a4f1d8f83218243f27ab41004ed83c4e055328e7
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 13 15:57:22 2011 -0500
+
+    modified HACKING
+
+commit 35e25b5031e311d8c1d70d71a513485f03215031
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 13 15:53:33 2011 -0500
+
+    vAudioManager: replace raw ptrs with shared_ptr
+
+commit fb9991d5bb4bff5796646fa6a7167253455fd8ff
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 13 15:13:54 2011 -0500
+
+    vPlugin: push more state into vSoundConn
+
+commit d9992c78efa9640df945715d5e62d2b669f7ed13
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 15:13:32 2011 -0500
+
+    added oscreceiver.h to spatosc.h-included files
+    
+    Using it in spatosc proto
+
+commit 66bfc3691245ea7f3aa98745f08d26740cbf6f26
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 15:01:07 2011 -0500
+
+    moved oscreceiver.{h,cpp} to the core of the lib
+
+commit 798ecf50ffb7271356485e7b6838467939590474
+Merge: 2a77f07 660ce2e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 14:48:35 2011 -0500
+
+    Merge branch 'master' into openal
+
+commit 2a77f079aaed3d23bfe8064a004b11f58511bc90
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 14:47:09 2011 -0500
+
+    more doc in oscreceiver.h
+
+commit 6cf6783c30da337fa7cd73ce078cd4a433e11691
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 14:44:35 2011 -0500
+
+    use include <lib> for system-wide libs
+
+commit 660ce2eaa757f22c1dd07f6ba2279c18d7649df2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 12:32:13 2011 -0500
+
+    renamed example names
+
+commit 190a56dafec7161cf8fbed9820a939e8c4178c7a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 12:29:03 2011 -0500
+
+    including spatosc.h in an example
+
+commit 96eb4da98ae8356ea329d0fa8c39bb52f239fa5d
+Merge: e82f67a a76dd3c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 12:25:11 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit e82f67aa4cc590d93df5cffffdc910e686bda88d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 12:24:31 2011 -0500
+
+    adding LGPL license header to many files
+
+commit 821a217b7944b7ff5d048728de57f428426e9087
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 12:19:38 2011 -0500
+
+    adding spatosc.h
+
+commit 02e58078a974cc86c9fcc618f8945f29835b1ea9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 12:15:55 2011 -0500
+
+    ignoring pdf files
+
+commit 39eeb33161b6cb01ecfd03ed1909d956f86590b9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 12:15:02 2011 -0500
+
+    moved coding style to the top of HACKING
+    
+    Released it in the public domain
+
+commit 0a7ca00463729a72f7169e183b9c0ad5f014ed98
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 12:10:01 2011 -0500
+
+    added AUTHORS
+
+commit 55d496419a9a9e21490f143406c22e6a3ac4eb66
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 12:06:15 2011 -0500
+
+    changed LICENSE to LGPL. SAT is copyright owner
+
+commit a76dd3c9cbb985a1dc986d925be61ac63f6c84eb
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 13 12:03:42 2011 -0500
+
+    vPlugin: use inheritance instead of type switch
+
+commit b19e023aff8bcd033e545122b8e2aef5931d5bd7
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 13 11:50:57 2011 -0500
+
+    dia: removed loudspeaker layout
+
+commit 6e086937b937bbd5bdac5651be766fab681086d9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 11:46:00 2011 -0500
+
+    adding more stuff in class diagram
+
+commit 6e5544354bfe1a4358d01651a6b629e8d5614365
+Merge: 095679e c60ab53
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 11:25:55 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 095679e37ad897fdf0346a125b53337874c2199a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 11:25:37 2011 -0500
+
+    changed name for translator
+
+commit c60ab53c9227781ba3691410e6ea20c42ba872f8
+Merge: ab7f285 9867c43
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 13 11:16:19 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 9867c43ebb85dc92845e9757f0aa4e378c68ce7f
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 11:15:51 2011 -0500
+
+    adding a class diagram
+
+commit ab7f2857988a90294ed48a6139909e1e8bb50049
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 13 11:15:41 2011 -0500
+
+    vSoundConn: push state into vSoundConn
+
+commit 732e408557723e5b168ce0fecec7bd3a0b2ec25d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 10:55:40 2011 -0500
+
+    more accurate doc string
+
+commit 3720135b9948fa16d42e9a5e20e93863a891bc3e
+Merge: 0a87ec0 87fc9e9
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 13 10:49:27 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 0a87ec0c63d73a3c6555b5cd75987a4f220e07da
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Thu Jan 13 10:48:50 2011 -0500
+
+    vSoundConn: store azimuth, distance and elevation
+    
+    calculated between source and sink
+
+commit 87fc9e955f2aa3353a923b20b2eb6efd0385d4c2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Thu Jan 13 10:43:12 2011 -0500
+
+    more comment
+
+commit f2aca9f5943983c839544ff4d637ff97716cbc20
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 12 17:49:07 2011 -0500
+
+    minor cleanup
+
+commit 51cbfb192fc9199f222a2daef3c93de6c5ac505d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 12 17:07:56 2011 -0500
+
+    add .PHONY rule
+
+commit 5cfc0caf19f84e49d804cdccfde5c76fda1007ab
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 12 17:04:57 2011 -0500
+
+    adding oscreceiver class in openalspat example
+
+commit eb579ffe153e09577b38629de7d3b8badbc35b4f
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 12 16:42:08 2011 -0500
+
+    vBaseNode: removed extra forward declaration
+
+commit 50c194ad47e8a79682de6fd45a0657ce221cf886
+Merge: 9e7ba20 3565c5b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 12 16:32:20 2011 -0500
+
+    Merge branch 'master' into openal
+
+commit 3565c5b4d093a1d52f659253a785c9c175a7aed0
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 12 16:25:21 2011 -0500
+
+    merged master into experimental, resolved conflicts
+
+commit e1ac8417e582421ec07878ff5afa50bfc616241a
+Merge: aab7a2a a1cd529
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 12 16:21:38 2011 -0500
+
+    Merge branch 'master' into experimental
+    
+    Conflicts:
+    	include/vAudioManager.h
+    	include/vBaseNode.h
+    	include/vListener.h
+    	include/vPlugin.h
+    	include/vPlugin_dmitri.h
+    	include/vSoundSource.h
+
+commit aab7a2adef714a22eac041a6f2ef8f56609ad4b4
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 12 16:13:15 2011 -0500
+
+    vSoundConn: use initializer list
+
+commit 940b1a9d6cd05db7acd7dade0cb21636796bd94b
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 12 16:10:36 2011 -0500
+
+    vSoundSource: commented out virtual inheritance
+
+commit 9e7ba204c45257e848ffcf7ea4269e973939bcf2
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 12 15:59:00 2011 -0500
+
+    ignore openalspat executable
+
+commit 0b7362596125939ccace39f9f83acdd63d5576de
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 12 15:49:24 2011 -0500
+
+    vPlugin_dmitri: add underscores to member vars
+
+commit c54df9a93dba2038ce4b7ae20a5e32f3d70d6c5e
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 12 15:48:18 2011 -0500
+
+    added underscores to member vars
+
+commit a41e85bb10522169ab9b10ddebf2f413e674c052
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 12 15:42:34 2011 -0500
+
+    Do not ignore makefiles in examples dir
+
+commit 341c992a5880d4678723834589af0fd0acb665a7
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 12 15:42:17 2011 -0500
+
+    adding openalspat soon-to-be example
+
+commit 5374e0fd61629a8a3acbaf33a2b71dbf43c39957
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 12 15:41:15 2011 -0500
+
+    vPlugin: added underscore to member vars
+
+commit 8eb7767af1a5623db910174baa8ebe5033ea4462
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 12 15:39:00 2011 -0500
+
+    vMath: removed unused headers
+
+commit e82e6095cb3745e3dcce2bc3144ebab7b69031d3
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 12 15:38:10 2011 -0500
+
+    vListener: pass string by const reference
+
+commit bbb54b48b9cf65e35390c38599b5fc27688de962
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 12 15:33:23 2011 -0500
+
+    vBaseNode: added underscores to member vars
+
+commit 7608d0c35396175e60f4a654d04e83f3d3062a35
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 12 15:21:18 2011 -0500
+
+    vAudioManager: added underscores to member vars
+    
+    Also, use preincrement when increment iterators as it avoids an additional temporary variable
+
+commit a1cd5292be10a418c4649a979da1ff7d1e8c8f87
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 12 15:14:10 2011 -0500
+
+    Doxygen file descriptions are set with @file
+
+commit ded32346153f8637a08ef74020cb6d315844789a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 12 15:06:44 2011 -0500
+
+    added a lot more doc for each .h file.
+
+commit 8d8d32748cc68f6a3a248f941cb6eb8b28a38fef
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 12 14:49:14 2011 -0500
+
+    use forward declarations instead of includes
+    
+    This speeds up compilation and reduce depencies. Also, pass strings by reference instead
+    of by value where possible.
+
+commit caeabb17cd0ea8ae3ab44c27f472ad187ba21c3c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 12 14:36:49 2011 -0500
+
+    exclude examples from doxygen doc
+
+commit 43413232eab906fa244b8eba85545d86e6fdcc5b
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 12 14:36:39 2011 -0500
+
+    vAudioManager: moved typedefs out of global namespace
+
+commit ce3755354282401dbdb3555de4ce5a7cb8dc6c00
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 12 14:35:25 2011 -0500
+
+    more doc in vPlugin
+
+commit 6a55bc97bbc927d26a22b24268a9b089aacf34db
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Wed Jan 12 14:34:49 2011 -0500
+
+    created OSCutil namespace
+
+commit e58ccb6239adc7ce8a5d26c2ad2edeb62ddcff8b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 12 14:29:17 2011 -0500
+
+    Added a lot of comments in vAudioManager.h
+
+commit 6aee469eb8ddb37b3dac484df9e4bd792ada1a7b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Jan 12 10:51:26 2011 -0500
+
+    more to do
+
+commit 63bfb91bd81865cd9bd4250677610e419402311e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 23:45:08 2011 -0500
+
+    updated todo
+
+commit 4df28d17a6d55c895a5878b3cf5444b1af7b86cf
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 23:44:43 2011 -0500
+
+    we don't want to install the example program
+
+commit 7dc5eb52a6a1bb5d533c4b85c104beb018a03dad
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 23:40:52 2011 -0500
+
+    Draggable with Clutter >= 1.4.0
+
+commit a9e0c8da001661ea9df05c038b1be19f66736963
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 23:38:06 2011 -0500
+
+    if using clutter >= 1.4, it should be draggable
+
+commit c6560f2344eb10e773ce9ad5a0e739725e71ecec
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 23:04:56 2011 -0500
+
+    clutterspat: scrolling resizes the actor.
+
+commit 94413ff845676b96c9ed3737aaebde7fee6a2fc8
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 22:46:00 2011 -0500
+
+    set initial position of sound source to the actor's
+
+commit 120dd8b914a0c22efdbbdbe53cf1962fd4699594
+Merge: 49ddb1f fe4848d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 22:45:04 2011 -0500
+
+    Merge branch 'clutter-proto' of github.com:mikewoz/spatosc into clutter-proto
+    
+    Conflicts:
+    	examples/clutterspat/main.cpp
+
+commit 49ddb1fcff05b3729bbd4bfb44ccd61deebc02b3
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 22:43:18 2011 -0500
+
+    improved example window title
+
+commit fe4848d4e2db7cb236c98e502f8f9d7727d16b53
+Merge: 8090931 1313601
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 11 22:41:37 2011 -0500
+
+    Merge branch 'clutter-proto' of github.com:mikewoz/spatosc into clutter-proto
+
+commit 80909310ab75fc44106409d0db4cdf6dc31b80e5
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 11 22:41:16 2011 -0500
+
+    fixed memory leak, changed old-school syntax
+
+commit 1313601b6821cae88b6118d9a4c2c8e1b0a91ace
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 22:38:36 2011 -0500
+
+    put example in public domain. Use C++-style cast
+
+commit 1a2062b2a9b82e6cae304da4591f24f31286c890
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 22:30:18 2011 -0500
+
+    fixed a leak in vAudioManager and avoid re-setting plugin
+
+commit ba75080307d303203532c8972afe84c35fc371c4
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 22:30:03 2011 -0500
+
+    ignore clutterspat executable
+
+commit c6cfc3b0337db25ba4c1471dac4a61759c01f735
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 22:25:17 2011 -0500
+
+    adding examples/clutterspat
+
+commit 9989acc96a654d922cba056822ac8dbbc91086c6
+Merge: 2e20b0b a0556f9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 17:50:38 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 2e20b0bdbe3df21bad4de2b0e8e87309830b6475
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 17:50:19 2011 -0500
+
+    adding NEWS with info about release 0.2.0 - coming soon
+
+commit a0556f9a60e73d00fcddcd84d71ca9ddba0dd1e6
+Merge: ea93fec f15072c
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 11 17:47:23 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit ea93fec74f4134ce15a5a41256c20bb319b4b5ad
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 11 17:47:09 2011 -0500
+
+    HACKING: fixed typo
+
+commit f15072ce05c7301f0bd24af81aa52533b9713417
+Merge: 764e585 e335acd
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 17:45:48 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit e335acdc75e291de51b6e0d2eedf1a267f693500
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 11 17:45:15 2011 -0500
+
+    revised HACKING
+
+commit 764e585eec21654de84ede0213bc9724ce416169
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 17:45:08 2011 -0500
+
+    adding one_step_build.sh
+
+commit 1c33eb43272368882532a0033325290eb22460ea
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 17:38:46 2011 -0500
+
+    Adding a pkg-config file
+
+commit aa26ee909a70381b38eb0d7e8a7123849881bf95
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 16:56:00 2011 -0500
+
+    updated HACKING for the coding style
+
+commit 7f8c0a0bff9b2e5d3c97a929347724853aba19af
+Merge: 281bf57 c1ec32f
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 15:37:48 2011 -0500
+
+    Merge branch 'master' of github.com:mikewoz/spatosc
+
+commit 281bf57273b4ab0a41654e60c17ca859abbd5325
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 15:37:09 2011 -0500
+
+    make html now builds doxygen documentation
+
+commit c1ec32fa17edf961ee7746bb37eba30aef981c03
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 11 15:24:10 2011 -0500
+
+    vSoundSource: rename get/setBus to get/setChannelID
+
+commit 7cdd9edd369eb441426e68f1949f49ed17cc8108
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 11 14:58:41 2011 -0500
+
+    OSCutil: pass strings by reference
+
+commit ae8e09bcf62b1ab64169c96d9a06413a769abf97
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Tue Jan 11 14:11:24 2011 -0500
+
+    use static constant rather than macro
+    
+    also get rid of warning for non-void return for switch in vPlugin.cpp
+
+commit e03331735efde30e752788d3c715e26aab4f9b1e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 12:33:34 2011 -0500
+
+    more to do
+
+commit a8c409d02fcf43d2200f496450b523f0fb0a913c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 11:38:24 2011 -0500
+
+    adding TODO
+
+commit fdc37309868fc8f6c32ca4ce06fa81ab3cd4952d
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Jan 11 11:36:39 2011 -0500
+
+    adding HACKING
+
+commit bc8c41591b331f3db5f92c31c0ad0b5fcecb51c4
+Author: Tristan Matthews <le.businessman@gmail.com>
+Date:   Sun Jan 9 22:31:50 2011 -0500
+
+    Commented unused vars, fixed warnings
+
+commit f7bac7e441ca5660d14363bf62396775c098476a
+Author: Tristan Matthews <le.businessman@gmail.com>
+Date:   Sun Jan 9 22:26:39 2011 -0500
+
+    vPlugin: removed extra semicolon after include
+
+commit a262750551838d6d323f31c5d3ec9941e091ab2c
+Author: Tristan Matthews <le.businessman@gmail.com>
+Date:   Mon Dec 20 15:44:54 2010 -0500
+
+    vMath: removed ^M characters
+
+commit 8fb67cd6c03575deb84ccaed479d3c1bfceed21e
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Dec 13 10:46:17 2010 -0500
+
+    adding a micro version number
+
+commit 017fe19bf0636e21043200c3285cf1aa68321f7c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Dec 13 10:44:55 2010 -0500
+
+    ignoring more files
+
+commit 9dba365f1c041723747e94408647631e7c607567
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Dec 13 10:44:46 2010 -0500
+
+    fixed missing include
+
+commit 3ed0d1dc8980fd4c795603e4095045c7cb2f21fb
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Dec 13 10:39:58 2010 -0500
+
+    ignoring some files
+
+commit ed66adfb41df279067689c7927f202d05f840ac2
+Author: Mike Wozniewski <mikewoz@dragon.gateway.2wire.net>
+Date:   Fri Dec 3 19:06:02 2010 -0500
+
+    Initial commit of source, with working prototype of D-Mitri plugin
+
+commit 2bc6de4f6e893cc5278f5caf6b6b122e78ce5490
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Mon Jun 14 17:59:21 2010 -0400
+
+    created project and added README
