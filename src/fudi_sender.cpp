@@ -1,18 +1,32 @@
+/*
+ * This file is part of Spatosc.
+ *
+ * Copyright (c) 2000 Miller Puckette
+ * Copyright (c) 2010 Society for Arts and Technologies <info@sat.qc.ca>
+ *
+ * Spatosc is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Spatosc is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 /* Copyright (c) 2000 Miller Puckette.
 * For information on usage and redistribution, and for a DISCLAIMER OF ALL
 * WARRANTIES, see the file, "LICENSE.txt," in the Pd distribution.  */
 
-/* the "pdsend" command.  This is a standalone program that forwards messages
-from its standard input to Pd via the netsend/netreceive ("FUDI") protocol. */
-
-
-/**
- * @file
- * The FudiSender class
- * 
+/*
  * g++ -Wall -o send_fudi fudi_translator.cpp
  */
 
+#include "fudi_sender.h"
 #include <sys/types.h>
 #include <cstring>
 #include <cstdio>
@@ -31,30 +45,23 @@ from its standard input to Pd via the netsend/netreceive ("FUDI") protocol. */
 #define SOCKET_ERROR -1
 #endif
 
+namespace spatosc
+{
+
 static void x_closesocket(int fd);
 #define BUFSIZE 4096
 #define UNUSED(x) ((void) (x))
 
-class FudiSender
+FudiSender::FudiSender(std::string host, unsigned int port, bool isTcp) :
+    host_(host),
+    port_(port),
+    protocol_(0)
 {
-    public:
-        FudiSender(std::string host, unsigned int port, bool isTcp) :
-            host_(host),
-            port_(port),
-            protocol_(0)
-        {
-            if (isTcp)
-                protocol_ = SOCK_STREAM;
-            else
-                protocol_ = SOCK_DGRAM;
-        }
-        bool sendFudi(const std::string &message);
-    private:
-        std::string host_;
-        unsigned int port_;
-        int protocol_;
-        void sockerror(char *s);
-};
+    if (isTcp)
+        protocol_ = SOCK_STREAM;
+    else
+        protocol_ = SOCK_DGRAM;
+}
 
 bool FudiSender::sendFudi(const std::string &message)
 {
@@ -151,6 +158,7 @@ static void x_closesocket(int fd)
 #endif
 }
 
+#if 0
 int main(int argc, char *argv[])
 {
     UNUSED(argc);
@@ -160,4 +168,7 @@ int main(int argc, char *argv[])
     sender.sendFudi("hello 1 2 3.14159;");
     return 0;
 }
+#endif
+
+} // end namespace spatosc
 

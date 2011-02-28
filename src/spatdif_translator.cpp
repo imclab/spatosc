@@ -1,6 +1,4 @@
 /*
- * spatdif_translator.cpp
- *
  * This file is part of Spatosc.
  *
  * Copyright (c) 2010 Society for Arts and Technologies <info@sat.qc.ca>
