@@ -163,7 +163,11 @@ extern "C" void spatosc_setup(void)
 	class_addmethod(spatosc_class, (t_method) spatosc_setNodeStringProperty, gensym("setNodeStringProperty"), A_SYMBOL, A_SYMBOL, A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_removeNodeStringProperty, gensym("removeNodeStringProperty"), A_SYMBOL, A_SYMBOL, 0);
     if (SPATOSC_DEBUG)
-        post("[spatosc] loaded");
+    {
+        post("[spatosc]: (c) Society for Arts and Technology 2011");
+        post("[spatosc]: free software released under the terms of the GNU General Public License.");
+        post("[spatosc]: written by Mike Wozniewski, Alexandre Quessy and Tristan Matthews.");
+    }
 }
 
 static void spatosc_createSource(t_spatosc *x, t_symbol *node)
