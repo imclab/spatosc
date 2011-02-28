@@ -66,7 +66,7 @@ class Properties
         {
             if (hasProperty(name))
             {
-                std::cout << "Warning: property \"" << name << 
+                std::cerr << "Warning: property \"" << name << 
                     "\" already exists" << std::endl;
                 return 0;
             }
@@ -87,7 +87,7 @@ class Properties
             }
             else
             {
-                std::cout << __FUNCTION__ << ": No such property: \"" + name + "\"." << std::endl;
+                std::cerr << __FUNCTION__ << ": No such property: \"" + name + "\"." << std::endl;
                 return false;
             }
         }
@@ -105,21 +105,15 @@ class Properties
 
         /**
          * Sets the value of a property.
-         * If there is no such property, it creates it.
-         * @return Whether it had to create this property since it was not there.
+         * If there is no such property, it creates it initialized to the 
+         * given value.
          */
-        bool setPropertyValue(const std::string &name, const T &value)
+        void setPropertyValue(const std::string &name, const T &value)
         {
-            if (! hasProperty(name))
-            {
-                addProperty(name, value);
-                return true;
-            }
+            if (hasProperty(name))
+                getProperty(name)->setValue(value);
             else
-            {
-                setPropertyValue(name, value);
-                return false;
-            }
+                addProperty(name, value);
         }
 
         /**
@@ -128,15 +122,15 @@ class Properties
          */
         bool getPropertyValue(const std::string &name, T &value) const
         {
-            if (! hasProperty(name))
-            {
-                std::cout << __FUNCTION__ << ": No such property: \"" + name + "\"." << std::endl;
-                return false;
-            }
-            else
+            if (hasProperty(name))
             {
                 value = getProperty(name)->getValue();
                 return true;
+            }
+            else
+            {
+                std::cerr << __FUNCTION__ << ": No such property: \"" + name + "\"." << std::endl;
+                return false;
             }
         }
 

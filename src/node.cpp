@@ -191,11 +191,10 @@ std::ostream &operator<<(std::ostream &out, const spatosc::Node &n)
     return out << n.id_;
 }
 
-bool Node::setStringProperty(const std::string &key, const std::string &value)
+void Node::setStringProperty(const std::string &key, const std::string &value)
 {
-    bool ret = properties_.setPropertyValue(key, value);
+    properties_.setPropertyValue(key, value);
     scene_.onPropertyChanged(this, key, value);
-    return ret;
 }
 
 bool Node::getStringProperty(const std::string &key, std::string &value) const
