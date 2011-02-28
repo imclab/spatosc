@@ -6,10 +6,18 @@ This release is a developer snapshot in the 0.1 unstable series.
 This version contains new features and bug fixes.
 
 New features:
-    * 
+    * Added node string properties
+    * added setter methods for distanceFactor, dopplerFactor, etc
+    * updates to dmitri translator, including documentation and ability to change spacemap radius
+    * Support multiple translators
 
 Bug fixes: 
-    * 
+    * validate that OSC args match desired types
+    * fixes for WIN32 build, and some updates to spinspat example
+    * changed distance gain attenuation to control Bus level, instead of Input level
+    * README: added note about building from git
+    * changed a couple 'and' and 'not' into && and ! for compatibility with windows
+    * configure: drop pedantic flag
 
 
 2011-02-18 spatosc 0.1.2
