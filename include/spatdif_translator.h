@@ -20,7 +20,7 @@
  */
 
 /** @file
- * The Spatdif translator class.
+ * The SpatdifTranslator class.
  */
 
 #ifndef _SPATDIF_TRANSLATOR_H_
