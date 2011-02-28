@@ -31,7 +31,6 @@
 namespace spatosc
 {
 
-
 Wrapper::Wrapper() :
     scene_(new Scene())
 {
@@ -42,7 +41,7 @@ bool Wrapper::createListener(const std::string &nodeName)
     Listener *node = scene_->createListener(nodeName);
     if (node == 0)
     {
-        std::cerr << "Error creating listener " << nodeName << std::endl;
+        std::cerr << __FUNCTION__ << ": Error creating listener " << nodeName << std::endl;
         return false;
     }
     else
@@ -54,7 +53,7 @@ bool Wrapper::createSource(const std::string &nodeName)
     SoundSource *node = scene_->createSoundSource(nodeName);
     if (node == 0)
     {
-        std::cerr << "Error creating sound source " << nodeName << std::endl;
+        std::cerr << __FUNCTION__ << ": Error creating sound source " << nodeName << std::endl;
         return false;
     }
     else
@@ -71,7 +70,7 @@ bool Wrapper::deleteNode(const std::string &nodeName)
         return scene_->deleteNode(source);
     else
     {
-        std::cerr << "No such node: " << nodeName << std::endl;
+        std::cerr << __FUNCTION__ << ": No such node: " << nodeName << std::endl;
         return false;
     }
 }
@@ -98,13 +97,13 @@ bool Wrapper::disconnect(const std::string &nodeFrom, const std::string &nodeTo)
     SoundSource *source = scene_->getSoundSource(nodeFrom);
     if (! source)
     {
-        std::cerr << "No such node: " << nodeFrom << std::endl;
+        std::cerr << __FUNCTION__ << ": No such node: " << nodeFrom << std::endl;
         return false;
     }
     Listener *sink = scene_->getListener(nodeTo);
     if (! sink)
     {
-        std::cerr << "No such node: " << nodeTo << std::endl;
+        std::cerr << __FUNCTION__ << ": No such node: " << nodeTo << std::endl;
         return false;
     }
     return scene_->disconnect(source,  sink);
@@ -115,13 +114,13 @@ bool Wrapper::connect(const std::string &nodeFrom, const std::string &nodeTo)
     SoundSource *source = scene_->getSoundSource(nodeFrom);
     if (! source)
     {
-        std::cerr << "No such node: " << nodeFrom << std::endl;
+        std::cerr << __FUNCTION__ << ": No such node: " << nodeFrom << std::endl;
         return false;
     }
     Listener *sink = scene_->getListener(nodeTo);
     if (! sink)
     {
-        std::cerr << "No such node: " << nodeTo << std::endl;
+        std::cerr << __FUNCTION__ << ": No such node: " << nodeTo << std::endl;
         return false;
     }
     return scene_->connect(source, sink);
@@ -132,7 +131,7 @@ bool Wrapper::setOrientation(const std::string &nodeName, double pitch, double r
     Node *node = scene_->getNode(nodeName);
     if (! node)
     {
-        std::cerr << "No such node: " << nodeName << std::endl;
+        std::cerr << __FUNCTION__ << ": No such node: " << nodeName << std::endl;
         return false;
     }
     else
@@ -147,7 +146,7 @@ bool Wrapper::setPosition(const std::string &nodeName, double x, double y, doubl
     Node *node = scene_->getNode(nodeName);
     if (! node)
     {
-        std::cerr << "No such node: " << nodeName << std::endl;
+        std::cerr << __FUNCTION__ << ": No such node: " << nodeName << std::endl;
         return false;
     }
     else
@@ -211,7 +210,10 @@ bool Wrapper::setNodeStringProperty(const std::string &node, const std::string &
         return true;
     }
     else
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
         return false;
+    }
 }
 
 bool Wrapper::getNodeStringProperty(const std::string &node, const std::string &key, std::string &value)
@@ -222,7 +224,10 @@ bool Wrapper::getNodeStringProperty(const std::string &node, const std::string &
         return nodePtr->getStringProperty(key, value);
     }
     else
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
         return false;
+    }
 }
 
 bool Wrapper::removeNodeStringProperty(const std::string &node, const std::string &key)
@@ -233,7 +238,10 @@ bool Wrapper::removeNodeStringProperty(const std::string &node, const std::strin
         return nodePtr->removeStringProperty(key);
     }
     else
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
         return false;
+    }
 }
 
 } // end of namespace spatosc

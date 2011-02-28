@@ -1,5 +1,5 @@
-#N canvas 592 104 752 471 10;
-#X obj 133 348 tgl 50 0 empty empty success 17 7 0 10 -258113 -1 -1
+#N canvas 592 104 897 633 10;
+#X obj 128 423 tgl 50 0 empty empty success 17 7 0 10 -258113 -1 -1
 0 1;
 #X msg 90 87 createSource source;
 #X msg 141 114 createListener listener;
@@ -51,17 +51,20 @@ and controls them using the Open Sound Control protocol.;
 #X connect 4 0 1 0;
 #X connect 5 0 2 0;
 #X restore 491 96 pd pack3f;
-#X text 226 345 Usage: [spatosc s:translator f:port s:host];
-#X text 228 362 The arguments are not mandatory. You can provide none
+#X text 266 438 Usage: [spatosc s:translator f:port s:host];
+#X text 268 455 The arguments are not mandatory. You can provide none
 of \, only one \, two or all three. The default translator simply prints
 to the console.;
-#X obj 133 316 spatosc;
-#X obj 229 317 spatosc DmitriTranslator localhost;
+#X obj 128 391 spatosc;
+#X obj 268 521 spatosc DmitriTranslator localhost;
 #X msg 411 215 addTranslator spatdif SpatdifTranslator localhost 18032
 ;
 #X msg 410 239 removeTranslator spatdif;
 #X msg 412 264 removeTranslator default;
 #X msg 413 287 hasTranslator default;
+#X text 271 501 Example using arguments:;
+#X msg 414 347 removeNodeStringProperty source foo;
+#X msg 413 322 setNodeStringProperty source foo bar;
 #X connect 1 0 18 0;
 #X connect 2 0 18 0;
 #X connect 3 0 18 0;
@@ -80,3 +83,5 @@ to the console.;
 #X connect 21 0 18 0;
 #X connect 22 0 18 0;
 #X connect 23 0 18 0;
+#X connect 25 0 18 0;
+#X connect 26 0 18 0;
