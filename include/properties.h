@@ -62,7 +62,7 @@ class Properties
         /**
          * Adds a property.
          */
-        Property<T> *addProperty(const std::string &name, T value)
+        Property<T> *addProperty(const std::string &name, const T &value)
         {
             if (hasProperty(name))
             {
@@ -76,10 +76,20 @@ class Properties
         
         /**
          * Removes a property.
+         * @return Property was there and got removed. False if it was not present.
          */
-        void removeProperty(const std::string &name)
+        bool removeProperty(const std::string &name)
         {
-            properties_.erase(name);
+            if (hasProperty(name))
+            {
+                properties_.erase(name);
+                return true;
+            }
+            else
+            {
+                std::cout << __FUNCTION__ << ": No such property: \"" + name + "\"." << std::endl;
+                return false;
+            }
         }
 
         /**
@@ -95,35 +105,39 @@ class Properties
 
         /**
          * Sets the value of a property.
+         * If there is no such property, it creates it.
+         * @return Whether it had to create this property since it was not there.
          */
-        bool setPropertyValue(const std::string &name, T value)
+        bool setPropertyValue(const std::string &name, const T &value)
         {
-            if (not hasProperty(name))
+            if (! hasProperty(name))
             {
-                std::cout << "No such property \"" << name << "\"" << std::endl;
-                return false;
+                addProperty(name, value);
+                return true;
             }
             else
-                properties_[name]->setValue(value);
-            return true;
+            {
+                setPropertyValue(name, value);
+                return false;
+            }
         }
 
         /**
-         * Returns the value of a property.
-         * 
-         * You should always call hasProperty before calling this method in order to avoid having to catch the exception it may throw if the given property does not exist.
-         * @throw NoSuchPropertyError if the given property does not exist.
+         * Retrieves the value of a property.
+         * If there is no such a property, it returns false.
          */
-        T getPropertyValue(const std::string &name) throw (NoSuchPropertyError)
+        bool getPropertyValue(const std::string &name, T &value) const
         {
-            if (not hasProperty(name))
+            if (! hasProperty(name))
             {
-                std::string message = "No such property: \"" + name + "\".";
-                std::cout << message << std::endl;
-                throw NoSuchPropertyError(message.c_str());
+                std::cout << __FUNCTION__ << ": No such property: \"" + name + "\"." << std::endl;
+                return false;
             }
-                
-            return properties_[name]->getValue();
+            else
+            {
+                value = getProperty(name)->getValue();
+                return true;
+            }
         }
 
         /**
@@ -138,7 +152,7 @@ class Properties
         /**
          * Returns a copy of this map of smart pointers to Property<T>.
          */
-        std::map<std::string, PropertyPtr> getProperties()
+        std::map<std::string, PropertyPtr> getProperties() const
         {
             return properties_;
         }
@@ -146,7 +160,7 @@ class Properties
         /**
          * Prints a list of all properties and their values.
          */
-        void printProperties()
+        void printProperties() const
         {
             typename std::map<std::string, PropertyPtr>::const_iterator iter;
             for (iter = properties_.begin(); iter != properties_.end(); ++iter)

@@ -151,15 +151,21 @@ class Node
         /**
          * Sets a string property for this node.
          * Creates it if it does not exist.
-         * Right now, there is no way to delete a Node Property.
-         * @return Success.
+         * @return Whether it had to create this property since it was not there.
          */
         bool setStringProperty(const std::string &key, const std::string &value);
+
         /**
          * Retrieves a string property value for this node.
          * @return Success.
          */
-        bool getStringProperty(const std::string &key, std::string &value);
+        bool getStringProperty(const std::string &key, std::string &value) const;
+
+        /**
+         * Removes a property.
+         * @return Whether it deleted it, or false if it was not there.
+         */
+        bool removeStringProperty(const std::string &key);
 
     protected:
         void notifyScene();

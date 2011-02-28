@@ -17,14 +17,15 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "node.h"
 #include <cassert>
 #include <iostream>
 #include <lo/lo.h>
-#include "scene.h"
+
 #include "connection.h"
 #include "geotransform.h"
+#include "node.h"
 #include "oscutils.h"
+#include "scene.h"
 
 #define UNUSED(x) ((void) (x))
 
@@ -192,26 +193,19 @@ std::ostream &operator<<(std::ostream &out, const spatosc::Node &n)
 
 bool Node::setStringProperty(const std::string &key, const std::string &value)
 {
-    if (! properties_.hasProperty(key))
-        properties_.addProperty(key, value);
-    else
-        properties_.setPropertyValue(key, value);
+    bool ret = properties_.setPropertyValue(key, value);
     scene_.onPropertyChanged(this, key, value);
-    return true;
+    return ret;
 }
 
-bool Node::getStringProperty(const std::string &key, std::string &value)
+bool Node::getStringProperty(const std::string &key, std::string &value) const
 {
-    if (! properties_.hasProperty(key))
-    {
-        std::cout << "No such property: " << key << std::endl;
-        return false;
-    }
-    else
-    {
-        value = properties_.getPropertyValue(key);
-        return true;
-    }
+    return properties_.getPropertyValue(key, value);
+}
+
+bool Node::removeStringProperty(const std::string &key)
+{
+    return properties_.removeProperty(key);
 }
 
 } // end namespace spatosc

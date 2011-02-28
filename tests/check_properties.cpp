@@ -63,7 +63,9 @@ bool test_properties()
         std::cout << __FUNCTION__ << ": could not set the property's value." << std::endl;
         return false;
     }
-    if (properties.getPropertyValue("foo") != "spam")
+    std::string value;
+    properties.getPropertyValue("foo", value);
+    if (value != "spam")
     {
         std::cout << __FUNCTION__ << ": its value should be the same as the one given." << std::endl;
         return false;
@@ -80,15 +82,7 @@ bool test_properties()
         return false;
     }
 
-    bool gotError = false;
-    try
-    {
-        properties.getPropertyValue("qwoeiuqowiueoqiweuoqwiue");
-    } catch (const NoSuchPropertyError &e)
-    {
-        gotError = true;
-    }
-    if (! gotError)
+    if (! properties.getPropertyValue("qwoeiuqowiueoqiweuoqwiue", value))
     {
         std::cout << __FUNCTION__ << ": should have raised an exception when trying to access a property that does not exist.." << std::endl;
         return false;
