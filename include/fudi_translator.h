@@ -41,7 +41,7 @@ class FudiTranslator : public Translator
     public:
         FudiTranslator(const std::string &ip, const std::string &port, bool verbose);
         virtual void pushOSCMessages(Connection *conn);
-        virtual void pushPropertyChange(Node *node, const std::string &key, const std::string &value);
+        //virtual void pushPropertyChange(Node *node, const std::string &key, const std::string &value);
         static const char *DEFAULT_SEND_PORT;
         static const char *DEFAULT_RECEIVER_PORT;
 

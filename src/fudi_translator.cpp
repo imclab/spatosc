@@ -48,7 +48,7 @@ FudiTranslator::FudiTranslator(const std::string &ip,
 
 void FudiTranslator::sendFudi(const std::string &message)
 {
-    FudiSender sender(ip_, port_, false); // UDP
+    FudiSender sender(ip_, port_, false);
     sender.sendFudi(message);
 }
 

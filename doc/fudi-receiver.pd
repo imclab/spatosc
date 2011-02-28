@@ -1,9 +1,4 @@
 #N canvas 943 407 450 300 10;
-#X obj 160 117 netreceive 31337;
-#X floatatom 281 171 5 0 0 0 - - -;
-#X obj 275 190 print connections;
 #X obj 160 225 print received;
-#X text 234 95 TCP;
-#X connect 0 0 3 0;
-#X connect 0 1 1 0;
-#X connect 0 1 2 0;
+#X obj 160 117 netreceive 31337 1;
+#X connect 1 0 0 0;
