@@ -151,9 +151,8 @@ class Node
         /**
          * Sets a string property for this node.
          * Creates it if it does not exist.
-         * @return Whether it had to create this property since it was not there.
          */
-        bool setStringProperty(const std::string &key, const std::string &value);
+        void setStringProperty(const std::string &key, const std::string &value);
 
         /**
          * Retrieves a string property value for this node.

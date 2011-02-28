@@ -58,7 +58,11 @@ bool test_properties()
         std::cout << __FUNCTION__ << ": its value should be the same as the one given." << std::endl;
         return false;
     }
-    if (! properties.setPropertyValue("foo", "spam"))
+
+    properties.setPropertyValue("foo", "spam");
+    std::string val;
+    properties.getPropertyValue("foo", val);
+    if (val != "spam")
     {
         std::cout << __FUNCTION__ << ": could not set the property's value." << std::endl;
         return false;
