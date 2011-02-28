@@ -201,5 +201,40 @@ bool Wrapper::hasTranslator(const std::string &name)
 {
     return scene_->hasTranslator(name);
 }
+
+bool Wrapper::setNodeStringProperty(const std::string &node, const std::string &key, const std::string &value)
+{
+    Node *nodePtr = scene_->getNode(node);
+    if (nodePtr)
+    {
+        nodePtr->setStringProperty(key, value);
+        return true;
+    }
+    else
+        return false;
+}
+
+bool Wrapper::getNodeStringProperty(const std::string &node, const std::string &key, std::string &value)
+{
+    Node *nodePtr = scene_->getNode(node);
+    if (nodePtr)
+    {
+        return nodePtr->getStringProperty(key, value);
+    }
+    else
+        return false;
+}
+
+bool Wrapper::removeNodeStringProperty(const std::string &node, const std::string &key)
+{
+    Node *nodePtr = scene_->getNode(node);
+    if (nodePtr)
+    {
+        return nodePtr->removeStringProperty(key);
+    }
+    else
+        return false;
+}
+
 } // end of namespace spatosc
 

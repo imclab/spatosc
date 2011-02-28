@@ -110,15 +110,21 @@ class Wrapper
          */
         bool hasTranslator(const std::string &name);
         /**
-         * @warning Not implemented.
+         * Sets the value of a Node string Property.
          * @return Success or not.
          */
-        bool setTranslatorProperty(const std::string &key, const std::string &value);
+        bool setNodeStringProperty(const std::string &node, const std::string &key, const std::string &value);
         /**
-         * @warning Not implemented.
+         * Retrieves the value of a Node string Property.
+         * @param value A reference to a string in which the value will be written.
          * @return Success or not.
          */
-        bool setNodeProperty(const std::string &key, const std::string &value);
+        bool getNodeStringProperty(const std::string &node, const std::string &key, std::string &value);
+        /**
+         * Removes a Node string Property.
+         * @return Success or not.
+         */
+        bool removeNodeStringProperty(const std::string &node, const std::string &key);
         /**
          * Sets the scene's translation.
          */
