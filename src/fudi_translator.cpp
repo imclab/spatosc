@@ -107,13 +107,9 @@ void FudiTranslator::pushOSCMessages(Connection *conn)
     }
     
     if (src->sendNewPosition())
-    {
-        sendPosition("source", snk);
-    }
+        sendPosition("source", src);
     if (snk->sendNewPosition())
-    {
         sendPosition("listener", snk);
-    }
 }
 
 } // end namespace spatosc
