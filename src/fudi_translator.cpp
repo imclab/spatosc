@@ -56,7 +56,7 @@ void FudiTranslator::sendPosition(const std::string &prefix, Node *node)
 {
     Vector3 vect(node->getPosition());
     std::ostringstream os;
-    os << prefix << " " << node->getID() << " xyz " << vect.x << " " << vect.y << " " << vect.z << ";";
+    os << prefix << " " << node->getID() << " xyz " << vect.x << " " << vect.y << " " << vect.z << ";\n";
     sendFudi(os.str());
 }
 

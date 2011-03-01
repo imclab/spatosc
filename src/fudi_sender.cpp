@@ -114,7 +114,7 @@ bool FudiSender::sendFudi(const std::string &message)
     char *bp;
     int nsent, nsend;
     nsend = strlen(buf);
-    printf("sending=%s     length=%d\n", buf, nsend);
+    //printf("sending=%s     length=%d\n", buf, nsend);
     for (bp = buf, nsent = 0; nsent <= nsend;)
     {
         int res = send(sockfd, bp, nsend - nsent, 0);
@@ -125,9 +125,9 @@ bool FudiSender::sendFudi(const std::string &message)
         }
         nsent += res;
         bp += res;
+        // printf("nsent=%d / %d\n", nsent, nsend);
         if (nsent >= nsend)
             break;
-        printf("nsent=%d\n", nsent);
     }
     x_closesocket(sockfd);
     return true;
