@@ -26,6 +26,7 @@
 
 #include "translator.h"
 #include <string>
+#include <sstream>
 
 namespace spatosc
 {
@@ -53,6 +54,36 @@ class FudiTranslator : public Translator
         unsigned int port_;
         std::string ip_;
         void sendPosition(const std::string &prefix, Node *node);
+};
+
+/**
+ * Formats a series of basic types atoms into a FUDI message.
+ */
+class FudiMessage
+{
+    public:
+        FudiMessage();
+        /**
+         * Appends an atom to the FUDI message.
+         * @return A reference to this, so that we can daisy-chain calls to this method.
+         */
+        template <typename T>
+        FudiMessage &add(const T &atom)
+        {
+            std::ostringstream os;
+            os << message_;
+            if (containsSomething_)
+                os << " ";
+            os << atom;
+            message_ = os.str();
+            containsSomething_ = true;
+            return *this;
+        }
+        void clear();
+        std::string toString() const;
+    private:
+        bool containsSomething_;
+        std::string message_;
 };
 
 } // end namespace spatosc
