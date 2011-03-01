@@ -24,6 +24,7 @@
 #include "scene.h"
 #include "soundsource.h"
 #include "spatdif_translator.h"
+#include "fudi_translator.h"
 #include "translator.h"
 #include "wrapper.h"
 #include <iostream>
@@ -184,6 +185,8 @@ bool Wrapper::addTranslator(const std::string &name, const std::string &translat
         return scene_->addTranslator<DmitriTranslator>(name, sendToAddress, port) != 0;
     else if (translatorName == "ConsoleTranslator")
         return scene_->addTranslator<ConsoleTranslator>(name, sendToAddress, port) != 0;
+    else if (translatorName == "FudiTranslator")
+        return scene_->addTranslator<FudiTranslator>(name, sendToAddress, port) != 0;
     else
     {
         std::cerr << "No such translator: " << translatorName << std::endl;
