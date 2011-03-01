@@ -36,6 +36,8 @@ class Node;
 
 /**
  * Translator to send FUDI messages to Pure Data.
+ * 
+ * @warning This Translator might not implement all the messages. It might be out of date.
  */
 class FudiTranslator : public Translator
 {
