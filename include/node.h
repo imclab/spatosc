@@ -67,6 +67,15 @@ class Node
         virtual void debugPrint() const;
 
         /**
+         * Activates (or deactivates) the node. When deactivated, no connections
+         * involving this node will be computed and sent via OSC. This is useful
+         * to reduce network load and processing for large scenes (eg, when a
+         * node is far away or otherwise culled).
+         */
+        void setActive(bool isActive);
+
+
+        /**
          * Sets this node's position in the 3D cartesian space.
          *
          * Distances are in meters.

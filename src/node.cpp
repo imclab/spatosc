@@ -57,6 +57,12 @@ void Node::debugPrint() const
     std::cout << "    active?\t" << active_ << std::endl;
 }
 
+void Node::setActive(bool isActive)
+{
+	active_ = isActive;
+	notifyScene();
+}
+
 void Node::setPosition(double x, double y, double z)
 {
     if (x != pos_.x || y != pos_.y || z != pos_.z)
