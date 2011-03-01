@@ -28,6 +28,7 @@
 #include "fudi_translator.h"
 #include "listener.h"
 #include "maths.h"
+#include "node.h"
 #include "soundsource.h"
 
 namespace spatosc
@@ -55,8 +56,16 @@ void FudiTranslator::sendFudi(const std::string &message)
 void FudiTranslator::sendPosition(const std::string &prefix, Node *node)
 {
     Vector3 vect(node->getPosition());
+    if (isVerbose())
+    {
+        std::cout << "    node position: " << vect.x << " " << vect.y << " " << vect.z << std::endl;
+        node->debugPrint();
+    }
     std::ostringstream os;
     os << prefix << " " << node->getID() << " xyz " << vect.x << " " << vect.y << " " << vect.z << ";\n";
+
+    if (isVerbose())
+        std::cout << "    sending FUDI: " << os.str() << std::endl;
     sendFudi(os.str());
 }
 
@@ -64,6 +73,15 @@ void FudiTranslator::pushOSCMessages(Connection *conn)
 {
     SoundSource *src = conn->getSource();
     Listener *snk = conn->getSink();
+
+    if (isVerbose())
+    {
+        std::cout << "Computation update for " << conn->getSource()->getID() << " -> " << conn->getSink()->getID() << " :" <<std::endl;
+        std::cout << "  dist:\t" << conn->distance() << std::endl;
+        std::cout << "  azim:\t" << conn->azimuth() << std::endl;
+        std::cout << "  elev:\t" << conn->elevation() << std::endl;
+        std::cout << "  gain:\t" << conn->gainDB() << " dB" << std::endl;
+    }
     
     if (src->sendNewPosition())
     {

@@ -58,7 +58,7 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
     int port = 0;
     t_symbol *host = gensym("NULL");
     t_symbol *translator = gensym("NULL");
-    // TRANSLATOR
+    // arg 0: TRANSLATOR
     if (argc >= 1) 
     {
         if (argv[0].a_type == A_SYMBOL)
@@ -66,7 +66,7 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
         else
             spatosc_print_usage();
     }
-    // PORT
+    // arg 1: PORT
     if (argc >= 2)
     {
         if (argv[1].a_type == A_FLOAT)
@@ -74,7 +74,7 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
         else
             spatosc_print_usage();
     }
-    // HOST
+    // arg 2: HOST
     if (argc >= 3) 
     {
         if (argv[2].a_type == A_SYMBOL)
@@ -92,6 +92,8 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
             sendToPort = spatosc::DmitriTranslator::DEFAULT_SEND_PORT;
         else if (translatorName == "SpatdifTranslator")
             sendToPort = spatosc::SpatdifTranslator::DEFAULT_SEND_PORT;
+        else if (translatorName == "FudiTranslator")
+            sendToPort = spatosc::FudiTranslator::DEFAULT_SEND_PORT;
     }
     if (std::string("NULL") != host->s_name)
         sendToAddress = host->s_name;
@@ -105,7 +107,7 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
     {
         post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
     }
-    bool success = x->wrapper.addTranslator("default", translatorName, sendToAddress, sendToPort);
+    bool success = x->wrapper.addTranslator("default", translatorName, sendToAddress, sendToPort, true);
     if (! success)
     {
         post("[spatosc]: ERROR calling addTranslator from the constructor.");
@@ -222,6 +224,7 @@ static void spatosc_setAutoConnect(t_spatosc *x, t_floatarg enabled)
     output_success(x, x->wrapper.setAutoConnect(enabled != 0.0f));
 }
 
+// TODO: invert port and host args?
 static void spatosc_addTranslator(t_spatosc *x, t_symbol *identifier, t_symbol *translator, t_symbol *host, t_floatarg port)
 {
     std::string translatorName = "ConsoleTranslator";
@@ -232,9 +235,18 @@ static void spatosc_addTranslator(t_spatosc *x, t_symbol *identifier, t_symbol *
         translatorName = translator->s_name;
         if (translatorName == "DmitriTranslator")
             sendToPort = spatosc::DmitriTranslator::DEFAULT_SEND_PORT;
+        if (translatorName == "FudiTranslator")
+            sendToPort = spatosc::FudiTranslator::DEFAULT_SEND_PORT;
     }
-    if (std::string("NULL") != host->s_name)
-        sendToAddress = host->s_name;
+    if (host)
+    {
+        if (std::string("NULL") != host->s_name)
+        {
+            sendToAddress = host->s_name;
+        }
+    }
+    else
+        post("[spatosc]: Error: invalid host symbol");
     if (0 != port)
     {
         std::ostringstream os;
@@ -246,7 +258,7 @@ static void spatosc_addTranslator(t_spatosc *x, t_symbol *identifier, t_symbol *
         printf("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
         post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
     }
-    output_success(x, x->wrapper.addTranslator(identifier->s_name, translatorName, sendToAddress, sendToPort));
+    output_success(x, x->wrapper.addTranslator(identifier->s_name, translatorName, sendToAddress, sendToPort, true));
 }
 
 static void spatosc_removeTranslator(t_spatosc *x, t_symbol *identifier)

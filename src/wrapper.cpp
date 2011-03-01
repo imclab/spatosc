@@ -177,16 +177,16 @@ void Wrapper::setScale(double sx, double sy, double sz)
     scene_->setScale(sx, sy, sz);
 }
 
-bool Wrapper::addTranslator(const std::string &name, const std::string &translatorName, const std::string &sendToAddress, const std::string &port)
+bool Wrapper::addTranslator(const std::string &name, const std::string &translatorName, const std::string &sendToAddress, const std::string &port, bool verbose)
 {
     if (translatorName == "SpatdifTranslator")
-        return scene_->addTranslator<SpatdifTranslator>(name, sendToAddress, port) != 0;
+        return scene_->addTranslator<SpatdifTranslator>(name, sendToAddress, port, verbose) != 0;
     else if (translatorName == "DmitriTranslator")
-        return scene_->addTranslator<DmitriTranslator>(name, sendToAddress, port) != 0;
+        return scene_->addTranslator<DmitriTranslator>(name, sendToAddress, port, verbose) != 0;
     else if (translatorName == "ConsoleTranslator")
-        return scene_->addTranslator<ConsoleTranslator>(name, sendToAddress, port) != 0;
+        return scene_->addTranslator<ConsoleTranslator>(name, sendToAddress, port, verbose) != 0;
     else if (translatorName == "FudiTranslator")
-        return scene_->addTranslator<FudiTranslator>(name, sendToAddress, port) != 0;
+        return scene_->addTranslator<FudiTranslator>(name, sendToAddress, port, verbose) != 0;
     else
     {
         std::cerr << "No such translator: " << translatorName << std::endl;
