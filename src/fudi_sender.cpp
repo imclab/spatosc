@@ -48,7 +48,6 @@
 namespace spatosc
 {
 
-static void x_closesocket(int fd);
 #define BUFSIZE 4096
 #define UNUSED(x) ((void) (x))
 
@@ -149,7 +148,7 @@ void FudiSender::sockerror(char *s)
     fprintf(stderr, "%s: %s (%d)\n", s, strerror(err), err);
 }
 
-static void x_closesocket(int fd)
+void FudiSender::x_closesocket(int fd)
 {
 #ifdef MSW
     closesocket(fd);

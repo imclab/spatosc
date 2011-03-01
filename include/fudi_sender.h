@@ -55,6 +55,7 @@ class FudiSender
         unsigned int port_;
         int protocol_;
         void sockerror(char *s);
+        void x_closesocket(int fd);
 };
 
 } // end of namespace spatosc
