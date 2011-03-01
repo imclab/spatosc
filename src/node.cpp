@@ -60,7 +60,7 @@ void Node::debugPrint() const
 void Node::setActive(bool isActive)
 {
 	active_ = isActive;
-	notifyScene();
+	forceNotifyScene();
 }
 
 void Node::setPosition(double x, double y, double z)
@@ -102,6 +102,12 @@ void Node::notifyScene()
 {
     nodeChanged_ = true;
     onNodeChanged(); // let subclasses decide what to do
+}
+
+void Node::forceNotifyScene()
+{
+    nodeChanged_ = true;
+    onNodeChanged(true); // let subclasses decide what to do
 }
 
 // FIXME:Sun Feb 13 12:11:29 EST 2011:tmatth:put this in a separate component

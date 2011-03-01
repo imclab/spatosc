@@ -104,6 +104,7 @@ OscSender &DmitriTranslator::getSender() const
 void DmitriTranslator::setEquatorRadius(double radius)
 {
 	SPACEMAP_EQUATOR_RADIUS = radius;
+	// TODO: need to recompute all connections and push them
 }
 
 } // end namespace spatosc
