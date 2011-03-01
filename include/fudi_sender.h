@@ -41,6 +41,14 @@ class FudiSender
          * @param isTcp Set to true to use TCP or false to use UDP.
          */
         FudiSender(std::string host, unsigned int port, bool isTcp);
+        /**
+         * Sends a FUDI message.
+         * Note than FUDI messages always end with a semi-colon. (";")
+         * When using the UDP protocol, they must also end with a newline character. ("\n")
+         *
+         * FUDI messages are made of ASCII strings whose atoms are separated by a space.
+         * Atoms can be strings of string-formatted numbers.
+         */
         bool sendFudi(const std::string &message);
     private:
         std::string host_;
