@@ -202,7 +202,11 @@ int main(int argc, char **argv)
 	// listener is looking forward along Y axis (camera is above, looking down)
 	//listener_->setOrientation(-90.0, 0.0, 0.0);
 
-
+    spatosc::Node *nn = audioScene_.getNode("1");
+    if (nn)
+    {
+        nn->setActive(false);
+    } else std::cout << "could not find node" << std::endl;
 	// create copy of scene in SPIN:
 
 	spin.SceneMessage("sss", "createNode", "1", "ShapeNode", LO_ARGS_END);

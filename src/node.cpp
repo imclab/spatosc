@@ -130,7 +130,14 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv, con
 {
     UNUSED(types);
     using namespace OSCutil; // argMatchesType
-    if (method == "xyz")
+    if (method == "setActive")
+    {
+    	if (argMatchesType(argc, types, 0, 'i'))
+    	{
+    		setActive((bool)argv[0]->i);
+    	}
+    }
+    else if (method == "xyz")
     {
         if (argMatchesType(argc, types, 0, 'f') &&
             argMatchesType(argc, types, 1, 'f') &&

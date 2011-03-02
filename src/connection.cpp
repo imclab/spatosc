@@ -117,7 +117,7 @@ void Connection::unmute()
 
 bool Connection::active() const
 {
-    return src_->active() || snk_->active();
+    return src_->active() && snk_->active();
 }
 
 void Connection::debugPrint() const
@@ -132,6 +132,7 @@ void Connection::debugPrint() const
     std::cout << "    dopplerFactor:\t" << dopplerFactor_ << "%" << std::endl;
 }
 
+// TODO: need to provide types as well
 void Connection::handleMessage(const std::string &method, int argc, lo_arg **argv)
 {
     if (method == "aed")
@@ -156,6 +157,21 @@ void Connection::handleMessage(const std::string &method, int argc, lo_arg **arg
         assert(argc == 1);
         gainDB_ = argv[0]->f;
     }
+    // FIXME: need types!
+    /*
+    else if (method == "setDistanceFactor")
+    {
+    	if (argMatchesType(argc, types, 0, 'f')) setDistanceFactor(argv[0]->f);
+    }
+    else if (method == "setDopplerFactor")
+    {
+    	if (argMatchesType(argc, types, 0, 'f')) setDopplerFactor(argv[0]->f);
+    }
+    else if (method == "setRolloffFactor")
+    {
+    	if (argMatchesType(argc, types, 0, 'f')) setRolloffFactor(argv[0]->f);
+    }
+    */
     else
         std::cerr << "Unknown method " << method << std::endl;
 }
