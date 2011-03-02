@@ -20,11 +20,10 @@
 #include <iostream>
 #include <tr1/memory>
 #include <spatosc/spatosc.h>
-#include <spatosc/spatdif_translator.h>
 
 static const bool VERBOSE = true;
 
-int main(int /*argc*/, char ** /*argv*/)
+int main(int argc, char ** /*argv*/)
 {
     using std::tr1::shared_ptr;
     using namespace spatosc;
@@ -51,7 +50,10 @@ int main(int /*argc*/, char ** /*argv*/)
     // In order to send OSC, some output plugin must be specified. In this case,
     // we choose the SpatdifTranslator, which can be rendered, for example, by
     // the pd-vbap example
-    scene.addTranslator<SpatdifTranslator>("spatdif", "127.0.0.1", "9999");
+    if (argc > 1)
+        scene.addTranslator<FudiTranslator>("fudi", "localhost", "31337");
+    else
+        scene.addTranslator<SpatdifTranslator>("spatdif", "127.0.0.1", "9999");
 
     // The Scene class can print out everything to the console:
     if (VERBOSE)
@@ -78,7 +80,6 @@ int main(int /*argc*/, char ** /*argv*/)
             bar->setPosition(sinf(-angle)*orbitRadius,
                              0.0,
                              1.0);
-
 	        usleep(1000000 * orbitDuration / numSamples);
         }
     }

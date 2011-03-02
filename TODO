@@ -17,7 +17,7 @@ Features
  * Support multicast and TCP in OscSender and OscReceiver. Perhaps use liblo urls in constructor arguments? (eg, osc.upd://239.0.0.1:9999/ or osc.tcp://localhost:9998/)
  * Support specifying the network interface to listen from
  * Implement Translator::getSender to allow sending custom messages (already implemented in dmitriTranslator. should return NULL in base class)
- * support either int, float, double for numerical OSC typetags. use those:
+ * support either int, float, double for numerical OSC typetags. ie, in oscutil, change argMatchesType() to something like getStringArg() and getNumericArg() using these liblo methods:
    * int lo_is_numerical_type(lo_type a)
    * int lo_is_string_type(lo_type a)
    * lo_hires lo_hires_val(lo_type type, lo_arg * p)

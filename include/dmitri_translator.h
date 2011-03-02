@@ -102,8 +102,10 @@ public:
     /**
      * Set the equator radius in the spacemap.
      *
-     * NOTE: You must call scene::pushOSCMessagesForTranslator with force=true
-     * to ensure that all nodes are properly updated afterwards
+     * NOTE: You MUST do this before you create your scene, otherwise the effect
+     * won't be applied until a node is moved. Alternatively, you could call
+     * scene::forceRefresh to ensure that all nodes are properly updated
+     * afterwards
      */
     void setEquatorRadius(double radius);
 

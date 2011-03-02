@@ -139,7 +139,7 @@ class Node
          * Returns true if this node's new position must be sent
          * @return boolean
          */
-        bool sendNewPosition() const
+        bool sendNewState() const
         {
             return nodeChanged_;
         }
@@ -147,7 +147,7 @@ class Node
         /**
          * Notify this node that it's new position has been sent
          */
-        void positionSent()
+        void stateSent()
         {
             nodeChanged_ = false;
         }
@@ -176,6 +176,7 @@ class Node
         bool removeStringProperty(const std::string &key);
 
     protected:
+        void forceNotifyScene();
         void notifyScene();
         std::string id_;
         Scene &scene_;
@@ -187,7 +188,7 @@ class Node
         // sink should not have a connectTO_
     private:
         Vector3 pos_;
-        virtual void onNodeChanged() = 0;
+        virtual void onNodeChanged(bool forcedNotify=false) = 0;
         virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv, const char *types) = 0;
         Properties<std::string> properties_;
 };

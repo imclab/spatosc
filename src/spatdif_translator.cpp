@@ -1,6 +1,4 @@
 /*
- * spatdif_translator.cpp
- *
  * This file is part of Spatosc.
  *
  * Copyright (c) 2010 Society for Arts and Technologies <info@sat.qc.ca>
@@ -75,28 +73,16 @@ void SpatdifTranslator::pushOSCMessages(Connection * conn)
     SoundSource *src = conn->getSource();
     Listener *snk = conn->getSink();
     
-    bool newPositions = false;
-    if (snk->sendNewPosition())
-    {
-        sendPosition("/spatosc/core/listener/" + snk->getID(), snk);
-        newPositions = true;
-    }
+    sendPosition("/spatosc/core/listener/" + snk->getID(), snk);
 
     std::string srcPath = "/spatosc/core/source/" + src->getID();
+    sendPosition(srcPath, src);
 
-    if (src->sendNewPosition())
-    {
-        sendPosition(srcPath, src);
-        newPositions = true;
-    }
+    std::string connectionPath = "/spatosc/core/connection/" + conn->getID();
+    sendAED(connectionPath, conn);
+    sendDelay(connectionPath, conn);
+    sendGainDB(connectionPath, conn);
 
-    if (newPositions)
-    {
-        std::string connectionPath = "/spatosc/core/connection/" + conn->getID();
-        sendAED(connectionPath, conn);
-        sendDelay(connectionPath, conn);
-        sendGainDB(connectionPath, conn);
-    }
 }
 
 } // end namespace spatosc
