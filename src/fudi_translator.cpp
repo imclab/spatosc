@@ -106,9 +106,9 @@ void FudiTranslator::pushOSCMessages(Connection *conn)
         std::cout << "  gain:\t" << conn->gainDB() << " dB" << std::endl;
     }
     
-    if (src->sendNewPosition())
+    if (src->sendNewState())
         sendPosition("source", src);
-    if (snk->sendNewPosition())
+    if (snk->sendNewState())
         sendPosition("listener", snk);
 }
 
