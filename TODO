@@ -1,40 +1,44 @@
 Spatosc TODO
 ============
 
-Features
----------------
+Release-critical for 0.2
+------------------------
  * Fix flushMessages
+ * remove non-public functions and typedefs from include/*.h
+ * regex support on OSX has broken; need to fix
+ * Scene with receiver should be subclass of regular scene. We shouldn't have to do if (receiver_) all the time.
+ * Cleanup the public interface of the public classes.
+ * Rename SoundSource to Source and Listener to Sink.
+
+
+Features
+--------
  * Load balancing, don't push all the state, all the time, over OSC. Only push whatever's changed, and at some controlled rate.
  * Support multicast and TCP in OscSender and OscReceiver. Perhaps use liblo urls in constructor arguments? (eg, osc.upd://239.0.0.1:9999/ or osc.tcp://localhost:9998/)
  * Support specifying the network interface to listen from
- * Each node has a map<string,string> of attributes and they're pushed when updated
  * Implement Translator::getSender to allow sending custom messages (already implemented in dmitriTranslator. should return NULL in base class)
  * support either int, float, double for numerical OSC typetags. use those:
    * int lo_is_numerical_type(lo_type a)
    * int lo_is_string_type(lo_type a)
    * lo_hires lo_hires_val(lo_type type, lo_arg * p)
 
+
 Examples
 --------
  * Progress in the Ogre example
 
+
 Packaging
 ---------
- * remove non-public functions and typedefs from include/*.h
  * maths:425 and 450: conversion from 'double' to 'float', possible loss of data
- * regex support on OSX has broken; need to fix
+
 
 Refactoring
 -----------
- * Scene with receiver should be subclass of regular scene. We shouldn't have to do if (receiver_) all the time.
- * Cleanup the public interface of the public classes.
  * convert aed-style orientation into quaternions. (or at least support also quaternions)
  * Should we warn clients that we disconnected some nodes?
  * Add property map to translators
- * Rename SoundSource to Source and Listener to Sink.
 
-Error handling
---------------
 
 Wrapper for OSC and FUDI callbacks
 ----------------------------------
