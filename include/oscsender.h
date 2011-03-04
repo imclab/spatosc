@@ -18,7 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
-/** @file The OscSender class.
+/** @file
+ * The OscSender class.
  */
 #ifndef __OSC_SENDER_H__
 #define __OSC_SENDER_H__

@@ -80,16 +80,12 @@ void FudiTranslator::sendPosition(const std::string &prefix, Node *node)
         std::cout << "    node position: " << vect.x << " " << vect.y << " " << vect.z << std::endl;
         node->debugPrint();
     }
-    //std::ostringstream os;
-    //os << prefix << " " << node->getID() << " xyz " << vect.x << " " << vect.y << " " << vect.z << ";\n";
-
     FudiMessage mess;
     mess.add(prefix).add(node->getID());
     mess.add("xyz").add(vect.x).add(vect.y).add(vect.z);
     if (isVerbose())
-        std::cout << "    sending FUDI: " << mess.toString(); 
-    //os.str() << std::endl;
-    sendFudi(mess.toString()); // os.str());
+        std::cout << "    sending FUDI: " << mess.toString();
+    sendFudi(mess.toString());
 }
 
 void FudiTranslator::pushOSCMessages(Connection *conn)

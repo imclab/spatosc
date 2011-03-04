@@ -79,6 +79,9 @@ class Translator
         bool verbose_;
 };
 
+/**
+ * Translator that only prints messages to the console.
+ */
 class ConsoleTranslator : public Translator
 {
     public:

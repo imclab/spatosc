@@ -37,7 +37,8 @@ class Node;
 /**
  * Translator to send FUDI messages to Pure Data.
  * 
- * @warning This Translator might not implement all the messages. It might be out of date.
+ * @warning This Translator might not implement all the messages.
+ * @warning Right now, it sends over UDP only and reconnects every time we send a message!
  */
 class FudiTranslator : public Translator
 {
@@ -52,6 +53,7 @@ class FudiTranslator : public Translator
         // not implemented
         FudiTranslator(const FudiTranslator&);
         const FudiTranslator& operator=(const FudiTranslator&);
+        // implemented
         void sendFudi(const std::string &message);
         unsigned int port_;
         std::string ip_;
@@ -67,6 +69,11 @@ class FudiMessage
         FudiMessage();
         /**
          * Appends an atom to the FUDI message.
+         * /beginverbatim
+           FudiMessage mess;
+           mess.add("hello").add(2).add(3.14159f);
+           sendFudi(mess.toString());
+          /endverbatim
          * @return A reference to this, so that we can daisy-chain calls to this method.
          */
         template <typename T>
