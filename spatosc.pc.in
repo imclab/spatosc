@@ -7,5 +7,6 @@ Name: spatosc
 Description: audio spatialization tool
 URL: @PACKAGE_URL@
 Version: @PACKAGE_VERSION@
+Requires.private: liblo >= 0.26
 Libs: -L${libdir} -lspatosc-@SPATOSC_API_VERSION@
 Cflags: -I${includedir}/spatosc-@SPATOSC_API_VERSION@
