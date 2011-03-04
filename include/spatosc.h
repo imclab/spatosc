@@ -88,6 +88,9 @@
    \verbatim
    PKG_CHECK_MODULES([SPATOSC], [spatosc-0.1])
    \endverbatim
+ * 
+ * Of course, change the version for spatosc-0.2, or so, according to the major
+ * and minor version numbers of the library.
  *
  * Then use the generated SPATOSC_CFLAGS and SPATOSC_LIBS variables in the project Makefile.am files. For example:
  *
