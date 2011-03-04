@@ -396,7 +396,7 @@ void Scene::pushOSCMessagesViaAllTranslators(Connection *conn, bool forcedNotify
         std::cerr << __FUNCTION__ << "This connection does not have a valid sink node." << std::endl;
         return;
     }
-    if (src->sendNewState() || sink->sendNewState() || forcedNotify)
+    if (src->shouldSendNewState() || sink->shouldSendNewState() || forcedNotify)
     {
         std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
         for (iter = translators_.begin(); iter != translators_.end(); ++iter)

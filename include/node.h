@@ -139,7 +139,7 @@ class Node
          * Returns true if this node's new position must be sent
          * @return boolean
          */
-        bool sendNewState() const
+        bool shouldSendNewState() const
         {
             return nodeChanged_;
         }

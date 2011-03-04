@@ -3,7 +3,6 @@ Spatosc TODO
 
 Release-critical for 0.2
 ------------------------
- * rename Node::sendNewState to mustSendNewState
  * Fix flushMessages
  * remove non-public functions and typedefs from include/*.h
  * regex support on OSX has broken; need to fix
