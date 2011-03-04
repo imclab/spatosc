@@ -33,7 +33,7 @@
 #include <string>
 #include <errno.h>
 #include <stdlib.h>
-#ifdef MSW
+#ifdef WIN32
 #include <winsock.h>
 #else
 #include <sys/socket.h>
@@ -68,14 +68,14 @@ bool FudiSender::sendFudi(const std::string &message)
     struct sockaddr_in server;
     struct hostent *hp;
     const char *hostname;
-#ifdef MSW
+#ifdef WIN32
     short version = MAKEWORD(2, 0);
     WSADATA nobby;
 #endif
     hostname = host_.c_str();
     protocol = protocol_;
     portno = (int) port_;
-#ifdef MSW
+#ifdef WIN32
     if (WSAStartup(version, &nobby))
         sockerror((char *) "WSAstartup");
 #endif
@@ -134,7 +134,7 @@ bool FudiSender::sendFudi(const std::string &message)
 
 void FudiSender::sockerror(char *s)
 {
-#ifdef MSW
+#ifdef WIN32
     int err = WSAGetLastError();
     if (err == 10054)
         return;
@@ -150,7 +150,7 @@ void FudiSender::sockerror(char *s)
 
 void FudiSender::x_closesocket(int fd)
 {
-#ifdef MSW
+#ifdef WIN32
     closesocket(fd);
 #else
     close(fd);
