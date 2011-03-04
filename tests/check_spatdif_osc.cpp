@@ -44,6 +44,8 @@ int main()
     static const float y = 2.4f;
     static const float z = 3.4f;
 
+    // TODO: expand this example to include ALL possible methods of both nodes
+    //       and connections. This will test that handle_messages() is complete.
     sender.sendMessage("/spatosc/core/source/dummy/xyz", "fff", x, y, z, LO_ARGS_END);
     sender.sendMessage("/spatosc/core/source/bunny/xyz", "fff", 2*x, 2*y, 2*z, LO_ARGS_END);
     sender.sendMessage("/spatosc/core/source/funny/xyz", "fff", 3*x, 3*y, 3*z, LO_ARGS_END);

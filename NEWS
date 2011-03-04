@@ -10,6 +10,7 @@ New features:
     * added setter methods for distanceFactor, dopplerFactor, etc
     * updates to dmitri translator, including documentation and ability to change spacemap radius
     * Support multiple translators
+    * Add the FudiTranslator, which sends messages to Pure Data's [netreceive]
 
 Bug fixes: 
     * validate that OSC args match desired types
@@ -18,6 +19,7 @@ Bug fixes:
     * README: added note about building from git
     * changed a couple 'and' and 'not' into && and ! for compatibility with windows
     * configure: drop pedantic flag
+    * Added Node::setActive
 
 
 2011-02-18 spatosc 0.1.2

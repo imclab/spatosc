@@ -41,7 +41,7 @@ class Listener : public Node
         void addConnectionFrom(const std::tr1::shared_ptr<Connection> &conn);
         void removeConnectionFrom(const Connection *conn);
     private:
-        virtual void onNodeChanged();
+        virtual void onNodeChanged(bool forcedNotify);
         virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv, const char *types);
         std::vector<std::tr1::shared_ptr<Connection> > connectFROM_;
 };

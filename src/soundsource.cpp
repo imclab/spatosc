@@ -50,12 +50,14 @@ void SoundSource::removeConnectionTo(const Connection *conn)
     eraseFromVector(connectTO_, conn);
 }
 
-void SoundSource::onNodeChanged()
+void SoundSource::onNodeChanged(bool forcedNotify)
 {
     typedef std::vector<std::tr1::shared_ptr<Connection> >::iterator ConnIterator;
     ConnIterator c;
 
     for (c = connectTO_.begin(); c != connectTO_.end(); ++c)
-        scene_.onConnectionChanged(c->get());
+        scene_.onConnectionChanged(c->get(), forcedNotify);
 }
+
+
 } // end namespace spatosc

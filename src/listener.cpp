@@ -67,12 +67,12 @@ void Listener::removeConnectionFrom(const Connection *conn)
     eraseFromVector(connectFROM_, conn);
 }
 
-void Listener::onNodeChanged()
+void Listener::onNodeChanged(bool forcedNotify)
 {
     typedef std::vector<std::tr1::shared_ptr<Connection> >::iterator ConnIterator;
     ConnIterator c;
 
     for (c = connectFROM_.begin(); c != connectFROM_.end(); ++c)
-        scene_.onConnectionChanged(c->get());
+        scene_.onConnectionChanged(c->get(), forcedNotify);
 }
 } // end namespace spatosc

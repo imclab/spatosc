@@ -358,49 +358,30 @@ bool Scene::disconnect(SoundSource *source, Listener *sink)
     return eraseFromVector(connections_, conn);
 }
 
-void Scene::onConnectionChanged(Connection *conn)
+void Scene::onConnectionChanged(Connection *conn, bool forcedNotify)
 {
     // If one of the connected nodes has been deactivated, then there is no need
-    // to compute anything. Enable the mute (and send the status change if this
-    // has just happened)
-    if (conn->active())
+    // to send messages.
+
+	conn->recomputeConnection();
+	if (conn->active() || forcedNotify)
     {
-        conn->recomputeConnection();
-        if (synchronous_)
-            pushOSCMessagesViaAllTranslators(conn);
+		if (synchronous_ || forcedNotify)
+			pushOSCMessagesViaAllTranslators(conn, forcedNotify);
     }
 }
 
-void Scene::pushOSCMessagesForTranslator(Translator *translator, bool force=false)
+void Scene::forceRefresh()
 {
     ConnConstIterator iter;
     for (iter = connections_.begin(); iter != connections_.end(); ++iter)
     {
-        Connection* conn = (*iter).get();
-        if (conn->active())
-        {
-        	SoundSource *src = conn->getSource();
-			Listener *sink = conn->getSink();
-
-			if (! src)
-			{
-				std::cerr << __FUNCTION__ << "This connection does not have a valid source node." << std::endl;
-				return;
-			}
-			if (! sink)
-			{
-				std::cerr << __FUNCTION__ << "This connection does not have a valid sink node." << std::endl;
-				return;
-			}
-			if (force || src->sendNewPosition() || sink->sendNewPosition())
-			{
-				translator->pushOSCMessages(conn);
-			}
-        }
+    	(*iter)->recomputeConnection();
+    	pushOSCMessagesViaAllTranslators((*iter).get(), true);
     }
 }
 
-void Scene::pushOSCMessagesViaAllTranslators(Connection *conn)
+void Scene::pushOSCMessagesViaAllTranslators(Connection *conn, bool forcedNotify)
 {
     SoundSource *src = conn->getSource();
     Listener *sink = conn->getSink();
@@ -415,13 +396,13 @@ void Scene::pushOSCMessagesViaAllTranslators(Connection *conn)
         std::cerr << __FUNCTION__ << "This connection does not have a valid sink node." << std::endl;
         return;
     }
-    if (src->sendNewPosition() || sink->sendNewPosition())
+    if (src->sendNewState() || sink->sendNewState() || forcedNotify)
     {
         std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
         for (iter = translators_.begin(); iter != translators_.end(); ++iter)
             iter->second->pushOSCMessages(conn);
-        src->positionSent();
-        sink->positionSent();
+        src->stateSent();
+        sink->stateSent();
     }
 }
 

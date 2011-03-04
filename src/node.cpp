@@ -60,7 +60,7 @@ void Node::debugPrint() const
 void Node::setActive(bool isActive)
 {
 	active_ = isActive;
-	notifyScene();
+	forceNotifyScene();
 }
 
 void Node::setPosition(double x, double y, double z)
@@ -104,6 +104,12 @@ void Node::notifyScene()
     onNodeChanged(); // let subclasses decide what to do
 }
 
+void Node::forceNotifyScene()
+{
+    nodeChanged_ = true;
+    onNodeChanged(true); // let subclasses decide what to do
+}
+
 // FIXME:Sun Feb 13 12:11:29 EST 2011:tmatth:put this in a separate component
 namespace {
 bool correctNumberOfArguments(const std::string &method, int expected, int actual)
@@ -124,7 +130,14 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv, con
 {
     UNUSED(types);
     using namespace OSCutil; // argMatchesType
-    if (method == "xyz")
+    if (method == "setActive")
+    {
+    	if (argMatchesType(argc, types, 0, 'i'))
+    	{
+    		setActive((bool)argv[0]->i);
+    	}
+    }
+    else if (method == "xyz")
     {
         if (argMatchesType(argc, types, 0, 'f') &&
             argMatchesType(argc, types, 1, 'f') &&

@@ -70,6 +70,11 @@ class Translator
          */
         virtual ~Translator() {}
 
+        /**
+         * Returns whether this translator is verbose or not.
+         */
+        bool isVerbose() const;
+
     protected:
         bool verbose_;
 };

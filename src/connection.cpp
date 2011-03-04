@@ -44,31 +44,44 @@ Connection::Connection(SoundSource *source, Listener *sink) :
 
 void Connection::recomputeConnection()
 {
-    Vector3 connVec = src_->getPosition() - snk_->getPosition();
-    Vector3 snkDir = snk_->getOrientation() * Vector3(0.0, 1.0, 0.0);
+	if (active())
+	{
+		Vector3 connVec = src_->getPosition() - snk_->getPosition();
+		Vector3 snkDir = snk_->getOrientation() * Vector3(0.0, 1.0, 0.0);
 
-	// Rotate connVec by the negative of the rotation described by the snk's
-	// orientation. To do this, just flip the sign of the quat.w:
-	Quaternion negRot = snk_->getOrientation();
-	negRot.w *= -1;
-	Vector3 rotConnVec = negRot * connVec;
-	aed_ = cartesianToSpherical(rotConnVec);
+		// Rotate connVec by the negative of the rotation described by the snk's
+		// orientation. To do this, just flip the sign of the quat.w:
+		Quaternion negRot = snk_->getOrientation();
+		negRot.w *= -1;
+		Vector3 rotConnVec = negRot * connVec;
+		aed_ = cartesianToSpherical(rotConnVec);
 
-	/*
-	std::cout << "src: "<<src_->getPosition() << ", snk: "<<snk_->getPosition() << std::endl;
-    std::cout << "snkOrient = " << snk_->getOrientation() << std::endl;
-    std::cout << "snkDir  = " << snkDir << std::endl;
-	std::cout << "rotConnVec: "<<rotConnVec << ", length=" << distance() << std::endl;
-	std::cout << "AED: " << azimuth()*TO_DEGREES <<","<< elevation()*TO_DEGREES <<","<< distance() << std::endl;
-	Quaternion q = RotationBetweenVectors(snkDir,connVec);		
-	std::cout << "QuatToEuler? = " << QuatToEuler(q)*TO_DEGREES << std::endl;
-	*/
+		/*
+		std::cout << "src: "<<src_->getPosition() << ", snk: "<<snk_->getPosition() << std::endl;
+		std::cout << "snkOrient = " << snk_->getOrientation() << std::endl;
+		std::cout << "snkDir  = " << snkDir << std::endl;
+		std::cout << "rotConnVec: "<<rotConnVec << ", length=" << distance() << std::endl;
+		std::cout << "AED: " << azimuth()*TO_DEGREES <<","<< elevation()*TO_DEGREES <<","<< distance() << std::endl;
+		Quaternion q = RotationBetweenVectors(snkDir,connVec);
+		std::cout << "QuatToEuler? = " << QuatToEuler(q)*TO_DEGREES << std::endl;
+		*/
 
 
-    // now from distance, compute gain and variable delay:
-   	double distanceScalar = 1 / (1.0 + pow(distance(), static_cast<double>(distanceFactor_) * 0.01));
-    vdel_ = distance() * (1 / SPEED_OF_SOUND) * .01 * dopplerFactor_;
-    gainDB_ = 20 * log10(distanceScalar);
+		// now from distance, compute gain and variable delay:
+		double distanceScalar = 1 / (1.0 + pow(distance(), static_cast<double>(distanceFactor_) * 0.01));
+		vdel_ = distance() * (1 / SPEED_OF_SOUND) * .01 * dopplerFactor_;
+		gainDB_ = 20 * log10(distanceScalar);
+
+	}
+
+
+	else
+	{
+		// when connection is not active (ie, one of the nodes has been
+		// deactivated, we set the gain to silence (-inf, so -100)
+		gainDB_ = -100;
+	}
+
 }
 
 void Connection::setDistanceFactor(double f)
@@ -92,6 +105,16 @@ void Connection::setRolloffFactor(double f)
 	recomputeConnection();
 }
 
+void Connection::mute()
+{
+	gainDB_ = -100;
+}
+
+void Connection::unmute()
+{
+
+}
+
 bool Connection::active() const
 {
     return src_->active() && snk_->active();
@@ -109,6 +132,7 @@ void Connection::debugPrint() const
     std::cout << "    dopplerFactor:\t" << dopplerFactor_ << "%" << std::endl;
 }
 
+// TODO: need to provide types as well
 void Connection::handleMessage(const std::string &method, int argc, lo_arg **argv)
 {
     if (method == "aed")
@@ -133,6 +157,21 @@ void Connection::handleMessage(const std::string &method, int argc, lo_arg **arg
         assert(argc == 1);
         gainDB_ = argv[0]->f;
     }
+    // FIXME: need types!
+    /*
+    else if (method == "setDistanceFactor")
+    {
+    	if (argMatchesType(argc, types, 0, 'f')) setDistanceFactor(argv[0]->f);
+    }
+    else if (method == "setDopplerFactor")
+    {
+    	if (argMatchesType(argc, types, 0, 'f')) setDopplerFactor(argv[0]->f);
+    }
+    else if (method == "setRolloffFactor")
+    {
+    	if (argMatchesType(argc, types, 0, 'f')) setRolloffFactor(argv[0]->f);
+    }
+    */
     else
         std::cerr << "Unknown method " << method << std::endl;
 }

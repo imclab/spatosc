@@ -62,6 +62,11 @@ void Translator::pushOSCMessages(Connection *conn)
     }
 }
 
+bool Translator::isVerbose() const
+{
+    return verbose_;
+}
+
 ConsoleTranslator::ConsoleTranslator(const std::string &ip, const std::string &port, bool verbose = false) :
     Translator(verbose)
 {

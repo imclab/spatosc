@@ -76,6 +76,13 @@ public:
     void setRolloffFactor(double f);
 
     /**
+     *
+     */
+    void mute();
+
+    void unmute();
+
+    /**
      * Returns the distance between the source and sink nodes.
      *
      * A distance is always positive.

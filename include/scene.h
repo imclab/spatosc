@@ -282,6 +282,7 @@ class Scene
          * @param synchronous Whether it should be in the synchronous mode or not.
          */
         void setSynchronous(bool synchronous);
+
         /**
          * When in asynchronous mode, (not synchronous) one needs to call this quite often to flush the OSC messages.
          * To be in the asynchronous mode, one should setSynchronous with false as parameter.
@@ -292,7 +293,7 @@ class Scene
         /**
          * Called when a new connection is made or when its node position change, so that the scene updates all its sibling nodes, and the translator may push some OSC messages.
          */
-        void onConnectionChanged(Connection *conn);
+        void onConnectionChanged(Connection *conn, bool forcedNotify=false);
         /**
          * Called when a Node Property value has changed.
          * Tells all the translators that the given property has changed.
@@ -301,11 +302,11 @@ class Scene
         void onPropertyChanged(Node *node, const std::string &key, const std::string &value);
 
         /**
-         * Allows a translator to be completely refreshed. For example, if the
+         * Allows the scene to be completely refreshed. For example, if the
          * remote spatializer crashes and restarts, this function can be called
-         * with the force flag set to true to send updates for all nodes.
+         * to send updates for all nodes.
          */
-        void pushOSCMessagesForTranslator(Translator *translator, bool force);
+        void forceRefresh();
 
     private:
         // private handle class
@@ -332,7 +333,7 @@ class Scene
         std::vector<std::tr1::shared_ptr<Connection> > connections_;
         bool verbose_;
         bool synchronous_;
-        void pushOSCMessagesViaAllTranslators(Connection *conn);
+        void pushOSCMessagesViaAllTranslators(Connection *conn, bool forcedNotify=false);
 };
 
 } // end namespace spatosc
