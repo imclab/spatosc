@@ -1,4 +1,4 @@
-2011-0?-?? spatosc 0.1.4
+2011-03-07 spatosc 0.1.4
 -------------------------
 
 This release is a developer snapshot in the 0.1 unstable series. 
@@ -13,6 +13,8 @@ New features:
     * Add the FudiTranslator, which sends messages to Pure Data's [netreceive]
 
 Bug fixes: 
+    * pkg-config: added liblo to Requires.private
+    * check for ifdef WIN32 in fudi_sender.cpp
     * validate that OSC args match desired types
     * fixes for WIN32 build, and some updates to spinspat example
     * changed distance gain attenuation to control Bus level, instead of Input level
@@ -20,6 +22,7 @@ Bug fixes:
     * changed a couple 'and' and 'not' into && and ! for compatibility with windows
     * configure: drop pedantic flag
     * Added Node::setActive
+    * Removed -j make option in one_step_build.sh
 
 
 2011-02-18 spatosc 0.1.2
