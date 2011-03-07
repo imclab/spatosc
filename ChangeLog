@@ -1,3 +1,282 @@
+commit 4e7e8d91a1084d40c069fc62f30121ec49ccbc4c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Mar 7 11:40:42 2011 -0500
+
+    fixed make distcheck
+
+commit e4e46b2b980f7f6f1cad8eb08e361e66bdb1f115
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Mar 4 15:02:42 2011 -0500
+
+    Improved the documentation of some files/classes
+
+commit f05f6f6631b731995f3cea2d500fe8833d4dd79a
+Merge: e9babe5 be82665
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Mar 4 14:14:56 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit e9babe5c34c6c2194597d7f0f7338ba57f6c2256
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Mar 4 14:13:51 2011 -0500
+
+    check for ifdef WIN32 in fudi_sender.cpp
+
+commit c20a8873578de7ddd86f2eed3d7661a2c86d0392
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Mar 4 14:11:29 2011 -0500
+
+    renamed sentNewState to shouldSendNewState
+
+commit be826659e1e8fa9a25db4883009c04f6c365408d
+Merge: f822616 762e4f3
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Mar 4 14:10:19 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit f822616762b6f8cf6c9f5dc9ba7a741340bb749f
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Fri Mar 4 14:08:51 2011 -0500
+
+    pkg-config: added liblo to Requires.private
+    
+    This means that if a user does
+    pkg-config --libs --static spatosc-0.1
+    they will see -llo and -lpthread in the requried libs for static linking.
+
+commit 20a6952d39da89c3dd591ac5fc9b0303039580f5
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Mar 4 13:54:02 2011 -0500
+
+    updated doc about pkg-config file
+
+commit 762e4f3a8207a80b972cc2096b722e2df63b1016
+Merge: fcdf3e0 c03c0e7
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Mar 4 13:50:37 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit fcdf3e0524be6cccdd0bf913bf6b63e3a8b844fe
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Fri Mar 4 13:50:33 2011 -0500
+
+    some TODO notes added
+
+commit c03c0e794aabc024f891ff5262000d22a7734c07
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Fri Mar 4 13:49:21 2011 -0500
+
+    remove -j option for make in one_step_build
+
+commit e41a71cb03c4189e13d887727b6b39da12c748f9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Mar 2 16:48:21 2011 -0500
+
+    updated TODO
+
+commit 338f4e33ce7b077e40edf14f808879881bada04b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Mar 2 16:47:29 2011 -0500
+
+    Fixed bad method name error
+
+commit 3e017d779f8c3227cc222463cb2b832df5e0c490
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Mar 2 16:20:53 2011 -0500
+
+    updated TODO
+
+commit 638ef518e28f81549df42f6ea066886a2315a758
+Merge: cdc7969 6fd601a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Mar 2 16:19:46 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit cdc79698bd57e024cd22208258668a6d046b3fdf
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Mar 2 16:19:40 2011 -0500
+
+    updated TODO
+
+commit 6fd601a57dfa27dc24fd22f5d60b9b54672a0c18
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Wed Mar 2 14:04:00 2011 -0500
+
+    fixes to node setActive
+
+commit 808e0febe7f6e9ea9519794cef448702ff077667
+Merge: 7edf050 6b20113
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Wed Mar 2 14:03:11 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit 6b201138bb3b92df9f3b776cda0567d5c2bbb81a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Mar 2 08:21:58 2011 -0500
+
+    updated NEWS
+
+commit 812c3e1e8c833326e217dd005e427fed6f9658b0
+Merge: 6a81334 9aadf1a
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Wed Mar 2 08:18:54 2011 -0500
+
+    Merge branch 'master' into fuditranslator
+
+commit 7edf050d3710cb7a86c63d9fcf53463bb225f941
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Tue Mar 1 15:06:40 2011 -0500
+
+    added forcedNotify to deactivate nodes and refresh scene
+
+commit 9aadf1ade8bc5e29ab1cc47c5be5f0144b0f8023
+Author: Mike Wozniewski <mike@mikewoz.com>
+Date:   Tue Mar 1 12:06:56 2011 -0500
+
+    added node::setActive
+
+commit 6a813349faf4361992c496017e8e5f5a39def282
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Mar 1 10:40:55 2011 -0500
+
+    added a comment
+
+commit d0328314ee683619d2ce6cb12b3dec1a5d11e702
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Mar 1 06:44:28 2011 -0500
+
+    Huge progress in the PD patch
+
+commit f47c1aff8d0a1390d83dd3923e1ef23b819d842c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Mar 1 06:26:40 2011 -0500
+
+    Fixed error in fudi_translator
+
+commit 7940c75e398f1a97f52e24ea0f2d1396678bb051
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Mar 1 06:21:30 2011 -0500
+
+    formatting FUDI messages with FudiMessage
+
+commit a4d5f605b7fa3682b48c1f8891053c5eb9d0e015
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Tue Mar 1 05:56:40 2011 -0500
+
+    make x_closesocket a member of FudiSender
+
+commit ba8a2cf10bd389e4e8e0f199d03f4cd1762f287b
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 21:05:26 2011 -0500
+
+    more comments
+
+commit 05e81fa5854f88b47fceffa9b9419cd543545ff7
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 20:41:00 2011 -0500
+
+    Fixed addTranslator in wrapper for FUDI translator
+    
+    more verbose useful info
+
+commit 6ac557e2382ca77226753473e1f30686cf29c9a6
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 20:00:10 2011 -0500
+
+    add FudiTranslator in Wrapper
+
+commit b2a3973dec58a041ef6c71e94b20187637d89d85
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 19:58:11 2011 -0500
+
+    UDP FUDI need a newline character at their end
+
+commit 3f9541f0e88b8b73dd2f9d240b2bd7519b342a00
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 18:26:42 2011 -0500
+
+    Trying to use FUDI in the hello_world example
+
+commit f9063ac9f5e32d8df51497d00f8d10afbb099d74
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 18:09:30 2011 -0500
+
+    compiling the FUDI translator
+
+commit 1ee7bef3e9ef86c84e88ecd45bbd34a455b6bfb9
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 18:08:56 2011 -0500
+
+    small change
+
+commit f3e257332e8c519034bf22c616357c65968b44de
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 17:22:18 2011 -0500
+
+    moved fudi_translator.cpp to fudi_sender.cpp
+
+commit 6a0b848c54660415d28335b9e2ccb480219a146c
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 17:12:46 2011 -0500
+
+    FUDI sender works
+
+commit 9a8365467ad7b01b48e620603adab9b73600265f
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 16:16:50 2011 -0500
+
+    adding fudi_translator.cpp from u_pdsend.c
+
+commit 3b2566a633b756cfc0d1b709b55d273249d292fe
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 16:00:00 2011 -0500
+
+    more doc for pd external
+
+commit 88a019750cc472facb1c1f55fcb6fb800df691fd
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 15:20:28 2011 -0500
+
+    more error message prints in wrapper
+
+commit e3f1b168596748e423f443c1ea2b9062db0c75da
+Merge: a6099cc a3fae64
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 14:42:28 2011 -0500
+
+    Merge branch 'master' of github.com:sat-metalab/spatosc
+
+commit a6099cc863a340f9963d399f0739c17afd8cc8e7
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 14:35:44 2011 -0500
+
+    Add Wrapper methods for node string properties
+
+commit a3fae6454e175a202a358a0db7db78b926a81e74
+Author: Tristan Matthews <tristan@sat.qc.ca>
+Date:   Mon Feb 28 14:31:13 2011 -0500
+
+    properties: removed accidental recursion
+
+commit 2b148a44c451ec9b1af234f55b303ec848e072a6
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 14:16:32 2011 -0500
+
+    updated NEWS
+
+commit 3eb87443031ffd600e0cb34a1d39970c4f44d6bb
+Author: Alexandre Quessy <alexandre@quessy.net>
+Date:   Mon Feb 28 14:11:10 2011 -0500
+
+    adding ChangeLog
+    
+    git log --pretty=medium > ChangeLog
+
 commit f7e8b31818adb5538181465da6e195c7abd81c8b
 Author: Alexandre Quessy <alexandre@quessy.net>
 Date:   Mon Feb 28 14:09:25 2011 -0500
