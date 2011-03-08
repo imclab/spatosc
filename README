@@ -1,11 +1,19 @@
-Spatosc is a C++ library useful to communicate with various 3D audio spatializers.
+Spatosc is a C++ library that supports communication with various 3D audio spatializers. 
+
+The library can be used to add high-end audio support to game engines, virtual reality systems, and immersive environments. It can also be used to create plugins (AU, VST, DSSI) so traditional digital audio workstations can be used to design and automate spatial audio effects.
+
+The library communicates with a spatializer over nework protocols such as OpenSoundControl (OSC) or FUDI, which most modern spatializer already support. However, each spatializer will have a different control protocol, so spatosc provides "translators", which convert scene contents into appropriate messages.
+
+Currently supported translators:
+ * SPATDif           http://www.spatdif.org
+ * D-Mitri           http://www.meyersound.com/products/d-mitri
 
 Support is planned for:
  * Zirkonium         http://ima.zkm.de/~cramakri/zirkonium
  * Audioscape        http://audioscape.org
  * SPIN Framework    http://spinframework.org
- * SPATDif           http://www.spatdif.org
- * D-Mitri           http://www.meyersound.com/products/d-mitri
+ * Audio Unit (AU)   http://en.wikipedia.org/wiki/Audio_Units
+ * VST               http://en.wikipedia.org/wiki/Virtual_Studio_Technology
 
 For more information, contact one of the authors:
  * Mike Wozniewski <mike@mikewoz.com>
