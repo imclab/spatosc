@@ -28,7 +28,6 @@
 #include <vector>
 #include <map>
 #include <iostream>
-#include <tr1/memory>
 #include "memory.h"
 #include "maths.h"
 
