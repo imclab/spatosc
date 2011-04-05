@@ -1,4 +1,4 @@
-2011-0?-?? spatosc 0.1.6
+2011-04-05 spatosc 0.1.6
 -------------------------
 
 This release is a developer snapshot in the 0.1 unstable series. 
@@ -6,10 +6,10 @@ This release is a developer snapshot in the 0.1 unstable series.
 This version contains new features and bug fixes.
 
 New features:
-    * 
+    * Updated project URL and README
 
 Bug fixes: 
-    * 
+    * Do not include tr1/memory directly
 
 
 2011-03-07 spatosc 0.1.4
