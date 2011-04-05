@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT(spatosc, [0.1.6], [http://github.com/sat-metalab/spatosc/issues], [spatosc], [http://github.com/sat-metalab/spatosc])
+AC_INIT(spatosc, [0.1.7], [http://github.com/sat-metalab/spatosc/issues], [spatosc], [http://github.com/sat-metalab/spatosc])
 AC_CONFIG_MACRO_DIR([m4])
 AC_MSG_NOTICE([Configuring spatosc])
 AM_INIT_AUTOMAKE([subdir-objects -Wno-portability])
