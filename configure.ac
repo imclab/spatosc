@@ -92,6 +92,16 @@ case "$host" in *-darwin* | *-macos10*)
   ;;
 esac
 
+AC_ARG_ENABLE([universal],
+    AS_HELP_STRING([--enable-universal], [Enables a universal i386 / x86_64 build on OSX]),
+    [universal_build=$enableval],
+    [universal_build=no])
+
+if test "x$universal_build" = xyes; then
+    CXXFLAGS+=" -arch i386 -arch x86_64"
+    LDFLAGS+=" -arch i386 -arch x86_64"
+fi
+
 #CXXFLAGS+=" -g3 -ggdb -Wall -Wextra -Wfatal-errors"
 CXXFLAGS+=" -Wall -Wextra -Wfatal-errors -Werror -Wnon-virtual-dtor "
 
