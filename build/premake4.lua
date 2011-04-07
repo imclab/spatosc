@@ -82,7 +82,7 @@
 
   text = string.gsub(text, '/%*VERSION%*/', '"'..version..'"')
 
-  io.output("../config.h")
+  io.output("../include/config.h")
   io.write(text)
   io.close()
 
