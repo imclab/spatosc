@@ -1,15 +1,28 @@
-2011-0?-?? spatosc 0.1.8
+2011-0?-?? spatosc 0.1.10
 -------------------------
 
 This release is a developer snapshot in the 0.1 unstable series. 
+It's the second release candidate for preparing the 0.2 stable series.
 
-This version contains new features and bug fixes.
-
-New features:
-    *
+This version contains bug fixes.
 
 Bug fixes: 
-    *
+    * (none)
+
+
+2011-04-07 spatosc 0.1.8
+-------------------------
+
+This release is a developer snapshot in the 0.1 unstable series. 
+It's the first release candidate for preparing the 0.2 stable series.
+
+This version contains bug fixes.
+
+Bug fixes: 
+    * On Windows, fixed path to include/config.h in build/premake4.lua
+    * On Mac OS X, using the new libtool
+    * Do not generate man pages
+    * Fixed spinspat example
 
 
 2011-04-05 spatosc 0.1.6
