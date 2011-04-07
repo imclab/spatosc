@@ -73,7 +73,7 @@
   text = io.read("*all")
   io.close()
   text = string.sub(text,string.find(text, "AC_INIT.+"))
-  version = string.sub(text,string.find(text, "%d+%.%d+"))
+  version = string.sub(text,string.find(text, "%d+%.%d+.%d+"))
 
 -- Replace it in "config.h" --
 
@@ -88,7 +88,7 @@
 
 
 ----------------------------------------------------------------------
--- The LibLo library project
+-- The Spatosc library project
 ----------------------------------------------------------------------
 
   project "spatosc"
