@@ -9,11 +9,15 @@ Release-critical for 0.2
  * Scene with receiver should be subclass of regular scene. We shouldn't have to do if (receiver_) all the time.
  * Cleanup the public interface of the public classes.
  * Rename SoundSource to Source and Listener to Sink.
- * Make sure the FUDI sender compiles on Windows
  * Complete the test/check_spatdif_osc test
  * Connection::handleMessage remove calls to assert()
  * Connection::handleMessage pass liblo types to validate them
  * What if OscReceiver or SpatdifReceiver cannot bind a socket?
+
+FUDI-specific features and issues
+---------------------------------
+ * FUDI: Make sure the FUDI sender works on Windows
+ * FUDI: reuse the socket
 
 OSC Messages to handle
 ----------------------
@@ -38,6 +42,7 @@ Features
    * int lo_is_numerical_type(lo_type a)
    * int lo_is_string_type(lo_type a)
    * lo_hires lo_hires_val(lo_type type, lo_arg * p)
+ * state saving (in XML)
 
 
 Examples
