@@ -142,19 +142,26 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv, con
         if (argMatchesType(argc, types, 0, 'f') &&
             argMatchesType(argc, types, 1, 'f') &&
             argMatchesType(argc, types, 2, 'f'))
+        {
             setPosition(argv[0]->f, argv[1]->f, argv[2]->f);
+        }
     }
     else if (method == "setStringProperty")
     {
         if (argMatchesType(argc, types, 0, 's') &&
             argMatchesType(argc, types, 1, 's'))
+        {
             setStringProperty(std::string(static_cast<const char *>(&argv[0]->s)), std::string(static_cast<const char *>(&argv[1]->s)));
+        }
     }
     else if (method == "aed")
     {
-        //assert(argc == 3);
-        //aed(argv[0]->f, argv[1]->f, argv[2]->f);
-        std::cerr << method << " NOT IMPLEMENTED" << std::endl;
+        if (argMatchesType(argc, types, 0, 'f') &&
+            argMatchesType(argc, types, 1, 'f') &&
+            argMatchesType(argc, types, 2, 'f'))
+        {
+            setPositionAED(argv[0]->f, argv[1]->f, argv[2]->f);
+        }
     }
     else if (method == "xy")
     {

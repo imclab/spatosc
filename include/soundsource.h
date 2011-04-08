@@ -28,7 +28,8 @@
 
 namespace spatosc
 {
-    class Connection;
+
+class Connection;
 
 /**
  * Sound source node.

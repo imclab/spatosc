@@ -24,7 +24,6 @@
 namespace spatosc
 {
 
-// *****************************************************************************
 SoundSource::SoundSource(const std::string &nodeID, Scene &scene) :
     Node(nodeID, scene),
     connectTO_()
@@ -59,5 +58,5 @@ void SoundSource::onNodeChanged(bool forcedNotify)
         scene_.onConnectionChanged(c->get(), forcedNotify);
 }
 
-
 } // end namespace spatosc
+
