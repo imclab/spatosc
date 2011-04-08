@@ -129,69 +129,39 @@ bool correctNumberOfArguments(const std::string &method, int expected, int actua
 void Node::handleMessage(const std::string &method, int argc, lo_arg **argv, const char *types)
 {
     UNUSED(types);
-    using namespace OSCutil; // argMatchesType
+    using namespace OSCutil; // typeTagsMatch
     if (method == "setActive")
     {
-    	if (argMatchesType(argc, types, 0, 'i'))
-    	{
-    		setActive((bool)argv[0]->i);
-    	}
+        if (typeTagsMatch(types, "i"))
+            setActive((bool)argv[0]->i);
     }
     else if (method == "xyz")
     {
-        if (argMatchesType(argc, types, 0, 'f') &&
-            argMatchesType(argc, types, 1, 'f') &&
-            argMatchesType(argc, types, 2, 'f'))
+        if (typeTagsMatch(types, "fff"))
             setPosition(argv[0]->f, argv[1]->f, argv[2]->f);
     }
     else if (method == "setStringProperty")
     {
-        if (argMatchesType(argc, types, 0, 's') &&
-            argMatchesType(argc, types, 1, 's'))
+    	if (typeTagsMatch(types, "ss"))
             setStringProperty(std::string(static_cast<const char *>(&argv[0]->s)), std::string(static_cast<const char *>(&argv[1]->s)));
     }
     else if (method == "aed")
     {
-        //assert(argc == 3);
-        //aed(argv[0]->f, argv[1]->f, argv[2]->f);
-        std::cerr << method << " NOT IMPLEMENTED" << std::endl;
+    	if (typeTagsMatch(types, "fff"))
+            setPositionAED(argv[0]->f, argv[1]->f, argv[2]->f);
     }
     else if (method == "xy")
-    {
-        //assert(argc == 2);
-        //xy(argv[0]->f, argv[1]->f);
         std::cerr << method << " NOT IMPLEMENTED" << std::endl;
-    }
     else if (method == "delay")
-    {
-        //assert(argc == 1);
-        //delay(argv[0]->f);
         std::cerr << method << " NOT IMPLEMENTED" << std::endl;
-    }
     else if (method == "gain")
-    {
-        //assert(argc == 1);
-        //gain(argv[0]->f);
         std::cerr << method << " NOT IMPLEMENTED" << std::endl;
-    }
     else if (method == "gainDB")
-    {
-        //assert(argc == 1);
-        //gainDB(argv[0]->f);
         std::cerr << method << " NOT IMPLEMENTED" << std::endl;
-    }
     else if (method == "spread")
-    {
-        //assert(argc == 1);
-        //spread(argv[0]->f);
         std::cerr << method << " NOT IMPLEMENTED" << std::endl;
-    }
     else if (method == "spreadAE")
-    {
-        //assert(argc == 2);
-        //spreadAE(argv[0]->f, argv[1]->f);
         std::cerr << method << " NOT IMPLEMENTED" << std::endl;
-    }
     else
     {
         // delegate to derived classes

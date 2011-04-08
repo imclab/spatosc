@@ -17,35 +17,26 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** @file
- * The SoundSource class.
- */
-#ifndef __SOUNDSOURCE_H__
-#define __SOUNDSOURCE_H__
+#include "oscutils.h"
 
-#include "node.h"
-#include "memory.h"
-
-namespace spatosc
+int main(int /*argc*/, char ** /*argv*/)
 {
+    using namespace spatosc::OSCutil;
 
-class Connection;
+    if (typeTagsMatch(0, "fff"))
+        return 1;
+    if (typeTagsMatch("fff", 0))
+        return 1;
+    if (typeTagsMatch("ff", "fff"))
+        return 1;
+    if (typeTagsMatch("fff", "ff"))
+        return 1;
+    if (!typeTagsMatch("s", "s"))
+        return 1;
+    if (!typeTagsMatch("ss", "ss"))
+        return 1;
+    if (!typeTagsMatch("ssf", "ssf"))
+        return 1;
 
-/**
- * Sound source node.
- */
-class SoundSource : public Node
-{
-    public:
-        SoundSource(const std::string &nodeID, Scene &scene);
-        void addConnectionTo(const std::tr1::shared_ptr<Connection> &conn);
-        void removeConnectionTo(const Connection *conn);
-    private:
-        std::vector<std::tr1::shared_ptr<Connection> > connectTO_;
-        virtual void onNodeChanged(bool forcedNotify);
-        virtual bool handleMessage_(const std::string &/*method*/, int argc, lo_arg ** /*argv*/, const char *types);
-};
-
-} // end namespace spatosc
-
-#endif // __SOUNDSOURCE_H__
+    return 0;
+}

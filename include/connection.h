@@ -146,8 +146,15 @@ public:
      * Returns true if source and sink are active
      */
     bool active() const;
-
-    void handleMessage(const std::string &method, int argc, lo_arg ** argv);
+    /**
+     * Handles OSC messages for a Connection.
+     *
+     * /aed f:azimuth f:elevation f:distance
+     * /delay f:milliseconds
+     * /gain f:rms
+     * /gainDB f:decibels
+     */
+    void handleMessage(const std::string &method, lo_arg ** argv, const char *types);
 
 private:
     std::string id_;

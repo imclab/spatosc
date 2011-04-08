@@ -74,7 +74,6 @@ class Node
          */
         void setActive(bool isActive);
 
-
         /**
          * Sets this node's position in the 3D cartesian space.
          *
@@ -151,8 +150,18 @@ class Node
         {
             nodeChanged_ = false;
         }
-
-        virtual void handleMessage(const std::string &method, int argc, lo_arg ** argv, const char *types);
+        
+        /**
+         * Handles OSC messages for a Node.
+         *
+         * Handles a message and passes it to its child clas if not handled.
+         *
+         * /xyz f:x f:y f:z
+         * /setStringProperty s:key s:value
+         * /setActive i:is_active
+         * 
+         */
+        void handleMessage(const std::string &method, int argc, lo_arg ** argv, const char *types);
         bool active() const { return active_; }
         bool hasID(const std::string &id) const;
         friend std::ostream &operator<<(std::ostream &out, const Node &n);
@@ -183,9 +192,6 @@ class Node
         Quaternion orientation_;
         bool active_;
         bool nodeChanged_;
-        // FIXME: Thu Jan 27 15:03:58 EST 2011 :tmatth:
-        // A source shouldn't have a connectFROM_ and a
-        // sink should not have a connectTO_
     private:
         Vector3 pos_;
         virtual void onNodeChanged(bool forcedNotify=false) = 0;
