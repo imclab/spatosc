@@ -19,6 +19,7 @@
 
 #include "connection.h"
 #include "soundsource.h"
+#include "oscutils.h"
 #include "listener.h"
 #include <iostream>
 #include <cassert>
@@ -133,47 +134,50 @@ void Connection::debugPrint() const
 }
 
 // TODO: need to provide types as well
-void Connection::handleMessage(const std::string &method, int argc, lo_arg **argv)
+void Connection::handleMessage(const std::string &method, lo_arg **argv, const char *types)
 {
+    using namespace OSCutil; // typeTagsMatch
     if (method == "aed")
     {
-        assert(argc == 3);
-        aed_.x = argv[0]->f;
-        aed_.y = argv[1]->f;
-        aed_.z = argv[2]->f;
+        if (typeTagsMatch(types, "fff"))
+        {
+            aed_.x = argv[0]->f;
+            aed_.y = argv[1]->f;
+            aed_.z = argv[2]->f;
+        }
     }
     else if (method == "delay")
     {
-        assert(argc == 1);
-        vdel_ = argv[0]->f;
+        if (typeTagsMatch(types, "f"))
+            vdel_ = argv[0]->f;
     }
     else if (method == "gain")
     {
-        assert(argc == 1);
-        gain_ = argv[0]->f;
+        if (typeTagsMatch(types, "f"))
+            gain_ = argv[0]->f;
     }
     else if (method == "gainDB")
     {
-        assert(argc == 1);
-        gainDB_ = argv[0]->f;
+        if (typeTagsMatch(types, "f"))
+            gainDB_ = argv[0]->f;
     }
     // FIXME: need types!
     /*
-    else if (method == "setDistanceFactor")
-    {
-    	if (argMatchesType(argc, types, 0, 'f')) setDistanceFactor(argv[0]->f);
-    }
-    else if (method == "setDopplerFactor")
-    {
-    	if (argMatchesType(argc, types, 0, 'f')) setDopplerFactor(argv[0]->f);
-    }
-    else if (method == "setRolloffFactor")
-    {
-    	if (argMatchesType(argc, types, 0, 'f')) setRolloffFactor(argv[0]->f);
-    }
-    */
-    else
-        std::cerr << "Unknown method " << method << std::endl;
+       else if (method == "setDistanceFactor")
+       {
+       if (typeTagsMatch(types, "f")) setDistanceFactor(argv[0]->f);
+       }
+       else if (method == "setDopplerFactor")
+       {
+       if (typeTagsMatch(types, "f")) setDopplerFactor(argv[0]->f);
+       }
+       else if (method == "setRolloffFactor")
+       {
+       if (typeTagsMatch(types, "f")) setRolloffFactor(argv[0]->f);
+       }
+     */
+       else
+           std::cerr << "Unknown method " << method << std::endl;
 }
 
 } // end namespace spatosc
