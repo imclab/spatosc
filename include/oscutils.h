@@ -71,9 +71,9 @@ namespace OSCutil
     /**
      * Casts a string to any type.
      */
-    template <class T> bool fromString(T& t, const std::string& s)
+    template <class T>
+    bool fromString(T& t, const std::string& s)
     {
-        // FIXME:2011-01-17:aalex: Can this throw an exception?
         std::istringstream iss(s);
         return ! (iss >> t).fail();
     }
@@ -116,7 +116,8 @@ namespace OSCutil
      * Checks that a typetag matches a desired one.
      */
     bool typeTagsMatch(const char *types, const std::string &desiredTypes);
-}
+
+} // end namespace OSCutil
 
 } // end namespace spatosc
 
