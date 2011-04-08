@@ -13,6 +13,7 @@ Release-critical for 0.2
  * Complete the test/check_spatdif_osc test
  * Connection::handleMessage remove calls to assert()
  * Connection::handleMessage pass liblo types to validate them
+ * What if OscReceiver or SpatdifReceiver cannot bind a socket?
 
 OSC Messages to handle
 ----------------------
