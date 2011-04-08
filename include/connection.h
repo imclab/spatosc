@@ -154,7 +154,7 @@ public:
      * /gain f:rms
      * /gainDB f:decibels
      */
-    void handleMessage(const std::string &method, int argc, lo_arg ** argv);
+    void handleMessage(const std::string &method, lo_arg ** argv, const char *types);
 
 private:
     std::string id_;

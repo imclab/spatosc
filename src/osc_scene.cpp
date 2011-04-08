@@ -56,17 +56,17 @@ bool correctNumberOfArguments(const std::string &method, int expected, int actua
 }
 } // end anonymous namespace
 
-void OscScene::handleMessage(const std::string &method, int argc, lo_arg **argv, const char *types)
+void OscScene::handleMessage(const std::string &method, lo_arg **argv, const char *types)
 {
     UNUSED(types);
     if (method == "create_source")
     {
-        if (OSCutil::argMatchesType(argc, types, 0, 's'))
+        if (OSCutil::typeTagsMatch(types, "s"))
             createSoundSource(reinterpret_cast<const char*>(argv[0]));
     }
     else if (method == "create_listener")
     {
-        if (OSCutil::argMatchesType(argc, types, 0, 's'))
+        if (OSCutil::typeTagsMatch(types, "s"))
             createListener(reinterpret_cast<const char *>(argv[0]));
     }
     else

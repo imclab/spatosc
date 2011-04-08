@@ -9,6 +9,7 @@ check_PROGRAMS = \
     check_distance \
     check_itworks \
     check_osc \
+    check_oscutils \
     check_properties \
     check_spatdif \
     check_spatdif_osc \
@@ -25,6 +26,7 @@ check_connections_SOURCES = check_connections.cpp
 check_distance_SOURCES = check_distance.cpp
 check_itworks_SOURCES = check_it_works.cpp
 check_osc_SOURCES = check_osc.cpp
+check_oscutils_SOURCES = check_oscutils.cpp
 check_properties_SOURCES = check_properties.cpp
 check_spatdif_SOURCES = check_spatdif.cpp
 check_spatdif_osc_SOURCES = check_spatdif_osc.cpp

@@ -108,17 +108,11 @@ namespace OSCutil
     // TODO:2011-01-17:aalex:Please someone document wildcardMatch() well.
 
     /**
-     * Checks whether a given argument type matches the desired type.
-     * @return success or not
-     */
-    bool argMatchesType(int argc, const char *types, int arg_index, char desiredType);
-    /**
      * Checks that a typetag matches a desired one.
      */
-    bool typeTagsMatch(const char *types, const std::string &desiredTypes);
+    bool typeTagsMatch(const char *types, const char *desiredTypes);
 
 } // end namespace OSCutil
-
 } // end namespace spatosc
 
 #endif // __OSCUTILS_H__

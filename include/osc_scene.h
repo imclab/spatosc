@@ -85,7 +85,7 @@ class OscScene : public Scene
          */
         bool poll();
 
-        virtual void handleMessage(const std::string &method, int argc, lo_arg ** argv, const char *types);
+        virtual void handleMessage(const std::string &method, lo_arg ** argv, const char *types);
 
     private:
         std::tr1::shared_ptr<SpatdifReceiver> receiver_;

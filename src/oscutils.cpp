@@ -18,6 +18,7 @@
  */
 
 #include <string>
+#include <cstring>
 #include <cstdlib>
 #include <iostream>
 
@@ -207,36 +208,20 @@ bool OSCutil::wildcardMatch(const char *path, const char *str)
     }
 }
 
-bool OSCutil::argMatchesType(int argc, const char *types, int arg_index, char desiredType)
-{
-    if (arg_index >= argc)
-    {
-        std::cerr << "There are " << argc << " OSC arguments, but you need argument index " << arg_index << std::endl;
-        return false;
-    }
-    else
-    {
-        if (types[arg_index] != desiredType)
-        {
-            std::cerr << "OSC argument number " << arg_index << " has type " << types[arg_index] << ", but we're looking should be of type " << desiredType << "." << std::endl;
-            return false;
-        }
-        else
-            return true;
-    }
-}
 
-bool OSCutil::typeTagsMatch(const char *types, const std::string &desiredTypes)
+bool OSCutil::typeTagsMatch(const char *types, const char *desiredTypes)
 {
-    if (desiredTypes != types)
+    if (!types)
+        return false;
+    if (!desiredTypes)
+        return false;
+    if (strcmp(types, desiredTypes) != 0)
     {
         std::cerr << "Expected OSC typetags " << desiredTypes << " but got " << types << "." << std::endl;
         return false;
     }
     else
-    {
         return true;
-    }
 }
 
 } // end namespace spatosc
