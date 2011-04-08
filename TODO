@@ -3,17 +3,13 @@ Spatosc TODO
 
 Release-critical for 0.2
 ------------------------
- * Fix flushMessages
- * remove non-public functions and typedefs from include/*.h
- * regex support on OSX has broken; need to fix
- * Scene with receiver should be subclass of regular scene. We shouldn't have to do if (receiver_) all the time.
- * Cleanup the public interface of the public classes.
- * Rename SoundSource to Source and Listener to Sink.
- * Make sure the FUDI sender compiles on Windows
- * Complete the test/check_spatdif_osc test
  * Connection::handleMessage remove calls to assert()
  * Connection::handleMessage pass liblo types to validate them
- * What if OscReceiver or SpatdifReceiver cannot bind a socket?
+
+FUDI-specific features and issues
+---------------------------------
+ * FUDI: Make sure the FUDI sender works on Windows
+ * FUDI: reuse the socket
 
 OSC Messages to handle
 ----------------------
@@ -28,6 +24,10 @@ OSC Messages to handle
  * Connection::handleMessage /spread f:spread
  * Connection::handleMessage /spreadAE f:azim_spread f:elev_spread
 
+Tests
+-----
+ * Complete the test/check_spatdif_osc test
+
 Features
 --------
  * Load balancing, don't push all the state, all the time, over OSC. Only push whatever's changed, and at some controlled rate.
@@ -38,26 +38,33 @@ Features
    * int lo_is_numerical_type(lo_type a)
    * int lo_is_string_type(lo_type a)
    * lo_hires lo_hires_val(lo_type type, lo_arg * p)
-
+ * state saving (in XML)
 
 Examples
 --------
  * Progress in the Ogre example
  * include the examples into the build system
 
+Bugs
+----
+ * maths:425 and 450: conversion from 'double' to 'float', possible loss of data
+ * Handle errors if if OscReceiver or SpatdifReceiver cannot bind a socket
 
 Packaging
 ---------
- * maths:425 and 450: conversion from 'double' to 'float', possible loss of data
+ * regex support on OSX has broken; need to fix
 
 
 Refactoring
 -----------
- * convert aed-style orientation into quaternions. (or at least support also quaternions)
+ * support quaternions in the API, no only aed-style orientation
  * Should we warn clients that we disconnected some nodes?
  * Add property map to translators
  * Make Node::handleMessage not liblo-specific.
  * Use Wrapper instead of writing liblo-specific code in Node and Connection methods?
+ * Rename SoundSource to Source and Listener to Sink - or see what renaming could make more sense
+ * Port could be an unsigned int for OscSender, OscReceiver, etc. It would make more sense
+ * rename namespace OSCutils to oscutils
 
 
 Wrapper for OSC and FUDI callbacks
