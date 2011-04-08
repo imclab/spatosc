@@ -10,7 +10,7 @@ all: $(NAME)
 
 ########################################################
 
-DEPS = spatosc-0.1 cppintrospection-2.11 liblo
+DEPS = spatosc-0.2 cppintrospection-2.11 liblo
 
 CXXFLAGS = -g -I/usr/include/boost `pkg-config --cflags $(DEPS)` `python-config --cflags`
 LDFLAGS = -lSPIN -lboost_python `pkg-config --libs $(DEPS)` `python-config --libs`

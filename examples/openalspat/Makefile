@@ -1,4 +1,4 @@
-DEPS=clutter-1.0 spatosc-0.1 openal freealut liblo
+DEPS=clutter-1.0 spatosc-0.2 openal freealut liblo
 CXXFLAGS=`pkg-config --cflags $(DEPS)` -Wall -Werror -Wfatal-errors -Wextra -O2
 LIBS=`pkg-config --libs $(DEPS)`
 OBJS=main.o gui.o openal_renderer.o application.o
