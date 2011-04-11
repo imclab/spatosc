@@ -1,11 +1,11 @@
-#N canvas 232 265 1316 683 10;
+#N canvas 0 367 1316 683 10;
 #X obj 28 71 loadbang;
 #X obj 28 123 s connect!;
 #X obj 29 98 symbol \$1-\$2.conn;
 #X obj 3 2 cnv 15 160 25 empty empty Help: 5 12 1 14 -260097 -16662
 0;
 #X obj 206 156 route list;
-#X text 318 76 <- note \, these coeffs will be different than the normal
+#X text 294 66 <- note \, these coeffs will be different than the normal
 connection (still to be done);
 #X obj 449 337 change1;
 #X text 396 434 dynamically generates plugin (in \$0-plug subpatch)
@@ -40,13 +40,11 @@ source \, and should be defined in the plugin patch;
 #X text 210 51 from AR;
 #X obj 325 146 send \$4.nodeMsg;
 #X obj 206 75 receive \$4;
-#X obj 459 142 anyreg \$3-type;
-#X obj 459 117 loadbang;
-#X msg 459 217 setType \$1;
-#X text 561 158 state-of-listener;
-#X obj 580 109 r \$3;
-#X obj 580 134 route setType;
+#X obj 459 101 loadbang;
 #X obj 459 192 symbol;
+#X obj 459 126 anyreg \$3-conn.type;
+#X msg 459 217 setType ar.\$1;
+#X text 465 144 set in listener plugin;
 #X connect 0 0 2 0;
 #X connect 2 0 1 0;
 #X connect 4 1 13 0;
@@ -64,10 +62,8 @@ source \, and should be defined in the plugin patch;
 #X connect 31 0 22 0;
 #X connect 34 0 4 0;
 #X connect 34 0 33 0;
-#X connect 35 0 41 0;
-#X connect 36 0 35 0;
-#X connect 37 0 13 0;
-#X connect 39 0 40 0;
-#X connect 40 0 41 0;
-#X connect 41 0 37 0;
+#X connect 35 0 37 0;
+#X connect 36 0 38 0;
+#X connect 37 0 36 0;
+#X connect 38 0 13 0;
 #X coords 0 0 1 1 85 60 0;

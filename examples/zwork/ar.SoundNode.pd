@@ -83,8 +83,7 @@
 #X text 421 174 disabled;
 #X text 290 209 sent from AR;
 #X obj 291 240 r \$2;
-#X obj 87 395 route setVUmeterFlag setPlugin setActive setType;
-#X obj 300 431 anyreg \$2-type;
+#X obj 87 395 route setVUmeterFlag setPlugin setActive;
 #X connect 0 0 1 0;
 #X connect 1 0 3 0;
 #X connect 3 0 8 1;
@@ -110,5 +109,4 @@
 #X connect 51 0 46 0;
 #X connect 51 1 29 0;
 #X connect 51 2 43 0;
-#X connect 51 3 52 0;
 #X coords 0 0 1 1 52 60 0;
