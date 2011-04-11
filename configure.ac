@@ -127,7 +127,6 @@ dnl fi
 # is no need to rename the template file when the API version changes.
 AC_CONFIG_FILES([
         Makefile 
-        spatosc.pc 
         include/version.h
         src/Makefile 
         tests/Makefile
