@@ -36,6 +36,13 @@ bool test_property()
         std::cout << __FUNCTION__ << ": its value should be the same as the one given." << std::endl;
         return false;
     }
+
+    if (property.getName() != "foo")
+    {
+        std::cout << __FUNCTION__ << ": its name should be the same as the one given." << std::endl;
+        return false;
+    }
+
     property.setValue("spam");
     if (property.getValue() != "spam")
     {
