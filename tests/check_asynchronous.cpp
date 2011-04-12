@@ -39,7 +39,7 @@ class DummyTranslator : public spatosc::Translator
             UNUSED(ip);
             UNUSED(toPort);
         }
-        virtual void pushOSCMessages(spatosc::Connection *conn)
+        virtual void pushConnectionChanges(spatosc::Connection *conn)
         {
             UNUSED(conn);
             pushed = true;

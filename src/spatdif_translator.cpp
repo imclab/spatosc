@@ -68,7 +68,7 @@ void SpatdifTranslator::sendGainDB(const std::string &prefix, Connection *conn)
     sender_->sendMessage(path, "f", conn->gainDB(), SPATOSC_ARGS_END);
 }
 
-void SpatdifTranslator::pushOSCMessages(Connection * conn)
+void SpatdifTranslator::pushConnectionChanges(Connection * conn)
 {
     SoundSource *src = conn->getSource();
     Listener *snk = conn->getSink();

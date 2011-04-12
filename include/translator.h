@@ -45,7 +45,7 @@ class Translator
         Translator(bool verbose = false);
 
         /**
-         * The main work of the translator is done by the pushOSCMessages() method, which is
+         * The main work of the translator is done by the pushConnectionChanges() method, which is
          * called whenever there is a change to some parameters within a connection.
          *
          * For each pair of nodes in the scene that are connected, it might calculate the
@@ -53,7 +53,7 @@ class Translator
          * It should then make sure there is some audio rendering going, either by sending interprocess
          * messages to control some audio engine, or by rendering audio by itself.
          */
-        virtual void pushOSCMessages(Connection *conn);
+        virtual void pushConnectionChanges(Connection *conn);
 
         /**
          * Called when it's time to push OSC messages when a Node property has changed.
