@@ -1,4 +1,4 @@
-#N canvas 129 23 1352 1076 10;
+#N canvas 127 22 1352 1076 10;
 #X floatatom 406 953 5 0 0 0 - - -;
 #X floatatom 445 953 5 0 0 0 - - -;
 #X floatatom 484 953 5 0 0 0 - - -;
@@ -20,7 +20,7 @@
 #X connect 5 0 2 0;
 #X restore 406 973 pd pack3f;
 #X text 666 -41 <-- Create a sound source;
-#X obj 401 221 OSCrx 18032;
+#X obj 95 184 OSCrx 18032;
 #N canvas 0 64 887 877 dynload 0;
 #X msg 229 66 vis 1;
 #X msg 43 281 clear;
@@ -188,7 +188,7 @@ exact time the patch is loaded;
 #X connect 36 0 15 1;
 #X restore 128 695 pd dynload SoundConnections;
 #X obj 399 634 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
-0 1;
+1 1;
 #X obj 399 602 spatosc SpatdifTranslator 18032 localhost;
 #X obj 767 544 r to_spatosc;
 #X obj -86 565 symbol;
@@ -200,7 +200,7 @@ exact time the patch is loaded;
 #X obj 252 662 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X obj -87 584 list prepend ar.SoundNode \$0;
-#X obj 479 220 cnv 20 20 20 empty empty \$0=$zero 0 12 1 14 -262144
+#X obj 173 183 cnv 20 20 20 empty empty \$0=$zero 0 12 1 14 -262144
 -66577 0;
 #X floatatom 327 114 5 0 0 0 - - -;
 #X obj 91 505 r clear-all;
@@ -302,16 +302,13 @@ exact time the patch is loaded;
 #X obj -78 894 DynamicPatchHolder \$0-SoundConnections;
 #X obj -86 532 r createNode;
 #X obj 130 557 r connectListener;
-#X obj 766 630 s createNode;
-#X obj 852 631 s createNode;
 #X msg 651 989 \; to_spatosc setPosition ear \$1 \$2 \$3;
-#X obj 940 632 s clear-all;
+#X obj 939 664 s clear-all;
 #X obj 398 564 r to_spatosc;
-#X obj 767 571 route createSource createListener clearScene connect
+#X obj 766 603 route createSource createListener clearScene connect
 disconnect;
-#X obj 1020 632 s connectListener;
 #X msg 784 42 \; to_spatosc clearScene;
-#X msg 790 186 \; to_spatosc createSource src1 \, createListener ear
+#X msg 667 175 \; to_spatosc createSource src1 \, createListener ear
 ;
 #X msg 35 -25 \; src1.plugin.patch vis 1;
 #X msg -84 -27 \; src1.patch vis 1;
@@ -325,24 +322,24 @@ disconnect;
 #X msg 765 519 \; to_spatosc setNodeStringProperty ear type stereo
 ;
 #X msg 406 993 \; to_spatosc setPosition src1 \$1 \$2 \$3;
-#X msg 338 39 \; to_spatosc connect src1 ear \;;
+#X msg 335 30 \; to_spatosc connect src1 ear \;;
 #X obj 359 535 r \$0-to_spatOSC;
 #X text 355 513 from DSP_GRAPH (vmic params etc);
-#X obj 401 314 list split 1;
-#X obj 401 340 symbol2list /;
-#X obj 400 368 unpack s s;
-#X obj 401 254 OSCparse /spatosc/core;
-#X obj 401 285 OSCparse /connection;
-#X obj 457 402 list append;
-#X obj 399 394 t b s;
-#X obj 457 428 anyreg \$0-list;
-#X obj 460 487 s;
-#X obj 458 454 list trim;
-#X text 547 246 need messages to audio-renderer such as "createListener
+#X obj 95 277 list split 1;
+#X obj 95 303 symbol2list /;
+#X obj 94 331 unpack s s;
+#X obj 95 217 OSCparse /spatosc/core;
+#X obj 95 248 OSCparse /connection;
+#X obj 151 365 list append;
+#X obj 93 357 t b s;
+#X obj 151 391 anyreg \$0-list;
+#X obj 154 450 s;
+#X obj 152 417 list trim;
+#X text 267 186 need messages to audio-renderer such as "createListener
 \, creeateNode \, connect \, disconnect.;
-#X text 549 276 Also need to be able to set/get/save/recall params
+#X text 269 216 Also need to be able to set/get/save/recall params
 in spatOSC;
-#X text 551 317 DELAY and AED are partially redundant;
+#X text 338 234 DELAY and AED are partially redundant;
 #X obj 166 780 bng 15 250 50 0 \$0-open-attenuation empty audio_I/0_attenuation
 17 7 1 12 -262144 -1 -1;
 #X obj 167 821 dsp.IO \$0;
@@ -378,13 +375,29 @@ in spatOSC;
 #X text 684 711 listener;
 #X msg 336 -33 \; to_spatosc createSource src1 \, createListener ear
 \; ear setPlugin ar.listener-stereo~ \; src1 setPlugin testone~;
+#X obj 213 306 s createNode;
+#X msg 296 366 \; createNode \$1 \; \$1 setPlugin ar.listener-stereo~
+;
+#X msg 665 255 \; to_spatosc setNodeStringProperty src1 setPlugin testone~
+;
+#X msg 666 303 \; to_spatosc setNodeStringProperty src1 setPlugin testone~
+;
+#X obj -38 305 p;
+#X obj 506 428 s connectListener;
+#X msg 665 214 \; to_spatosc connect src1 ear \;;
+#X obj 765 662 s createNode;
+#X obj 851 663 s createNode;
+#X obj 1019 664 s connectListener;
+#X obj 212 273 route createSoundSource createListener deleteNode connect
+;
+#X obj 342 313 symbol;
 #X connect 0 0 3 0;
 #X connect 1 0 3 1;
 #X connect 2 0 3 2;
-#X connect 3 0 53 0;
-#X connect 5 0 60 0;
+#X connect 3 0 50 0;
+#X connect 5 0 57 0;
 #X connect 9 0 8 0;
-#X connect 10 0 40 0;
+#X connect 10 0 38 0;
 #X connect 11 0 17 0;
 #X connect 12 0 6 0;
 #X connect 13 0 7 0;
@@ -392,7 +405,7 @@ in spatOSC;
 #X connect 15 0 6 2;
 #X connect 16 0 7 2;
 #X connect 17 0 12 0;
-#X connect 19 0 73 0;
+#X connect 19 0 70 0;
 #X connect 20 0 7 1;
 #X connect 20 0 6 1;
 #X connect 20 0 22 1;
@@ -404,36 +417,38 @@ in spatOSC;
 #X connect 28 0 13 0;
 #X connect 30 0 22 1;
 #X connect 33 0 11 0;
-#X connect 34 0 47 0;
-#X connect 39 0 9 0;
-#X connect 40 0 35 0;
-#X connect 40 1 36 0;
-#X connect 40 2 38 0;
-#X connect 40 3 41 0;
-#X connect 47 0 14 0;
-#X connect 55 0 9 0;
+#X connect 34 0 44 0;
+#X connect 37 0 9 0;
+#X connect 38 2 36 0;
+#X connect 44 0 14 0;
+#X connect 52 0 9 0;
+#X connect 54 0 55 0;
+#X connect 54 1 59 1;
+#X connect 55 0 56 0;
+#X connect 56 0 60 0;
+#X connect 56 1 59 0;
 #X connect 57 0 58 0;
-#X connect 57 1 62 1;
-#X connect 58 0 59 0;
-#X connect 59 0 63 0;
-#X connect 59 1 62 0;
+#X connect 58 0 54 0;
+#X connect 58 1 94 0;
+#X connect 59 0 61 0;
 #X connect 60 0 61 0;
-#X connect 61 0 57 0;
-#X connect 62 0 64 0;
-#X connect 63 0 64 0;
-#X connect 63 1 65 1;
-#X connect 64 0 66 0;
-#X connect 66 0 65 0;
-#X connect 72 0 71 0;
-#X connect 74 0 75 0;
-#X connect 74 1 76 0;
-#X connect 75 0 0 0;
-#X connect 76 0 1 0;
-#X connect 77 0 80 0;
-#X connect 78 0 80 1;
-#X connect 79 0 80 2;
-#X connect 80 0 37 0;
-#X connect 81 0 82 0;
-#X connect 81 1 83 0;
-#X connect 82 0 77 0;
-#X connect 83 0 78 0;
+#X connect 60 1 62 1;
+#X connect 61 0 63 0;
+#X connect 63 0 62 0;
+#X connect 69 0 68 0;
+#X connect 71 0 72 0;
+#X connect 71 1 73 0;
+#X connect 72 0 0 0;
+#X connect 73 0 1 0;
+#X connect 74 0 77 0;
+#X connect 75 0 77 1;
+#X connect 76 0 77 2;
+#X connect 77 0 35 0;
+#X connect 78 0 79 0;
+#X connect 78 1 80 0;
+#X connect 79 0 74 0;
+#X connect 80 0 75 0;
+#X connect 94 0 84 0;
+#X connect 94 1 95 0;
+#X connect 94 3 89 0;
+#X connect 95 0 85 0;
