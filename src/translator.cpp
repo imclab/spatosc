@@ -32,7 +32,7 @@ namespace spatosc
 Translator::Translator(bool verbose) : verbose_(verbose)
 {}
 
-void Translator::pushOSCMessages(Connection *conn)
+void Translator::pushConnectionChanges(Connection *conn)
 {
     if (verbose_)
         std::cout << "Computation update for " << conn->getSource() << " -> " << conn->getSink() << " :" <<std::endl;

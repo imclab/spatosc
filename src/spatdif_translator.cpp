@@ -68,7 +68,7 @@ void SpatdifTranslator::sendGainDB(const std::string &prefix, Connection *conn)
     sender_->sendMessage(path, "f", conn->gainDB(), SPATOSC_ARGS_END);
 }
 
-void SpatdifTranslator::pushOSCMessages(Connection * conn)
+void SpatdifTranslator::pushConnectionChanges(Connection * conn)
 {
     SoundSource *src = conn->getSource();
     Listener *snk = conn->getSink();
@@ -110,7 +110,7 @@ void SpatdifTranslator::pushSceneChange(const std::string &method, ...)
 void SpatdifTranslator::pushPropertyChange(Node *node, const std::string &key, const std::string &value)
 {
     //std::cout << "pushing property for node " << node->getID() << ": " << key << value << std::endl;
-    std::string path = "/spatosc/core/" + node->getType() + "/prop";
+    std::string path = "/spatosc/core/" + node->getType() + "/" + node->getID() + "/prop";
     sender_->sendMessage(path, "ss", key.c_str(), value.c_str(), SPATOSC_ARGS_END);
 }
 

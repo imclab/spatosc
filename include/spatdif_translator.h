@@ -43,7 +43,7 @@ class SpatdifTranslator : public Translator
 {
     public:
         SpatdifTranslator(const std::string &ip, const std::string &port, bool verbose);
-        virtual void pushOSCMessages(Connection *conn);
+        virtual void pushConnectionChanges(Connection *conn);
         //virtual void pushSceneChange(const std::string &method, ...);
         virtual void pushSceneChange(const char *types, va_list ap);
         virtual void pushPropertyChange(Node *node, const std::string &key, const std::string &value);
