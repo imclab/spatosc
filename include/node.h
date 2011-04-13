@@ -55,6 +55,9 @@ class Node
          */
         virtual ~Node();
 
+
+        virtual std::string getType() const { return "Node"; }
+
         /**
          * Returns the identifier of this node.
          * @return A string to identify this Node.

@@ -43,6 +43,14 @@ Connection::Connection(SoundSource *source, Listener *sink) :
     recomputeConnection();
 }
 
+Connection::~Connection()
+{
+    // TODO: there is no pointer to scene_ available, so this has now been
+    // moved into the scene::disconnect method. It would be better to have it
+    // here because there are several ways to disconnect things.
+    //scene_.onSceneChanged("sss", "disconnect", src_->getID().c_str(), snk_->getID().c_str(), SPATOSC_ARGS_END);
+}
+
 void Connection::recomputeConnection()
 {
 	if (active())

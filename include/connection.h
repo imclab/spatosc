@@ -40,6 +40,8 @@ class Connection
 {
 public:
     Connection(SoundSource *source, Listener *sink);
+    ~Connection();
+
     /**
      * Update distance, azimuth and elevation values (usually called by Scene instance)
      */
