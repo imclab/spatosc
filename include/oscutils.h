@@ -26,6 +26,9 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <lo/lo.h>
+
+#define SPATOSC_ARGS_END LO_ARGS_END
 
 namespace spatosc
 {

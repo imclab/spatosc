@@ -56,6 +56,19 @@ class Translator
         virtual void pushOSCMessages(Connection *conn);
 
         /**
+         * This is called whenever the scene changes (ie, a node is created or,
+         * deleted, a connection is made, etc). The change is available to any
+         * translator so that the proper resources can be allocated in the audio
+         * rendering process.
+         */
+        //virtual void pushSceneChange(const std::string &method, ...)
+        virtual void pushSceneChange(const char *types, va_list ap)
+        {
+            UNUSED(types);
+            UNUSED(ap);
+        }
+
+        /**
          * Called when it's time to push OSC messages when a Node property has changed.
          */
         virtual void pushPropertyChange(Node *node, const std::string &key, const std::string &value)
