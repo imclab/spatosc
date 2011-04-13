@@ -43,6 +43,10 @@ Node::Node(const std::string &nodeID, Scene &scene) :
 
 Node::~Node()
 {
+    // send a scene change, telling the rendere that this node's memory can be
+    // cleared:
+    scene_.onSceneChanged("ss", "deleteNode", id_.c_str(), SPATOSC_ARGS_END);
+
     // FIXME: Tue Feb  8 11:56:52 EST 2011:tmatth
     // only osc-enabled scenes should have to be unsubscribed.
     // remove osc handler for this node

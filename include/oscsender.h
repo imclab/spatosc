@@ -26,8 +26,9 @@
 
 #include <lo/lo.h>
 #include <string>
+#include "oscutils.h"
 
-#define SPATOSC_ARGS_END LO_ARGS_END
+
 
 namespace spatosc
 {
@@ -57,11 +58,13 @@ class OscSender
           * \endcode
           */
         void sendMessage(const std::string &OSCpath, const char *types, ...) const;
+
+        void sendMessage(const std::string &OSCpath, const char *types, va_list ap) const;
+
     private:
         // not implemented
         OscSender(const OscSender&);
         const OscSender& operator=(const OscSender&);
-        void sendMessage(const std::string &OSCpath, const char *types, va_list ap) const;
         void sendMessage(const std::string &OSCpath, lo_message msg) const;
         std::string host_;
         std::string toPort_;
