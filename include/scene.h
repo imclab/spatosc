@@ -300,6 +300,8 @@ class Scene
          */
         void onPropertyChanged(Node *node, const std::string &key, const std::string &value);
 
+        void onSceneChanged(const char *types, ...);
+
         /**
          * Allows the scene to be completely refreshed. For example, if the
          * remote spatializer crashes and restarts, this function can be called

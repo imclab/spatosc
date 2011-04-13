@@ -85,4 +85,33 @@ void SpatdifTranslator::pushConnectionChanges(Connection * conn)
 
 }
 
+void SpatdifTranslator::pushSceneChange(const char *types, va_list ap)
+{
+    // just forwards all scene changes over OSC
+    // (includes messages like createListener, createSoundSource, connect, etc)
+    sender_->sendMessage("/spatosc/core", types, ap);
+}
+/*
+void SpatdifTranslator::pushSceneChange(const std::string &method, ...)
+{
+    va_list ap;
+    va_start(ap, method);
+
+    if ((method=="createSoundSource") || (method=="createListener"))
+        //std::cout << "got createSoundSource message " << method << " " << va_arg(ap,const char*) << std::endl;
+        sender_->sendMessage("/spatosc/core", "ss", method.c_str(), va_arg(ap,const char*), SPATOSC_ARGS_END);
+    else if (method=="connect")
+        sender_->sendMessage("/spatosc/core", "sss", method.c_str(), va_arg(ap,const char*), va_arg(ap,const char*), SPATOSC_ARGS_END);
+    else
+        std::cout << "ERROR: Got pushSceneChange for unknown method: " << method << std::endl;
+}
+*/
+
+void SpatdifTranslator::pushPropertyChange(Node *node, const std::string &key, const std::string &value)
+{
+    //std::cout << "pushing property for node " << node->getID() << ": " << key << value << std::endl;
+    std::string path = "/spatosc/core/" + node->getType() + "/prop";
+    sender_->sendMessage(path, "ss", key.c_str(), value.c_str(), SPATOSC_ARGS_END);
+}
+
 } // end namespace spatosc

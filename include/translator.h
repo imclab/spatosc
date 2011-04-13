@@ -24,6 +24,7 @@
 #define __TRANSLATOR_H__
 
 #include <string>
+#include <cstdarg> // for va_list
 #define UNUSED(x) ((void) (x))
 
 namespace spatosc
@@ -54,6 +55,19 @@ class Translator
          * messages to control some audio engine, or by rendering audio by itself.
          */
         virtual void pushConnectionChanges(Connection *conn);
+
+        /**
+         * This is called whenever the scene changes (ie, a node is created or,
+         * deleted, a connection is made, etc). The change is available to any
+         * translator so that the proper resources can be allocated in the audio
+         * rendering process.
+         */
+        //virtual void pushSceneChange(const std::string &method, ...)
+        virtual void pushSceneChange(const char *types, va_list ap)
+        {
+            UNUSED(types);
+            UNUSED(ap);
+        }
 
         /**
          * Called when it's time to push OSC messages when a Node property has changed.
