@@ -397,7 +397,7 @@ void Scene::onConnectionChanged(Connection *conn, bool forcedNotify)
 	if (conn->active() || forcedNotify)
     {
 		if (synchronous_ || forcedNotify)
-			pushOSCMessagesViaAllTranslators(conn, forcedNotify);
+			pushConnectionChangesViaAllTranslators(conn, forcedNotify);
     }
 }
 
@@ -411,11 +411,11 @@ void Scene::forceRefresh()
     for (iter = connections_.begin(); iter != connections_.end(); ++iter)
     {
     	(*iter)->recomputeConnection();
-    	pushOSCMessagesViaAllTranslators((*iter).get(), true);
+        pushConnectionChangesViaAllTranslators((*iter).get(), true);
     }
 }
 
-void Scene::pushOSCMessagesViaAllTranslators(Connection *conn, bool forcedNotify)
+void Scene::pushConnectionChangesViaAllTranslators(Connection *conn, bool forcedNotify)
 {
     SoundSource *src = conn->getSource();
     Listener *sink = conn->getSink();
@@ -434,7 +434,7 @@ void Scene::pushOSCMessagesViaAllTranslators(Connection *conn, bool forcedNotify
     {
         std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
         for (iter = translators_.begin(); iter != translators_.end(); ++iter)
-            iter->second->pushOSCMessages(conn);
+            iter->second->pushConnectionChanges(conn);
         src->stateSent();
         sink->stateSent();
     }
@@ -454,7 +454,7 @@ bool Scene::flushMessages()
         {
             Connection* conn = (*iter).get();
             if (conn->active())
-                pushOSCMessagesViaAllTranslators(conn);
+                pushConnectionChangesViaAllTranslators(conn);
         }
         return true;
     }

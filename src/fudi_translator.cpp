@@ -88,7 +88,7 @@ void FudiTranslator::sendPosition(const std::string &prefix, Node *node)
     sendFudi(mess.toString());
 }
 
-void FudiTranslator::pushOSCMessages(Connection *conn)
+void FudiTranslator::pushConnectionChanges(Connection *conn)
 {
     SoundSource *src = conn->getSource();
     Listener *snk = conn->getSink();

@@ -334,7 +334,7 @@ class Scene
         std::vector<std::tr1::shared_ptr<Connection> > connections_;
         bool verbose_;
         bool synchronous_;
-        void pushOSCMessagesViaAllTranslators(Connection *conn, bool forcedNotify=false);
+        void pushConnectionChangesViaAllTranslators(Connection *conn, bool forcedNotify=false);
 };
 
 } // end namespace spatosc
