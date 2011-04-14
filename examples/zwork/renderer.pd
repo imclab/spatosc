@@ -1,17 +1,17 @@
-#N canvas 507 22 1182 703 12;
+#N canvas 507 22 1056 512 12;
 #X obj -60 6 OSCrx 18032;
 #X obj 99 37 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
 1 1;
 #X obj 99 5 spatosc SpatdifTranslator 18032 localhost;
-#X msg -26 238 \; ear.patch vis 1;
-#X msg 101 238 \; ear.plugin.patch vis 1;
+#X msg -37 290 \; ear.patch vis 1;
+#X msg 90 290 \; ear.plugin.patch vis 1;
 #X obj 99 -21 r to_spatosc;
-#X msg 109 197 \; src1.plugin.patch vis 1;
-#X msg -26 196 \; src1.patch vis 1;
-#X msg -27 280 \; src1-ear.conn.patch vis 1;
-#X msg 166 279 \; src1-ear.conn.plugin.patch vis 1;
+#X msg 98 249 \; src1.plugin.patch vis 1;
+#X msg -37 248 \; src1.patch vis 1;
+#X msg -38 332 \; src1-ear.conn.patch vis 1;
+#X msg 155 331 \; src1-ear.conn.plugin.patch vis 1;
 #X obj 443 10 grid grid1 100 0 199 100 0 199 0 1 1 10 10 477 60;
-#X obj 560 9 grid grid1 100 0 199 100 0 199 0 1 1 10 10 605 68;
+#X obj 560 9 grid grid1 100 0 199 100 0 199 0 1 1 10 10 618 81;
 #X text 446 -17 source;
 #X text 566 -15 listener;
 #N canvas 184 210 1250 818 RX-from-spatOSC 0;
@@ -157,10 +157,8 @@ y z (note: global x y z);
 #X text 38 422 NOTE: spatOSC has only one "connect" message--- what
 about connecting sources to sinks which are not listeners ???;
 #X restore -59 -23 pd SPIN_INTEGRATION;
-#X obj -65 136 cnv 15 24 24 empty empty 1 4 12 1 24 -99865 -262144
+#X obj -63 151 cnv 15 24 24 empty empty 1 4 12 1 24 -99865 -262144
 0;
-#X msg -32 125 \; to_spatosc createSource src1 \, createListener ear
-\; to_spatosc setNodeStringProperty src1 setPlugin testone~;
 #N canvas 0 22 584 459 dynamic 0;
 #X obj 40 36 inlet;
 #X obj 102 38 inlet;
@@ -229,11 +227,11 @@ about connecting sources to sinks which are not listeners ???;
 #X connect 16 0 12 0;
 #X connect 17 0 13 0;
 #X restore 515 130 pd dynamic;
-#X obj 550 327 bng 15 250 50 0 \$0-open-attenuation empty audio_I/0_attenuation
+#X obj 456 211 bng 15 250 50 0 \$0-open-attenuation empty audio_I/0_attenuation
 17 7 1 12 -262144 -1 -1;
-#X obj 551 368 dsp.IO \$0;
-#X obj 551 347 r \$0-dspCtl;
-#X msg 546 281 \; see-nodes bang;
+#X obj 457 252 dsp.IO \$0;
+#X obj 457 231 r \$0-dspCtl;
+#X msg 452 165 \; see-nodes bang;
 #N canvas 761 264 983 873 SPAT_OSC_MESSAGES 0;
 #X floatatom 59 79 5 0 0 0 - - -;
 #X msg 41 -243 \; to_spatosc setConnectFilter ear;
@@ -261,37 +259,47 @@ spatOSC;
 #X msg 34 471 \; to_spatosc setNodeFloatProperty ear setSpread 1;
 #X connect 0 0 5 0;
 #X restore -60 87 pd SPAT_OSC_MESSAGES;
-#X obj 331 375 iterN 20;
-#X obj 231 375 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
--1 -1;
-#X obj 331 403 t f b;
-#X obj 420 402 random 200;
-#X obj 419 429 - 100;
-#X obj 505 403 random 200;
-#X obj 504 430 - 100;
-#X obj 317 472 pack f f f;
-#X obj 206 105 p;
-#X msg -243 382 \; to_spatosc createListener ear \;;
-#X msg -208 456 \; to_spatosc connect src-14 ear \;;
-#X msg 333 535 \; to_spatosc createSource src-\$1 \; to_spatosc setNodeStringProperty
+#N canvas 314 181 608 479 temp 0;
+#X obj 20 53 iterN 20;
+#X obj 20 30 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 20 81 t f b;
+#X obj 109 80 random 200;
+#X obj 108 107 - 100;
+#X obj 194 81 random 200;
+#X obj 193 108 - 100;
+#X obj 6 150 pack f f f;
+#X msg 22 213 \; to_spatosc createSource src-\$1 \; to_spatosc setNodeStringProperty
 src-\$1 setPlugin testone~ \; to_spatosc connect src-\$1 ear \; to_spatosc
 setPosition src-\$1 \$2 \$3 0;
+#X msg 55 378 \; to_spatosc createListener ear \;;
+#X connect 0 0 2 0;
+#X connect 1 0 0 0;
+#X connect 2 0 7 0;
+#X connect 2 1 3 0;
+#X connect 2 1 5 0;
+#X connect 3 0 4 0;
+#X connect 4 0 7 1;
+#X connect 5 0 6 0;
+#X connect 6 0 7 2;
+#X connect 7 0 8 0;
+#X restore -61 111 pd temp;
+#X obj 459 278 OSCrx 18032;
+#X obj 459 304 spigot;
+#X obj 459 330 print FROM__SPATOSC;
+#X obj 535 306 tgl 15 0 empty empty print-spat-mess 17 7 0 12 -262144
+-1 -1 1 1;
+#X msg -34 148 \; to_spatosc createSource src1 \, createSource src2
+\, createListener ear \, setNodeStringProperty src1 setPlugin testone~
+\, setNodeStringProperty src2 setPlugin testone~;
 #X connect 0 0 14 0;
-#X connect 0 0 34 0;
 #X connect 2 0 1 0;
 #X connect 5 0 2 0;
-#X connect 10 0 20 0;
-#X connect 10 1 20 1;
-#X connect 11 0 20 2;
-#X connect 11 1 20 3;
-#X connect 23 0 22 0;
-#X connect 26 0 28 0;
-#X connect 27 0 26 0;
-#X connect 28 0 33 0;
-#X connect 28 1 29 0;
-#X connect 28 1 31 0;
-#X connect 29 0 30 0;
-#X connect 30 0 33 1;
-#X connect 31 0 32 0;
-#X connect 32 0 33 2;
-#X connect 33 0 37 0;
+#X connect 10 0 19 0;
+#X connect 10 1 19 1;
+#X connect 11 0 19 2;
+#X connect 11 1 19 3;
+#X connect 22 0 21 0;
+#X connect 26 0 27 0;
+#X connect 27 0 28 0;
+#X connect 29 0 27 1;
