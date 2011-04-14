@@ -1,4 +1,4 @@
-#N canvas -1593 271 882 809 10;
+#N canvas 0 271 882 809 10;
 #X obj 528 2 cnv 20 20 20 empty empty \$0=$zero 0 12 1 14 -262144 -66577
 0;
 #X obj 421 157 r \$1-from-SPIN;
@@ -76,7 +76,8 @@
 #X obj 488 437 list prepend setParam;
 #X obj 488 460 list trim;
 #X obj 489 500 send \$2.nodeMsg;
-#X obj 87 425 route setVUmeterFlag setPlugin setActive;
+#X obj 87 425 route setVUmeterFlag setPlugin setActive setSpread;
+#X obj 309 477 s \$2.spread;
 #X connect 3 0 16 0;
 #X connect 14 0 23 0;
 #X connect 19 0 14 0;
@@ -96,5 +97,6 @@
 #X connect 42 0 43 0;
 #X connect 44 0 34 0;
 #X connect 44 1 19 0;
-#X connect 44 3 41 0;
+#X connect 44 3 45 0;
+#X connect 44 4 41 0;
 #X coords 0 0 1 1 52 60 0;
