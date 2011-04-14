@@ -64,7 +64,7 @@ verbose_(verbose)
     }
 }
 
-void DmitriTranslator::pushOSCMessages(Connection *conn)
+void DmitriTranslator::pushConnectionChanges(Connection *conn)
 {
     std::string str;
     SoundSource *src = conn->getSource();

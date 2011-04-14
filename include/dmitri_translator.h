@@ -77,7 +77,7 @@ public:
     /**
      * This is where we customize messages for D-Mitri's OSC protocol.
      */
-    virtual void pushOSCMessages(Connection *conn);
+    virtual void pushConnectionChanges(Connection *conn);
 
     /**
      * The DEFAULT_SEND_PORT should always be 18033 (as of CueStation 5.0)
