@@ -49,9 +49,10 @@ killall Pd-extended; killall spinserver; killall spinviewer;
 
 
 
-$SPINSERV &
-$SPINVIEW --screen 1 &
+#$SPINSERV &
+#$SPINVIEW --screen 1 &
 
 echo launch audio renderer
 
-$PDE -open renderer.pd  spin.renderer.pd spinEdit.pd &
+$PDE -open renderer.pd  &
+#$PDE -open renderer.pd  spin.renderer.pd spinEdit.pd &

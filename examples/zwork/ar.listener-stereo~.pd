@@ -1,4 +1,4 @@
-#N canvas -1709 413 891 559 10;
+#N canvas 0 413 891 559 10;
 #X obj 2 1 cnv 15 500 30 empty empty DSP.plugin:(listener-stereo~)
 5 15 1 18 -228856 -16662 0;
 #X obj 258 7 cnv 20 20 20 empty empty nodeID:(\$2) 5 10 0 12 -233017
@@ -31,8 +31,9 @@
 #X obj 301 132 param \$2 vmicR.channel 2;
 #X obj 301 156 param \$2 vmicL.yaw 60;
 #X obj 301 178 param \$2 vmicR.yaw -60;
-#X obj 468 379 loadbang;
-#X obj 468 408 anyreg \$2-conn.type listener-stereo.conn~;
+#X obj 470 345 loadbang;
+#X obj 470 394 anyreg \$2-conn.type listener-stereo.conn~;
+#X obj 470 368 s \$2-conn.type!;
 #X connect 3 0 4 0;
 #X connect 10 0 12 0;
 #X connect 11 0 10 0;
@@ -40,5 +41,5 @@
 #X connect 16 0 15 0;
 #X connect 19 0 16 0;
 #X connect 20 0 19 0;
-#X connect 26 0 27 0;
+#X connect 26 0 28 0;
 #X coords 0 0 1 1 400 400 0;

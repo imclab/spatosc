@@ -1,5 +1,5 @@
 #N canvas 0 367 1316 683 10;
-#X obj 28 71 loadbang;
+#X obj 30 60 loadbang;
 #X obj 28 123 s connect!;
 #X obj 29 98 symbol \$1-\$2.conn;
 #X obj 3 2 cnv 15 160 25 empty empty Help: 5 12 1 14 -260097 -16662
@@ -7,19 +7,19 @@
 #X obj 206 156 route list;
 #X text 294 66 <- note \, these coeffs will be different than the normal
 connection (still to be done);
-#X obj 449 337 change1;
-#X text 396 434 dynamically generates plugin (in \$0-plug subpatch)
+#X obj 366 349 change1;
+#X text 313 446 dynamically generates plugin (in \$0-plug subpatch)
 ;
-#X obj 449 317 symbol;
+#X obj 366 329 symbol;
 #X obj 60 200 DynamicPatchHolder \$0-plug;
-#X obj 449 358 list prepend \$0 \$1 \$2 \$3 \$4;
-#X msg 449 381 \; pd-\$1-plug clear \; pd-\$1-plug obj 50 50 \$6 \$2
+#X obj 366 370 list prepend \$0 \$1 \$2 \$3 \$4;
+#X msg 366 393 \; pd-\$1-plug clear \; pd-\$1-plug obj 50 50 \$6 \$2
 \$3 \$4 \$5 \; \$5.plugin.patch loadbang \;;
-#X text 388 475 plugin needs [namecanvas \$4.plugin.patch];
+#X text 305 487 plugin needs [namecanvas \$4.plugin.patch];
 #X obj 264 244 route setThru mute setType;
 #X text 25 334 [receive~ \$2.from~] is how to receive audio from the
 source \, and should be defined in the plugin patch;
-#X text 385 492 ie \, [namecanvas src-snk.conn.plugin.patch];
+#X text 302 504 ie \, [namecanvas src-snk.conn.plugin.patch];
 #X obj 49 6 AUDIOSCAPE_HELP;
 #X obj 4 31 namecanvas \$4.patch;
 #X obj 870 121 loadbang;
@@ -45,7 +45,7 @@ source \, and should be defined in the plugin patch;
 #X obj 459 126 anyreg \$3-conn.type;
 #X msg 459 217 setType ar.\$1;
 #X text 465 144 set in listener plugin;
-#X connect 0 0 2 0;
+#X obj 516 102 r \$3-conn.type!;
 #X connect 2 0 1 0;
 #X connect 4 1 13 0;
 #X connect 6 0 10 0;
@@ -66,4 +66,5 @@ source \, and should be defined in the plugin patch;
 #X connect 36 0 38 0;
 #X connect 37 0 36 0;
 #X connect 38 0 13 0;
+#X connect 40 0 37 0;
 #X coords 0 0 1 1 85 60 0;
