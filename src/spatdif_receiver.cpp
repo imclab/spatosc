@@ -23,13 +23,12 @@
 #include "osc_scene.h"
 #include "oscreceiver.h"
 #include "node.h"
+#include "unused.h"
 #include <cstring>
 #include <lo/lo.h>
 #include <string>
 #include <iostream>
 #include <cassert>
-
-#define UNUSED(x) ((void) (x))
 
 namespace spatosc
 {

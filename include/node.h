@@ -56,6 +56,9 @@ class Node
         virtual ~Node();
 
 
+        /**
+         * Returns a string which represents the node type.
+         */
         virtual std::string getType() const { return "Node"; }
 
         /**
@@ -182,10 +185,24 @@ class Node
         bool getStringProperty(const std::string &key, std::string &value) const;
 
         /**
-         * Removes a property.
+         * Removes a text property.
          * @return Whether it deleted it, or false if it was not there.
          */
         bool removeStringProperty(const std::string &key);
+
+        /** Same as the string version */
+        void setFloatProperty(const std::string &key, const double &value);
+        /** Same as the string version */
+        bool getFloatProperty(const std::string &key, double &value) const;
+        /** Same as the string version */
+        bool removeFloatProperty(const std::string &key);
+
+        /** Same as the string version */
+        void setIntProperty(const std::string &key, const int &value);
+        /** Same as the string version */
+        bool getIntProperty(const std::string &key, int &value) const;
+        /** Same as the string version */
+        bool removeIntProperty(const std::string &key);
 
     protected:
         void forceNotifyScene();
@@ -199,7 +216,9 @@ class Node
         Vector3 pos_;
         virtual void onNodeChanged(bool forcedNotify=false) = 0;
         virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv, const char *types) = 0;
-        Properties<std::string> properties_;
+        Properties<std::string> string_properties_;
+        Properties<double> float_properties_;
+        Properties<int> int_properties_;
 };
 
 } // end namespace spatosc

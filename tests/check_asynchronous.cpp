@@ -24,9 +24,7 @@
 #include <iostream>
 #include <string>
 #include "spatosc.h"
-
-#define UNUSED(x) ((void) (x))
-
+#include "unused.h"
 
 class DummyTranslator : public spatosc::Translator
 {

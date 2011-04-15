@@ -5,6 +5,9 @@ Release-critical for 0.2
 ------------------------
  * Connection::handleMessage remove calls to assert()
  * Connection::handleMessage pass liblo types to validate them
+ * avoid to include unused.h from public header files
+ * test properties well
+ * implement OSC callbacks for float and int properties
 
 FUDI-specific features and issues
 ---------------------------------
