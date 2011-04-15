@@ -1,6 +1,6 @@
-#N canvas 634 57 799 630 10;
+#N canvas 605 55 872 737 10;
 #X obj -40 85 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
-1 1;
+0 1;
 #X obj -40 27 r to_spatosc;
 #X obj 415 50 grid grid1 100 0 199 100 0 199 0 1 1 10 10 478 106;
 #X obj 532 49 grid grid1 100 0 199 100 0 199 0 1 1 10 10 577 170;
@@ -29,8 +29,8 @@ sink-node;
 y z (note: global x y z);
 #X text 38 422 NOTE: spatOSC has only one "connect" message--- what
 about connecting sources to sinks which are not listeners ???;
-#X restore -33 173 pd SPIN_INTEGRATION;
-#X obj -31 203 cnv 15 24 24 empty empty 1 4 12 1 24 -99865 -262144
+#X restore -33 209 pd SPIN_INTEGRATION;
+#X obj -33 241 cnv 15 24 24 empty empty 1 4 12 1 24 -99865 -262144
 0;
 #N canvas 0 351 584 459 dynamic 0;
 #X obj 40 36 inlet;
@@ -126,7 +126,7 @@ spatOSC;
 #X msg 33 404 \; to_spatosc clearScene \;;
 #X msg 34 471 \; to_spatosc setNodeFloatProperty ear setSpread 1;
 #X connect 0 0 5 0;
-#X restore -34 151 pd SPAT_OSC_MESSAGES;
+#X restore -34 187 pd SPAT_OSC_MESSAGES;
 #N canvas 314 181 608 479 temp 0;
 #X obj 20 53 iterN 20;
 #X obj 20 30 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
@@ -152,24 +152,24 @@ setPosition src-\$1 \$2 \$3 0;
 #X connect 6 0 7 2;
 #X connect 7 0 8 0;
 #X restore 0 358 pd temp;
-#X msg 4 273 \; to_spatosc createSource src1 \, createSource src2 \,
+#X msg 4 309 \; to_spatosc createSource src1 \, createSource src2 \,
 createListener ear \, setNodeStringProperty src1 setPlugin testone~
 \, setNodeStringProperty src2 setPlugin testone~;
-#X msg 2 203 \; to_spatosc createSource src1 \, createListener ear
+#X msg 2 239 \; to_spatosc createSource src1 \, createListener ear
 \, setNodeStringProperty src1 setPlugin testnoise~;
-#X msg 184 425 \; to_renderer src1.plugin.patch vis 1;
-#X msg 182 467 \; to_renderer ear.plugin.patch vis 1;
-#X msg 228 505 \; to_renderer src1-ear.conn.plugin.patch vis 1;
-#X msg -12 506 \; to_renderer src1-ear.conn.patch vis 1;
-#X msg -11 422 \; to_renderer src1.patch vis 1;
-#X msg -11 464 \; to_renderer ear.patch vis 1;
+#X msg 184 461 \; to_renderer src1.plugin.patch vis 1;
+#X msg 182 503 \; to_renderer ear.plugin.patch vis 1;
+#X msg 228 541 \; to_renderer src1-ear.conn.plugin.patch vis 1;
+#X msg -12 542 \; to_renderer src1-ear.conn.patch vis 1;
+#X msg -11 458 \; to_renderer src1.patch vis 1;
+#X msg -11 500 \; to_renderer ear.patch vis 1;
 #X obj -40 53 spatosc;
 #X obj 50 17 r port;
 #X obj 100 16 loadbang;
-#X msg 158 17 \; port 18032;
-#X msg 50 42 \; to_spatosc addTranslator spatdif SpatdifTranslator
+#X msg 101 39 \; port 18032;
+#X msg 50 78 \; to_spatosc addTranslator spatdif SpatdifTranslator
 localhost \$1;
-#X msg 50 82 \; to_spatosc clearScene \; to_renderer clear-all bang
+#X msg 51 130 \; to_spatosc clearScene \; to_renderer clear-all bang
 ;
 #N canvas 0 22 450 300 debug 0;
 #X obj 102 154 OSCtx;
@@ -181,7 +181,7 @@ localhost \$1;
 #X connect 2 0 0 0;
 #X connect 3 0 0 0;
 #X connect 4 0 3 0;
-#X restore 260 125 pd debug;
+#X restore 260 161 pd debug;
 #X connect 1 0 19 0;
 #X connect 2 0 8 0;
 #X connect 2 1 8 1;

@@ -54,5 +54,9 @@ killall Pd-extended; killall spinserver; killall spinviewer;
 
 echo launch audio renderer
 
-$PDE -open renderer.pd  &
+#$PDE -send "spatOSC-port 18032" -open renderer.pd  spatOSC-client.pd &
+
+$PDE -send "spatOSC-port 18032" -open renderer.pd &
+$PDE -send "spatOSC-port 18032" -open spatOSC-client.pd &
+
 #$PDE -open renderer.pd  spin.renderer.pd spinEdit.pd &
