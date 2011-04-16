@@ -190,18 +190,38 @@ class Node
          */
         bool removeStringProperty(const std::string &key);
 
-        /** Same as the string version */
+        /**
+         * Sets a float property for this node.
+         * @param value Note that it actually is a double, not a float.
+         * Creates it if it does not exist.
+         */
         void setFloatProperty(const std::string &key, const double &value);
-        /** Same as the string version */
+        /**
+         * Retrieves a float property value for this node.
+         * @param value Note that it actually is a double, not a float.
+         * @return Success.
+         */
         bool getFloatProperty(const std::string &key, double &value) const;
-        /** Same as the string version */
+        /**
+         * Removes a float property.
+         * @return Whether it deleted it, or false if it was not there.
+         */
         bool removeFloatProperty(const std::string &key);
 
-        /** Same as the string version */
+        /**
+         * Sets an int property for this node.
+         * Creates it if it does not exist.
+         */
         void setIntProperty(const std::string &key, const int &value);
-        /** Same as the string version */
+        /**
+         * Retrieves an int property value for this node.
+         * @return Success.
+         */
         bool getIntProperty(const std::string &key, int &value) const;
-        /** Same as the string version */
+        /**
+         * Removes an int property.
+         * @return Whether it deleted it, or false if it was not there.
+         */
         bool removeIntProperty(const std::string &key);
 
     protected:
