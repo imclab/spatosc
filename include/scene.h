@@ -30,6 +30,7 @@
 #include <iostream>
 #include "memory.h"
 #include "maths.h"
+#include "translator.h"
 
 namespace spatosc
 {
@@ -298,7 +299,13 @@ class Scene
          * Tells all the translators that the given property has changed.
          * @warning Clients should not call this directly.
          */
-        void onPropertyChanged(Node *node, const std::string &key, const std::string &value);
+        template <typename T>
+        void onPropertyChanged(Node *node, const std::string &key, const T &value)
+        {
+            std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
+            for (iter = translators_.begin(); iter != translators_.end(); ++iter)
+                iter->second->pushPropertyChange(node, key, value);
+        }
 
         void onSceneChanged(const char *types, ...);
 

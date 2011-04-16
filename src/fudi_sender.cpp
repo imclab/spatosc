@@ -27,6 +27,7 @@
  */
 
 #include "fudi_sender.h"
+#include "unused.h"
 #include <sys/types.h>
 #include <cstring>
 #include <cstdio>
@@ -49,7 +50,6 @@ namespace spatosc
 {
 
 #define BUFSIZE 4096
-#define UNUSED(x) ((void) (x))
 
 FudiSender::FudiSender(std::string host, unsigned int port, bool isTcp) :
     host_(host),

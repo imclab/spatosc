@@ -25,9 +25,12 @@
 #include <iostream>
 #include <string>
 #include "spatosc.h"
+#include "unused.h"
 
 using namespace spatosc;
-
+/**
+ * Tests the Property template class.
+ */
 bool test_property()
 {
     Property<std::string> property("foo", "bar");
@@ -52,6 +55,9 @@ bool test_property()
     return true;
 }
 
+/**
+ * Tests the Properties template class.
+ */
 bool test_properties()
 {
     Properties<std::string> properties;
@@ -101,8 +107,6 @@ bool test_properties()
     return true;
 }
 
-#define UNUSED(x) ((void) (x))
-
 class DummyTranslator : public spatosc::Translator
 {
     public:
@@ -143,6 +147,9 @@ bool test_notification()
         std::cerr <<" should have received a property update.\n";
         return false;
     }
+    // TODO: test this more:
+    source->setFloatProperty("bar", 3.14159);
+    source->setIntProperty("egg", 2);
     return true;
 }
 

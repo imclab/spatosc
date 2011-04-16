@@ -571,13 +571,6 @@ bool Scene::hasTranslator(const std::string &name) const
     return translators_.find(name) != translators_.end();
 }
 
-void Scene::onPropertyChanged(Node *node, const std::string &key, const std::string &value)
-{
-    std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
-    for (iter = translators_.begin(); iter != translators_.end(); ++iter)
-        iter->second->pushPropertyChange(node, key, value);
-}
-
 void Scene::onSceneChanged(const char *types, ...)
 {
     va_list ap;
