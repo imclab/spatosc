@@ -55,6 +55,12 @@ class Node
          */
         virtual ~Node();
 
+
+        /**
+         * Returns a string which represents the node type.
+         */
+        virtual std::string getType() const { return "Node"; }
+
         /**
          * Returns the identifier of this node.
          * @return A string to identify this Node.
@@ -73,7 +79,6 @@ class Node
          * node is far away or otherwise culled).
          */
         void setActive(bool isActive);
-
 
         /**
          * Sets this node's position in the 3D cartesian space.
@@ -151,8 +156,18 @@ class Node
         {
             nodeChanged_ = false;
         }
-
-        virtual void handleMessage(const std::string &method, int argc, lo_arg ** argv, const char *types);
+        
+        /**
+         * Handles OSC messages for a Node.
+         *
+         * Handles a message and passes it to its child clas if not handled.
+         *
+         * /xyz f:x f:y f:z
+         * /setStringProperty s:key s:value
+         * /setActive i:is_active
+         * 
+         */
+        void handleMessage(const std::string &method, int argc, lo_arg ** argv, const char *types);
         bool active() const { return active_; }
         bool hasID(const std::string &id) const;
         friend std::ostream &operator<<(std::ostream &out, const Node &n);
@@ -170,10 +185,24 @@ class Node
         bool getStringProperty(const std::string &key, std::string &value) const;
 
         /**
-         * Removes a property.
+         * Removes a text property.
          * @return Whether it deleted it, or false if it was not there.
          */
         bool removeStringProperty(const std::string &key);
+
+        /** Same as the string version */
+        void setFloatProperty(const std::string &key, const double &value);
+        /** Same as the string version */
+        bool getFloatProperty(const std::string &key, double &value) const;
+        /** Same as the string version */
+        bool removeFloatProperty(const std::string &key);
+
+        /** Same as the string version */
+        void setIntProperty(const std::string &key, const int &value);
+        /** Same as the string version */
+        bool getIntProperty(const std::string &key, int &value) const;
+        /** Same as the string version */
+        bool removeIntProperty(const std::string &key);
 
     protected:
         void forceNotifyScene();
@@ -183,14 +212,13 @@ class Node
         Quaternion orientation_;
         bool active_;
         bool nodeChanged_;
-        // FIXME: Thu Jan 27 15:03:58 EST 2011 :tmatth:
-        // A source shouldn't have a connectFROM_ and a
-        // sink should not have a connectTO_
     private:
         Vector3 pos_;
         virtual void onNodeChanged(bool forcedNotify=false) = 0;
         virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv, const char *types) = 0;
-        Properties<std::string> properties_;
+        Properties<std::string> string_properties_;
+        Properties<double> float_properties_;
+        Properties<int> int_properties_;
 };
 
 } // end namespace spatosc

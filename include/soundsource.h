@@ -28,7 +28,8 @@
 
 namespace spatosc
 {
-    class Connection;
+
+class Connection;
 
 /**
  * Sound source node.
@@ -37,6 +38,7 @@ class SoundSource : public Node
 {
     public:
         SoundSource(const std::string &nodeID, Scene &scene);
+        virtual std::string getType() const { return "source"; }
         void addConnectionTo(const std::tr1::shared_ptr<Connection> &conn);
         void removeConnectionTo(const Connection *conn);
     private:

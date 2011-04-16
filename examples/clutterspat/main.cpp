@@ -215,6 +215,8 @@ int main(int argc, char *argv[])
             static_cast<gpointer>(&app));
     clutter_actor_set_reactive(app.foo_actor, TRUE);
     clutter_actor_add_action(app.foo_actor, drag_action);
+#else
+    g_print("\nWarning: Dragging disabled. Since it requires Clutter >= 1.4.0\n");
 #endif
 
     app.foo_sound = scene.createSoundSource("1");

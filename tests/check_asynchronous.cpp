@@ -24,9 +24,7 @@
 #include <iostream>
 #include <string>
 #include "spatosc.h"
-
-#define UNUSED(x) ((void) (x))
-
+#include "unused.h"
 
 class DummyTranslator : public spatosc::Translator
 {
@@ -39,7 +37,7 @@ class DummyTranslator : public spatosc::Translator
             UNUSED(ip);
             UNUSED(toPort);
         }
-        virtual void pushOSCMessages(spatosc::Connection *conn)
+        virtual void pushConnectionChanges(spatosc::Connection *conn)
         {
             UNUSED(conn);
             pushed = true;

@@ -26,8 +26,7 @@
 #include "node.h"
 #include "oscutils.h"
 #include "scene.h"
-
-#define UNUSED(x) ((void) (x))
+#include "unused.h"
 
 namespace spatosc
 {
@@ -43,6 +42,10 @@ Node::Node(const std::string &nodeID, Scene &scene) :
 
 Node::~Node()
 {
+    // send a scene change, telling the rendere that this node's memory can be
+    // cleared:
+    scene_.onSceneChanged("ss", "deleteNode", id_.c_str(), SPATOSC_ARGS_END);
+
     // FIXME: Tue Feb  8 11:56:52 EST 2011:tmatth
     // only osc-enabled scenes should have to be unsubscribed.
     // remove osc handler for this node
@@ -129,69 +132,39 @@ bool correctNumberOfArguments(const std::string &method, int expected, int actua
 void Node::handleMessage(const std::string &method, int argc, lo_arg **argv, const char *types)
 {
     UNUSED(types);
-    using namespace OSCutil; // argMatchesType
+    using namespace OSCutil; // typeTagsMatch
     if (method == "setActive")
     {
-    	if (argMatchesType(argc, types, 0, 'i'))
-    	{
-    		setActive((bool)argv[0]->i);
-    	}
+        if (typeTagsMatch(types, "i"))
+            setActive((bool)argv[0]->i);
     }
     else if (method == "xyz")
     {
-        if (argMatchesType(argc, types, 0, 'f') &&
-            argMatchesType(argc, types, 1, 'f') &&
-            argMatchesType(argc, types, 2, 'f'))
+        if (typeTagsMatch(types, "fff"))
             setPosition(argv[0]->f, argv[1]->f, argv[2]->f);
     }
     else if (method == "setStringProperty")
     {
-        if (argMatchesType(argc, types, 0, 's') &&
-            argMatchesType(argc, types, 1, 's'))
+    	if (typeTagsMatch(types, "ss"))
             setStringProperty(std::string(static_cast<const char *>(&argv[0]->s)), std::string(static_cast<const char *>(&argv[1]->s)));
     }
     else if (method == "aed")
     {
-        //assert(argc == 3);
-        //aed(argv[0]->f, argv[1]->f, argv[2]->f);
-        std::cerr << method << " NOT IMPLEMENTED" << std::endl;
+    	if (typeTagsMatch(types, "fff"))
+            setPositionAED(argv[0]->f, argv[1]->f, argv[2]->f);
     }
     else if (method == "xy")
-    {
-        //assert(argc == 2);
-        //xy(argv[0]->f, argv[1]->f);
         std::cerr << method << " NOT IMPLEMENTED" << std::endl;
-    }
     else if (method == "delay")
-    {
-        //assert(argc == 1);
-        //delay(argv[0]->f);
         std::cerr << method << " NOT IMPLEMENTED" << std::endl;
-    }
     else if (method == "gain")
-    {
-        //assert(argc == 1);
-        //gain(argv[0]->f);
         std::cerr << method << " NOT IMPLEMENTED" << std::endl;
-    }
     else if (method == "gainDB")
-    {
-        //assert(argc == 1);
-        //gainDB(argv[0]->f);
         std::cerr << method << " NOT IMPLEMENTED" << std::endl;
-    }
     else if (method == "spread")
-    {
-        //assert(argc == 1);
-        //spread(argv[0]->f);
         std::cerr << method << " NOT IMPLEMENTED" << std::endl;
-    }
     else if (method == "spreadAE")
-    {
-        //assert(argc == 2);
-        //spreadAE(argv[0]->f, argv[1]->f);
         std::cerr << method << " NOT IMPLEMENTED" << std::endl;
-    }
     else
     {
         // delegate to derived classes
@@ -212,18 +185,50 @@ std::ostream &operator<<(std::ostream &out, const spatosc::Node &n)
 
 void Node::setStringProperty(const std::string &key, const std::string &value)
 {
-    properties_.setPropertyValue(key, value);
-    scene_.onPropertyChanged(this, key, value);
+    string_properties_.setPropertyValue(key, value);
+    scene_.onPropertyChanged<std::string>(this, key, value);
 }
 
 bool Node::getStringProperty(const std::string &key, std::string &value) const
 {
-    return properties_.getPropertyValue(key, value);
+    return string_properties_.getPropertyValue(key, value);
 }
 
 bool Node::removeStringProperty(const std::string &key)
 {
-    return properties_.removeProperty(key);
+    return string_properties_.removeProperty(key);
+}
+
+void Node::setFloatProperty(const std::string &key, const double &value)
+{
+    float_properties_.setPropertyValue(key, value);
+    scene_.onPropertyChanged<double>(this, key, value);
+}
+
+bool Node::getFloatProperty(const std::string &key, double &value) const
+{
+    return float_properties_.getPropertyValue(key, value);
+}
+
+bool Node::removeFloatProperty(const std::string &key)
+{
+    return float_properties_.removeProperty(key);
+}
+
+void Node::setIntProperty(const std::string &key, const int &value)
+{
+    int_properties_.setPropertyValue(key, value);
+    scene_.onPropertyChanged<double>(this, key, value);
+}
+
+bool Node::getIntProperty(const std::string &key, int &value) const
+{
+    return int_properties_.getPropertyValue(key, value);
+}
+
+bool Node::removeIntProperty(const std::string &key)
+{
+    return int_properties_.removeProperty(key);
 }
 
 } // end namespace spatosc

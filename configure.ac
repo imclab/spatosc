@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT(spatosc, [0.1.5], [http://github.com/sat-metalab/spatosc/issues], [spatosc], [http://github.com/sat-metalab/spatosc])
+AC_INIT(spatosc, [0.1.9], [http://github.com/sat-metalab/spatosc/issues], [spatosc], [http://github.com/sat-metalab/spatosc])
 AC_CONFIG_MACRO_DIR([m4])
 AC_MSG_NOTICE([Configuring spatosc])
 AM_INIT_AUTOMAKE([subdir-objects -Wno-portability])
@@ -19,7 +19,7 @@ AC_CANONICAL_HOST # fills $host variable
 #  * current: Increment when the interface changes. (and set revision to 0)
 #  * revision: Increment when the implementation changes, but not the interface.
 #  * age: Backward-compatible with how many interface numbers.
-AC_SUBST([SPATOSC_SO_VERSION], [0:0:0])
+AC_SUBST([SPATOSC_SO_VERSION], [0:1:0])
 
 # The version of the API. Should be major.minor and not change until not backward-compatible
 AC_SUBST([SPATOSC_API_VERSION], [0.1])
@@ -74,6 +74,7 @@ fi
 
 # Special cases
 case "$host" in *-darwin* | *-macos10*)
+  LIBTOOL="glibtool"
   CXXFLAGS+=" -D__Darwin"
   LDFLAGS+=" -undefined dynamic_lookup -Wl,-headerpad_max_install_names"
   if test -d /opt/local ; then
@@ -90,6 +91,16 @@ case "$host" in *-darwin* | *-macos10*)
   LDFLAGS+=" -fPIC -L/usr/local/lib -L/usr/local/lib64"
   ;;
 esac
+
+AC_ARG_ENABLE([universal],
+    AS_HELP_STRING([--enable-universal], [Enables a universal i386 / x86_64 build on OSX]),
+    [universal_build=$enableval],
+    [universal_build=no])
+
+if test "x$universal_build" = xyes; then
+    CXXFLAGS+=" -arch i386 -arch x86_64"
+    LDFLAGS+=" -arch i386 -arch x86_64"
+fi
 
 #CXXFLAGS+=" -g3 -ggdb -Wall -Wextra -Wfatal-errors"
 CXXFLAGS+=" -Wall -Wextra -Wfatal-errors -Werror -Wnon-virtual-dtor "
@@ -116,7 +127,6 @@ dnl fi
 # is no need to rename the template file when the API version changes.
 AC_CONFIG_FILES([
         Makefile 
-        spatosc.pc 
         include/version.h
         src/Makefile 
         tests/Makefile

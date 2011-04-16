@@ -26,6 +26,9 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <lo/lo.h>
+
+#define SPATOSC_ARGS_END LO_ARGS_END
 
 namespace spatosc
 {
@@ -71,9 +74,9 @@ namespace OSCutil
     /**
      * Casts a string to any type.
      */
-    template <class T> bool fromString(T& t, const std::string& s)
+    template <class T>
+    bool fromString(T& t, const std::string& s)
     {
-        // FIXME:2011-01-17:aalex: Can this throw an exception?
         std::istringstream iss(s);
         return ! (iss >> t).fail();
     }
@@ -108,16 +111,11 @@ namespace OSCutil
     // TODO:2011-01-17:aalex:Please someone document wildcardMatch() well.
 
     /**
-     * Checks whether a given argument type matches the desired type.
-     * @return success or not
-     */
-    bool argMatchesType(int argc, const char *types, int arg_index, char desiredType);
-    /**
      * Checks that a typetag matches a desired one.
      */
-    bool typeTagsMatch(const char *types, const std::string &desiredTypes);
-}
+    bool typeTagsMatch(const char *types, const char *desiredTypes);
 
+} // end namespace OSCutil
 } // end namespace spatosc
 
 #endif // __OSCUTILS_H__

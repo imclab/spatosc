@@ -42,6 +42,7 @@ extern pthread_mutex_t sceneMutex;
 
 spatosc::Scene audioScene_;
 
+using namespace spin;
 
 int node_callback(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
 {
@@ -98,14 +99,9 @@ int main(int argc, char **argv)
 	spinClientContext spinListener;
 	spinApp &spin = spinApp::Instance();
 
-	if (!spinListener.start())
-	{
-        std::cout << "ERROR: could not start SPIN listener" << std::endl;
-        exit(EXIT_FAILURE);
-	}
-	spin.sceneManager->setGraphical(true);
 
-	std::string sceneID = spin.getSceneID();
+	std::string sceneID = "default";
+   // spin.getSceneID();
 
 
 	// *************************************************************************
@@ -135,8 +131,17 @@ int main(int argc, char **argv)
 	
     osg::ArgumentParser::Parameter param_dmitri(dmitriIP);
 	if (arguments.read("--dmitri", param_dmitri)) dmitri = true;
+	
+    
+    // *************************************************************************
+    if (!spinListener.start())
+	{
+        std::cout << "ERROR: could not start SPIN listener" << std::endl;
+        exit(EXIT_FAILURE);
+	}
+	spin.sceneManager->setGraphical(true);
 
-	// *************************************************************************
+    // *************************************************************************
 	// add extra handlers for spatosc:
 	// (one for the scene, one for the nodes:
 
@@ -202,12 +207,7 @@ int main(int argc, char **argv)
 	// listener is looking forward along Y axis (camera is above, looking down)
 	//listener_->setOrientation(-90.0, 0.0, 0.0);
 
-    spatosc::Node *nn = audioScene_.getNode("1");
-    if (nn)
-    {
-        nn->setActive(false);
-    } else std::cout << "could not find node" << std::endl;
-	// create copy of scene in SPIN:
+    // create copy of scene in SPIN:
 
 	spin.SceneMessage("sss", "createNode", "1", "ShapeNode", LO_ARGS_END);
 	spin.SceneMessage("sss", "createNode", "1-label", "TextNode", LO_ARGS_END);
@@ -261,13 +261,18 @@ int main(int argc, char **argv)
 
 			if (dt >= minFrameTime)
 			{
+				pthread_mutex_lock(&sceneMutex);
+                viewer.frame();
+				pthread_mutex_unlock(&sceneMutex);
+
+                /*
 				viewer.advance();
 				viewer.eventTraversal();
 				pthread_mutex_lock(&sceneMutex);
 				viewer.updateTraversal();
 				viewer.renderingTraversals();
 				pthread_mutex_unlock(&sceneMutex);
-				
+				*/
 				// save time when the last time a frame was rendered:
 				lastFrameTick = osg::Timer::instance()->tick();
 				dt = 0;

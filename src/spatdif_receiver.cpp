@@ -23,13 +23,12 @@
 #include "osc_scene.h"
 #include "oscreceiver.h"
 #include "node.h"
+#include "unused.h"
 #include <cstring>
 #include <lo/lo.h>
 #include <string>
 #include <iostream>
 #include <cassert>
-
-#define UNUSED(x) ((void) (x))
 
 namespace spatosc
 {
@@ -89,7 +88,7 @@ std::string getTypeName(const std::string &path)
 
 
 int SpatdifReceiver::onSceneMessage(const char * path, const char * types,
-        lo_arg ** argv, int argc, void * /*data*/, void *user_data)
+        lo_arg ** argv, int /*argc*/, void * /*data*/, void *user_data)
 {
     OscScene *scene = static_cast<OscScene*>(user_data);
 
@@ -104,7 +103,7 @@ int SpatdifReceiver::onSceneMessage(const char * path, const char * types,
     std::string method(getMethodName(path));
 
     // then call scene's handleMessage and perhaps return true if handled?
-    scene->handleMessage(method, argc, argv, types);
+    scene->handleMessage(method, argv, types);
 
     return 1;
 }
