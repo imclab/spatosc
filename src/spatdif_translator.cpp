@@ -82,7 +82,6 @@ void SpatdifTranslator::pushConnectionChanges(Connection * conn)
     sendAED(connectionPath, conn);
     sendDelay(connectionPath, conn);
     sendGainDB(connectionPath, conn);
-
 }
 
 void SpatdifTranslator::pushSceneChange(const char *types, va_list ap)

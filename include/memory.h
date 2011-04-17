@@ -18,7 +18,7 @@
  */
 
 /** @file
- * Wrapper for including <tr1/memory>
+ * Wrapper for portably including <tr1/memory>
  */
 #ifndef __MEMORY_H__
 #define __MEMORY_H__

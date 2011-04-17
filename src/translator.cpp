@@ -23,8 +23,7 @@
 #include "connection.h"
 #include "soundsource.h"
 #include "listener.h"
-
-#define UNUSED(x) ((void) (x))
+#include "unused.h"
 
 namespace spatosc
 {

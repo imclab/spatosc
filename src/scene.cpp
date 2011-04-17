@@ -403,10 +403,9 @@ void Scene::onConnectionChanged(Connection *conn, bool forcedNotify)
 
 void Scene::forceRefresh()
 {
+    // FIXME: should re-create all nodes here.
     // TODO: send createSoundSource, createListener, connect, messages
     // ie, call pushSceneChanged() for all translators
-
-
     ConnConstIterator iter;
     for (iter = connections_.begin(); iter != connections_.end(); ++iter)
     {
@@ -498,13 +497,25 @@ bool Scene::deleteNode(const Listener *node)
     return eraseFromVector(listeners_, node);
 }
 
+namespace
+{
+template <typename T>
+void clearVector(std::vector<T> &vec)
+{
+    std::vector<T>().swap(vec);
+}
+} // end of anonymous namespace
+
 void Scene::deleteAllNodes()
 {
     // we swap them with emtpy vectors to make sure their size is 0.
     // see http://www.gotw.ca/gotw/054.htm
-    std::vector<std::tr1::shared_ptr<Connection> >().swap(connections_);
-    std::vector<std::tr1::shared_ptr<Listener> >().swap(listeners_);
-    std::vector<std::tr1::shared_ptr<SoundSource> >().swap(soundSources_);
+    clearVector(connections_);
+    clearVector(listeners_);
+    clearVector(soundSources_);
+    //std::vector<std::tr1::shared_ptr<Connection> >().swap(connections_);
+    //std::vector<std::tr1::shared_ptr<Listener> >().swap(listeners_);
+    //std::vector<std::tr1::shared_ptr<SoundSource> >().swap(soundSources_);
 }
 
 void Scene::onTransformChanged()
@@ -569,13 +580,6 @@ bool Scene::removeTranslator(const std::string &name)
 bool Scene::hasTranslator(const std::string &name) const
 {
     return translators_.find(name) != translators_.end();
-}
-
-void Scene::onPropertyChanged(Node *node, const std::string &key, const std::string &value)
-{
-    std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
-    for (iter = translators_.begin(); iter != translators_.end(); ++iter)
-        iter->second->pushPropertyChange(node, key, value);
 }
 
 void Scene::onSceneChanged(const char *types, ...)
