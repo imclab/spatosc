@@ -126,6 +126,38 @@ class Wrapper
          */
         bool removeNodeStringProperty(const std::string &node, const std::string &key);
         /**
+         * Sets the value of a Node int Property.
+         * @return Success or not.
+         */
+        bool setNodeIntProperty(const std::string &node, const std::string &key, const int &value);
+        /**
+         * Retrieves the value of a Node int Property.
+         * @param value A reference to a int in which the value will be written.
+         * @return Success or not.
+         */
+        bool getNodeIntProperty(const std::string &node, const std::string &key, int &value);
+        /**
+         * Removes a Node int Property.
+         * @return Success or not.
+         */
+        bool removeNodeIntProperty(const std::string &node, const std::string &key);
+        /**
+         * Sets the value of a Node float Property.
+         * @return Success or not.
+         */
+        bool setNodeFloatProperty(const std::string &node, const std::string &key, const double &value);
+        /**
+         * Retrieves the value of a Node float Property.
+         * @param value A reference to a float in which the value will be written.
+         * @return Success or not.
+         */
+        bool getNodeFloatProperty(const std::string &node, const std::string &key, double &value);
+        /**
+         * Removes a Node float Property.
+         * @return Success or not.
+         */
+        bool removeNodeFloatProperty(const std::string &node, const std::string &key);
+        /**
          * Sets the scene's translation.
          */
         void setTranslation(double tx, double ty, double tz);

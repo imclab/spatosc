@@ -247,5 +247,90 @@ bool Wrapper::removeNodeStringProperty(const std::string &node, const std::strin
     }
 }
 
+bool Wrapper::setNodeIntProperty(const std::string &node, const std::string &key, const int &value)
+{
+    Node *nodePtr = scene_->getNode(node);
+    if (nodePtr)
+    {
+        nodePtr->setIntProperty(key, value);
+        return true;
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::getNodeIntProperty(const std::string &node, const std::string &key, int &value)
+{
+    Node *nodePtr = scene_->getNode(node);
+    if (nodePtr)
+    {
+        return nodePtr->getIntProperty(key, value);
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::removeNodeIntProperty(const std::string &node, const std::string &key)
+{
+    Node *nodePtr = scene_->getNode(node);
+    if (nodePtr)
+    {
+        return nodePtr->removeIntProperty(key);
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::setNodeFloatProperty(const std::string &node, const std::string &key, const double &value)
+{
+    Node *nodePtr = scene_->getNode(node);
+    if (nodePtr)
+    {
+        nodePtr->setFloatProperty(key, value);
+        return true;
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::getNodeFloatProperty(const std::string &node, const std::string &key, double &value)
+{
+    Node *nodePtr = scene_->getNode(node);
+    if (nodePtr)
+    {
+        return nodePtr->getFloatProperty(key, value);
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::removeNodeFloatProperty(const std::string &node, const std::string &key)
+{
+    Node *nodePtr = scene_->getNode(node);
+    if (nodePtr)
+    {
+        return nodePtr->removeFloatProperty(key);
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
+        return false;
+    }
+}
 } // end of namespace spatosc
 

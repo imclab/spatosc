@@ -24,8 +24,9 @@
 #define __TRANSLATOR_H__
 
 #include <string>
+#include <iostream>
 #include <cstdarg> // for va_list
-#define UNUSED(x) ((void) (x))
+#include "unused.h" // FIXME: we should not define this macro in a public header
 
 namespace spatosc
 {
@@ -77,6 +78,29 @@ class Translator
             UNUSED(node);
             UNUSED(key);
             UNUSED(value);
+            std::cout << "Warning: Translator::" << __FUNCTION__ << "(string) not overriden.\n";
+        }
+
+        /**
+         * Called when it's time to push OSC messages when a Node property has changed.
+         */
+        virtual void pushPropertyChange(Node *node, const std::string &key, const double &value)
+        {
+            UNUSED(node);
+            UNUSED(key);
+            UNUSED(value);
+            std::cout << "Warning: Translator::" << __FUNCTION__ << "(double) not overriden.\n";
+        }
+
+        /**
+         * Called when it's time to push OSC messages when a Node property has changed.
+         */
+        virtual void pushPropertyChange(Node *node, const std::string &key, const int &value)
+        {
+            UNUSED(node);
+            UNUSED(key);
+            UNUSED(value);
+            std::cout << "Warning: Translator::" << __FUNCTION__ << "(int) not overriden.\n";
         }
 
         /**
