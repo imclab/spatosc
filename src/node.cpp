@@ -148,6 +148,22 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv, con
     	if (typeTagsMatch(types, "ss"))
             setStringProperty(std::string(static_cast<const char *>(&argv[0]->s)), std::string(static_cast<const char *>(&argv[1]->s)));
     }
+    else if (method == "setIntProperty")
+    {
+        if (argc==2)
+        {
+            int i = (float)lo_hires_val((lo_type)types[1], argv[1]);
+            setIntProperty(std::string(static_cast<const char *>(&argv[0]->s)), i);
+        }
+    }
+    else if (method == "setFloatProperty")
+    {
+        if (argc==2)
+        {
+            float f = (float)lo_hires_val((lo_type)types[1], argv[1]);
+            setFloatProperty(std::string(static_cast<const char *>(&argv[0]->s)), f);
+        }
+    }
     else if (method == "aed")
     {
     	if (typeTagsMatch(types, "fff"))

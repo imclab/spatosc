@@ -516,6 +516,8 @@ void Scene::deleteAllNodes()
     //std::vector<std::tr1::shared_ptr<Connection> >().swap(connections_);
     //std::vector<std::tr1::shared_ptr<Listener> >().swap(listeners_);
     //std::vector<std::tr1::shared_ptr<SoundSource> >().swap(soundSources_);
+
+    onSceneChanged("s", "clear", SPATOSC_ARGS_END);
 }
 
 void Scene::onTransformChanged()
