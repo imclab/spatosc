@@ -210,7 +210,9 @@ int main(int argc, char **argv)
     // create copy of scene in SPIN:
 
 	spin.SceneMessage("sss", "createNode", "1", "ShapeNode", LO_ARGS_END);
+	spin.SceneMessage("sss", "createNode", "2", "ShapeNode", LO_ARGS_END);
 	spin.SceneMessage("sss", "createNode", "1-label", "TextNode", LO_ARGS_END);
+	spin.SceneMessage("sss", "createNode", "2-label", "TextNode", LO_ARGS_END);
 
 	spin.SceneMessage("sss", "createNode", "listener", "ModelNode", LO_ARGS_END);
 	spin.SceneMessage("sss", "createNode", "listener-label", "TextNode", LO_ARGS_END);
@@ -225,13 +227,21 @@ int main(int argc, char **argv)
     
     spin.NodeMessage("1", "si",   "setShape", (int)ShapeNode::SPHERE, LO_ARGS_END);
 	spin.NodeMessage("1", "si",   "setInteractionMode", (int)GroupNode::DRAG, LO_ARGS_END);
-	spin.NodeMessage("1", "sfff", "setTranslation", 0.0, 2.0, 0.0, LO_ARGS_END);
+	spin.NodeMessage("1", "sfff", "setTranslation", -1.0, 2.0, 0.0, LO_ARGS_END);
 	spin.NodeMessage("1", "sfff", "setScale", 0.2, 0.2, 0.2, LO_ARGS_END);
 	spin.NodeMessage("1-label", "ss",   "setParent", "1", LO_ARGS_END);
 	spin.NodeMessage("1-label", "sfff", "setTranslation", 0.0, 0.0, 0.5, LO_ARGS_END);
 	spin.NodeMessage("1-label", "ss", "setTextValue", "SoundSource 1", LO_ARGS_END);
 	spin.NodeMessage("1-label", "si",   "setBillboard", (int)TextNode::STAY_UP, LO_ARGS_END);
 
+    spin.NodeMessage("2", "si",   "setShape", (int)ShapeNode::SPHERE, LO_ARGS_END);
+	spin.NodeMessage("2", "si",   "setInteractionMode", (int)GroupNode::DRAG, LO_ARGS_END);
+	spin.NodeMessage("2", "sfff", "setTranslation", 1.0, 2.0, 0.0, LO_ARGS_END);
+	spin.NodeMessage("2", "sfff", "setScale", 0.2, 0.2, 0.2, LO_ARGS_END);
+	spin.NodeMessage("2-label", "ss",   "setParent", "1", LO_ARGS_END);
+	spin.NodeMessage("2-label", "sfff", "setTranslation", 0.0, 0.0, 0.5, LO_ARGS_END);
+	spin.NodeMessage("2-label", "ss", "setTextValue", "SoundSource 2", LO_ARGS_END);
+	spin.NodeMessage("2-label", "si",   "setBillboard", (int)TextNode::STAY_UP, LO_ARGS_END);
 
 	spin.NodeMessage("listener", "ss", "setModelFromFile", "listener.osg", LO_ARGS_END);
 	spin.NodeMessage("listener-label", "ss",   "setParent", "listener", LO_ARGS_END);

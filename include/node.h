@@ -150,7 +150,7 @@ class Node
         }
 
         /**
-         * Notify this node that it's new position has been sent
+         * Notify this node that it's new data has been sent
          */
         void stateSent()
         {
@@ -234,6 +234,8 @@ class Node
         bool nodeChanged_;
     private:
         Vector3 pos_;
+        // NOTE: onNodeChanged MUST call stateSent(), which unsets the changed
+        // flag
         virtual void onNodeChanged(bool forcedNotify=false) = 0;
         virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv, const char *types) = 0;
         Properties<std::string> string_properties_;
