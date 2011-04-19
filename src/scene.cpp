@@ -434,8 +434,11 @@ void Scene::pushConnectionChangesViaAllTranslators(Connection *conn, bool forced
         std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
         for (iter = translators_.begin(); iter != translators_.end(); ++iter)
             iter->second->pushConnectionChanges(conn);
-        src->stateSent();
-        sink->stateSent();
+
+        // !!! can't do this here, because node may be needed for other
+        // connections.
+        //src->stateSent();
+        //sink->stateSent();
     }
 }
 

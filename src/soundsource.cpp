@@ -56,6 +56,8 @@ void SoundSource::onNodeChanged(bool forcedNotify)
 
     for (c = connectTO_.begin(); c != connectTO_.end(); ++c)
         scene_.onConnectionChanged(c->get(), forcedNotify);
+
+    stateSent();
 }
 
 } // end namespace spatosc

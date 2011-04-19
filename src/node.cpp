@@ -131,7 +131,6 @@ bool correctNumberOfArguments(const std::string &method, int expected, int actua
 // FIXME: need to provide the types as well.
 void Node::handleMessage(const std::string &method, int argc, lo_arg **argv, const char *types)
 {
-    UNUSED(types);
     using namespace OSCutil; // typeTagsMatch
     if (method == "setActive")
     {
