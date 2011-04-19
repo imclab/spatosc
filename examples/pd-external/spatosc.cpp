@@ -144,7 +144,11 @@ static void spatosc_addTranslator(t_spatosc *x, t_symbol *identifier, t_symbol *
 static void spatosc_removeTranslator(t_spatosc *x, t_symbol *translator);
 static void spatosc_hasTranslator(t_spatosc *x, t_symbol *translator);
 static void spatosc_setNodeStringProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_symbol *value);
+static void spatosc_setNodeFloatProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_floatarg value);
 static void spatosc_removeNodeStringProperty(t_spatosc *x, t_symbol *node, t_symbol *key);
+
+
+
 
 extern "C" void spatosc_setup(void)
 {
@@ -163,6 +167,7 @@ extern "C" void spatosc_setup(void)
 	class_addmethod(spatosc_class, (t_method) spatosc_removeTranslator, gensym("removeTranslator"), A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_hasTranslator, gensym("hasTranslator"), A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setNodeStringProperty, gensym("setNodeStringProperty"), A_SYMBOL, A_SYMBOL, A_SYMBOL, 0);
+	class_addmethod(spatosc_class, (t_method) spatosc_setNodeFloatProperty, gensym("setNodeFloatProperty"), A_SYMBOL, A_SYMBOL, A_FLOAT, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_removeNodeStringProperty, gensym("removeNodeStringProperty"), A_SYMBOL, A_SYMBOL, 0);
     if (SPATOSC_DEBUG)
     {
@@ -275,6 +280,13 @@ static void spatosc_setNodeStringProperty(t_spatosc *x, t_symbol *node, t_symbol
 {
     output_success(x, x->wrapper.setNodeStringProperty(node->s_name, key->s_name, value->s_name));
 }
+
+static void spatosc_setNodeFloatProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_floatarg value)
+{
+    output_success(x, x->wrapper.setNodeFloatProperty(node->s_name, key->s_name, (double) value));
+}
+
+
 
 static void spatosc_removeNodeStringProperty(t_spatosc *x, t_symbol *node, t_symbol *key)
 {
