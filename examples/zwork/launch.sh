@@ -56,7 +56,7 @@ echo launch audio renderer
 
 #$PDE -send "spatOSC-port 18032" -open renderer.pd  spatOSC-client.pd &
 
-$PDE -send "spatOSC-port 18032" -open renderer.pd &
+$PDE -send "spatOSC-port 18032" -open spatosc_basic-renderer.pd &
 $PDE -send "spatOSC-port 18032" -open spatOSC-client.pd &
 
 #$PDE -open renderer.pd  spin.renderer.pd spinEdit.pd &
