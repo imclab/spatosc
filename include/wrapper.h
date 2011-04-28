@@ -21,8 +21,8 @@
  * The Wrapper class.
  */
 
-#ifndef __FACADE_H__
-#define __FACADE_H__
+#ifndef __WRAPPER_H__
+#define __WRAPPER_H__
 
 #include <string>
 #include "memory.h"
@@ -34,6 +34,7 @@ class Scene;
 
 /**
  * Wraps the whole spatosc library.
+ * Implements the Facade design pattern.
  */
 class Wrapper
 {
@@ -175,6 +176,16 @@ class Wrapper
          * Sets the scene's scale.
          */
         void setScale(double sx, double sy, double sz);
+        /**
+         * Sets a connection's distance factor.
+         * See Connection::setDistanceFactor.
+         */
+        bool setDistanceFactor(const std::string &sourceNode, const std::string &sinkNode, double &factor);
+        /**
+         * Sets a connection's Doppler factor.
+         * See Connection::setDistanceFactor.
+         */
+        bool setDopplerFactor(const std::string &sourceNode, const std::string &sinkNode, double &factor);
     private:
         std::tr1::shared_ptr<Scene> scene_;
 };
