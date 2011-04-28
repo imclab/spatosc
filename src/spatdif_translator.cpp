@@ -110,6 +110,8 @@ void SpatdifTranslator::pushPropertyChange(Node *node, const std::string &key, c
 {
     //std::cout << "pushing property for node " << node->getID() << ": " << key << value << std::endl;
     std::string path = "/spatosc/core/" + node->getType() + "/" + node->getID() + "/prop";
+	
+	printf("pushPropertyChange");
     sender_->sendMessage(path, "ss", key.c_str(), value.c_str(), SPATOSC_ARGS_END);
 }
 

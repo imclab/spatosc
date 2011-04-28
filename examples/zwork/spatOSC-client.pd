@@ -1,12 +1,12 @@
-#N canvas 605 55 763 669 10;
+#N canvas 661 26 763 669 10;
 #X obj -40 85 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
 1 1;
 #X obj -40 27 r to_spatosc;
-#X obj 415 50 grid grid1 100 0 199 100 0 199 0 1 1 10 10 471 113;
-#X obj 532 49 grid grid1 100 0 199 100 0 199 0 1 1 10 10 572 153;
+#X obj 415 50 grid grid1 100 0 199 100 0 199 0 1 1 10 10 412 45;
+#X obj 532 49 grid grid1 100 0 199 100 0 199 0 1 1 10 10 591 109;
 #X text 418 23 source;
 #X text 538 25 listener;
-#N canvas 715 22 917 639 SPIN_INTEGRATION 0;
+#N canvas 523 22 917 639 SPIN_INTEGRATION 0;
 #X text 26 -48 ListenerNode: setType is ignored \, since the setPlugin
 "listener-type~" automatically generates the proper "type" state for
 its connections;
@@ -58,7 +58,6 @@ about connecting sources to sinks which are not listeners ???;
 #X connect 5 0 2 0;
 #X restore 43 184 pd pack3f;
 #X msg 325 196 \; to_spatosc setPosition ear \$1 \$2 \$3;
-#X msg 42 221 \; to_spatosc setPosition src1 \$1 \$2 \$3;
 #X obj 45 129 - 100;
 #X obj 132 136 - 100;
 #X floatatom 327 142 5 0 0 0 - - -;
@@ -83,32 +82,31 @@ about connecting sources to sinks which are not listeners ???;
 #X restore 327 170 pd pack3f;
 #X obj 327 101 - 100;
 #X obj 414 108 - 100;
-#X connect 0 0 10 0;
-#X connect 1 0 11 0;
-#X connect 2 0 16 0;
-#X connect 3 0 17 0;
+#X msg 42 221 \; to_spatosc setPosition src-0 \$1 \$2 \$3;
+#X connect 0 0 9 0;
+#X connect 1 0 10 0;
+#X connect 2 0 15 0;
+#X connect 3 0 16 0;
 #X connect 4 0 7 0;
 #X connect 5 0 7 1;
 #X connect 6 0 7 2;
-#X connect 7 0 9 0;
-#X connect 10 0 4 0;
-#X connect 11 0 5 0;
-#X connect 12 0 15 0;
-#X connect 13 0 15 1;
-#X connect 14 0 15 2;
-#X connect 15 0 8 0;
+#X connect 7 0 17 0;
+#X connect 9 0 4 0;
+#X connect 10 0 5 0;
+#X connect 11 0 14 0;
+#X connect 12 0 14 1;
+#X connect 13 0 14 2;
+#X connect 14 0 8 0;
+#X connect 15 0 11 0;
 #X connect 16 0 12 0;
-#X connect 17 0 13 0;
 #X restore 487 170 pd dynamic;
-#N canvas 761 264 983 873 SPAT_OSC_MESSAGES 0;
+#N canvas 457 27 983 873 SPAT_OSC_MESSAGES 1;
 #X floatatom 59 79 5 0 0 0 - - -;
 #X msg 41 -243 \; to_spatosc setConnectFilter ear;
 #X text 451 -181 <-- Add properties;
 #X text 49 -8 Also need to be able to set/get/save/recall params in
 spatOSC;
 #X text 102 5 DELAY and AED are partially redundant;
-#X msg 60 108 \; src1 setParam fq \$1;
-#X msg 46 -65 \; to_spatosc connect src1 ear \;;
 #X msg 46 -192 \; to_spatosc setNodeStringProperty ear vmicL.channel
 "9";
 #X text 381 -131 <-- Add properties;
@@ -116,60 +114,70 @@ spatOSC;
 ;
 #X text 45 -85 not needed with auto-connect;
 #X text 62 55 need to deal with numbers;
-#X msg 60 150 \; to_spatosc setNodeFloatProperty src fq 9;
-#X msg 33 263 \; to_spatosc createSource src1;
-#X msg 253 343 \; to_spatosc disconnect src1 ear \;;
-#X msg 35 342 \; to_spatosc connect src1 ear \;;
-#X msg 242 262 \; to_spatosc deleteNode src1;
 #X msg 32 299 \; to_spatosc createListener ear;
 #X msg 252 302 \; to_spatosc deleteNode ear;
 #X msg 33 404 \; to_spatosc clearScene \;;
 #X msg 34 471 \; to_spatosc setNodeFloatProperty ear setSpread 1;
-#X connect 0 0 5 0;
+#X msg 60 107 \; src-0 setParam fq \$1;
+#X msg 46 -65 \; to_spatosc connect src-0 ear \;;
+#X msg 242 262 \; to_spatosc deleteNode src-0;
+#X msg 253 343 \; to_spatosc disconnect src-0 ear \;;
+#X msg 35 342 \; to_spatosc connect src-0 ear \;;
+#X msg 33 263 \; to_spatosc createSource src-0;
+#X msg 60 150 \; to_spatosc setNodeFloatProperty src-0 fq 9.1;
+#X connect 0 0 14 0;
 #X restore -34 187 pd SPAT_OSC_MESSAGES;
-#N canvas 314 181 608 479 temp 0;
-#X obj 20 53 iterN 20;
-#X obj 20 30 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+#N canvas 377 29 695 497 temp 0;
+#X obj 34 12 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X obj 20 81 t f b;
-#X obj 109 80 random 200;
-#X obj 108 107 - 100;
-#X obj 194 81 random 200;
-#X obj 193 108 - 100;
-#X obj 6 150 pack f f f;
-#X msg 22 213 \; to_spatosc createSource src-\$1 \; to_spatosc setNodeStringProperty
-src-\$1 setPlugin testone~ \; to_spatosc connect src-\$1 ear \; to_spatosc
-setPosition src-\$1 \$2 \$3 0;
-#X msg 55 378 \; to_spatosc createListener ear \;;
-#X connect 0 0 2 0;
-#X connect 1 0 0 0;
-#X connect 2 0 7 0;
-#X connect 2 1 3 0;
-#X connect 2 1 5 0;
-#X connect 3 0 4 0;
-#X connect 4 0 7 1;
-#X connect 5 0 6 0;
-#X connect 6 0 7 2;
-#X connect 7 0 8 0;
-#X restore 0 358 pd temp;
-#X msg -1 291 \; to_spatosc createSource src1 \, createSource src2
-\, createListener ear \, setNodeStringProperty src1 setPlugin testone~
-\, setNodeStringProperty src2 setPlugin testone~;
-#X msg 2 239 \; to_spatosc createSource src1 \, createListener ear
-\, setNodeStringProperty src1 setPlugin testnoise~;
-#X msg 184 461 \; to_renderer src1.plugin.patch vis 1;
+#X obj 86 101 t f b;
+#X obj 175 100 random 200;
+#X obj 174 127 - 100;
+#X obj 248 97 random 200;
+#X obj 247 124 - 100;
+#X msg 35 339 \; to_spatosc createListener ear \;;
+#X obj 34 40 t b b;
+#X obj 86 169 pack f f f f;
+#X obj 334 96 random 40;
+#X obj 333 150 mtof;
+#X floatatom 156 37 5 0 0 0 - - -;
+#X obj 86 73 iterN 2;
+#X msg 286 404 \; to_spatosc createSource src-\$1 \; to_spatosc setNodeStringProperty
+src-\$1 setPlugin testone~ \; to_spatosc setNodeFloatProperty src-\$1
+fq \$4 \; to_spatosc connect src-\$1 ear \; to_spatosc setPosition
+src-\$1 \$2 \$3 0;
+#X obj 333 123 + 60;
+#X msg 85 223 \; to_spatosc createSource src-\$1 \; to_spatosc setNodeStringProperty
+src-\$1 setPlugin testone~ \; to_renderer src-\$1 setParam fq \$4 \;
+to_spatosc setPosition src-\$1 \$2 \$3 0;
+#X text 82 306 connects automatically;
+#X obj 84 14 inlet;
+#X connect 0 0 7 0;
+#X connect 1 0 8 0;
+#X connect 1 1 2 0;
+#X connect 1 1 4 0;
+#X connect 1 1 9 0;
+#X connect 2 0 3 0;
+#X connect 3 0 8 1;
+#X connect 4 0 5 0;
+#X connect 5 0 8 2;
+#X connect 7 0 6 0;
+#X connect 7 1 12 0;
+#X connect 8 0 15 0;
+#X connect 9 0 14 0;
+#X connect 10 0 8 3;
+#X connect 11 0 12 1;
+#X connect 12 0 1 0;
+#X connect 14 0 10 0;
+#X connect 17 0 0 0;
+#X restore 0 385 pd temp;
 #X msg 182 503 \; to_renderer ear.plugin.patch vis 1;
-#X msg 228 541 \; to_renderer src1-ear.conn.plugin.patch vis 1;
-#X msg -12 542 \; to_renderer src1-ear.conn.patch vis 1;
-#X msg -11 458 \; to_renderer src1.patch vis 1;
 #X msg -11 500 \; to_renderer ear.patch vis 1;
 #X obj -40 53 spatosc;
 #X obj 158 13 loadbang;
 #X msg 50 78 \; to_spatosc addTranslator spatdif SpatdifTranslator
 localhost \$1;
-#X msg 51 130 \; to_spatosc clearScene \; to_renderer clear-all bang
-;
-#N canvas 0 22 450 300 debug 0;
+#N canvas 153 134 450 300 debug 0;
 #X obj 102 154 OSCtx;
 #X obj 83 54 r to_renderer;
 #X obj 84 83 OSCprepend /spatosc/debug;
@@ -186,11 +194,25 @@ localhost \$1;
 #X restore 260 161 pd debug;
 #X obj 50 17 r spatOSC-port;
 #X msg 158 35 \; spatOSC-port 18032;
-#X connect 1 0 19 0;
+#X msg 51 130 \; to_spatosc clearScene;
+#X msg 2 239 \; to_spatosc createSource src-0 \, createListener ear
+\, setNodeStringProperty src-0 setPlugin testnoise~;
+#X msg 2 288 \; to_spatosc createSource src-0 \, createSource src-1
+\, createListener ear \, setNodeStringProperty src-0 setPlugin testone~
+\, setNodeStringProperty src-1 setPlugin testone~;
+#X msg -11 458 \; to_renderer src-0.patch vis 1;
+#X msg 184 461 \; to_renderer src-0.plugin.patch vis 1;
+#X msg -12 542 \; to_renderer src-0-ear.conn.patch vis 1;
+#X msg 246 541 \; to_renderer src-0-ear.conn.plugin.patch vis 1;
+#X msg 184 424 \; to_spatosc setPosition src-1 0 0 0;
+#X obj -1 364 bng 15 250 50 0 empty empty generate-nodes 17 7 0 10
+-262144 -1 -1;
+#X connect 1 0 13 0;
 #X connect 2 0 8 0;
 #X connect 2 1 8 1;
 #X connect 3 0 8 2;
 #X connect 3 1 8 3;
-#X connect 19 0 0 0;
-#X connect 20 0 25 0;
-#X connect 24 0 21 0;
+#X connect 13 0 0 0;
+#X connect 14 0 18 0;
+#X connect 17 0 15 0;
+#X connect 27 0 10 0;
