@@ -128,7 +128,6 @@ bool correctNumberOfArguments(const std::string &method, int expected, int actua
 }
 } // end anonymous namespace
 
-// FIXME: need to provide the types as well.
 void Node::handleMessage(const std::string &method, int argc, lo_arg **argv, const char *types)
 {
     using namespace OSCutil; // typeTagsMatch
@@ -151,7 +150,7 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv, con
     {
         if (argc==2)
         {
-            int i = (float)lo_hires_val((lo_type)types[1], argv[1]);
+            int i = (int)lo_hires_val((lo_type)types[1], argv[1]);
             setIntProperty(std::string(static_cast<const char *>(&argv[0]->s)), i);
         }
     }
@@ -159,7 +158,7 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv, con
     {
         if (argc==2)
         {
-            float f = (float)lo_hires_val((lo_type)types[1], argv[1]);
+            double f = (double)lo_hires_val((lo_type)types[1], argv[1]);
             setFloatProperty(std::string(static_cast<const char *>(&argv[0]->s)), f);
         }
     }
