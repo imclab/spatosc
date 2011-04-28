@@ -233,7 +233,7 @@ bool Node::removeFloatProperty(const std::string &key)
 void Node::setIntProperty(const std::string &key, const int &value)
 {
     int_properties_.setPropertyValue(key, value);
-    scene_.onPropertyChanged<double>(this, key, value);
+    scene_.onPropertyChanged<int>(this, key, value);
 }
 
 bool Node::getIntProperty(const std::string &key, int &value) const

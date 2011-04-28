@@ -33,7 +33,7 @@ CC = g++
 
 # -I"$(PD_INCLUDE)/pd" supports the header location for 0.43
 
-DEPS=liblo spatosc-0.2
+DEPS=liblo spatosc-0.1
 CFLAGS = -I"$(PD_INCLUDE)/pd" -Wall -W -g `pkg-config --cflags $(DEPS)`
 LDFLAGS = 
 LIBS = `pkg-config --libs $(DEPS)`
@@ -95,9 +95,9 @@ ifeq ($(UNAME),Darwin)
     OPT_CFLAGS = -ftree-vectorize -ftree-vectorizer-verbose=2 -fast
 # build universal 32-bit on 10.4 and 32/64 on newer
     ifeq ($(shell uname -r | sed 's|\([0-9][0-9]*\)\.[0-9][0-9]*\.[0-9][0-9]*|\1|'), 8)
-      FAT_FLAGS = -arch ppc -arch i386 -mmacosx-version-min=10.4
+      FAT_FLAGS = -arch i386 -mmacosx-version-min=10.4
     else
-      FAT_FLAGS = -arch ppc -arch i386 -arch x86_64 -mmacosx-version-min=10.4
+      FAT_FLAGS = -arch i386 -arch x86_64 -mmacosx-version-min=10.4
       SOURCES += $(SOURCES_iphoneos)
     endif
     CFLAGS += $(FAT_FLAGS) -fPIC -I/sw/include
