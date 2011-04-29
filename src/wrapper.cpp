@@ -334,7 +334,7 @@ bool Wrapper::removeNodeFloatProperty(const std::string &node, const std::string
     }
 }
 
-bool Wrapper::setDistanceFactor(const std::string &sourceNode, const std::string &sinkNode, double &factor)
+bool Wrapper::setDistanceFactor(const std::string &sourceNode, const std::string &sinkNode, double factor)
 {
     Node *src = scene_->getNode(sourceNode);
     if (! src)
@@ -361,7 +361,7 @@ bool Wrapper::setDistanceFactor(const std::string &sourceNode, const std::string
     }
 }
 
-bool Wrapper::setDopplerFactor(const std::string &sourceNode, const std::string &sinkNode, double &factor)
+bool Wrapper::setDopplerFactor(const std::string &sourceNode, const std::string &sinkNode, double factor)
 {
     Node *src = scene_->getNode(sourceNode);
     if (! src)

@@ -58,9 +58,9 @@ bool test_wrapper()
         return false;
 
     // see if we can fine tune a connection:
-    if (! wrapper.setDopplerFactor(std::string("source"), std::string("sink"), 45.0))
+    if (! wrapper.setDopplerFactor("source", "listener", 45.0))
         return false;
-    if (! wrapper.setDistanceFactor(std::string("source"), std::string("sink"), 45.0))
+    if (! wrapper.setDistanceFactor("source", "listener", 45.0))
         return false;
     return true;
 }

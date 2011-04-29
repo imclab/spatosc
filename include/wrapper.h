@@ -180,12 +180,12 @@ class Wrapper
          * Sets a connection's distance factor.
          * See Connection::setDistanceFactor.
          */
-        bool setDistanceFactor(const std::string &sourceNode, const std::string &sinkNode, double &factor);
+        bool setDistanceFactor(const std::string &sourceNode, const std::string &sinkNode, double factor);
         /**
          * Sets a connection's Doppler factor.
          * See Connection::setDistanceFactor.
          */
-        bool setDopplerFactor(const std::string &sourceNode, const std::string &sinkNode, double &factor);
+        bool setDopplerFactor(const std::string &sourceNode, const std::string &sinkNode, double factor);
     private:
         std::tr1::shared_ptr<Scene> scene_;
 };
