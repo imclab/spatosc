@@ -8,6 +8,7 @@ Release-critical for 0.2
  * avoid to include unused.h from public header files
  * test properties well
  * implement OSC callbacks for float and int properties
+ * implement float/int properties in pd-external example
 
 FUDI-specific features and issues
 ---------------------------------

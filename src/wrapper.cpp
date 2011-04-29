@@ -17,6 +17,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "connection.h"
 #include "dmitri_translator.h"
 #include "listener.h"
 #include "memory.h"
@@ -329,6 +330,60 @@ bool Wrapper::removeNodeFloatProperty(const std::string &node, const std::string
     else
     {
         std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::setDistanceFactor(const std::string &sourceNode, const std::string &sinkNode, double factor)
+{
+    Node *src = scene_->getNode(sourceNode);
+    if (! src)
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << sourceNode << "\"" << std::endl;
+        return false;
+    }
+    Node *sink = scene_->getNode(sinkNode);
+    if (! sink)
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << sinkNode << "\"" << std::endl;
+        return false;
+    }
+    Connection *conn = scene_->getConnection(src, sink);
+    if (conn)
+    {
+        conn->setDistanceFactor(factor);
+        return true;
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No connection between \"" << sourceNode << "\" and \"" << sinkNode << "\"" << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::setDopplerFactor(const std::string &sourceNode, const std::string &sinkNode, double factor)
+{
+    Node *src = scene_->getNode(sourceNode);
+    if (! src)
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << sourceNode << "\"" << std::endl;
+        return false;
+    }
+    Node *sink = scene_->getNode(sinkNode);
+    if (! sink)
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << sinkNode << "\"" << std::endl;
+        return false;
+    }
+    Connection *conn = scene_->getConnection(src, sink);
+    if (conn)
+    {
+        conn->setDopplerFactor(factor);
+        return true;
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No connection between \"" << sourceNode << "\" and \"" << sinkNode << "\"" << std::endl;
         return false;
     }
 }
