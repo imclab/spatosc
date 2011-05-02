@@ -1,5 +1,5 @@
-#N canvas 436 22 897 633 10;
-#X obj 39 441 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
+#N canvas 436 22 961 710 10;
+#X obj 24 502 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
 1 1;
 #X msg 501 158 clearScene;
 #X floatatom 498 -12 5 0 0 0 - - -;
@@ -27,17 +27,17 @@ and controls them using the Open Sound Control protocol.;
 #X connect 4 0 1 0;
 #X connect 5 0 2 0;
 #X restore 498 8 pd pack3f;
-#X text 119 413 Usage: [spatosc s:translator f:port s:host];
-#X text 121 430 The arguments are not mandatory. You can provide none
+#X text 104 474 Usage: [spatosc s:translator f:port s:host];
+#X text 106 491 The arguments are not mandatory. You can provide none
 of \, only one \, two or all three. The default translator simply prints
 to the console.;
-#X obj 39 409 spatosc;
+#X obj 24 470 spatosc;
 #X msg 499 247 removeTranslator spatdif;
 #X msg 499 269 removeTranslator default;
 #X msg 497 291 hasTranslator default;
-#X text 124 476 Example using arguments:;
-#X obj 121 496 spatosc DmitriTranslator 18033 localhost;
-#X obj 479 448 netreceive 31337 1;
+#X text 109 537 Example using arguments:;
+#X obj 106 557 spatosc DmitriTranslator 18033 localhost;
+#X obj 464 509 netreceive 31337 1;
 #X msg 497 203 addTranslator fudi FudiTranslator localhost 31337;
 #X floatatom 500 86 5 0 0 0 - - -;
 #X floatatom 539 86 5 0 0 0 - - -;
@@ -64,20 +64,20 @@ to the console.;
 #X msg 498 28 setPosition noise \$1 \$2 \$3;
 #X msg 500 127 setPosition ear \$1 \$2 \$3;
 #X msg 499 326 setNodeStringProperty noise foo bar;
-#X msg 500 381 removeNodeStringProperty noise foo;
-#X obj 479 489 print viaFudi;
-#X obj 574 475 list split 2;
-#X obj 574 550 unpack s s;
-#X symbolatom 574 577 10 0 0 0 - - -;
-#X symbolatom 640 576 10 0 0 0 - - -;
-#X obj 710 552 unpack f f f;
-#X floatatom 710 576 5 0 0 0 - - -;
-#X floatatom 755 577 5 0 0 0 - - -;
-#X floatatom 794 576 5 0 0 0 - - -;
-#X obj 574 528 list trim;
-#X obj 710 531 route xyz;
-#X obj 710 510 list trim;
-#X text 476 413 If you choose the FudiTranslator \, it's easy to receive
+#X msg 503 411 removeNodeStringProperty noise foo;
+#X obj 464 550 print viaFudi;
+#X obj 559 536 list split 2;
+#X obj 559 611 unpack s s;
+#X symbolatom 559 638 10 0 0 0 - - -;
+#X symbolatom 625 637 10 0 0 0 - - -;
+#X obj 695 613 unpack f f f;
+#X floatatom 695 637 5 0 0 0 - - -;
+#X floatatom 740 638 5 0 0 0 - - -;
+#X floatatom 779 637 5 0 0 0 - - -;
+#X obj 559 589 list trim;
+#X obj 695 592 route xyz;
+#X obj 695 571 list trim;
+#X text 461 474 If you choose the FudiTranslator \, it's easy to receive
 messages with [netreceive]:;
 #X text 666 -41 <-- Create a sound source;
 #X text 674 62 <-- Create a listener;
@@ -91,6 +91,7 @@ scene;
 #X msg 498 223 addTranslator spatdif SpatdifTranslator localhost 18032
 ;
 #X msg 500 353 setNodeFloatProperty noise param 1.4;
+#X msg 504 380 setNodeIntProperty noise param 1000;
 #X connect 1 0 10 0;
 #X connect 2 0 7 0;
 #X connect 3 0 7 1;
@@ -126,3 +127,4 @@ scene;
 #X connect 47 0 48 0;
 #X connect 49 0 10 0;
 #X connect 50 0 10 0;
+#X connect 51 0 10 0;
