@@ -41,7 +41,50 @@ class SoundSource : public Node
         virtual std::string getType() const { return "source"; }
         void addConnectionTo(const std::tr1::shared_ptr<Connection> &conn);
         void removeConnectionTo(const Connection *conn);
+
+        // TODO: media extension:
+
+        /**
+         * Possible URIs for media??:
+        file://soundfilename.wav
+        http://www.server.com/soundfile.wav
+        adc://1:1
+        content://media/external/audio/media/710
+        mms://some_media_stream
+        rtsp://127.0.0.1:12311
+        pd_plugin://audio_plugin_patch.pd
+        */
+
+        void setMediaURI(std::string uri) { mediaURI_ = uri; }
+
+        /*
+        enum PlayingState {NOT_APPLICABLE, PLAYING, PAUSED};
+        enum LoopingState {NOT_LOOPING, LOOPING};
+
+        void setLoopingState(LoopingState loop);
+        // play() may need a timestamp?
+        virtual void play() { currentLoopingState = PLAYING; onMediaChanged(); }
+        virtual void stop() { currentPlayingState = PAUSED; onMediaChanged(); }
+        virtual void seek(double normalizedIndex);
+        */
+
+        // NOTE: need onMediaChanged() that tells "media-style" translators to
+        // update their respective renderers.
+        //
+        // To start, we will have 2 translators that make use of these variables
+        // - The existing Basic renderer AND D-Mitri translator
+        // (In the case of D-Mitri, we send messages to WildTracks)
+
+
     private:
+
+        std::string mediaURI_;
+        /*
+        PlayingState currentPlayingState;
+        LoopingState currentLoopingState;
+        */
+
+
         std::vector<std::tr1::shared_ptr<Connection> > connectTO_;
         virtual void onNodeChanged(bool forcedNotify);
         virtual bool handleMessage_(const std::string &/*method*/, int argc, lo_arg ** /*argv*/, const char *types);

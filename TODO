@@ -8,6 +8,7 @@ Release-critical for 0.2
  * avoid to include unused.h from public header files
  * test properties well
  * implement OSC callbacks for float and int properties
+ * implement float/int properties in pd-external example
 
 FUDI-specific features and issues
 ---------------------------------
@@ -33,12 +34,11 @@ Tests
 
 Features
 --------
- * Compile translators as dymanic libraries, and provide an example of an individual build system for a translate. ie, if someone has spatosc installed, they can write and build a new translator without modifying spatosc.
- * Rename current spatdif_translator to spatosc_translator. Eventually we can have a real spatdif translator that adheres exactly to the version found at spatdif.org
- * Load balancing, don't push all the state, all the time, over OSC. Only push whatever's changed, and at some controlled rate.
+ * Compile translators as dymanic libraries
+ *  provide an example of an individual build system for a translate. ie, if someone has spatosc installed, they can write and build a new translator without modifying spatosc.
+ * Rename current spatdif_translator to basic_translator. Eventually we can have a real spatdif translator that adheres exactly to the version found at spatdif.org
  * Support multicast and TCP in OscSender and OscReceiver. Perhaps use liblo urls in constructor arguments? (eg, osc.upd://239.0.0.1:9999/ or osc.tcp://localhost:9998/)
  * Support specifying the network interface to listen from
- * Implement Translator::getSender to allow sending custom messages (already implemented in dmitriTranslator. should return NULL in base class)
  * support either int, float, double for numerical OSC typetags. ie, in oscutil, change argMatchesType() to something like getStringArg() and getNumericArg() using these liblo methods:
    * int lo_is_numerical_type(lo_type a)
    * int lo_is_string_type(lo_type a)

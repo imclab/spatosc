@@ -115,4 +115,18 @@ void SpatdifTranslator::pushPropertyChange(Node *node, const std::string &key, c
     sender_->sendMessage(path, "ss", key.c_str(), value.c_str(), SPATOSC_ARGS_END);
 }
 
+void SpatdifTranslator::pushPropertyChange(Node *node, const std::string &key, const double &value)
+{
+    //std::cout << "pushing property for node " << node->getID() << ": " << key << value << std::endl;
+    std::string path = "/spatosc/core/" + node->getType() + "/" + node->getID() + "/prop";
+    sender_->sendMessage(path, "sf", key.c_str(), (float)value, SPATOSC_ARGS_END);
+}
+
+void SpatdifTranslator::pushPropertyChange(Node *node, const std::string &key, const int &value)
+{
+    //std::cout << "pushing property for node " << node->getID() << ": " << key << value << std::endl;
+    std::string path = "/spatosc/core/" + node->getType() + "/" + node->getID() + "/prop";
+    sender_->sendMessage(path, "sf", key.c_str(), (float)value, SPATOSC_ARGS_END);
+}
+
 } // end namespace spatosc
