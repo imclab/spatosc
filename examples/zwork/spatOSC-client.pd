@@ -1,4 +1,4 @@
-#N canvas 661 26 763 669 10;
+#N canvas 650 22 937 894 10;
 #X obj -40 85 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
 1 1;
 #X obj -40 27 r to_spatosc;
@@ -100,7 +100,7 @@ about connecting sources to sinks which are not listeners ???;
 #X connect 15 0 11 0;
 #X connect 16 0 12 0;
 #X restore 487 170 pd dynamic;
-#N canvas 457 27 983 873 SPAT_OSC_MESSAGES 1;
+#N canvas 457 27 983 873 SPAT_OSC_MESSAGES 0;
 #X floatatom 59 79 5 0 0 0 - - -;
 #X msg 41 -243 \; to_spatosc setConnectFilter ear;
 #X text 451 -181 <-- Add properties;
@@ -195,7 +195,7 @@ localhost \$1;
 #X obj 50 17 r spatOSC-port;
 #X msg 158 35 \; spatOSC-port 18032;
 #X msg 51 130 \; to_spatosc clearScene;
-#X msg 2 239 \; to_spatosc createSource src-0 \, createListener ear
+#X msg 2 238 \; to_spatosc createSource src-0 \, createListener ear
 \, setNodeStringProperty src-0 setPlugin testnoise~;
 #X msg 2 288 \; to_spatosc createSource src-0 \, createSource src-1
 \, createListener ear \, setNodeStringProperty src-0 setPlugin testone~
@@ -207,6 +207,14 @@ localhost \$1;
 #X msg 184 424 \; to_spatosc setPosition src-1 0 0 0;
 #X obj -1 364 bng 15 250 50 0 empty empty generate-nodes 17 7 0 10
 -262144 -1 -1;
+#X msg -15 607 \; to_spatosc setNodeStringProperty src-0 setMediaURI
+adc://1.1;
+#X msg -16 644 \; to_spatosc setNodeStringProperty src-0 setMediaURI
+file://soundfilename.wav;
+#X msg -16 694 \; to_spatosc setNodeStringProperty src-0 setMediaURI
+plugin://testnoise~;
+#X msg -18 749 \; to_spatosc setNodeStringProperty src-0 setMediaURI
+plugin://testnoise~;
 #X connect 1 0 13 0;
 #X connect 2 0 8 0;
 #X connect 2 1 8 1;

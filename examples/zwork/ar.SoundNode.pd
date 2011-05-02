@@ -1,4 +1,4 @@
-#N canvas 0 271 882 809 10;
+#N canvas 0 271 855 822 10;
 #X obj 528 2 cnv 20 20 20 empty empty \$0=$zero 0 12 1 14 -262144 -66577
 0;
 #X obj 421 157 r \$1-from-SPIN;
@@ -14,19 +14,19 @@
 #X text 24 251 |;
 #X text 24 261 V;
 #X text 25 89 DSP chain:;
-#X obj 166 575 change1;
-#X text 233 568 dynamically generates plugin (in \$0-plug subpatch)
+#X obj 190 589 change1;
+#X text 257 582 dynamically generates plugin (in \$0-plug subpatch)
 ;
 #X obj 25 146 send~ \$2.plugin~;
 #X text 44 182 plug needs to receive \$2.plugin~;
 #X text 45 243 ... and send \$2.plugout~;
-#X obj 166 555 symbol;
+#X obj 190 569 symbol;
 #X obj 4 4 cnv 15 165 25 empty empty Help: 5 12 1 14 -260097 -16662
 0;
 #X text 154 37 <- Required for 'vis' command;
 #X obj 25 278 receive~ \$2.plugout~;
-#X obj 166 596 list prepend \$0 \$1 \$2;
-#X msg 166 619 \; pd-\$1-plug clear \; pd-\$1-plug obj 50 50 \$4 \$2
+#X obj 190 610 list prepend \$0 \$1 \$2;
+#X msg 190 633 \; pd-\$1-plug clear \; pd-\$1-plug obj 50 50 \$4 \$2
 \$3 \; \$3.plugin.patch loadbang \;;
 #X obj 25 211 DynamicPatchHolder \$0-plug;
 #X obj 10 36 namecanvas \$2.patch;
@@ -76,10 +76,15 @@
 #X obj 528 328 list prepend setParam;
 #X obj 528 351 list trim;
 #X obj 529 391 send \$2.nodeMsg;
-#X obj 264 507 s \$2.spread;
+#X obj 232 473 s \$2.spread;
 #X obj 87 425 route setVUmeterFlag setPlugin setActive setSpread setMediaURI
 ;
-#X obj 410 505 print \$2-setMediaURI-MESS;
+#X obj 323 462 symbol;
+#X obj 324 485 symbol2list ://;
+#X obj 533 500 route file plugin adc;
+#X obj 533 559 print \$2-setMediaURI-mess:file;
+#X obj 323 507 list trim;
+#X obj 616 533 print \$2-setMediaURI-mess:adc;
 #X connect 3 0 16 0;
 #X connect 14 0 23 0;
 #X connect 19 0 14 0;
@@ -102,4 +107,10 @@
 #X connect 45 3 44 0;
 #X connect 45 4 46 0;
 #X connect 45 5 41 0;
+#X connect 46 0 47 0;
+#X connect 47 0 50 0;
+#X connect 48 0 49 0;
+#X connect 48 1 19 0;
+#X connect 48 2 51 0;
+#X connect 50 0 48 0;
 #X coords 0 0 1 1 52 60 0;
