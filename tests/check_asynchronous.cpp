@@ -57,6 +57,13 @@ bool test_async()
     SoundSource *source = scene.createSoundSource("source");
     Listener *listener = scene.createListener("listener");
     scene.connect(source, listener);
+
+    // In synchronous mode, changing a position results in a connection update.
+    // We want it to happen only after flushMessages():
+
+    DummyTranslator::pushed = false;
+    source->setPosition(1.0, 2.0, 3.0);
+
     if (DummyTranslator::pushed)
     {
         std::cerr <<" should not have pushed yet.\n";

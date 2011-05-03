@@ -318,6 +318,8 @@ class Scene
          */
         void setSynchronous(bool synchronous);
 
+        bool isSynchronous() { return synchronous_; }
+
         /**
          * When in asynchronous mode, (not synchronous) one needs to call this quite often to flush the OSC messages.
          * To be in the asynchronous mode, one should setSynchronous with false as parameter.
