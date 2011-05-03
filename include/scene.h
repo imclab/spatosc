@@ -104,30 +104,65 @@ class Scene
         void debugPrint();
 
         /**
-         * Template method that sets the renderer plugin.
+         * Helper template method that adds a translator plugin with one IP and
+         * port (most cases).
          *
-         * The template argument must be a child of Translator.
+         * This is also here for legacy purposes (before we realized that
+         * translators may have various constructor arguments). For thos more
+         * specialized cases, you have to pass a pointer (see below).
+         *
+         * The template argument must be derived from Translator class.
+         *
+         * Each translator must have an identifier, so that you can remove it
+         * later. You can have many translators for a single scene.
          * 
-         * Each translator must have an identifier, so that you can remove it later. You can have many translators for a single scene.
          * Here is an example:
          * \code
          * Scene scene();
          * scene.addTranslator<SpatdifTranslator>("spatdif", "127.0.0.1", "11111");
          * \endcode
          * 
-         * @return A Translator pointer. Null if there was already one with that name, or if an error occurred. Never free this pointer.
+         * @return A Translator pointer. Null if there was already one with that
+         * name, or if an error occurred. Never free this pointer.
          */
         template <typename T>
         Translator *addTranslator(const std::string &name, const std::string &address="", const std::string &port="", bool verbose = true)
         {
             if (hasTranslator(name))
             {
-                std::cout << "Warning: There is already a translator named " << name << std::endl;
+                std::cout << "Warning: Cannot add translator named " << name << ". Already exists." << std::endl;
                 return 0;
             }
             else
             {
                 translators_[name] = std::tr1::shared_ptr<Translator>(new T(address, port, verbose));
+                return getTranslator(name);
+            }
+        }
+
+        /**
+         * Add a translator by passing a pointer.
+         *
+         * Here is an example:
+         * \code
+         * Scene scene();
+         * scene.addTranslator("spatdif", new SpatdifTranslator("127.0.0.1", "11111"));
+         * \endcode
+         *
+         * IMPORTANT: you should never free the object for the pointer that you
+         * passed to this function. Instead, use the removeTranslator() method.
+         *
+         */
+        Translator *addTranslator(const std::string &name, Translator *t)
+        {
+            if (hasTranslator(name))
+            {
+                std::cout << "Warning: Cannot add translator named " << name << ". Already exists." << std::endl;
+                return 0;
+            }
+            else
+            {
+                translators_[name] = std::tr1::shared_ptr<Translator>(t);
                 return getTranslator(name);
             }
         }

@@ -35,32 +35,26 @@ double DmitriTranslator::SPACEMAP_EQUATOR_RADIUS = 700.0;
 const double DmitriTranslator::SPACEMAP_POLE_RADIUS = 1000.0;
 
 // ************************************************
-// FIXME: Wed Jan 19 14:12:24 EST 2011: tmatth
-// could these port values be defined in translator.h/cpp?
-// 2011-01-21:aalex:I think this default port number is D-Mitri-specific.
-DmitriTranslator::DmitriTranslator(const std::string &ip,
-        const std::string &toPort,
-        bool verbose = true) :
-    Translator(verbose),
-    sender_(new OscSender(ip, toPort)),
-    verbose_(verbose)
-{
-    if (verbose_)
-        std::cout << "D-Mitri translator sending to: " << sender_->toString() << std::endl;
-}
 
-DmitriTranslator::DmitriTranslator(const std::string &ip,
-    const std::string &toPort,
-    const std::string &fromPort,
-    bool verbose = false) :
+DmitriTranslator::DmitriTranslator(const std::string &ip, const std::string &toPort, const std::string &fromPort, bool verbose) :
 Translator(verbose),
 sender_(new OscSender(ip, toPort, fromPort)),
 verbose_(verbose)
 {
     if (verbose_)
     {
-        //std::cout << "Sending to D-Mitri on: " << lo_address_get_url(destAddr_) << std::endl;
-        //std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
+        std::cout << "D-Mitri translator sending to: " << sender_->toString() << std::endl;
+    }
+}
+
+DmitriTranslator::DmitriTranslator(const std::string &ip, const std::string &toPort, bool verbose) :
+Translator(verbose),
+sender_(new OscSender(ip, toPort, DmitriTranslator::DEFAULT_RECEIVER_PORT)),
+verbose_(verbose)
+{
+    if (verbose_)
+    {
+        std::cout << "D-Mitri translator sending to: " << sender_->toString() << std::endl;
     }
 }
 

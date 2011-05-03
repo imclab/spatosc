@@ -31,11 +31,10 @@ namespace spatosc
 {
 
 const char *SpatdifTranslator::DEFAULT_SEND_PORT = "18032";
-const char *SpatdifTranslator::DEFAULT_RECEIVER_PORT = "18098";
 
 SpatdifTranslator::SpatdifTranslator(const std::string &ip,
         const std::string &port,
-        bool verbose = true) :
+        bool verbose) :
     Translator(verbose),
     sender_(new OscSender(ip, port))
     {

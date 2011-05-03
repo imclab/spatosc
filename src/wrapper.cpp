@@ -195,6 +195,11 @@ bool Wrapper::addTranslator(const std::string &name, const std::string &translat
     }
 }
 
+bool Wrapper::addTranslator(const std::string &name, Translator *t)
+{
+    return scene_->addTranslator(name, t) != 0;
+}
+
 bool Wrapper::removeTranslator(const std::string &name)
 {
     return scene_->removeTranslator(name);
