@@ -145,6 +145,7 @@ static void spatosc_removeTranslator(t_spatosc *x, t_symbol *translator);
 static void spatosc_hasTranslator(t_spatosc *x, t_symbol *translator);
 static void spatosc_setNodeStringProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_symbol *value);
 static void spatosc_setNodeFloatProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_floatarg value);
+static void spatosc_setNodeIntProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_floatarg value);
 static void spatosc_removeNodeStringProperty(t_spatosc *x, t_symbol *node, t_symbol *key);
 static void spatosc_setDistanceFactor(t_spatosc *x, t_symbol *src, t_symbol *sink, t_floatarg factor);
 static void spatosc_setDopplerFactor(t_spatosc *x, t_symbol *src, t_symbol *sink, t_floatarg factor);
@@ -170,6 +171,7 @@ extern "C" void spatosc_setup(void)
 	class_addmethod(spatosc_class, (t_method) spatosc_hasTranslator, gensym("hasTranslator"), A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setNodeStringProperty, gensym("setNodeStringProperty"), A_SYMBOL, A_SYMBOL, A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setNodeFloatProperty, gensym("setNodeFloatProperty"), A_SYMBOL, A_SYMBOL, A_FLOAT, 0);
+	class_addmethod(spatosc_class, (t_method) spatosc_setNodeFloatProperty, gensym("setNodeIntProperty"), A_SYMBOL, A_SYMBOL, A_FLOAT, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_removeNodeStringProperty, gensym("removeNodeStringProperty"), A_SYMBOL, A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setDistanceFactor, gensym("setDistanceFactor"), A_SYMBOL, A_SYMBOL, A_FLOAT, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setDopplerFactor, gensym("setDopplerFactor"), A_SYMBOL, A_SYMBOL, A_FLOAT, 0);
@@ -290,6 +292,10 @@ static void spatosc_setNodeFloatProperty(t_spatosc *x, t_symbol *node, t_symbol 
     output_success(x, x->wrapper.setNodeFloatProperty(node->s_name, key->s_name, (double) value));
 }
 
+static void spatosc_setNodeIntProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_floatarg value)
+{
+    output_success(x, x->wrapper.setNodeIntProperty(node->s_name, key->s_name, (int) value));
+}
 
 
 static void spatosc_removeNodeStringProperty(t_spatosc *x, t_symbol *node, t_symbol *key)
