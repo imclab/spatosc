@@ -451,13 +451,20 @@ bool Scene::flushMessages()
     }
     else
     {
-        ConnConstIterator iter;
-        for (iter = connections_.begin(); iter != connections_.end(); ++iter)
+        ConnConstIterator c;
+        for (c = connections_.begin(); c != connections_.end(); ++c)
         {
-            Connection* conn = (*iter).get();
+            Connection* conn = (*c).get();
             if (conn->active())
                 pushConnectionChangesViaAllTranslators(conn);
         }
+
+        // now reset all changed flags on nodes:
+        for (ListenerIterator L = listeners_.begin(); L != listeners_.end(); ++L)
+            (*L)->stateSent();
+        for (SourceIterator n = soundSources_.begin(); n != soundSources_.end(); ++n)
+            (*n)->stateSent();
+
         return true;
     }
 }

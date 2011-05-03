@@ -42,7 +42,14 @@ class Node;
 class SpatdifTranslator : public Translator
 {
     public:
-        SpatdifTranslator(const std::string &ip, const std::string &port, bool verbose);
+
+        static const char *DEFAULT_SEND_PORT;
+
+        SpatdifTranslator(
+                const std::string &ip,
+                const std::string &port = DEFAULT_SEND_PORT,
+                bool verbose = false);
+
         virtual void pushConnectionChanges(Connection *conn);
         //virtual void pushSceneChange(const std::string &method, ...);
         virtual void pushSceneChange(const char *types, va_list ap);
@@ -51,8 +58,6 @@ class SpatdifTranslator : public Translator
         virtual void pushPropertyChange(Node *node, const std::string &key, const double &value);
         virtual void pushPropertyChange(Node *node, const std::string &key, const int &value);
 
-        static const char *DEFAULT_SEND_PORT;
-        static const char *DEFAULT_RECEIVER_PORT;
 
     private:
         std::tr1::shared_ptr<OscSender> sender_;

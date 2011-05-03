@@ -71,13 +71,6 @@ class Connection;
 class DmitriTranslator : public Translator
 {
 public:
-    DmitriTranslator(const std::string &ip, const std::string &toPort, const std::string &fromPort, bool verbose);
-    DmitriTranslator(const std::string &ip, const std::string &toPort, bool verbose);
-
-    /**
-     * This is where we customize messages for D-Mitri's OSC protocol.
-     */
-    virtual void pushConnectionChanges(Connection *conn);
 
     /**
      * The DEFAULT_SEND_PORT should always be 18033 (as of CueStation 5.0)
@@ -89,6 +82,26 @@ public:
      * OSC Map Command. Only messages from this outgoing port will be accepted.
      */
     static const char *DEFAULT_RECEIVER_PORT;
+
+    /**
+     * Constructor (only IP address is required; ports can be overridden)
+     */
+    DmitriTranslator(
+            const std::string &ip,
+            const std::string &toPort = DmitriTranslator::DEFAULT_SEND_PORT,
+            const std::string &fromPort = DmitriTranslator::DEFAULT_RECEIVER_PORT,
+            bool verbose = false);
+
+    /**
+     * Legacy constructor to support templated scene::addTranslator method
+     * (to be deprecated)
+     */
+    DmitriTranslator(const std::string &ip, const std::string &toPort, bool verbose = false);
+
+    /**
+     * This is where we customize messages for D-Mitri's OSC protocol.
+     */
+    virtual void pushConnectionChanges(Connection *conn);
 
     /**
      * Gets the OscSender object so that you can send arbitrary commands to the

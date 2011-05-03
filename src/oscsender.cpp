@@ -20,7 +20,9 @@ OscSender::OscSender(const std::string &host, const std::string &toPort, const s
 
 std::string OscSender::toString() const
 {
-    return "host:" + host_ + ", port:" + toPort_;
+    std::stringstream sstr;
+    sstr << lo_server_get_port(server_);
+    return "host:" + host_ + ", port:" + toPort_ + " (outgoing port: "+sstr.str()+")";
 }
 
 

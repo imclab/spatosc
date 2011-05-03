@@ -189,15 +189,19 @@ int main(int argc, char **argv)
 	// *************************************************************************
 	// create test scene:
 
+
     if (dmitri)
     {
-	    audioScene_.addTranslator<spatosc::DmitriTranslator>("dmitri", dmitriIP.c_str(), spatosc::DmitriTranslator::DEFAULT_SEND_PORT, spatosc::DmitriTranslator::DEFAULT_RECEIVER_PORT);
-        audioScene_.addTranslator<spatosc::SpatdifTranslator>("spatdif", spatdifIP.c_str(), spatosc::SpatdifTranslator::DEFAULT_SEND_PORT);
+	    audioScene_.addTranslator<spatosc::DmitriTranslator>("dmitri", dmitriIP.c_str(), spatosc::DmitriTranslator::DEFAULT_SEND_PORT);
+        /*
+        // POINTER METHOD:
+        spatosc::DmitriTranslator *dmitriTranslator = new spatosc::DmitriTranslator(dmitriIP.c_str());
+        audioScene_.addTranslator("dmitri", dmitriTranslator);
+        */
     }
-    else {
-        //audioScene_.setSynchronous(false); // we will need to call flushMessages() once in a while
-        audioScene_.addTranslator<spatosc::SpatdifTranslator>("spatdif", spatdifIP.c_str(), spatosc::SpatdifTranslator::DEFAULT_SEND_PORT);
-    }
+    
+    // also send to spatdif translator for this example (for doppler component):
+    audioScene_.addTranslator<spatosc::SpatdifTranslator>("spatdif", spatdifIP.c_str(), spatosc::SpatdifTranslator::DEFAULT_SEND_PORT);
 
     
     //audioScene_.setOrientation(90.0, 0.0, 0.0);

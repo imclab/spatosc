@@ -101,6 +101,14 @@ class Wrapper
         */
         bool addTranslator(const std::string &name, const std::string &translatorName, const std::string &sendToAddress, const std::string &port, bool verbose);
         /**
+          * Adds a translator to use.
+          * Example of valid translators names include "SpatdifTranslator" and "DmitriTranslator".
+          * @param translatorID A unique id for this translator instance (required in order to eventually remove the translator).
+          * @param translator A pointer to an already constructed translator object (ie, created with new SpatdifTranslator(), etc).
+          * @return Success or not.
+         */
+        bool addTranslator(const std::string &translatorID, Translator *translator);
+        /**
          * Removes a translator.
          * @return Success or not.
          */
