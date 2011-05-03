@@ -1,13 +1,18 @@
-2011-0?-?? spatosc 0.1.10
+2011-05-02 spatosc 0.1.10
 -------------------------
 
 This release is a developer snapshot in the 0.1 unstable series. 
 It's the second release candidate for preparing the 0.2 stable series.
 
-This version contains bug fixes.
+This version contains new features and bug fixes.
+
+New Features:
+    * Int and Float properties for any node
+    * Added sending of scene messages via OSC (eg, createSoundSource, deleteNode, connect, etc.). This will allow dynamic renderers to perform actions when the scene changes.
 
 Bug fixes: 
-    * (none)
+    * Important fix that properly updates all nodes sharing a connection (previously only the first connected node was updated)
+    * Allowed translator constructors to use default port arguments, so user doesn't need to provide them
 
 
 2011-04-07 spatosc 0.1.8
