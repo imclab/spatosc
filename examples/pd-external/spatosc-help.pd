@@ -91,7 +91,7 @@ scene;
 #X msg 498 223 addTranslator spatdif SpatdifTranslator localhost 18032
 ;
 #X msg 500 353 setNodeFloatProperty noise param 1.4;
-#X msg 504 380 setNodeIntProperty noise param 1000;
+#X msg 504 380 setNodeIntProperty noise channel 1000;
 #X connect 1 0 10 0;
 #X connect 2 0 7 0;
 #X connect 3 0 7 1;
