@@ -1,9 +1,9 @@
-#N canvas 497 35 884 1003 10;
+#N canvas 490 29 884 1003 10;
 #X obj -38 69 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
 1 1;
 #X obj -38 11 r to_spatosc;
-#X obj 242 30 grid grid1 100 0 199 100 0 199 0 1 1 10 10 283 64;
-#X obj 359 29 grid grid1 100 0 199 100 0 199 0 1 1 10 10 403 77;
+#X obj 242 30 grid grid1 100 0 199 100 0 199 0 1 1 10 10 273 74;
+#X obj 359 29 grid grid1 100 0 199 100 0 199 0 1 1 10 10 407 97;
 #X text 245 3 source;
 #X text 365 5 listener;
 #N canvas 523 22 940 755 SPIN_INTEGRATION 0;

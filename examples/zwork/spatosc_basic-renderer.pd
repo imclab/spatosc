@@ -1,4 +1,4 @@
-#N canvas -465 48 416 226 12;
+#N canvas 0 48 416 226 12;
 #X obj 96 81 bng 15 250 50 0 \$0-open-attenuation empty audio_I/0_attenuation
 17 7 1 12 -262144 -1 -1;
 #X msg 95 29 \; see-nodes bang;

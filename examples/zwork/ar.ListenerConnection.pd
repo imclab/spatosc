@@ -8,18 +8,16 @@
 #X text 294 66 <- note \, these coeffs will be different than the normal
 connection (still to be done);
 #X obj 366 349 change1;
-#X text 313 446 dynamically generates plugin (in \$0-plug subpatch)
+#X text 355 463 dynamically generates plugin (in \$0-plug subpatch)
 ;
 #X obj 366 329 symbol;
 #X obj 60 200 DynamicPatchHolder \$0-plug;
 #X obj 366 370 list prepend \$0 \$1 \$2 \$3 \$4;
-#X msg 366 393 \; pd-\$1-plug clear \; pd-\$1-plug obj 50 50 \$6 \$2
-\$3 \$4 \$5 \; \$5.plugin.patch loadbang \;;
-#X text 305 487 plugin needs [namecanvas \$4.plugin.patch];
+#X text 353 514 plugin needs [namecanvas \$4.plugin.patch];
 #X obj 264 244 route setThru mute setType;
 #X text 25 334 [receive~ \$2.from~] is how to receive audio from the
 source \, and should be defined in the plugin patch;
-#X text 302 504 ie \, [namecanvas src-snk.conn.plugin.patch];
+#X text 350 531 ie \, [namecanvas src-snk.conn.plugin.patch];
 #X obj 49 6 AUDIOSCAPE_HELP;
 #X obj 4 31 namecanvas \$4.patch;
 #X obj 870 121 loadbang;
@@ -46,25 +44,28 @@ source \, and should be defined in the plugin patch;
 #X msg 459 217 setType ar.\$1;
 #X text 465 144 set in listener plugin;
 #X obj 516 102 r \$3-conn.type!;
+#X msg 366 393 \; pd-\$1-plug clear \; pd-\$1-plug obj 50 50 \$6 \$2
+\$3 \$4 \$5 \; \$5.plugin.patch loadbang \; \$3->\$4 mute 0;
+#X text 356 480 un-mutes the connection by default;
 #X connect 2 0 1 0;
-#X connect 4 1 13 0;
+#X connect 4 1 12 0;
 #X connect 6 0 10 0;
 #X connect 8 0 6 0;
-#X connect 10 0 11 0;
-#X connect 13 2 8 0;
-#X connect 18 0 29 0;
-#X connect 20 0 24 1;
-#X connect 21 0 24 0;
-#X connect 22 0 23 0;
-#X connect 24 0 30 0;
-#X connect 24 0 31 0;
-#X connect 29 0 20 0;
-#X connect 31 0 22 0;
-#X connect 34 0 4 0;
-#X connect 34 0 33 0;
+#X connect 10 0 40 0;
+#X connect 12 2 8 0;
+#X connect 17 0 28 0;
+#X connect 19 0 23 1;
+#X connect 20 0 23 0;
+#X connect 21 0 22 0;
+#X connect 23 0 29 0;
+#X connect 23 0 30 0;
+#X connect 28 0 19 0;
+#X connect 30 0 21 0;
+#X connect 33 0 4 0;
+#X connect 33 0 32 0;
+#X connect 34 0 36 0;
 #X connect 35 0 37 0;
-#X connect 36 0 38 0;
-#X connect 37 0 36 0;
-#X connect 38 0 13 0;
-#X connect 40 0 37 0;
+#X connect 36 0 35 0;
+#X connect 37 0 12 0;
+#X connect 39 0 36 0;
 #X coords 0 0 1 1 85 60 0;

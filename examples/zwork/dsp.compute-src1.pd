@@ -2,7 +2,6 @@
 #X obj 201 257 + 500;
 #X obj 93 92 t f f;
 #X floatatom 201 282 7 0 0 1 absorption_hz - -;
-#X obj 90 316 pack 0 0 0;
 #X obj 93 121 db2amp;
 #X obj 201 230 * 19500;
 #X obj 181 63 inlet delay-ms;
@@ -12,17 +11,20 @@
 #X obj 200 118 clip 0 2941;
 #X obj 200 168 expr 1 - $f1 * 0.00034002;
 #X text 280 118 2941ms == 1000m;
-#X text 160 316 list: source-gain(incidence*dist.) absorption_hz dist_ms
+#X text 197 315 list: source-gain(incidence*dist.) absorption_hz dist_ms
 ;
+#X obj 90 316 pack 0 10000 1;
+#X obj 40 36 loadbang;
 #X connect 0 0 2 0;
-#X connect 1 0 4 0;
-#X connect 2 0 3 1;
-#X connect 3 0 8 0;
-#X connect 4 0 3 0;
-#X connect 5 0 0 0;
-#X connect 6 0 3 2;
-#X connect 6 0 10 0;
-#X connect 7 0 1 0;
-#X connect 9 0 5 0;
-#X connect 10 0 11 0;
-#X connect 11 0 9 0;
+#X connect 1 0 3 0;
+#X connect 2 0 13 1;
+#X connect 3 0 13 0;
+#X connect 4 0 0 0;
+#X connect 5 0 9 0;
+#X connect 5 0 13 2;
+#X connect 6 0 1 0;
+#X connect 8 0 4 0;
+#X connect 9 0 10 0;
+#X connect 10 0 8 0;
+#X connect 13 0 7 0;
+#X connect 14 0 13 0;
