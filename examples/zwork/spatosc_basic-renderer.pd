@@ -1,10 +1,10 @@
-#N canvas 0 48 416 226 12;
+#N canvas -423 46 416 226 12;
 #X obj 96 81 bng 15 250 50 0 \$0-open-attenuation empty audio_I/0_attenuation
 17 7 1 12 -262144 -1 -1;
 #X msg 95 29 \; see-nodes bang;
 #X floatatom -48 97 7 0 0 3 spatOSCrx-port spatOSC-port-set spatOSC-port
 ;
-#N canvas 0 256 1166 821 RX-from-spatOSC 0;
+#N canvas 0 278 1166 821 RX-from-spatOSC 0;
 #X obj -2 202 list split 1;
 #X obj -2 228 symbol2list /;
 #X obj -3 256 unpack s s;
@@ -235,13 +235,13 @@ thru spin (could always update the param-declare abstraction instead)
 12 -262144 -1 -1 0 1;
 #X floatatom -47 142 7 0 0 3 renderer-port renderer-port-set renderer-port
 ;
-#N canvas 0 22 615 690 readme 0;
+#N canvas -837 57 615 690 readme 0;
 #X text 51 113 where spatOSC messages are received: spatOSC-port 18032
 ;
 #X text 49 19 when launched from the commandline \, the following arguments
 can set the ports for RX messages (spatOSC and render-ctl) to the renderer.
 ;
-#X text 53 75 pd -send "spatOSC-port 18032" -send "renderer-port 18111"
+#X text 90 74 pd -send "spatOSC-port 18032" -send "renderer-port 18111"
 ....;
 #X text 53 140 and control/config messages are received: renderer-port
 18111;
@@ -251,7 +251,7 @@ can set the ports for RX messages (spatOSC and render-ctl) to the renderer.
 #X text 75 220 spatOSC-port 18032;
 #X text 49 359 /a.renderer/nodemess "node arg1 arg2 arg3..." sends
 args to node;
-#X text 51 404 /a.renderer/setOutputForamt [mono \, stereo \, quad
+#X text 45 392 /a.renderer/setOutputForamt [mono \, stereo \, quad
 \, five.one \, seven.one \, octo \, or dome];
 #X restore 99 -5 pd readme;
 #N canvas 231 357 1042 628 renderer-CTl 0;
