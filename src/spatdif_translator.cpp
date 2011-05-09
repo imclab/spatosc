@@ -44,9 +44,12 @@ SpatdifTranslator::SpatdifTranslator(const std::string &ip,
 
 void SpatdifTranslator::sendPosition(const std::string &prefix, Node *node)
 {
+
+	
+	// no need to send this to the renderer
     std::string path = prefix +  "/xyz";
-    Vector3 vect(node->getPosition());
-    sender_->sendMessage(path, "fff", vect.x, vect.y, vect.z, SPATOSC_ARGS_END);
+   Vector3 vect(node->getPosition());
+    // sender_->sendMessage(path, "fff", vect.x, vect.y, vect.z, SPATOSC_ARGS_END);
 }
 
 void SpatdifTranslator::sendAED(const std::string &prefix, Connection *conn)
