@@ -33,8 +33,8 @@ Translator::Translator(bool verbose) : verbose_(verbose)
 
 void Translator::pushConnectionChanges(Connection *conn)
 {
-    if (verbose_)
-        std::cout << "Computation update for " << conn->getSource() << " -> " << conn->getSink() << " :" <<std::endl;
+    //if (verbose_)
+        //std::cout << "Computation update for " << conn->getSource() << " -> " << conn->getSink() << " :" <<std::endl;
 
     /*
     // SRC INCIDENCE:
@@ -52,7 +52,8 @@ void Translator::pushConnectionChanges(Connection *conn)
     double snkScalar = (double) (1.0 - (.01*xconn->rolloffEffect  * (1.0 - snkIncidenceGain)));
      */
 
-    if (verbose_)
+    // if (verbose_)
+    if (0)
     {
         std::cout << "  dist:\t" << conn->distance() << std::endl;
         std::cout << "  azim:\t" << conn->azimuth() << std::endl;

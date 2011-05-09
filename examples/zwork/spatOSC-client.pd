@@ -2,7 +2,7 @@
 #X obj -36 76 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
 1 1;
 #X obj -36 18 r to_spatosc;
-#X obj 208 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 239 79;
+#X obj 208 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 266 60;
 #X obj 324 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 385 86;
 #X text 213 12 source;
 #X text 316 10 listener;
@@ -274,17 +274,22 @@ src-0 ear 10;
 #X floatatom 388 476 5 0 0 0 - - -;
 #X floatatom 388 441 5 0 0 0 - - -;
 #X msg 426 432 \; to_spatosc setPosition src-1 0 \$1 0;
-#X floatatom 488 120 5 0 0 0 - - -;
+#X floatatom 518 70 5 0 0 0 - - -;
 #X msg 422 521 \; to_spatosc setNodeFloatProperty src-0 fq \$1;
 #X floatatom 389 527 5 0 0 0 - - -;
 #X msg 8 310 \; to_spatosc createSource src-0 \, createSource src-1
 \, createListener ear \, setPosition src-0 -20 -0 0 \, setPosition
 src-1 20 0 0 \, setNodeStringProperty src-0 setPlugin testone~ \, setNodeStringProperty
 src-1 setPlugin testnoise~;
-#X msg 492 30 \; to_renderer /a.renderer/setOutputFormat quad;
-#X msg 491 72 \; to_renderer /a.renderer/setOutputFormat stereo;
-#X msg 524 113 \; to_renderer /a.renderer/nodemess src-0 setParam fq
-\$1;
+#X obj 566 91 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 501 143 s to_renderer;
+#X msg 581 92 /a.renderer/nodemess pd dsp \$1;
+#X msg 552 70 /a.renderer/nodemess src-0 setParam fq \$1;
+#X msg 503 46 /a.renderer/setOutputFormat stereo;
+#X msg 489 23 /a.renderer/setOutputFormat quad;
+#X floatatom 590 118 5 -60 6 1 _db - -;
+#X msg 591 139 /a.renderer/setOutputDB \$1;
 #X connect 1 0 9 0;
 #X connect 2 0 7 0;
 #X connect 2 1 7 1;
@@ -303,5 +308,12 @@ src-1 setPlugin testnoise~;
 #X connect 52 0 53 0;
 #X connect 55 0 54 0;
 #X connect 56 0 57 0;
-#X connect 58 0 64 0;
+#X connect 58 0 65 0;
 #X connect 60 0 59 0;
+#X connect 62 0 64 0;
+#X connect 64 0 63 0;
+#X connect 65 0 63 0;
+#X connect 66 0 63 0;
+#X connect 67 0 63 0;
+#X connect 68 0 69 0;
+#X connect 69 0 63 0;
