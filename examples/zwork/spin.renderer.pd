@@ -1,65 +1,103 @@
-#N canvas 1187 481 609 577 10;
+#N canvas 640 42 749 801 10;
 #X obj 18 9 widget-spinConnect \$0;
 #X obj 351 9 cnv 20 20 20 empty empty \$0=$zero 0 12 1 14 -262144 -66577
 0;
-#X obj 10 84 widget-AudioRenderer \$0;
-#X obj 353 131 shell;
-#X obj 353 93 loadbang;
-#X msg 353 112 hostname -s;
-#N canvas 257 375 797 488 create_buzzer 0;
-#X obj 21 230 pack s s;
-#X obj 33 164 t s b;
-#X obj 94 60 t s s;
-#X obj 93 16 inlet;
-#X obj 180 457 outlet;
-#X text 366 107 first \, create nodes:;
-#X text 426 361 (SoundNode parameters);
-#X text 47 308 (connect to user outputs);
-#X text 409 216 (ShapeNode parameters);
-#X msg 351 130 createNode \$1 SoundNode \, createNode \$1-shp ShapeNode
-\, createNode \$1-text TextNode;
-#X text 412 291 (Text label parameters);
-#X msg 362 242 /\$1-text setParent \$1 \, /\$1-text setText \$1 \,
-/\$1-text setTranslation 0 0 0.6 \, /\$1-text setBillboard 2 \, /\$1-text
-setScale 2 2 2;
-#X msg 361 184 /\$1-shp setParent \$1 \, /\$1-shp setShape 1 \, \$1-shp
-setScale 0.5 0.5 0.5;
-#X obj 74 207 anyreg \$0-userID;
-#X msg 94 39 symbol buzzer;
-#X msg 368 325 /\$1 setPlugin buzz~ \, /\$1 setSpread 0 \, /\$1 setRolloff
-omni \, /\$1 setTranslation 0 0 1.5;
-#X msg 20 289 /\$2-listener connectSource \$1;
-#X connect 0 0 16 0;
+#X obj 25 157 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
+0 1;
+#X obj 25 99 r to_spatosc;
+#X obj 25 125 spatosc;
+#N canvas 28 508 984 377 OSC-messaging 0;
+#X obj 105 218 OSCtx;
+#X msg 104 193 setAddress localhost \$1;
+#X obj 104 165 r renderer-port;
+#X msg 381 142 port \$1;
+#X obj 381 164 print spatOSC-tx;
+#X obj 381 112 r spatOSC-port;
+#X msg 381 61 port \$1;
+#X obj 381 83 print renderer-port;
+#X obj 15 39 r to_renderer-db;
+#X obj 217 37 r to_renderer;
+#X obj 216 67 OSCprepend /a.renderer;
+#X obj 381 38 r renderer-port;
+#X obj 652 59 loadbang;
+#X msg 534 141 \; to_spatosc addTranslator spatdif SpatdifTranslator
+localhost \$1;
+#X obj 534 80 r spatOSC-port;
+#X msg 652 81 \; spatOSC-port 18032 \; renderer-port 18111;
+#X obj 14 72 OSCprepend /a.renderer/nodemess;
+#X obj 616 312 s renderer-port-set;
+#X msg 616 287 set \$1;
+#X obj 616 261 r renderer-port;
+#X msg 759 289 set \$1;
+#X obj 759 263 r spatOSC-port;
+#X obj 759 314 s spatOSC-port-set;
 #X connect 1 0 0 0;
-#X connect 1 1 13 0;
-#X connect 2 0 12 0;
-#X connect 2 0 11 0;
-#X connect 2 0 15 0;
 #X connect 2 0 1 0;
-#X connect 2 1 9 0;
-#X connect 3 0 14 0;
-#X connect 9 0 4 0;
-#X connect 11 0 4 0;
-#X connect 12 0 4 0;
-#X connect 13 0 0 1;
-#X connect 14 0 2 0;
-#X connect 15 0 4 0;
-#X connect 16 0 4 0;
-#X restore 14 476 pd create_buzzer;
-#X obj 13 457 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
--1;
-#X obj 14 496 s \$0-to-SPIN;
-#X obj 353 152 s set-\$0-userID;
-#X obj 21 391 s \$0-to-SPIN;
-#X msg 295 518 createNode sndNode1 SoundNode \, createNode ear-st Listener
-\, createNode ear-quad Listener \, /ear-quad setType listener-quad.conn~
-\, /ear-quad setPlugin listener-quad~ \, /sndNode1 connect ear \, /sndNode1
-connect ear-quad;
-#X msg 20 252 createNode sndNode1 SoundNode \, createNode ear-st Listener
-\, /ear setType listener-stereo.conn~ \, /sndNode1 connect ear;
-#X connect 3 0 9 0;
-#X connect 4 0 5 0;
+#X connect 3 0 4 0;
 #X connect 5 0 3 0;
-#X connect 6 0 8 0;
-#X connect 7 0 6 0;
+#X connect 6 0 7 0;
+#X connect 8 0 16 0;
+#X connect 9 0 10 0;
+#X connect 9 0 0 0;
+#X connect 11 0 6 0;
+#X connect 12 0 15 0;
+#X connect 14 0 13 0;
+#X connect 16 0 0 0;
+#X connect 18 0 17 0;
+#X connect 19 0 18 0;
+#X connect 20 0 22 0;
+#X connect 21 0 20 0;
+#X restore 22 233 pd OSC-messaging;
+#N canvas 457 27 983 873 SPAT_OSC_MESSAGES 0;
+#X floatatom 59 79 5 0 0 0 - - -;
+#X msg 41 -243 \; to_spatosc setConnectFilter ear;
+#X text 451 -181 <-- Add properties;
+#X text 49 -8 Also need to be able to set/get/save/recall params in
+spatOSC;
+#X text 102 5 DELAY and AED are partially redundant;
+#X msg 46 -192 \; to_spatosc setNodeStringProperty ear vmicL.channel
+"9";
+#X text 381 -131 <-- Add properties;
+#X msg 46 -145 \; to_spatosc setNodeStringProperty ear setPlugin ar.listener-stereo~
+;
+#X text 45 -85 not needed with auto-connect;
+#X text 62 55 need to deal with numbers;
+#X msg 32 299 \; to_spatosc createListener ear;
+#X msg 252 302 \; to_spatosc deleteNode ear;
+#X msg 33 404 \; to_spatosc clearScene \;;
+#X msg 34 471 \; to_spatosc setNodeFloatProperty ear setSpread 1;
+#X msg 60 107 \; src-0 setParam fq \$1;
+#X msg 46 -65 \; to_spatosc connect src-0 ear \;;
+#X msg 242 262 \; to_spatosc deleteNode src-0;
+#X msg 253 343 \; to_spatosc disconnect src-0 ear \;;
+#X msg 35 342 \; to_spatosc connect src-0 ear \;;
+#X msg 33 263 \; to_spatosc createSource src-0;
+#X msg 60 150 \; to_spatosc setNodeFloatProperty src-0 fq 9.1;
+#X connect 0 0 14 0;
+#X restore 25 266 pd SPAT_OSC_MESSAGES;
+#X obj 39 581 cnv 15 380 160 empty empty RENDERER_MESSAGES 4 12 0 16
+-191407 -1 0;
+#X floatatom 74 650 5 0 0 0 - - -;
+#X obj 122 671 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 57 723 s to_renderer;
+#X msg 137 672 /a.renderer/nodemess pd dsp \$1;
+#X msg 108 650 /a.renderer/nodemess src-0 setParam fq \$1;
+#X msg 59 626 /a.renderer/setOutputFormat stereo;
+#X msg 45 603 /a.renderer/setOutputFormat quad;
+#X floatatom 146 698 5 -60 6 1 _db - -;
+#X msg 147 719 /a.renderer/setOutputDB \$1;
+#X floatatom 130 148 7 0 0 3 spatOSCrx-port spatOSC-port-set spatOSC-port
+;
+#X floatatom 128 104 7 0 0 3 renderer-port renderer-port-set renderer-port
+;
+#X connect 3 0 4 0;
+#X connect 4 0 2 0;
+#X connect 8 0 12 0;
+#X connect 9 0 11 0;
+#X connect 11 0 10 0;
 #X connect 12 0 10 0;
+#X connect 13 0 10 0;
+#X connect 14 0 10 0;
+#X connect 15 0 16 0;
+#X connect 16 0 10 0;

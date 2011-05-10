@@ -1,37 +1,11 @@
-#N canvas 490 29 928 1020 10;
+#N canvas 98 22 928 1020 10;
 #X obj -36 76 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
-1 1;
+0 1;
 #X obj -36 18 r to_spatosc;
 #X obj 208 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 266 60;
 #X obj 324 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 385 86;
 #X text 213 12 source;
 #X text 316 10 listener;
-#N canvas 523 22 940 755 SPIN_INTEGRATION 0;
-#X text 26 -48 ListenerNode: setType is ignored \, since the setPlugin
-"listener-type~" automatically generates the proper "type" state for
-its connections;
-#X text 26 6 SoundNodes and ListenerNodes: setParam should be translated
-as follows:;
-#X text 32 -117 SPIN MESSAGES ---> OSCSPAT;
-#X text 33 57 setParam keyword valaue -----> prop keyword value;
-#X text 35 97 setVUmeterFlag value -----> prop setVUmeterFlag value
-;
-#X text 35 123 setPlugin name -----> prop setPlugin value;
-#X text 36 154 setActive value -----> prop setActive value;
-#X text 28 205 createNode name ListenerNode -----> createListener name
-;
-#X text 27 226 createNode name SoundNode -----> createSource name;
-#X text 26 253 /src-node connect sink-node -----> connect src-node
-sink-node;
-#X text 36 396 NOTE: spatOSC "auto-connect" feature must be disabled
-;
-#X text 30 307 /node setTranslation x y z -----> setPosition node x
-y z (note: global x y z);
-#X text 38 422 NOTE: spatOSC has only one "connect" message--- what
-about connecting sources to sinks which are not listeners ???;
-#X msg 443 -96 \; to_renderer /nodemess src-0 setParam fq \$1;
-#X text 444 -117 SPIN MESSAGES ---> RENDERER;
-#X restore 45 60 pd SPIN_INTEGRATION;
 #N canvas 0 351 856 474 dynamic 0;
 #X obj 40 36 inlet;
 #X obj 102 38 inlet;
@@ -142,9 +116,9 @@ spatOSC;
 ;
 #X obj 483 1 cnv 15 380 160 empty empty RENDERER_MESSAGES 4 12 0 16
 -191407 -1 0;
-#X floatatom 42 110 7 0 0 3 spatOSCrx-port spatOSC-port-set spatOSC-port
+#X floatatom 47 109 7 0 0 3 spatOSCrx-port spatOSC-port-set spatOSC-port
 ;
-#X floatatom 106 89 7 0 0 3 renderer-port renderer-port-set renderer-port
+#X floatatom 45 65 7 0 0 3 renderer-port renderer-port-set renderer-port
 ;
 #N canvas 0 321 879 369 OSC-messaging 0;
 #X obj 105 218 OSCtx;
@@ -290,30 +264,30 @@ src-1 setPlugin testnoise~;
 #X msg 489 23 /a.renderer/setOutputFormat quad;
 #X floatatom 590 118 5 -60 6 1 _db - -;
 #X msg 591 139 /a.renderer/setOutputDB \$1;
-#X connect 1 0 9 0;
-#X connect 2 0 7 0;
-#X connect 2 1 7 1;
-#X connect 3 0 7 2;
-#X connect 3 1 7 3;
-#X connect 9 0 0 0;
-#X connect 23 0 7 4;
-#X connect 35 0 34 0;
-#X connect 38 0 45 0;
-#X connect 40 0 45 0;
-#X connect 42 0 45 0;
-#X connect 45 0 44 0;
-#X connect 46 0 52 0;
-#X connect 48 0 52 0;
-#X connect 50 0 52 0;
-#X connect 52 0 53 0;
-#X connect 55 0 54 0;
-#X connect 56 0 57 0;
-#X connect 58 0 65 0;
-#X connect 60 0 59 0;
-#X connect 62 0 64 0;
-#X connect 64 0 63 0;
-#X connect 65 0 63 0;
-#X connect 66 0 63 0;
-#X connect 67 0 63 0;
-#X connect 68 0 69 0;
-#X connect 69 0 63 0;
+#X connect 1 0 8 0;
+#X connect 2 0 6 0;
+#X connect 2 1 6 1;
+#X connect 3 0 6 2;
+#X connect 3 1 6 3;
+#X connect 8 0 0 0;
+#X connect 22 0 6 4;
+#X connect 34 0 33 0;
+#X connect 37 0 44 0;
+#X connect 39 0 44 0;
+#X connect 41 0 44 0;
+#X connect 44 0 43 0;
+#X connect 45 0 51 0;
+#X connect 47 0 51 0;
+#X connect 49 0 51 0;
+#X connect 51 0 52 0;
+#X connect 54 0 53 0;
+#X connect 55 0 56 0;
+#X connect 57 0 64 0;
+#X connect 59 0 58 0;
+#X connect 61 0 63 0;
+#X connect 63 0 62 0;
+#X connect 64 0 62 0;
+#X connect 65 0 62 0;
+#X connect 66 0 62 0;
+#X connect 67 0 68 0;
+#X connect 68 0 62 0;
