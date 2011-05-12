@@ -7,7 +7,10 @@ It's the second release candidate for preparing the 0.2 stable series.
 This version contains new features and bug fixes.
 
 New Features:
-    * (none)
+    * DmitriTranslator now has properties enableGain and enableDelay to specify whether these should be sent via OSC
+    * DmitriTranslator Bus number should be set using setIntProperty "bus" <bus #>
+    * scened::addTranslator now also accepts a pointer (instead of the previously required template method>
+    * New PackageMaker document to make .pkg files for OSX
 
 Bug fixes: 
     * (none)
