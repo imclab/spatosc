@@ -65,9 +65,34 @@ bool test_wrapper()
     return true;
 }
 
+bool test_properties()
+{
+    Wrapper wrapper;
+    if (! wrapper.createSource("foo"))
+        return false;
+    if (! wrapper.setNodeIntProperty("foo", "bar", 2))
+        return false;
+    int i_value(0);
+    if (! wrapper.getNodeIntProperty("foo", "bar", i_value))
+        return false;
+    if (i_value != 2)
+        return false;
+    // Delete it and make sure it worked:
+    if (! wrapper.removeNodeIntProperty("foo", "bar"))
+        return false;
+    i_value = 0;
+    if (wrapper.getNodeIntProperty("foo", "bar", i_value))
+        return false;
+    if (i_value != 0)
+        return false;
+    return true;
+}
+
 int main(int /*argc*/, char ** /*argv*/)
 {
     if (! test_wrapper())
+        return 1;
+    if (! test_properties())
         return 1;
     return 0;
 }

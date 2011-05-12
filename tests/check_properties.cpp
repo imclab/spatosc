@@ -204,6 +204,14 @@ bool test_notification()
         std::cerr <<" int property has not been set.\n";
         return false;
     }
+    source->removeIntProperty("egg");
+    i_value = 0;
+    source->getIntProperty("egg", i_value);
+    if (i_value != 0)
+    {
+        std::cerr <<" int property has not been removed.\n";
+        return false;
+    }
     return true;
 }
 
