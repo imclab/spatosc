@@ -87,7 +87,8 @@ class Properties
             }
             else
             {
-                std::cerr << __FUNCTION__ << ": No such property: \"" + name + "\"." << std::endl;
+                T dummy;
+                std::cerr << __FUNCTION__ << ": No such " << typeid(dummy).name() << " property: \"" + name + "\"." << std::endl;
                 return false;
             }
         }
