@@ -256,6 +256,7 @@ bool Wrapper::removeNodeStringProperty(const std::string &node, const std::strin
 bool Wrapper::setNodeIntProperty(const std::string &node, const std::string &key, const int &value)
 {
     Node *nodePtr = scene_->getNode(node);
+
     if (nodePtr)
     {
         nodePtr->setIntProperty(key, value);
