@@ -183,7 +183,7 @@ bool Wrapper::addTranslator(const std::string &name, const std::string &translat
     if (translatorName == "BasicTranslator")
         return scene_->addTranslator<BasicTranslator>(name, sendToAddress, port, verbose) != 0;
     else if (translatorName == "DmitriTranslator")
-        return scene_->addTranslator<DmitriTranslator>(name, sendToAddress, port, verbose) != 0;
+        return scene_->addTranslator<DmitriTranslator>(name, sendToAddress, port, verbose) != 0; // FIXME:4th arg to DmitriTranslator's constructor is not a bool!
     else if (translatorName == "ConsoleTranslator")
         return scene_->addTranslator<ConsoleTranslator>(name, sendToAddress, port, verbose) != 0;
     else if (translatorName == "FudiTranslator")
