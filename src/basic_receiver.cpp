@@ -1,5 +1,5 @@
 /*
- * spatdif_receiver.cpp
+ * basic_receiver.cpp
  *
  * This file is part of Spatosc.
  *
@@ -19,7 +19,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "spatdif_receiver.h"
+#include "basic_receiver.h"
 #include "osc_scene.h"
 #include "oscreceiver.h"
 #include "node.h"

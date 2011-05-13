@@ -17,7 +17,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "spatdif_translator.h"
+#include "basic_translator.h"
 #include <string>
 #include <iostream>
 #include <cassert>

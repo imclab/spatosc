@@ -1,5 +1,5 @@
 /*
- * spatdif_receiver.h
+ * basic_receiver.h
  *
  * This file is part of Spatosc.
  *

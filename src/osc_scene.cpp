@@ -20,7 +20,7 @@
 #include <iostream>
 #include <cassert>
 #include "osc_scene.h"
-#include "spatdif_receiver.h"
+#include "basic_receiver.h"
 #include "unused.h"
 #include "oscutils.h"
 

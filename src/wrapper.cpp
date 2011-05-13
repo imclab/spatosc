@@ -24,7 +24,7 @@
 #include "node.h"
 #include "scene.h"
 #include "soundsource.h"
-#include "spatdif_translator.h"
+#include "basic_translator.h"
 #include "fudi_translator.h"
 #include "translator.h"
 #include "wrapper.h"

@@ -119,7 +119,7 @@ class Scene
          * Here is an example:
          * \code
          * Scene scene();
-         * scene.addTranslator<SpatdifTranslator>("spatdif", "127.0.0.1", "11111");
+         * scene.addTranslator<SpatdifTranslator>("basic", "127.0.0.1", "11111");
          * \endcode
          * 
          * @return A Translator pointer. Null if there was already one with that
@@ -146,7 +146,7 @@ class Scene
          * Here is an example:
          * \code
          * Scene scene();
-         * scene.addTranslator("spatdif", new SpatdifTranslator("127.0.0.1", "11111"));
+         * scene.addTranslator("basic", new SpatdifTranslator("127.0.0.1", "11111"));
          * \endcode
          *
          * IMPORTANT: you should never free the object for the pointer that you

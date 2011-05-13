@@ -1,5 +1,5 @@
 /*
- * spatdif_translator.h
+ * basic_translator.h
  *
  * This file is part of Spatosc.
  *
