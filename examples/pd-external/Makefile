@@ -33,7 +33,7 @@ CC = g++
 
 # -I"$(PD_INCLUDE)/pd" supports the header location for 0.43
 
-DEPS=liblo spatosc-0.1
+DEPS=liblo spatosc-0.2
 CFLAGS = -I"$(PD_INCLUDE)/pd" -Wall -W -g `pkg-config --cflags $(DEPS)`
 LDFLAGS = 
 LIBS = `pkg-config --libs $(DEPS)`
