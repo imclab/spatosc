@@ -18,7 +18,7 @@
  */
 
 /** @file
- * This test checks a client using SpatdifReceiver
+ * This test checks a client using BasicReceiver
  *
  * To run it though gdb:
  * $ libtool --mode=execute gdb check_spatdif

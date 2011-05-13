@@ -30,44 +30,44 @@
 namespace spatosc
 {
 
-const char *SpatdifTranslator::DEFAULT_SEND_PORT = "18032";
+const char *BasicTranslator::DEFAULT_SEND_PORT = "18032";
 
-SpatdifTranslator::SpatdifTranslator(const std::string &ip,
+BasicTranslator::BasicTranslator(const std::string &ip,
         const std::string &port,
         bool verbose) :
     Translator(verbose),
     sender_(new OscSender(ip, port))
     {
         if (verbose_)
-            std::cout << "SpatdifTranslator sending to: " << sender_->toString() << std::endl;
+            std::cout << "BasicTranslator sending to: " << sender_->toString() << std::endl;
     }
 
-void SpatdifTranslator::sendPosition(const std::string &prefix, Node *node)
+void BasicTranslator::sendPosition(const std::string &prefix, Node *node)
 {
     std::string path = prefix +  "/xyz";
     Vector3 vect(node->getPosition());
     sender_->sendMessage(path, "fff", vect.x, vect.y, vect.z, SPATOSC_ARGS_END);
 }
 
-void SpatdifTranslator::sendAED(const std::string &prefix, Connection *conn)
+void BasicTranslator::sendAED(const std::string &prefix, Connection *conn)
 {
     std::string path = prefix +  "/aed";
     sender_->sendMessage(path, "fff", conn->azimuth(), conn->elevation(), conn->distance(), SPATOSC_ARGS_END);
 }
 
-void SpatdifTranslator::sendDelay(const std::string &prefix, Connection *conn)
+void BasicTranslator::sendDelay(const std::string &prefix, Connection *conn)
 {
     std::string path = prefix +  "/delay";
     sender_->sendMessage(path, "f", conn->delay(), SPATOSC_ARGS_END);
 }
 
-void SpatdifTranslator::sendGainDB(const std::string &prefix, Connection *conn)
+void BasicTranslator::sendGainDB(const std::string &prefix, Connection *conn)
 {
     std::string path = prefix +  "/gainDB";
     sender_->sendMessage(path, "f", conn->gainDB(), SPATOSC_ARGS_END);
 }
 
-void SpatdifTranslator::pushConnectionChanges(Connection * conn)
+void BasicTranslator::pushConnectionChanges(Connection * conn)
 {
     SoundSource *src = conn->getSource();
     Listener *snk = conn->getSink();
@@ -83,14 +83,14 @@ void SpatdifTranslator::pushConnectionChanges(Connection * conn)
     sendGainDB(connectionPath, conn);
 }
 
-void SpatdifTranslator::pushSceneChange(const char *types, va_list ap)
+void BasicTranslator::pushSceneChange(const char *types, va_list ap)
 {
     // just forwards all scene changes over OSC
     // (includes messages like createListener, createSoundSource, connect, etc)
     sender_->sendMessage("/spatosc/core", types, ap);
 }
 /*
-void SpatdifTranslator::pushSceneChange(const std::string &method, ...)
+void BasicTranslator::pushSceneChange(const std::string &method, ...)
 {
     va_list ap;
     va_start(ap, method);
@@ -105,7 +105,7 @@ void SpatdifTranslator::pushSceneChange(const std::string &method, ...)
 }
 */
 
-void SpatdifTranslator::pushPropertyChange(Node *node, const std::string &key, const std::string &value)
+void BasicTranslator::pushPropertyChange(Node *node, const std::string &key, const std::string &value)
 {
     //std::cout << "pushing property for node " << node->getID() << ": " << key << value << std::endl;
     std::string path = "/spatosc/core/" + node->getType() + "/" + node->getID() + "/prop";
@@ -114,14 +114,14 @@ void SpatdifTranslator::pushPropertyChange(Node *node, const std::string &key, c
     sender_->sendMessage(path, "ss", key.c_str(), value.c_str(), SPATOSC_ARGS_END);
 }
 
-void SpatdifTranslator::pushPropertyChange(Node *node, const std::string &key, const double &value)
+void BasicTranslator::pushPropertyChange(Node *node, const std::string &key, const double &value)
 {
     //std::cout << "pushing property for node " << node->getID() << ": " << key << value << std::endl;
     std::string path = "/spatosc/core/" + node->getType() + "/" + node->getID() + "/prop";
     sender_->sendMessage(path, "sf", key.c_str(), (float)value, SPATOSC_ARGS_END);
 }
 
-void SpatdifTranslator::pushPropertyChange(Node *node, const std::string &key, const int &value)
+void BasicTranslator::pushPropertyChange(Node *node, const std::string &key, const int &value)
 {
     //std::cout << "pushing property for node " << node->getID() << ": " << key << value << std::endl;
     std::string path = "/spatosc/core/" + node->getType() + "/" + node->getID() + "/prop";

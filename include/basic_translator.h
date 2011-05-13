@@ -20,11 +20,11 @@
  */
 
 /** @file
- * The SpatdifTranslator class.
+ * The BasicTranslator class.
  */
 
-#ifndef _SPATDIF_TRANSLATOR_H_
-#define _SPATDIF_TRANSLATOR_H_
+#ifndef _BASIC_TRANSLATOR_H_
+#define _BASIC_TRANSLATOR_H_
 
 #include "translator.h"
 #include "memory.h"
@@ -37,15 +37,15 @@ class OscSender;
 class Node;
 
 /**
- * Translator for the SpatDIF protocol.
+ * Translator for the Basic protocol.
  */
-class SpatdifTranslator : public Translator
+class BasicTranslator : public Translator
 {
     public:
 
         static const char *DEFAULT_SEND_PORT;
 
-        SpatdifTranslator(
+        BasicTranslator(
                 const std::string &ip,
                 const std::string &port = DEFAULT_SEND_PORT,
                 bool verbose = false);
@@ -66,9 +66,9 @@ class SpatdifTranslator : public Translator
         void sendDelay(const std::string &prefix, Connection *conn);
         void sendGainDB(const std::string &prefix, Connection *conn);
         // not implemented
-        SpatdifTranslator(const SpatdifTranslator&);
-        const SpatdifTranslator& operator=(const SpatdifTranslator&);
+        BasicTranslator(const BasicTranslator&);
+        const BasicTranslator& operator=(const BasicTranslator&);
 };
 
 } // end namespace spatosc
-#endif // _SPATDIF_TRANSLATOR_H_
+#endif // _BASIC_TRANSLATOR_H_

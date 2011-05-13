@@ -20,11 +20,11 @@
  */
 
 /** @file
- * The SpatdifReceiver class.
+ * The BasicReceiver class.
  */
 
-#ifndef _SPATDIF_RECEIVER_H_
-#define _SPATDIF_RECEIVER_H_
+#ifndef _BASIC_RECEIVER_H_
+#define _BASIC_RECEIVER_H_
 
 #include <string>
 #include "oscreceiver.h"
@@ -34,9 +34,9 @@ namespace spatosc
 {
 
 /**
- * Useful for clients to receive messages from spatosc's SpatdifTranslator.
+ * Useful for clients to receive messages from spatosc's BasicTranslator.
  */
-class SpatdifReceiver : public OscReceiver
+class BasicReceiver : public OscReceiver
 {
     public:
         /**
@@ -44,7 +44,7 @@ class SpatdifReceiver : public OscReceiver
          * Starts listening for OSC messages on the given port.
          * @param port String that must be a valid port number.
          */
-        SpatdifReceiver(const std::string &port, bool verbose = false);
+        BasicReceiver(const std::string &port, bool verbose = false);
         /**
          * Checks for incoming OSC messages.
          */
@@ -60,4 +60,6 @@ class SpatdifReceiver : public OscReceiver
 };
 
 } // end namespace spatosc
-#endif // _SPATDIF_RECEIVER_H_
+
+#endif // _BASIC_RECEIVER_H_
+

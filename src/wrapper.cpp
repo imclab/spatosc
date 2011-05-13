@@ -180,8 +180,8 @@ void Wrapper::setScale(double sx, double sy, double sz)
 
 bool Wrapper::addTranslator(const std::string &name, const std::string &translatorName, const std::string &sendToAddress, const std::string &port, bool verbose)
 {
-    if (translatorName == "SpatdifTranslator")
-        return scene_->addTranslator<SpatdifTranslator>(name, sendToAddress, port, verbose) != 0;
+    if (translatorName == "BasicTranslator")
+        return scene_->addTranslator<BasicTranslator>(name, sendToAddress, port, verbose) != 0;
     else if (translatorName == "DmitriTranslator")
         return scene_->addTranslator<DmitriTranslator>(name, sendToAddress, port, verbose) != 0;
     else if (translatorName == "ConsoleTranslator")

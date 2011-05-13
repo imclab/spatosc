@@ -31,9 +31,9 @@ namespace spatosc
 OscScene::OscScene(const std::string &receiverPort) :
     receiver_()
 {
-    receiver_.reset(new SpatdifReceiver(receiverPort));
+    receiver_.reset(new BasicReceiver(receiverPort));
     std::cout << "Scene receiving on port " << receiverPort << std::endl;
-    receiver_->addHandler(NULL, NULL, SpatdifReceiver::onSceneMessage, this);
+    receiver_->addHandler(NULL, NULL, BasicReceiver::onSceneMessage, this);
 }
 
 OscScene::~OscScene()
@@ -77,7 +77,7 @@ SoundSource* OscScene::createSoundSource(const std::string &id)
 {
     SoundSource *result = Scene::createSoundSource(id);
     if (result != 0)
-        receiver_->addHandler(NULL, NULL, SpatdifReceiver::onNodeMessage, result);
+        receiver_->addHandler(NULL, NULL, BasicReceiver::onNodeMessage, result);
     return result;
 }
 
@@ -85,7 +85,7 @@ Listener* OscScene::createListener(const std::string &id)
 {
     Listener *result = Scene::createListener(id);
     if (result != 0)
-        receiver_->addHandler(NULL, NULL, SpatdifReceiver::onNodeMessage, result);
+        receiver_->addHandler(NULL, NULL, BasicReceiver::onNodeMessage, result);
     return result;
 }
 
