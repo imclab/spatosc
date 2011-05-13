@@ -91,7 +91,7 @@ int main(int argc, char **argv)
 	double maxFrameRate = 60;
     bool dmitri = false;
     std::string dmitriIP = "127.0.0.1";
-    std::string spatdifIP = "127.0.0.1";
+    std::string basicTranslatorIP = "127.0.0.1";
 
 	// *************************************************************************
 	// set up SPIN:
@@ -113,7 +113,7 @@ int main(int argc, char **argv)
 	arguments.getApplicationUsage()->setCommandLineUsage(arguments.getApplicationName()+" [options]");
 	arguments.getApplicationUsage()->addCommandLineOption("-h or --help", "Display this information");
 	arguments.getApplicationUsage()->addCommandLineOption("--scene-id <uniqueID>", "Specify the scene ID to listen to (Default: '" + sceneID + "')");
-	arguments.getApplicationUsage()->addCommandLineOption("--remote-ip <IP address>", "Specify the remote IP address of the spatdif spatializer (Default: '" + spatdifIP + "')");
+	arguments.getApplicationUsage()->addCommandLineOption("--remote-ip <IP address>", "Specify the remote IP address of the spatdif spatializer (Default: '" + basicTranslatorIP + "')");
 	arguments.getApplicationUsage()->addCommandLineOption("--dmitri <IP address>", "Use the D-Mitri translator and send messages to the specified DCP address (requires a properly configured spacemap and OSC mapping control defined in CueStation");
 
 	if (arguments.read("-h") || arguments.read("--help"))
@@ -126,7 +126,7 @@ int main(int argc, char **argv)
 	arguments.read("--scene-id", param_spinID);
 	spin.setSceneID(sceneID);
 
-	osg::ArgumentParser::Parameter param_remoteIP(spatdifIP);
+	osg::ArgumentParser::Parameter param_remoteIP(basicTranslatorIP);
 	if (arguments.read("--remote-ip", param_remoteIP));
 	
     osg::ArgumentParser::Parameter param_dmitri(dmitriIP);
@@ -202,7 +202,7 @@ int main(int argc, char **argv)
     }
     
     // also send to spatdif translator for this example (for doppler component):
-    audioScene_.addTranslator<spatosc::SpatdifTranslator>("spatdif", spatdifIP.c_str(), spatosc::SpatdifTranslator::DEFAULT_SEND_PORT);
+    audioScene_.addTranslator<spatosc::BasicTranslator>("basic", basicTranslatorIP.c_str(), spatosc::BasicTranslator::DEFAULT_SEND_PORT);
 
     
     //audioScene_.setOrientation(90.0, 0.0, 0.0);
