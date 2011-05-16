@@ -30,7 +30,8 @@
 
 #define UNUSED(x) ((void) (x))
 
-static const bool SPATOSC_DEBUG = true;
+//static const bool SPATOSC_DEBUG = true;
+static const bool SPATOSC_DEBUG = false;
 static const float SUCCESS = 1.0;
 static const float FAILURE = 0.0;
 
@@ -107,7 +108,7 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
     {
         post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
     }
-    bool success = x->wrapper.addTranslator("default", translatorName, sendToAddress, sendToPort, true);
+    bool success = x->wrapper.addTranslator("default", translatorName, sendToAddress, sendToPort, SPATOSC_DEBUG);
     if (! success)
     {
         post("[spatosc]: ERROR calling addTranslator from the constructor.");
