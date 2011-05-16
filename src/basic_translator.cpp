@@ -44,9 +44,12 @@ BasicTranslator::BasicTranslator(const std::string &ip,
 
 void BasicTranslator::sendPosition(const std::string &prefix, Node *node)
 {
+
+	
+	// no need to send this to the renderer
     std::string path = prefix +  "/xyz";
-    Vector3 vect(node->getPosition());
-    sender_->sendMessage(path, "fff", vect.x, vect.y, vect.z, SPATOSC_ARGS_END);
+   Vector3 vect(node->getPosition());
+    // sender_->sendMessage(path, "fff", vect.x, vect.y, vect.z, SPATOSC_ARGS_END);
 }
 
 void BasicTranslator::sendAED(const std::string &prefix, Connection *conn)

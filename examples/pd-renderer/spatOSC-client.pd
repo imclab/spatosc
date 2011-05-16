@@ -1,0 +1,293 @@
+#N canvas 98 22 928 1020 10;
+#X obj -36 76 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
+0 1;
+#X obj -36 18 r to_spatosc;
+#X obj 208 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 266 60;
+#X obj 324 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 385 86;
+#X text 213 12 source;
+#X text 316 10 listener;
+#N canvas 0 351 856 474 dynamic 0;
+#X obj 40 36 inlet;
+#X obj 102 38 inlet;
+#X obj 283 43 inlet;
+#X obj 345 45 inlet;
+#X floatatom 43 164 5 0 0 0 - - -;
+#X floatatom 82 164 5 0 0 0 - - -;
+#X floatatom 121 164 5 0 0 0 - - -;
+#N canvas 0 22 290 211 pack3f 0;
+#X obj 79 103 pack f f f;
+#X obj 99 73 t b f;
+#X obj 144 71 t b f;
+#X obj 63 44 inlet;
+#X obj 110 41 inlet;
+#X obj 162 45 inlet;
+#X obj 80 137 outlet;
+#X connect 0 0 6 0;
+#X connect 1 0 0 0;
+#X connect 1 1 0 1;
+#X connect 2 0 0 0;
+#X connect 2 1 0 2;
+#X connect 3 0 0 0;
+#X connect 4 0 1 0;
+#X connect 5 0 2 0;
+#X restore 43 184 pd pack3f;
+#X msg 325 196 \; to_spatosc setPosition ear \$1 \$2 \$3;
+#X obj 45 129 - 100;
+#X obj 132 136 - 100;
+#X floatatom 327 142 5 0 0 0 - - -;
+#X floatatom 366 142 5 0 0 0 - - -;
+#X floatatom 411 141 5 0 0 0 - - -;
+#N canvas 0 22 290 211 pack3f 0;
+#X obj 79 103 pack f f f;
+#X obj 99 73 t b f;
+#X obj 144 71 t b f;
+#X obj 63 44 inlet;
+#X obj 110 41 inlet;
+#X obj 162 45 inlet;
+#X obj 80 137 outlet;
+#X connect 0 0 6 0;
+#X connect 1 0 0 0;
+#X connect 1 1 0 1;
+#X connect 2 0 0 0;
+#X connect 2 1 0 2;
+#X connect 3 0 0 0;
+#X connect 4 0 1 0;
+#X connect 5 0 2 0;
+#X restore 327 170 pd pack3f;
+#X obj 327 101 - 100;
+#X obj 414 108 - 100;
+#X msg 42 221 \; to_spatosc setPosition src-0 \$1 \$2 \$3;
+#X msg 475 59 \; to_spatosc setOrientation ear 0 0 \$1;
+#X obj 488 33 inlet;
+#X connect 0 0 9 0;
+#X connect 1 0 10 0;
+#X connect 2 0 15 0;
+#X connect 3 0 16 0;
+#X connect 4 0 7 0;
+#X connect 5 0 7 1;
+#X connect 6 0 7 2;
+#X connect 7 0 17 0;
+#X connect 9 0 4 0;
+#X connect 10 0 5 0;
+#X connect 11 0 14 0;
+#X connect 12 0 14 1;
+#X connect 13 0 14 2;
+#X connect 14 0 8 0;
+#X connect 15 0 11 0;
+#X connect 16 0 12 0;
+#X connect 19 0 18 0;
+#X restore 280 148 pd dynamic;
+#N canvas 457 27 983 873 SPAT_OSC_MESSAGES 0;
+#X floatatom 59 79 5 0 0 0 - - -;
+#X msg 41 -243 \; to_spatosc setConnectFilter ear;
+#X text 451 -181 <-- Add properties;
+#X text 49 -8 Also need to be able to set/get/save/recall params in
+spatOSC;
+#X text 102 5 DELAY and AED are partially redundant;
+#X msg 46 -192 \; to_spatosc setNodeStringProperty ear vmicL.channel
+"9";
+#X text 381 -131 <-- Add properties;
+#X msg 46 -145 \; to_spatosc setNodeStringProperty ear setPlugin ar.listener-stereo~
+;
+#X text 45 -85 not needed with auto-connect;
+#X text 62 55 need to deal with numbers;
+#X msg 32 299 \; to_spatosc createListener ear;
+#X msg 252 302 \; to_spatosc deleteNode ear;
+#X msg 33 404 \; to_spatosc clearScene \;;
+#X msg 34 471 \; to_spatosc setNodeFloatProperty ear setSpread 1;
+#X msg 60 107 \; src-0 setParam fq \$1;
+#X msg 46 -65 \; to_spatosc connect src-0 ear \;;
+#X msg 242 262 \; to_spatosc deleteNode src-0;
+#X msg 253 343 \; to_spatosc disconnect src-0 ear \;;
+#X msg 35 342 \; to_spatosc connect src-0 ear \;;
+#X msg 33 263 \; to_spatosc createSource src-0;
+#X msg 60 150 \; to_spatosc setNodeFloatProperty src-0 fq 9.1;
+#X connect 0 0 14 0;
+#X restore 44 38 pd SPAT_OSC_MESSAGES;
+#X obj -36 44 spatosc;
+#X obj -28 725 cnv 15 700 240 empty empty debug 4 12 0 14 -233017 -1
+0;
+#X msg -16 769 \; to_renderer-db src-0.patch vis 1;
+#X msg -16 811 \; to_renderer-db ear.patch vis 1;
+#X msg -17 853 \; to_renderer-db src-0-ear.conn.patch vis 1;
+#X msg 248 774 \; to_renderer-db src-0.plugin.patch vis 1;
+#X msg 246 816 \; to_renderer-db ear.plugin.patch vis 1;
+#X msg 248 855 \; to_renderer-db src-0-ear.conn.plugin.patch vis 1
+;
+#X obj 483 1 cnv 15 380 160 empty empty RENDERER_MESSAGES 4 12 0 16
+-191407 -1 0;
+#X floatatom 47 109 7 0 0 3 spatOSCrx-port spatOSC-port-set spatOSC-port
+;
+#X floatatom 45 65 7 0 0 3 renderer-port renderer-port-set renderer-port
+;
+#N canvas 0 321 879 369 OSC-messaging 0;
+#X obj 105 218 OSCtx;
+#X msg 104 193 setAddress localhost \$1;
+#X obj 104 165 r renderer-port;
+#X msg 381 142 port \$1;
+#X obj 381 164 print spatOSC-tx;
+#X obj 381 112 r spatOSC-port;
+#X msg 381 61 port \$1;
+#X obj 381 83 print renderer-port;
+#X obj 15 39 r to_renderer-db;
+#X obj 217 37 r to_renderer;
+#X obj 216 67 OSCprepend /a.renderer;
+#X obj 381 38 r renderer-port;
+#X obj 652 59 loadbang;
+#X msg 534 141 \; to_spatosc addTranslator spatdif SpatdifTranslator
+localhost \$1;
+#X obj 534 80 r spatOSC-port;
+#X msg 652 81 \; spatOSC-port 18032 \; renderer-port 18111;
+#X obj 14 72 OSCprepend /a.renderer/nodemess;
+#X connect 1 0 0 0;
+#X connect 2 0 1 0;
+#X connect 3 0 4 0;
+#X connect 5 0 3 0;
+#X connect 6 0 7 0;
+#X connect 8 0 16 0;
+#X connect 9 0 10 0;
+#X connect 9 0 0 0;
+#X connect 11 0 6 0;
+#X connect 12 0 15 0;
+#X connect 14 0 13 0;
+#X connect 16 0 0 0;
+#X restore 45 17 pd OSC-messaging;
+#X text 22 749 nodes;
+#X text 306 751 plugins;
+#X floatatom 379 11 5 0 0 1 orientation - -;
+#X obj -37 168 cnv 15 900 540 empty empty SPAT_OSC_MESSAGES 4 12 0
+16 -191407 -1 0;
+#X obj -28 439 cnv 15 400 260 empty empty setMediaURI 4 12 0 14 -233017
+-1 0;
+#X msg -17 603 \; to_spatosc setNodeStringProperty src-0 setMediaURI
+plugin://testnoise~;
+#X msg -16 505 \; to_spatosc setNodeStringProperty src-0 setMediaURI
+file://test.aif;
+#X msg 14 549 \; to_spatosc setNodeStringProperty src-0 setMediaURI
+file://~/svn/ss_demo/sound/sheefa8.aif;
+#X msg -14 462 \; to_spatosc setNodeStringProperty src-0 setMediaURI
+adc://1;
+#X msg 25 647 \; to_spatosc setNodeStringProperty src-0 setMediaURI
+plugin://testone~;
+#X obj -30 194 cnv 15 400 240 empty empty scene-generation 4 12 0 14
+-233017 -1 0;
+#X obj -25 243 cnv 15 24 24 empty empty 1 4 12 1 24 -99865 -262144
+0;
+#X msg 187 196 \; to_spatosc clearScene;
+#N canvas 377 29 695 497 temp 0;
+#X obj 34 12 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 86 101 t f b;
+#X obj 175 100 random 200;
+#X obj 174 127 - 100;
+#X obj 248 97 random 200;
+#X obj 247 124 - 100;
+#X msg 35 339 \; to_spatosc createListener ear \;;
+#X obj 34 40 t b b;
+#X obj 86 169 pack f f f f;
+#X obj 334 96 random 40;
+#X obj 333 150 mtof;
+#X floatatom 156 37 5 0 0 0 - - -;
+#X obj 86 73 iterN 2;
+#X obj 333 123 + 60;
+#X text 82 306 connects automatically;
+#X obj 84 14 inlet;
+#X msg 301 368 \; to_spatosc createSource src-\$1 \; to_spatosc setNodeStringProperty
+src-\$1 setPlugin testone~ \; to_renderer src-\$1 setParam fq \$4 \;
+to_spatosc setPosition src-\$1 \$2 \$3 0;
+#X msg 242 448 \; to_renderer /nodemess src-0 setParam fq \$1;
+#X floatatom 242 424 5 0 0 0 - - -;
+#X msg 85 223 \; to_spatosc createSource src-\$1 \; to_spatosc setNodeStringProperty
+src-\$1 setPlugin testone~ \; to_spatosc setNodeFloatProperty src-\$1
+fq \$4 \; to_spatosc connect src-\$1 ear \; to_spatosc setPosition
+src-\$1 \$2 \$3 0 \; to_spatosc setDopplerFactor src-\$1 ear 10;
+#X connect 0 0 7 0;
+#X connect 1 0 8 0;
+#X connect 1 1 2 0;
+#X connect 1 1 4 0;
+#X connect 1 1 9 0;
+#X connect 2 0 3 0;
+#X connect 3 0 8 1;
+#X connect 4 0 5 0;
+#X connect 5 0 8 2;
+#X connect 7 0 6 0;
+#X connect 7 1 12 0;
+#X connect 8 0 19 0;
+#X connect 9 0 13 0;
+#X connect 10 0 8 3;
+#X connect 11 0 12 1;
+#X connect 12 0 1 0;
+#X connect 13 0 10 0;
+#X connect 15 0 0 0;
+#X connect 18 0 17 0;
+#X restore 9 413 pd temp;
+#X obj 8 392 bng 15 250 50 0 empty empty generate-nodes 17 7 0 10 -262144
+-1 -1;
+#X msg 9 244 \; to_spatosc createSource src-0 \, createListener ear
+\, setNodeStringProperty src-0 setPlugin testnoise~ \, setDopplerFactor
+src-0 ear 10;
+#X obj 376 189 cnv 15 400 510 empty empty other 4 12 0 14 -233017 -1
+0;
+#X msg 386 224 0;
+#X text 420 221 no effect;
+#X msg 504 225 100;
+#X text 533 224 normal;
+#X msg 507 250 200;
+#X text 540 250 more extreme;
+#X msg 388 275 \; to_spatosc setDopplerFactor src-0 ear \$1;
+#X floatatom 386 249 5 0 0 0 - - -;
+#X msg 388 329 0;
+#X text 422 326 no effect;
+#X msg 506 330 100;
+#X text 535 329 normal;
+#X msg 509 355 200;
+#X text 542 355 more extreme;
+#X floatatom 388 354 5 0 0 0 - - -;
+#X msg 390 380 \; to_spatosc setDistanceFactor src-0 ear \$1;
+#X msg 425 471 \; to_spatosc setOrientation ear 0 0 \$1;
+#X floatatom 388 476 5 0 0 0 - - -;
+#X floatatom 388 441 5 0 0 0 - - -;
+#X msg 426 432 \; to_spatosc setPosition src-1 0 \$1 0;
+#X floatatom 518 70 5 0 0 0 - - -;
+#X msg 422 521 \; to_spatosc setNodeFloatProperty src-0 fq \$1;
+#X floatatom 389 527 5 0 0 0 - - -;
+#X msg 8 310 \; to_spatosc createSource src-0 \, createSource src-1
+\, createListener ear \, setPosition src-0 -20 -0 0 \, setPosition
+src-1 20 0 0 \, setNodeStringProperty src-0 setPlugin testone~ \, setNodeStringProperty
+src-1 setPlugin testnoise~;
+#X obj 566 91 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 501 143 s to_renderer;
+#X msg 581 92 /a.renderer/nodemess pd dsp \$1;
+#X msg 552 70 /a.renderer/nodemess src-0 setParam fq \$1;
+#X msg 503 46 /a.renderer/setOutputFormat stereo;
+#X msg 489 23 /a.renderer/setOutputFormat quad;
+#X floatatom 590 118 5 -60 6 1 _db - -;
+#X msg 591 139 /a.renderer/setOutputDB \$1;
+#X connect 1 0 8 0;
+#X connect 2 0 6 0;
+#X connect 2 1 6 1;
+#X connect 3 0 6 2;
+#X connect 3 1 6 3;
+#X connect 8 0 0 0;
+#X connect 22 0 6 4;
+#X connect 34 0 33 0;
+#X connect 37 0 44 0;
+#X connect 39 0 44 0;
+#X connect 41 0 44 0;
+#X connect 44 0 43 0;
+#X connect 45 0 51 0;
+#X connect 47 0 51 0;
+#X connect 49 0 51 0;
+#X connect 51 0 52 0;
+#X connect 54 0 53 0;
+#X connect 55 0 56 0;
+#X connect 57 0 64 0;
+#X connect 59 0 58 0;
+#X connect 61 0 63 0;
+#X connect 63 0 62 0;
+#X connect 64 0 62 0;
+#X connect 65 0 62 0;
+#X connect 66 0 62 0;
+#X connect 67 0 68 0;
+#X connect 68 0 62 0;
