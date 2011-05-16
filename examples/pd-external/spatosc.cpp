@@ -90,8 +90,8 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
         translatorName = translator->s_name;
         if (translatorName == "DmitriTranslator")
             sendToPort = spatosc::DmitriTranslator::DEFAULT_SEND_PORT;
-        else if (translatorName == "SpatdifTranslator")
-            sendToPort = spatosc::SpatdifTranslator::DEFAULT_SEND_PORT;
+        else if (translatorName == "BasicTranslator")
+            sendToPort = spatosc::BasicTranslator::DEFAULT_SEND_PORT;
         else if (translatorName == "FudiTranslator")
             sendToPort = spatosc::FudiTranslator::DEFAULT_SEND_PORT;
     }
@@ -241,7 +241,7 @@ static void spatosc_addTranslator(t_spatosc *x, t_symbol *identifier, t_symbol *
 {
     std::string translatorName = "ConsoleTranslator";
     std::string sendToAddress = "localhost";
-    std::string sendToPort = spatosc::SpatdifTranslator::DEFAULT_SEND_PORT;
+    std::string sendToPort = spatosc::BasicTranslator::DEFAULT_SEND_PORT;
     if (std::string("NULL") != translator->s_name)
     {
         translatorName = translator->s_name;
