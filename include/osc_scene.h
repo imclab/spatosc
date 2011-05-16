@@ -31,7 +31,7 @@
 namespace spatosc
 {
 
-class SpatdifReceiver;
+class BasicReceiver;
 
 /**
  * Manages the nodes and their connections.
@@ -88,7 +88,7 @@ class OscScene : public Scene
         virtual void handleMessage(const std::string &method, lo_arg ** argv, const char *types);
 
     private:
-        std::tr1::shared_ptr<SpatdifReceiver> receiver_;
+        std::tr1::shared_ptr<BasicReceiver> receiver_;
 };
 
 } // end namespace spatosc

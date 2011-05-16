@@ -78,7 +78,7 @@ class Translator
             UNUSED(node);
             UNUSED(key);
             UNUSED(value);
-            std::cout << "Warning: Translator::" << __FUNCTION__ << "(string) not overriden.\n";
+            //std::cout << "Warning: Translator::" << __FUNCTION__ << "(string) not overriden.\n";
         }
 
         /**
@@ -89,7 +89,7 @@ class Translator
             UNUSED(node);
             UNUSED(key);
             UNUSED(value);
-            std::cout << "Warning: Translator::" << __FUNCTION__ << "(double) not overriden.\n";
+            //std::cout << "Warning: Translator::" << __FUNCTION__ << "(double) not overriden.\n";
         }
 
         /**
@@ -100,7 +100,7 @@ class Translator
             UNUSED(node);
             UNUSED(key);
             UNUSED(value);
-            std::cout << "Warning: Translator::" << __FUNCTION__ << "(int) not overriden.\n";
+            //std::cout << "Warning: Translator::" << __FUNCTION__ << "(int) not overriden.\n";
         }
 
         /**

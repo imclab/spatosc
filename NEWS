@@ -1,8 +1,8 @@
-2011-0?-?? spatosc 0.1.12
--------------------------
+2011-05-?? spatosc 0.2.0
+------------------------
 
-This release is a developer snapshot in the 0.1 unstable series. 
-It's the second release candidate for preparing the 0.2 stable series.
+This release is an official version in the 0.2 stable series. 
+It's the first release release in the 0.2 stable series. Each release in the 0.2 stable should be backward-compatible with each previous version in the series.
 
 This version contains new features and bug fixes.
 
@@ -11,6 +11,24 @@ New Features:
 
 Bug fixes: 
     * (none)
+
+2011-05-12 spatosc 0.1.12
+-------------------------
+
+This release is a developer snapshot in the 0.1 unstable series. 
+It's the third release candidate for preparing the 0.2 stable series. The API version is now 0.2.
+
+This version contains new features and bug fixes.
+
+New Features:
+    * DmitriTranslator now has properties enableGain and enableDelay to specify whether these should be sent via OSC
+    * DmitriTranslator Bus number should be set using setIntProperty "bus" <bus #>
+    * scened::addTranslator now also accepts a pointer (instead of the previously required template method>
+    * New PackageMaker document to make .pkg files for OSX
+    * Renamed SpatdifTranslator to BasicTranslator
+
+Bug fixes: 
+    * pd-external: Fixed setNodeIntProperty which was actually setting a float property
 
 2011-05-03 spatosc 0.1.10
 -------------------------

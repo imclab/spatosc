@@ -9,6 +9,7 @@ Release-critical for 0.2
  * test properties well
  * implement OSC callbacks for float and int properties
  * implement float/int properties in pd-external example
+ * setter method for verbose property in translators, with pd method 
 
 FUDI-specific features and issues
 ---------------------------------

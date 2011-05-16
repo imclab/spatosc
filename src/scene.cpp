@@ -604,5 +604,19 @@ void Scene::onSceneChanged(const char *types, ...)
         iter->second->pushSceneChange(types, ap);
 }
 
+Translator *Scene::addTranslator(const std::string &name, Translator *t)
+{
+    if (hasTranslator(name))
+    {
+        std::cout << "Warning: Cannot add translator named " << name << ". Already exists." << std::endl;
+        return 0;
+    }
+    else
+    {
+        translators_[name] = std::tr1::shared_ptr<Translator>(t);
+        return getTranslator(name);
+    }
+}
+
 } // end namespace spatosc
 

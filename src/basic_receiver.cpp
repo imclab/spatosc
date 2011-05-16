@@ -1,5 +1,5 @@
 /*
- * spatdif_receiver.cpp
+ * basic_receiver.cpp
  *
  * This file is part of Spatosc.
  *
@@ -19,7 +19,7 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "spatdif_receiver.h"
+#include "basic_receiver.h"
 #include "osc_scene.h"
 #include "oscreceiver.h"
 #include "node.h"
@@ -33,13 +33,13 @@
 namespace spatosc
 {
 
-SpatdifReceiver::SpatdifReceiver(const std::string &port, bool verbose) :
+BasicReceiver::BasicReceiver(const std::string &port, bool verbose) :
     OscReceiver(port),
     verbose_(verbose)
 {
 }
 
-int SpatdifReceiver::poll()
+int BasicReceiver::poll()
 {
     int bytes = 0;
     do
@@ -87,7 +87,7 @@ std::string getTypeName(const std::string &path)
 } // end anonymous namespace
 
 
-int SpatdifReceiver::onSceneMessage(const char * path, const char * types,
+int BasicReceiver::onSceneMessage(const char * path, const char * types,
         lo_arg ** argv, int /*argc*/, void * /*data*/, void *user_data)
 {
     OscScene *scene = static_cast<OscScene*>(user_data);
@@ -108,7 +108,7 @@ int SpatdifReceiver::onSceneMessage(const char * path, const char * types,
     return 1;
 }
 
-int SpatdifReceiver::onNodeMessage(const char * path, const char * types,
+int BasicReceiver::onNodeMessage(const char * path, const char * types,
         lo_arg ** argv, int argc, void * /*data*/, void *user_data)
 {
     Node *node = static_cast<Node*>(user_data);

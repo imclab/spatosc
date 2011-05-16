@@ -24,7 +24,7 @@
 #include "node.h"
 #include "scene.h"
 #include "soundsource.h"
-#include "spatdif_translator.h"
+#include "basic_translator.h"
 #include "fudi_translator.h"
 #include "translator.h"
 #include "wrapper.h"
@@ -180,10 +180,10 @@ void Wrapper::setScale(double sx, double sy, double sz)
 
 bool Wrapper::addTranslator(const std::string &name, const std::string &translatorName, const std::string &sendToAddress, const std::string &port, bool verbose)
 {
-    if (translatorName == "SpatdifTranslator")
-        return scene_->addTranslator<SpatdifTranslator>(name, sendToAddress, port, verbose) != 0;
+    if (translatorName == "BasicTranslator")
+        return scene_->addTranslator<BasicTranslator>(name, sendToAddress, port, verbose) != 0;
     else if (translatorName == "DmitriTranslator")
-        return scene_->addTranslator<DmitriTranslator>(name, sendToAddress, port, verbose) != 0;
+        return scene_->addTranslator<DmitriTranslator>(name, sendToAddress, port, verbose) != 0; // FIXME:4th arg to DmitriTranslator's constructor is not a bool!
     else if (translatorName == "ConsoleTranslator")
         return scene_->addTranslator<ConsoleTranslator>(name, sendToAddress, port, verbose) != 0;
     else if (translatorName == "FudiTranslator")
@@ -256,6 +256,7 @@ bool Wrapper::removeNodeStringProperty(const std::string &node, const std::strin
 bool Wrapper::setNodeIntProperty(const std::string &node, const std::string &key, const int &value)
 {
     Node *nodePtr = scene_->getNode(node);
+
     if (nodePtr)
     {
         nodePtr->setIntProperty(key, value);

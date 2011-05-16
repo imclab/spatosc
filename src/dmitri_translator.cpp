@@ -60,8 +60,19 @@ verbose_(verbose)
 
 void DmitriTranslator::pushConnectionChanges(Connection *conn)
 {
-    std::string str;
-    SoundSource *src = conn->getSource();
+    //std::string str;
+    std::ostringstream ostr;
+    //SoundSource *src = conn->getSource();
+
+    int busID = 1; // default bus 1
+    conn->getSource()->getIntProperty("bus", busID);
+
+    int enableGain = 1;
+    conn->getSource()->getIntProperty("enableGain", enableGain);
+
+    int enableDelay = 0;
+    conn->getSource()->getIntProperty("enableDelay", enableDelay);
+
 
     float r = 1.0 - fabs( conn->elevation() / (M_PI/2) );
     float spacemapX, spacemapY;
@@ -77,17 +88,37 @@ void DmitriTranslator::pushConnectionChanges(Connection *conn)
     //std::cout << "azim="<<conn->azimuth()<<" elev="<<conn->elevation()<<" r="<<r<<std::endl;
     //std::cout << "Sending spacemap: " << spacemapX << "," << spacemapY << std::endl;
 
-    str = "/spacemap/" +  src->getID() + "/x";
-    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
-    sender_->sendMessage(str.c_str(), "f", spacemapX, SPATOSC_ARGS_END);
 
-    str = "/spacemap/" + src->getID() + "/y";
-    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
-    sender_->sendMessage(str.c_str(), "f", spacemapY, SPATOSC_ARGS_END);
 
-    str = "Bus " + src->getID() + " Level";
-    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
-    sender_->sendMessage("/set", "sf", str.c_str(), conn->gainDB(), SPATOSC_ARGS_END);
+    //str = "/spacemap/" +  src->getID() + "/x";
+    ostr.str("");
+    ostr << "/spacemap/" << busID << "/x";
+    sender_->sendMessage(ostr.str().c_str(), "f", spacemapX, SPATOSC_ARGS_END);
+    //std::cout << "sent " << ostr.str() <<" "<< spacemapX << std::endl;
+
+    //str = "/spacemap/" + src->getID() + "/y";
+    ostr.str("");
+    ostr << "/spacemap/" << busID << "/y";
+    sender_->sendMessage(ostr.str().c_str(), "f", spacemapY, SPATOSC_ARGS_END);
+    //std::cout << "sent " << ostr.str() <<" "<< spacemapY << std::endl;
+
+    if (enableGain)
+    {
+        //str = "Bus " + src->getID() + " Level";
+        ostr.str("");
+        ostr << "Bus " << busID << " Level";
+        sender_->sendMessage("/set", "sf", ostr.str().c_str(), conn->gainDB(), SPATOSC_ARGS_END);
+        //std::cout << "sent " << ostr.str() <<" "<< conn->gainDB() << std::endl;
+    }
+
+    if (enableDelay)
+    {
+        // NOTE: Dmitri expects delay as nanoseconds (INT64)
+        ostr.str("");
+        ostr << "Bus " << busID << " Delay";
+        sender_->sendMessage("/set", "sh", ostr.str().c_str(), (long int)(conn->delay()*1000000), SPATOSC_ARGS_END);
+        //std::cout << "sent " << ostr.str() <<" "<< conn->delay() << std::endl;
+    }
 }
 
 OscSender &DmitriTranslator::getSender() const
@@ -97,6 +128,7 @@ OscSender &DmitriTranslator::getSender() const
 
 void DmitriTranslator::setEquatorRadius(double radius)
 {
+    std::cout << "Set D-Mitri Spacemap equator radius to " << radius << std::endl;
 	SPACEMAP_EQUATOR_RADIUS = radius;
 	// TODO: need to recompute all connections and push them
 }

@@ -119,7 +119,7 @@ class Scene
          * Here is an example:
          * \code
          * Scene scene();
-         * scene.addTranslator<SpatdifTranslator>("spatdif", "127.0.0.1", "11111");
+         * scene.addTranslator<BasicTranslator>("basic", "127.0.0.1", "11111");
          * \endcode
          * 
          * @return A Translator pointer. Null if there was already one with that
@@ -146,26 +146,16 @@ class Scene
          * Here is an example:
          * \code
          * Scene scene();
-         * scene.addTranslator("spatdif", new SpatdifTranslator("127.0.0.1", "11111"));
+         * scene.addTranslator("basic", new BasicTranslator("127.0.0.1", "11111"));
          * \endcode
          *
          * IMPORTANT: you should never free the object for the pointer that you
          * passed to this function. Instead, use the removeTranslator() method.
          *
+         * @return A Translator pointer. Null if there was already one with that
+         * name, or if an error occurred. Never free this pointer.
          */
-        Translator *addTranslator(const std::string &name, Translator *t)
-        {
-            if (hasTranslator(name))
-            {
-                std::cout << "Warning: Cannot add translator named " << name << ". Already exists." << std::endl;
-                return 0;
-            }
-            else
-            {
-                translators_[name] = std::tr1::shared_ptr<Translator>(t);
-                return getTranslator(name);
-            }
-        }
+        Translator *addTranslator(const std::string &name, Translator *t);
 
         /**
          * Returns a pointer to a given Translator or a null pointer if not found.

@@ -44,7 +44,7 @@ class SoundSource : public Node
 
         // TODO: media extension:
 
-        /**
+        /*
          * Possible URIs for media??:
         file://soundfilename.wav
         http://www.server.com/soundfile.wav
@@ -55,7 +55,8 @@ class SoundSource : public Node
         pd_plugin://audio_plugin_patch.pd
         */
 
-        void setMediaURI(std::string uri) { mediaURI_ = uri; }
+
+        //void setMediaURI(std::string uri) { mediaURI_ = uri; }
 
         /*
         enum PlayingState {NOT_APPLICABLE, PLAYING, PAUSED};
@@ -78,7 +79,7 @@ class SoundSource : public Node
 
     private:
 
-        std::string mediaURI_;
+        //std::string mediaURI_;
         /*
         PlayingState currentPlayingState;
         LoopingState currentLoopingState;

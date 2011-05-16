@@ -95,16 +95,16 @@ class Wrapper
         bool setPosition(const std::string &nodeName, double x, double y, double z);
         /**
          * Adds a translator to use.
-         * Example of valid translators names include "SpatdifTranslator" and "DmitriTranslator".
+         * Example of valid translators names include "BasicTranslator" and "DmitriTranslator".
          * @param translatorName Must be the name of a valid child of the Translator class.
          * @return Success or not.
         */
         bool addTranslator(const std::string &name, const std::string &translatorName, const std::string &sendToAddress, const std::string &port, bool verbose);
         /**
           * Adds a translator to use.
-          * Example of valid translators names include "SpatdifTranslator" and "DmitriTranslator".
+          * Example of valid translators names include "BasicTranslator" and "DmitriTranslator".
           * @param translatorID A unique id for this translator instance (required in order to eventually remove the translator).
-          * @param translator A pointer to an already constructed translator object (ie, created with new SpatdifTranslator(), etc).
+          * @param translator A pointer to an already constructed translator object (ie, created with new BasicTranslator(), etc).
           * @return Success or not.
          */
         bool addTranslator(const std::string &translatorID, Translator *translator);
