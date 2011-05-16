@@ -29,7 +29,7 @@ namespace spatosc
 {
 
 Translator::Translator(bool verbose) : verbose_(verbose)
-{verbose=0}
+{}
 
 	
 	
