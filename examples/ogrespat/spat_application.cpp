@@ -18,7 +18,7 @@ This source file is part of the
 #include <signal.h>
 #include "spat_application.h"
 #include "text_renderer.h"
-#include "spatosc/geotransform.h"
+#include "spatosc/spatosc.h"
 #include <OgreMaterial.h>
 #include <OgreManualObject.h>
 #include <OgreMaterialManager.h>
@@ -50,7 +50,7 @@ SpatApplication::SpatApplication() :
 void SpatApplication::createAudioScene()
 {
     audioScene_.setSynchronous(false); // we will need to call flushMessages() once in a while
-    audioScene_.addTranslator<spatosc::SpatdifTranslator>("spatdif", "127.0.0.1", spatosc::SpatdifTranslator::DEFAULT_SEND_PORT);
+    audioScene_.addTranslator<spatosc::BasicTranslator>("basic", "127.0.0.1", spatosc::BasicTranslator::DEFAULT_SEND_PORT, true);
     audioScene_.setOrientation(90.0, 0.0, 0.0);
     soundSourceOne_ = audioScene_.createSoundSource("source1");
     soundSourceTwo_ = audioScene_.createSoundSource("source2");
