@@ -20,10 +20,7 @@
 #include "openal_renderer.h"
 #include <stdexcept>
 #include <iostream>
-#include <spatosc/scene.h>
-#include <spatosc/spatdif_translator.h>
-#include <spatosc/soundsource.h>
-#include <spatosc/maths.h>
+#include <spatosc/spatosc.h>
 #include <glib/gmain.h> // for gtimeout
 
 void AudioScene::init()
@@ -67,7 +64,7 @@ void AudioScene::bindCallbacks()
 
 // receive messages from the spatosc plugin
 AudioScene::AudioScene() : 
-    scene_(spatosc::SpatdifTranslator::DEFAULT_SEND_PORT)
+    scene_(spatosc::BasicTranslator::DEFAULT_SEND_PORT)
 {
     createSource();
     createListener();
