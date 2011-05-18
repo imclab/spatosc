@@ -35,7 +35,11 @@ class Scene;
 
 /**
  * Wraps the whole spatosc library.
+ * 
  * Implements the Facade design pattern.
+ * It makes the internal details of the library opaque to the user. That means you cannot access the Scene or its nodes directly.
+ * 
+ * For now, this is the only class that is accessible from Windows using the spatosc dynamic library.
  */
 class DLLEXPORT Wrapper
 {
@@ -191,7 +195,6 @@ class DLLEXPORT Wrapper
          * Enables or disables a node.
          */
         bool setNodeActive(const std::string &node, bool active);
-        
         /**
          * The Dmitri translator doesn't work with addTranslator, so here's a specific method to add it.
          */
@@ -202,4 +205,5 @@ class DLLEXPORT Wrapper
 
 } // end of namespace spatosc
 
-#endif
+#endif // __WRAPPER_H__
+
