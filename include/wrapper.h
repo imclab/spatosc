@@ -26,6 +26,7 @@
 
 #include <string>
 #include "memory.h"
+#include "dllexport.h"
 
 namespace spatosc
 {
@@ -36,7 +37,7 @@ class Scene;
  * Wraps the whole spatosc library.
  * Implements the Facade design pattern.
  */
-class Wrapper
+class DLLEXPORT Wrapper
 {
     public:
         /**
@@ -194,6 +195,10 @@ class Wrapper
          * See Connection::setDistanceFactor.
          */
         bool setDopplerFactor(const std::string &sourceNode, const std::string &sinkNode, double factor);
+        /**
+         * Enables or disables a node.
+         */
+        bool setNodeActive(const std::string &node, bool active);
     private:
         std::tr1::shared_ptr<Scene> scene_;
 };
