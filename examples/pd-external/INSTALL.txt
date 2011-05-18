@@ -1,0 +1,12 @@
+
+This extern will be installed to:
+
+for OSX: 
+	~/Library/Pd/spatosc
+	
+for Linux:
+	/usr/local/lib/pd-externals/spatosc
+
+note: you will need to add the above directory to your pd (pd-extended) search path, according to your OS, or specify the path on the command line, e.g:  "pd-extended -path   /usr/local/lib/pd-externals/spatosc "
+
+
