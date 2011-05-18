@@ -406,5 +406,10 @@ bool Wrapper::setNodeActive(const std::string &node, bool active)
     return true;
 }
 
+bool Wrapper::addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, bool verbose)
+{
+    return scene_->addTranslator(name, new DmitriTranslator(ip, toPort, verbose));
+}
+
 } // end of namespace spatosc
 

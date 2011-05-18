@@ -199,6 +199,11 @@ class DLLEXPORT Wrapper
          * Enables or disables a node.
          */
         bool setNodeActive(const std::string &node, bool active);
+        
+        /**
+         * The Dmitri translator doesn't work with addTranslator, so here's a specific method to add it.
+         */
+        bool addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, bool verbose);
     private:
         std::tr1::shared_ptr<Scene> scene_;
 };
