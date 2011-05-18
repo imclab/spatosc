@@ -1,0 +1,31 @@
+This pd-renderer example depends on three items:
+
+1. Pd-extended   To download, go to: http://puredata.info/community/projects/software/pd-extended
+
+2. the pd external: "spatosc"   (located in the "pd-external" subdirectory of the  spatosc/examples). Follow instructions to make and install;
+
+3. The pdsheefa library (externs, abstractions)
+
+To download and install, follow instructions on the site  http://code.sat.qc.ca/trac/pdsheefa.
+
+
+
+Note: you must make sure that you add the paths to "pdsheefa" and "spatosc" in pd-extended's search paths (either by via the command line, or in the preferences).   See instructions in spatosc/examples/pd-external, and on the pdsheefa site.
+
+For example on OSX,  you would launch pd-extended, and select "File->Preferences->Path..."
+
+~/Library/Pd/spatosc
+~/Library/Pd/pdsheefa
+
+
+Now the items in this example can be run by double clicking on them.
+
+
+
+for more information see:
+
+
+https://github.com/sat-metalab/spatosc/wiki/examples:Getting-Started:-pd-render
+
+
+-zack settel may 2011

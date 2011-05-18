@@ -1,3 +1,10 @@
+This extern depends on the spatosc library, which must be compiled and installed before making  (see README in spatosc directory).
+
+Once the spatosc library has been compiled and installed, do:
+
+> make
+> make install
+
 
 This extern will be installed to:
 
