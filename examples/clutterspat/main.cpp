@@ -220,7 +220,7 @@ int main(int argc, char *argv[])
 #endif
 
     app.foo_sound = scene.createSoundSource("1");
-    scene.addTranslator<SpatdifTranslator>("spatdif");
+    scene.addTranslator<BasicTranslator>("basic");
     app.foo_sound->setPosition(clutter_actor_get_x(app.foo_actor),
             clutter_actor_get_y(app.foo_actor), 0);
     scene.debugPrint();

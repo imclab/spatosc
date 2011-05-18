@@ -77,3 +77,12 @@ Wrapper for OSC and FUDI callbacks
 ----------------------------------
  * [s:nodeName] [s:method] [s:typeTags] [s:args...]
 
+More (dmitri-specific) tools in the wrapper
+-------------------------------------------
+sendOscMessageToTranslator(translator, args)
+sendOscSetFloatMessageToDmtri(translator, controlPoint, f)
+sendOscSetIntMessageToDmtri(translator, controlPoint, i)
+sendOscSetStringMessageToDmtri(translator, controlPoint, s)
+
+sendOscSetDoubleMessageToDmtri(translator, controlPoint, d)
+

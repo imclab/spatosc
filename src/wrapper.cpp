@@ -195,11 +195,6 @@ bool Wrapper::addTranslator(const std::string &name, const std::string &translat
     }
 }
 
-bool Wrapper::addTranslator(const std::string &name, Translator *t)
-{
-    return scene_->addTranslator(name, t) != 0;
-}
-
 bool Wrapper::removeTranslator(const std::string &name)
 {
     return scene_->removeTranslator(name);
@@ -393,5 +388,23 @@ bool Wrapper::setDopplerFactor(const std::string &sourceNode, const std::string 
         return false;
     }
 }
+
+bool Wrapper::setNodeActive(const std::string &node, bool active)
+{
+    Node *n = scene_->getNode(node);
+    if (! n)
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
+        return false;
+    }
+    n->setActive(active);
+    return true;
+}
+
+bool Wrapper::addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, bool verbose)
+{
+    return scene_->addTranslator(name, new DmitriTranslator(ip, toPort, verbose));
+}
+
 } // end of namespace spatosc
 

@@ -1,4 +1,4 @@
-#N canvas 24 32 327 219 12;
+#N canvas 60 34 327 219 12;
 #X obj 96 81 bng 15 250 50 0 \$0-open-attenuation empty audio_I/0_attenuation
 17 7 1 12 -262144 -1 -1;
 #X msg 95 29 \; see-nodes bang;
@@ -250,7 +250,7 @@ thru spin (could always update the param-declare abstraction instead)
 12 -262144 -1 -1 0 1;
 #X floatatom -47 142 7 0 0 3 renderer-port renderer-port-set renderer-port
 ;
-#N canvas 97 356 615 690 readme 1;
+#N canvas 97 356 615 690 readme 0;
 #X text 51 113 where spatOSC messages are received: spatOSC-port 18032
 ;
 #X text 49 19 when launched from the commandline \, the following arguments

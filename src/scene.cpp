@@ -609,6 +609,7 @@ Translator *Scene::addTranslator(const std::string &name, Translator *t)
     if (hasTranslator(name))
     {
         std::cout << "Warning: Cannot add translator named " << name << ". Already exists." << std::endl;
+        delete t;
         return 0;
     }
     else

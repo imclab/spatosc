@@ -46,6 +46,7 @@ libspatosc_@SPATOSC_API_VERSION@_la_includedir = $(includedir)/spatosc-$(SPATOSC
 libspatosc_@SPATOSC_API_VERSION@_la_include_HEADERS = \
     $(top_srcdir)/include/connection.h \
     $(top_srcdir)/include/dmitri_translator.h \
+    $(top_srcdir)/include/dllexport.h \
     $(top_srcdir)/include/fudi_sender.h \
     $(top_srcdir)/include/fudi_translator.h \
     $(top_srcdir)/include/geotransform.h \

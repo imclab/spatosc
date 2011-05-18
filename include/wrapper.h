@@ -26,6 +26,7 @@
 
 #include <string>
 #include "memory.h"
+#include "dllexport.h"
 
 namespace spatosc
 {
@@ -34,9 +35,13 @@ class Scene;
 
 /**
  * Wraps the whole spatosc library.
+ * 
  * Implements the Facade design pattern.
+ * It makes the internal details of the library opaque to the user. That means you cannot access the Scene or its nodes directly.
+ * 
+ * For now, this is the only class that is accessible from Windows using the spatosc dynamic library.
  */
-class Wrapper
+class DLLEXPORT Wrapper
 {
     public:
         /**
@@ -100,14 +105,6 @@ class Wrapper
          * @return Success or not.
         */
         bool addTranslator(const std::string &name, const std::string &translatorName, const std::string &sendToAddress, const std::string &port, bool verbose);
-        /**
-          * Adds a translator to use.
-          * Example of valid translators names include "BasicTranslator" and "DmitriTranslator".
-          * @param translatorID A unique id for this translator instance (required in order to eventually remove the translator).
-          * @param translator A pointer to an already constructed translator object (ie, created with new BasicTranslator(), etc).
-          * @return Success or not.
-         */
-        bool addTranslator(const std::string &translatorID, Translator *translator);
         /**
          * Removes a translator.
          * @return Success or not.
@@ -194,10 +191,19 @@ class Wrapper
          * See Connection::setDistanceFactor.
          */
         bool setDopplerFactor(const std::string &sourceNode, const std::string &sinkNode, double factor);
+        /**
+         * Enables or disables a node.
+         */
+        bool setNodeActive(const std::string &node, bool active);
+        /**
+         * The Dmitri translator doesn't work with addTranslator, so here's a specific method to add it.
+         */
+        bool addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, bool verbose);
     private:
         std::tr1::shared_ptr<Scene> scene_;
 };
 
 } // end of namespace spatosc
 
-#endif
+#endif // __WRAPPER_H__
+

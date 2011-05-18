@@ -10,7 +10,12 @@ New Features:
     * (none)
 
 Bug fixes: 
-    * (none)
+    * updated examples for spatosc-0.2
+    * fixed examples to use the BasicTranslator
+    * updates of osx package stuff in HACKING
+    * Makefiles should not be executable
+    * fix to SO_VERSION
+
 
 2011-05-12 spatosc 0.1.12
 -------------------------
@@ -29,6 +34,7 @@ New Features:
 
 Bug fixes: 
     * pd-external: Fixed setNodeIntProperty which was actually setting a float property
+
 
 2011-05-03 spatosc 0.1.10
 -------------------------
