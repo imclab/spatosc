@@ -1,4 +1,4 @@
-2011-05-?? spatosc 0.2.0
+2011-05-18 spatosc 0.2.0
 ------------------------
 
 This release is an official version in the 0.2 stable series. 
@@ -7,7 +7,8 @@ It's the first release release in the 0.2 stable series. Each release in the 0.2
 This version contains new features and bug fixes.
 
 New Features:
-    * (none)
+    * Export the wrapper as DLL for Windows (Visual Studio)
+    * Added Wrapper::addDmitriTranslator
 
 Bug fixes: 
     * updated examples for spatosc-0.2
@@ -15,6 +16,9 @@ Bug fixes:
     * updates of osx package stuff in HACKING
     * Makefiles should not be executable
     * fix to SO_VERSION
+    * Fixed a memleak in Scene::addTranslator with a *Translator as argument.
+    * Removed Wrapper::addTranslator with a *Translator as argument.
+    * Added the "using-the-wrapper" example.
 
 
 2011-05-12 spatosc 0.1.12
