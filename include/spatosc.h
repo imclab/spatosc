@@ -49,7 +49,9 @@
 #include "soundsource.h"
 #include "basic_translator.h"
 #include "translator.h"
+#ifndef _WIN32
 #include "version.h"
+#endif // WIN32
 #include "wrapper.h"
 
 /**
