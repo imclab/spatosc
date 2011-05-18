@@ -2,8 +2,8 @@
 #X obj -36 76 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
 1 1;
 #X obj -36 18 r to_spatosc;
-#X obj 208 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 282 92;
-#X obj 324 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 383 96;
+#X obj 208 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 279 88;
+#X obj 324 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 391 60;
 #X text 213 12 source;
 #X text 316 10 listener;
 #N canvas 0 351 856 474 dynamic 0;
@@ -101,8 +101,8 @@
 #X obj 534 80 r spatOSC-port;
 #X msg 652 81 \; spatOSC-port 18032 \; renderer-port 18111;
 #X obj 14 72 OSCprepend /a.renderer/nodemess;
-#X msg 534 141 \; to_spatosc addTranslator spatdif BasicTranslator
-localhost \$1;
+#X msg 534 141 \; to_spatosc addTranslator basic BasicTranslator localhost
+\$1;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
 #X connect 3 0 4 0;
@@ -224,7 +224,7 @@ src-0 ear 10;
 #X msg 489 23 /a.renderer/setOutputFormat quad;
 #X floatatom 590 118 5 -60 6 1 _db - -;
 #X msg 591 139 /a.renderer/setOutputDB \$1;
-#N canvas 457 27 742 283 debug 0;
+#N canvas 457 27 742 283 debug 1;
 #X obj -20 9 cnv 15 700 240 empty empty debug 4 12 0 14 -233017 -1
 0;
 #X msg -8 53 \; to_renderer-db src-0.patch vis 1;
