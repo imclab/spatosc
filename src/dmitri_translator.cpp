@@ -21,6 +21,7 @@
 #include "oscutils.h"
 #include "oscsender.h"
 #include "soundsource.h"
+#include "listener.h"
 #include "connection.h"
 
 #include <iostream>
@@ -31,8 +32,6 @@ namespace spatosc
 
 const char *DmitriTranslator::DEFAULT_SEND_PORT = "18033";
 const char *DmitriTranslator::DEFAULT_RECEIVER_PORT = "18099";
-double DmitriTranslator::SPACEMAP_EQUATOR_RADIUS = 700.0;
-const double DmitriTranslator::SPACEMAP_POLE_RADIUS = 1000.0;
 
 // ************************************************
 
@@ -60,9 +59,7 @@ verbose_(verbose)
 
 void DmitriTranslator::pushConnectionChanges(Connection *conn)
 {
-    //std::string str;
     std::ostringstream ostr;
-    //SoundSource *src = conn->getSource();
 
     int busID = 1; // default bus 1
     conn->getSource()->getIntProperty("bus", busID);
@@ -73,30 +70,31 @@ void DmitriTranslator::pushConnectionChanges(Connection *conn)
     int enableDelay = 0;
     conn->getSource()->getIntProperty("enableDelay", enableDelay);
 
+    double spacemapEquator = 700.0;
+    conn->getSink()->getFloatProperty("spacemapEquator", spacemapEquator);
+    
+    double spacemapPole = 1000.0;
+    conn->getSink()->getFloatProperty("spacemapPole", spacemapPole);
+
 
     float r = 1.0 - fabs( conn->elevation() / (M_PI/2) );
     float spacemapX, spacemapY;
     if (conn->elevation() >= 0)
     {
-        spacemapX = -sin(conn->azimuth()) * r * SPACEMAP_EQUATOR_RADIUS;
-        spacemapY =  cos(conn->azimuth()) * r * SPACEMAP_EQUATOR_RADIUS;
+        spacemapX = -sin(conn->azimuth()) * r * spacemapEquator;
+        spacemapY =  cos(conn->azimuth()) * r * spacemapEquator;
     } else {
-        spacemapX = -sin(conn->azimuth()) * (SPACEMAP_EQUATOR_RADIUS + ((1-r) * (SPACEMAP_POLE_RADIUS-SPACEMAP_EQUATOR_RADIUS)));
-        spacemapY =  cos(conn->azimuth()) * (SPACEMAP_EQUATOR_RADIUS + ((1-r) * (SPACEMAP_POLE_RADIUS-SPACEMAP_EQUATOR_RADIUS)));
+        spacemapX = -sin(conn->azimuth()) * (spacemapEquator + ((1-r) * (spacemapPole-spacemapEquator)));
+        spacemapY =  cos(conn->azimuth()) * (spacemapEquator + ((1-r) * (spacemapPole-spacemapEquator)));
     }
 
     //std::cout << "azim="<<conn->azimuth()<<" elev="<<conn->elevation()<<" r="<<r<<std::endl;
-    //std::cout << "Sending spacemap: " << spacemapX << "," << spacemapY << std::endl;
 
-
-
-    //str = "/spacemap/" +  src->getID() + "/x";
     ostr.str("");
     ostr << "/spacemap/" << busID << "/x";
     sender_->sendMessage(ostr.str().c_str(), "f", spacemapX, SPATOSC_ARGS_END);
     //std::cout << "sent " << ostr.str() <<" "<< spacemapX << std::endl;
 
-    //str = "/spacemap/" + src->getID() + "/y";
     ostr.str("");
     ostr << "/spacemap/" << busID << "/y";
     sender_->sendMessage(ostr.str().c_str(), "f", spacemapY, SPATOSC_ARGS_END);
@@ -104,7 +102,6 @@ void DmitriTranslator::pushConnectionChanges(Connection *conn)
 
     if (enableGain)
     {
-        //str = "Bus " + src->getID() + " Level";
         ostr.str("");
         ostr << "Bus " << busID << " Level";
         sender_->sendMessage("/set", "sf", ostr.str().c_str(), conn->gainDB(), SPATOSC_ARGS_END);
@@ -124,13 +121,6 @@ void DmitriTranslator::pushConnectionChanges(Connection *conn)
 OscSender &DmitriTranslator::getSender() const
 {
     return *sender_;
-}
-
-void DmitriTranslator::setEquatorRadius(double radius)
-{
-    std::cout << "Set D-Mitri Spacemap equator radius to " << radius << std::endl;
-	SPACEMAP_EQUATOR_RADIUS = radius;
-	// TODO: need to recompute all connections and push them
 }
 
 } // end namespace spatosc

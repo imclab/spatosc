@@ -211,9 +211,7 @@ int main(int argc, char **argv)
     src1->setIntProperty("enableDelay", 1);
     spatosc::SoundSource *src2 = audioScene_.createSoundSource("source-2");
     src2->setIntProperty("bus", 2);
-	audioScene_.createListener("listener");
-	// listener is looking forward along Y axis (camera is above, looking down)
-	//listener_->setOrientation(-90.0, 0.0, 0.0);
+    spatosc::Listener *listener = audioScene_.createListener("listener");
 
     // create copy of scene in SPIN:
 

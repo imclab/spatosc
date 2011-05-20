@@ -43,13 +43,13 @@ class Connection;
  *    The assumption is that the sphere is viewed from the center, looking up,
  *    and is projected on a plane. The lower hemisphere is unfolded and mapped
  *    along the outside of the resuling circular projection. Positive elevations
- *    result in spacemap positions ranging from (0,0) to SPACEMAP_EQUATOR_RADIUS
- *    and ngative elevations range from the SPACEMAP_EQUATOR_RADIUS to the
- *    SPACEMAP_POLE_RADUIS.
+ *    result in spacemap positions ranging from (0,0) to spacemapEquator and
+ *    negative elevations range from the spacemapEquator to the spacemapPole.
+ *    These can be set using setFloatProperty("spacemapEquator", 700.0)
  *
  *    Examples:
  *    -> a sound source in front (0,1,0) will have
- *       a spacemap position of: (0,-SPACEMAP_EQUATOR_RADIUS)
+ *       a spacemap position of: (0,-spacemapEquator)
  *    -> a sound source above (0,0,1) will have
  *       a spacemap position of: (0,0)
  *
@@ -112,19 +112,7 @@ public:
      */
     OscSender &getSender() const;
 
-    /**
-     * Set the equator radius in the spacemap.
-     *
-     * NOTE: You MUST do this before you create your scene, otherwise the effect
-     * won't be applied until a node is moved. Alternatively, you could call
-     * scene::forceRefresh to ensure that all nodes are properly updated
-     * afterwards
-     */
-    void setEquatorRadius(double radius);
-
 private:
-    static double SPACEMAP_EQUATOR_RADIUS;
-    static const double SPACEMAP_POLE_RADIUS;
     std::tr1::shared_ptr<OscSender> sender_;
     // not implemented
     DmitriTranslator(const DmitriTranslator&);
