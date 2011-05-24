@@ -68,6 +68,18 @@ Create the tag in git.
 Update the version number in configure.ac to the next release to come. Make a new commit. 
 
 
+Creating a .pkg for OSX
+-----------------------
+
+Configure a universal build, compile, and install into /tmp:
+
+ $ ./configure --enable-universal --disable-dependency-tracking
+ $
+ $ sudo make DESTDIR=/tmp/spatosc install
+
+Then run PackageMaker on the spatosc.pmdoc file
+
+
 The RELEASE notes and the NEWS file
 -----------------------------------
 

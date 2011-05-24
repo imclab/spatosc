@@ -48,12 +48,12 @@ int main(int argc, char ** /*argv*/)
     SoundSource *bar = scene.createSoundSource("bar");
 
     // In order to send OSC, some output plugin must be specified. In this case,
-    // we choose the SpatdifTranslator, which can be rendered, for example, by
+    // we choose the BasicTranslator, which can be rendered, for example, by
     // the pd-vbap example
     if (argc > 1)
         scene.addTranslator<FudiTranslator>("fudi", "localhost", "31337");
     else
-        scene.addTranslator<SpatdifTranslator>("spatdif", "127.0.0.1", "9999");
+        scene.addTranslator<BasicTranslator>("basic", "127.0.0.1", "9999");
 
     // The Scene class can print out everything to the console:
     if (VERBOSE)

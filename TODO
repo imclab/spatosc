@@ -5,6 +5,11 @@ Release-critical for 0.2
 ------------------------
  * Connection::handleMessage remove calls to assert()
  * Connection::handleMessage pass liblo types to validate them
+ * avoid to include unused.h from public header files
+ * test properties well
+ * implement OSC callbacks for float and int properties
+ * implement float/int properties in pd-external example
+ * setter method for verbose property in translators, with pd method 
 
 FUDI-specific features and issues
 ---------------------------------
@@ -30,10 +35,11 @@ Tests
 
 Features
 --------
- * Load balancing, don't push all the state, all the time, over OSC. Only push whatever's changed, and at some controlled rate.
+ * Compile translators as dymanic libraries
+ *  provide an example of an individual build system for a translate. ie, if someone has spatosc installed, they can write and build a new translator without modifying spatosc.
+ * Rename current spatdif_translator to basic_translator. Eventually we can have a real spatdif translator that adheres exactly to the version found at spatdif.org
  * Support multicast and TCP in OscSender and OscReceiver. Perhaps use liblo urls in constructor arguments? (eg, osc.upd://239.0.0.1:9999/ or osc.tcp://localhost:9998/)
  * Support specifying the network interface to listen from
- * Implement Translator::getSender to allow sending custom messages (already implemented in dmitriTranslator. should return NULL in base class)
  * support either int, float, double for numerical OSC typetags. ie, in oscutil, change argMatchesType() to something like getStringArg() and getNumericArg() using these liblo methods:
    * int lo_is_numerical_type(lo_type a)
    * int lo_is_string_type(lo_type a)
@@ -70,4 +76,13 @@ Refactoring
 Wrapper for OSC and FUDI callbacks
 ----------------------------------
  * [s:nodeName] [s:method] [s:typeTags] [s:args...]
+
+More (dmitri-specific) tools in the wrapper
+-------------------------------------------
+sendOscMessageToTranslator(translator, args)
+sendOscSetFloatMessageToDmtri(translator, controlPoint, f)
+sendOscSetIntMessageToDmtri(translator, controlPoint, i)
+sendOscSetStringMessageToDmtri(translator, controlPoint, s)
+
+sendOscSetDoubleMessageToDmtri(translator, controlPoint, d)
 

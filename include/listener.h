@@ -37,6 +37,7 @@ class Listener : public Node
 {
     public:
         Listener(const std::string &nodeID, Scene &scene);
+        virtual std::string getType() const { return "listener"; }
         virtual void debugPrint() const;
         void addConnectionFrom(const std::tr1::shared_ptr<Connection> &conn);
         void removeConnectionFrom(const Connection *conn);

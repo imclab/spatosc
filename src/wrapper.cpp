@@ -17,13 +17,14 @@
  * along with Spatosc.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "connection.h"
 #include "dmitri_translator.h"
 #include "listener.h"
 #include "memory.h"
 #include "node.h"
 #include "scene.h"
 #include "soundsource.h"
-#include "spatdif_translator.h"
+#include "basic_translator.h"
 #include "fudi_translator.h"
 #include "translator.h"
 #include "wrapper.h"
@@ -179,10 +180,10 @@ void Wrapper::setScale(double sx, double sy, double sz)
 
 bool Wrapper::addTranslator(const std::string &name, const std::string &translatorName, const std::string &sendToAddress, const std::string &port, bool verbose)
 {
-    if (translatorName == "SpatdifTranslator")
-        return scene_->addTranslator<SpatdifTranslator>(name, sendToAddress, port, verbose) != 0;
+    if (translatorName == "BasicTranslator")
+        return scene_->addTranslator<BasicTranslator>(name, sendToAddress, port, verbose) != 0;
     else if (translatorName == "DmitriTranslator")
-        return scene_->addTranslator<DmitriTranslator>(name, sendToAddress, port, verbose) != 0;
+        return scene_->addTranslator<DmitriTranslator>(name, sendToAddress, port, verbose) != 0; // FIXME:4th arg to DmitriTranslator's constructor is not a bool!
     else if (translatorName == "ConsoleTranslator")
         return scene_->addTranslator<ConsoleTranslator>(name, sendToAddress, port, verbose) != 0;
     else if (translatorName == "FudiTranslator")
@@ -245,6 +246,164 @@ bool Wrapper::removeNodeStringProperty(const std::string &node, const std::strin
         std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
         return false;
     }
+}
+
+bool Wrapper::setNodeIntProperty(const std::string &node, const std::string &key, const int &value)
+{
+    Node *nodePtr = scene_->getNode(node);
+
+    if (nodePtr)
+    {
+        nodePtr->setIntProperty(key, value);
+        return true;
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::getNodeIntProperty(const std::string &node, const std::string &key, int &value)
+{
+    Node *nodePtr = scene_->getNode(node);
+    if (nodePtr)
+    {
+        return nodePtr->getIntProperty(key, value);
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::removeNodeIntProperty(const std::string &node, const std::string &key)
+{
+    Node *nodePtr = scene_->getNode(node);
+    if (nodePtr)
+    {
+        return nodePtr->removeIntProperty(key);
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::setNodeFloatProperty(const std::string &node, const std::string &key, const double &value)
+{
+    Node *nodePtr = scene_->getNode(node);
+    if (nodePtr)
+    {
+        nodePtr->setFloatProperty(key, value);
+        return true;
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::getNodeFloatProperty(const std::string &node, const std::string &key, double &value)
+{
+    Node *nodePtr = scene_->getNode(node);
+    if (nodePtr)
+    {
+        return nodePtr->getFloatProperty(key, value);
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::removeNodeFloatProperty(const std::string &node, const std::string &key)
+{
+    Node *nodePtr = scene_->getNode(node);
+    if (nodePtr)
+    {
+        return nodePtr->removeFloatProperty(key);
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::setDistanceFactor(const std::string &sourceNode, const std::string &sinkNode, double factor)
+{
+    Node *src = scene_->getNode(sourceNode);
+    if (! src)
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << sourceNode << "\"" << std::endl;
+        return false;
+    }
+    Node *sink = scene_->getNode(sinkNode);
+    if (! sink)
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << sinkNode << "\"" << std::endl;
+        return false;
+    }
+    Connection *conn = scene_->getConnection(src, sink);
+    if (conn)
+    {
+        conn->setDistanceFactor(factor);
+        return true;
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No connection between \"" << sourceNode << "\" and \"" << sinkNode << "\"" << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::setDopplerFactor(const std::string &sourceNode, const std::string &sinkNode, double factor)
+{
+    Node *src = scene_->getNode(sourceNode);
+    if (! src)
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << sourceNode << "\"" << std::endl;
+        return false;
+    }
+    Node *sink = scene_->getNode(sinkNode);
+    if (! sink)
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << sinkNode << "\"" << std::endl;
+        return false;
+    }
+    Connection *conn = scene_->getConnection(src, sink);
+    if (conn)
+    {
+        conn->setDopplerFactor(factor);
+        return true;
+    }
+    else
+    {
+        std::cerr << __FUNCTION__ << ": No connection between \"" << sourceNode << "\" and \"" << sinkNode << "\"" << std::endl;
+        return false;
+    }
+}
+
+bool Wrapper::setNodeActive(const std::string &node, bool active)
+{
+    Node *n = scene_->getNode(node);
+    if (! n)
+    {
+        std::cerr << __FUNCTION__ << ": No such node: \"" << node << "\"" << std::endl;
+        return false;
+    }
+    n->setActive(active);
+    return true;
+}
+
+bool Wrapper::addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, bool verbose)
+{
+    return scene_->addTranslator(name, new DmitriTranslator(ip, toPort, verbose));
 }
 
 } // end of namespace spatosc

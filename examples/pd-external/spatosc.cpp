@@ -30,7 +30,8 @@
 
 #define UNUSED(x) ((void) (x))
 
-static const bool SPATOSC_DEBUG = true;
+//static const bool SPATOSC_DEBUG = true;
+static const bool SPATOSC_DEBUG = false;
 static const float SUCCESS = 1.0;
 static const float FAILURE = 0.0;
 
@@ -90,8 +91,8 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
         translatorName = translator->s_name;
         if (translatorName == "DmitriTranslator")
             sendToPort = spatosc::DmitriTranslator::DEFAULT_SEND_PORT;
-        else if (translatorName == "SpatdifTranslator")
-            sendToPort = spatosc::SpatdifTranslator::DEFAULT_SEND_PORT;
+        else if (translatorName == "BasicTranslator")
+            sendToPort = spatosc::BasicTranslator::DEFAULT_SEND_PORT;
         else if (translatorName == "FudiTranslator")
             sendToPort = spatosc::FudiTranslator::DEFAULT_SEND_PORT;
     }
@@ -107,7 +108,7 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
     {
         post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
     }
-    bool success = x->wrapper.addTranslator("default", translatorName, sendToAddress, sendToPort, true);
+    bool success = x->wrapper.addTranslator("default", translatorName, sendToAddress, sendToPort, SPATOSC_DEBUG);
     if (! success)
     {
         post("[spatosc]: ERROR calling addTranslator from the constructor.");
@@ -144,7 +145,13 @@ static void spatosc_addTranslator(t_spatosc *x, t_symbol *identifier, t_symbol *
 static void spatosc_removeTranslator(t_spatosc *x, t_symbol *translator);
 static void spatosc_hasTranslator(t_spatosc *x, t_symbol *translator);
 static void spatosc_setNodeStringProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_symbol *value);
+static void spatosc_setNodeFloatProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_floatarg value);
+static void spatosc_setNodeIntProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_floatarg value);
 static void spatosc_removeNodeStringProperty(t_spatosc *x, t_symbol *node, t_symbol *key);
+static void spatosc_removeNodeIntProperty(t_spatosc *x, t_symbol *node, t_symbol *key);
+static void spatosc_removeNodeFloatProperty(t_spatosc *x, t_symbol *node, t_symbol *key);
+static void spatosc_setDistanceFactor(t_spatosc *x, t_symbol *src, t_symbol *sink, t_floatarg factor);
+static void spatosc_setDopplerFactor(t_spatosc *x, t_symbol *src, t_symbol *sink, t_floatarg factor);
 
 extern "C" void spatosc_setup(void)
 {
@@ -163,7 +170,13 @@ extern "C" void spatosc_setup(void)
 	class_addmethod(spatosc_class, (t_method) spatosc_removeTranslator, gensym("removeTranslator"), A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_hasTranslator, gensym("hasTranslator"), A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setNodeStringProperty, gensym("setNodeStringProperty"), A_SYMBOL, A_SYMBOL, A_SYMBOL, 0);
+	class_addmethod(spatosc_class, (t_method) spatosc_setNodeFloatProperty, gensym("setNodeFloatProperty"), A_SYMBOL, A_SYMBOL, A_FLOAT, 0);
+	class_addmethod(spatosc_class, (t_method) spatosc_setNodeIntProperty, gensym("setNodeIntProperty"), A_SYMBOL, A_SYMBOL, A_FLOAT, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_removeNodeStringProperty, gensym("removeNodeStringProperty"), A_SYMBOL, A_SYMBOL, 0);
+	class_addmethod(spatosc_class, (t_method) spatosc_removeNodeIntProperty, gensym("removeNodeIntProperty"), A_SYMBOL, A_SYMBOL, 0);
+	class_addmethod(spatosc_class, (t_method) spatosc_removeNodeFloatProperty, gensym("removeNodeFloatProperty"), A_SYMBOL, A_SYMBOL, 0);
+	class_addmethod(spatosc_class, (t_method) spatosc_setDistanceFactor, gensym("setDistanceFactor"), A_SYMBOL, A_SYMBOL, A_FLOAT, 0);
+	class_addmethod(spatosc_class, (t_method) spatosc_setDopplerFactor, gensym("setDopplerFactor"), A_SYMBOL, A_SYMBOL, A_FLOAT, 0);
     if (SPATOSC_DEBUG)
     {
         post("[spatosc]: (c) Society for Arts and Technology 2011");
@@ -229,7 +242,7 @@ static void spatosc_addTranslator(t_spatosc *x, t_symbol *identifier, t_symbol *
 {
     std::string translatorName = "ConsoleTranslator";
     std::string sendToAddress = "localhost";
-    std::string sendToPort = spatosc::SpatdifTranslator::DEFAULT_SEND_PORT;
+    std::string sendToPort = spatosc::BasicTranslator::DEFAULT_SEND_PORT;
     if (std::string("NULL") != translator->s_name)
     {
         translatorName = translator->s_name;
@@ -271,13 +284,45 @@ static void spatosc_hasTranslator(t_spatosc *x, t_symbol *identifier)
     output_success(x, x->wrapper.hasTranslator(identifier->s_name));
 }
 
+// setNode*Property:
 static void spatosc_setNodeStringProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_symbol *value)
 {
     output_success(x, x->wrapper.setNodeStringProperty(node->s_name, key->s_name, value->s_name));
 }
 
+static void spatosc_setNodeFloatProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_floatarg value)
+{
+    output_success(x, x->wrapper.setNodeFloatProperty(node->s_name, key->s_name, (double) value));
+}
+
+static void spatosc_setNodeIntProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_floatarg value)
+{
+    output_success(x, x->wrapper.setNodeIntProperty(node->s_name, key->s_name, (int) value));
+}
+
+// removeNode*Property:
 static void spatosc_removeNodeStringProperty(t_spatosc *x, t_symbol *node, t_symbol *key)
 {
     output_success(x, x->wrapper.removeNodeStringProperty(node->s_name, key->s_name));
+}
+
+static void spatosc_removeNodeIntProperty(t_spatosc *x, t_symbol *node, t_symbol *key)
+{
+    output_success(x, x->wrapper.removeNodeIntProperty(node->s_name, key->s_name));
+}
+
+static void spatosc_removeNodeFloatProperty(t_spatosc *x, t_symbol *node, t_symbol *key)
+{
+    output_success(x, x->wrapper.removeNodeFloatProperty(node->s_name, key->s_name));
+}
+
+static void spatosc_setDistanceFactor(t_spatosc *x, t_symbol *src, t_symbol *sink, t_floatarg factor)
+{
+    output_success(x, x->wrapper.setDistanceFactor(src->s_name, sink->s_name, factor));
+}
+
+static void spatosc_setDopplerFactor(t_spatosc *x, t_symbol *src, t_symbol *sink, t_floatarg factor)
+{
+    output_success(x, x->wrapper.setDopplerFactor(src->s_name, sink->s_name, factor));
 }
 

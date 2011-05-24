@@ -18,12 +18,7 @@
  */
 
 #include "gui.h"
-#include <spatosc/scene.h>
-#include <spatosc/translator.h>
-#include <spatosc/spatdif_translator.h>
-#include <spatosc/soundsource.h>
-#include <spatosc/geotransform.h>
-#include <spatosc/listener.h>
+#include <spatosc/spatosc.h>
 #include <cassert>
 #include <sstream>
 
@@ -179,7 +174,7 @@ GUI::GUI() :
     default_stage_height_(600.0f),
     sound_(0)
 {
-    scene_->addTranslator<spatosc::SpatdifTranslator>("spatdif", "127.0.0.1", spatosc::SpatdifTranslator::DEFAULT_SEND_PORT, true);
+    scene_->addTranslator<spatosc::BasicTranslator>("basic", "127.0.0.1", spatosc::BasicTranslator::DEFAULT_SEND_PORT, true);
     scene_->setScale(INV_PIXELS_PER_METER, INV_PIXELS_PER_METER, INV_PIXELS_PER_METER);
     createStage();
     connectMouseCallbacks();

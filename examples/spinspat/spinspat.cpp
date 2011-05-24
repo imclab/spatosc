@@ -91,7 +91,7 @@ int main(int argc, char **argv)
 	double maxFrameRate = 60;
     bool dmitri = false;
     std::string dmitriIP = "127.0.0.1";
-    std::string spatdifIP = "127.0.0.1";
+    std::string basicTranslatorIP = "127.0.0.1";
 
 	// *************************************************************************
 	// set up SPIN:
@@ -113,7 +113,7 @@ int main(int argc, char **argv)
 	arguments.getApplicationUsage()->setCommandLineUsage(arguments.getApplicationName()+" [options]");
 	arguments.getApplicationUsage()->addCommandLineOption("-h or --help", "Display this information");
 	arguments.getApplicationUsage()->addCommandLineOption("--scene-id <uniqueID>", "Specify the scene ID to listen to (Default: '" + sceneID + "')");
-	arguments.getApplicationUsage()->addCommandLineOption("--remote-ip <IP address>", "Specify the remote IP address of the spatdif spatializer (Default: '" + spatdifIP + "')");
+	arguments.getApplicationUsage()->addCommandLineOption("--remote-ip <IP address>", "Specify the remote IP address of the spatdif spatializer (Default: '" + basicTranslatorIP + "')");
 	arguments.getApplicationUsage()->addCommandLineOption("--dmitri <IP address>", "Use the D-Mitri translator and send messages to the specified DCP address (requires a properly configured spacemap and OSC mapping control defined in CueStation");
 
 	if (arguments.read("-h") || arguments.read("--help"))
@@ -126,7 +126,7 @@ int main(int argc, char **argv)
 	arguments.read("--scene-id", param_spinID);
 	spin.setSceneID(sceneID);
 
-	osg::ArgumentParser::Parameter param_remoteIP(spatdifIP);
+	osg::ArgumentParser::Parameter param_remoteIP(basicTranslatorIP);
 	if (arguments.read("--remote-ip", param_remoteIP));
 	
     osg::ArgumentParser::Parameter param_dmitri(dmitriIP);
@@ -189,28 +189,36 @@ int main(int argc, char **argv)
 	// *************************************************************************
 	// create test scene:
 
+
     if (dmitri)
     {
-	    audioScene_.addTranslator<spatosc::DmitriTranslator>("dmitri", dmitriIP.c_str(), spatosc::DmitriTranslator::DEFAULT_SEND_PORT, spatosc::DmitriTranslator::DEFAULT_RECEIVER_PORT);
-        audioScene_.addTranslator<spatosc::SpatdifTranslator>("spatdif", spatdifIP.c_str(), spatosc::SpatdifTranslator::DEFAULT_SEND_PORT);
+	    //spatosc::DmitriTranslator *dmitriTranslator = dynamic_cast<spatosc::DmitriTranslator>(audioScene_.addTranslator<spatosc::DmitriTranslator>("dmitri", dmitriIP.c_str(), spatosc::DmitriTranslator::DEFAULT_SEND_PORT));
+        
+        // POINTER METHOD:
+        spatosc::DmitriTranslator *dmitriTranslator = new spatosc::DmitriTranslator(dmitriIP.c_str());
+        audioScene_.addTranslator("dmitri", dmitriTranslator);
+        
+        //dmitriTranslator->setEquatorRadius(1000.0);
     }
-    else {
-        //audioScene_.setSynchronous(false); // we will need to call flushMessages() once in a while
-        audioScene_.addTranslator<spatosc::SpatdifTranslator>("spatdif", spatdifIP.c_str(), spatosc::SpatdifTranslator::DEFAULT_SEND_PORT);
-    }
+    
+    // also send to spatdif translator for this example (for doppler component):
+    audioScene_.addTranslator<spatosc::BasicTranslator>("basic", basicTranslatorIP.c_str(), spatosc::BasicTranslator::DEFAULT_SEND_PORT);
 
     
     //audioScene_.setOrientation(90.0, 0.0, 0.0);
-	audioScene_.createSoundSource("1");
-	audioScene_.createSoundSource("2");
-	audioScene_.createListener("listener");
-	// listener is looking forward along Y axis (camera is above, looking down)
-	//listener_->setOrientation(-90.0, 0.0, 0.0);
+    spatosc::SoundSource *src1 = audioScene_.createSoundSource("source-1");
+    src1->setIntProperty("bus", 1);
+    src1->setIntProperty("enableDelay", 1);
+    spatosc::SoundSource *src2 = audioScene_.createSoundSource("source-2");
+    src2->setIntProperty("bus", 2);
+    spatosc::Listener *listener = audioScene_.createListener("listener");
 
     // create copy of scene in SPIN:
 
-	spin.SceneMessage("sss", "createNode", "1", "ShapeNode", LO_ARGS_END);
-	spin.SceneMessage("sss", "createNode", "1-label", "TextNode", LO_ARGS_END);
+	spin.SceneMessage("sss", "createNode", "source-1", "ShapeNode", LO_ARGS_END);
+	spin.SceneMessage("sss", "createNode", "source-2", "ShapeNode", LO_ARGS_END);
+	spin.SceneMessage("sss", "createNode", "source-1-label", "TextNode", LO_ARGS_END);
+	spin.SceneMessage("sss", "createNode", "source-2-label", "TextNode", LO_ARGS_END);
 
 	spin.SceneMessage("sss", "createNode", "listener", "ModelNode", LO_ARGS_END);
 	spin.SceneMessage("sss", "createNode", "listener-label", "TextNode", LO_ARGS_END);
@@ -219,19 +227,29 @@ int main(int argc, char **argv)
 
     // important: need to setReportMode so that 6DOF messages are received
 	spin.NodeMessage("listener", "si", "setReportMode", (int)GroupNode::GLOBAL_6DOF, LO_ARGS_END);
-	spin.NodeMessage("1", "si", "setReportMode", (int)GroupNode::GLOBAL_6DOF, LO_ARGS_END);
-	spin.NodeMessage("2", "si", "setReportMode", (int)GroupNode::GLOBAL_6DOF, LO_ARGS_END);
+	spin.NodeMessage("source-1", "si", "setReportMode", (int)GroupNode::GLOBAL_6DOF, LO_ARGS_END);
+	spin.NodeMessage("source-2", "si", "setReportMode", (int)GroupNode::GLOBAL_6DOF, LO_ARGS_END);
 	
     
-    spin.NodeMessage("1", "si",   "setShape", (int)ShapeNode::SPHERE, LO_ARGS_END);
-	spin.NodeMessage("1", "si",   "setInteractionMode", (int)GroupNode::DRAG, LO_ARGS_END);
-	spin.NodeMessage("1", "sfff", "setTranslation", 0.0, 2.0, 0.0, LO_ARGS_END);
-	spin.NodeMessage("1", "sfff", "setScale", 0.2, 0.2, 0.2, LO_ARGS_END);
-	spin.NodeMessage("1-label", "ss",   "setParent", "1", LO_ARGS_END);
-	spin.NodeMessage("1-label", "sfff", "setTranslation", 0.0, 0.0, 0.5, LO_ARGS_END);
-	spin.NodeMessage("1-label", "ss", "setTextValue", "SoundSource 1", LO_ARGS_END);
-	spin.NodeMessage("1-label", "si",   "setBillboard", (int)TextNode::STAY_UP, LO_ARGS_END);
+    spin.NodeMessage("source-1", "si",   "setShape", (int)ShapeNode::SPHERE, LO_ARGS_END);
+	spin.NodeMessage("source-1", "si",   "setInteractionMode", (int)GroupNode::DRAG, LO_ARGS_END);
+	spin.NodeMessage("source-1", "sfff", "setTranslation", -1.0, 2.0, 0.0, LO_ARGS_END);
+	spin.NodeMessage("source-1", "sfff", "setScale", 0.2, 0.2, 0.2, LO_ARGS_END);
+	spin.NodeMessage("source-1-label", "ss",   "setParent", "source-1", LO_ARGS_END);
+	spin.NodeMessage("source-1-label", "sfff", "setTranslation", 0.0, 0.0, 1.0, LO_ARGS_END);
+	spin.NodeMessage("source-1-label", "sfff", "setScale", 5.0, 5.0, 5.0, LO_ARGS_END);
+	spin.NodeMessage("source-1-label", "ss", "setTextValue", "SoundSource 1", LO_ARGS_END);
+	spin.NodeMessage("source-1-label", "si",   "setBillboard", (int)TextNode::STAY_UP, LO_ARGS_END);
 
+    spin.NodeMessage("source-2", "si",   "setShape", (int)ShapeNode::SPHERE, LO_ARGS_END);
+	spin.NodeMessage("source-2", "si",   "setInteractionMode", (int)GroupNode::DRAG, LO_ARGS_END);
+	spin.NodeMessage("source-2", "sfff", "setTranslation", 1.0, 2.0, 0.0, LO_ARGS_END);
+	spin.NodeMessage("source-2", "sfff", "setScale", 0.2, 0.2, 0.2, LO_ARGS_END);
+	spin.NodeMessage("source-2-label", "ss",   "setParent", "source-2", LO_ARGS_END);
+	spin.NodeMessage("source-2-label", "sfff", "setTranslation", 0.0, 0.0, 1.0, LO_ARGS_END);
+	spin.NodeMessage("source-2-label", "sfff", "setScale", 5.0, 5.0, 5.0, LO_ARGS_END);
+	spin.NodeMessage("source-2-label", "ss", "setTextValue", "SoundSource 2", LO_ARGS_END);
+	spin.NodeMessage("source-2-label", "si",   "setBillboard", (int)TextNode::STAY_UP, LO_ARGS_END);
 
 	spin.NodeMessage("listener", "ss", "setModelFromFile", "listener.osg", LO_ARGS_END);
 	spin.NodeMessage("listener-label", "ss",   "setParent", "listener", LO_ARGS_END);

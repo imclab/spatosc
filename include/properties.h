@@ -87,7 +87,8 @@ class Properties
             }
             else
             {
-                std::cerr << __FUNCTION__ << ": No such property: \"" + name + "\"." << std::endl;
+                T dummy;
+                std::cerr << __FUNCTION__ << ": No such " << typeid(dummy).name() << " property: \"" + name + "\"." << std::endl;
                 return false;
             }
         }
@@ -129,7 +130,10 @@ class Properties
             }
             else
             {
-                std::cerr << __FUNCTION__ << ": No such property: \"" + name + "\"." << std::endl;
+                // mikewoz removed this print; this returns a bool, so the print
+                // can be generated downstream if necessary, otherwise it's
+                // annoying.
+                //std::cerr << __FUNCTION__ << ": No such property: \"" + name + "\"." << std::endl;
                 return false;
             }
         }

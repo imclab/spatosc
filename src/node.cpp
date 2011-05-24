@@ -26,8 +26,7 @@
 #include "node.h"
 #include "oscutils.h"
 #include "scene.h"
-
-#define UNUSED(x) ((void) (x))
+#include "unused.h"
 
 namespace spatosc
 {
@@ -43,6 +42,10 @@ Node::Node(const std::string &nodeID, Scene &scene) :
 
 Node::~Node()
 {
+    // send a scene change, telling the rendere that this node's memory can be
+    // cleared:
+    scene_.onSceneChanged("ss", "deleteNode", id_.c_str(), SPATOSC_ARGS_END);
+
     // FIXME: Tue Feb  8 11:56:52 EST 2011:tmatth
     // only osc-enabled scenes should have to be unsubscribed.
     // remove osc handler for this node
@@ -125,10 +128,8 @@ bool correctNumberOfArguments(const std::string &method, int expected, int actua
 }
 } // end anonymous namespace
 
-// FIXME: need to provide the types as well.
 void Node::handleMessage(const std::string &method, int argc, lo_arg **argv, const char *types)
 {
-    UNUSED(types);
     using namespace OSCutil; // typeTagsMatch
     if (method == "setActive")
     {
@@ -144,6 +145,22 @@ void Node::handleMessage(const std::string &method, int argc, lo_arg **argv, con
     {
     	if (typeTagsMatch(types, "ss"))
             setStringProperty(std::string(static_cast<const char *>(&argv[0]->s)), std::string(static_cast<const char *>(&argv[1]->s)));
+    }
+    else if (method == "setIntProperty")
+    {
+        if (argc==2)
+        {
+            int i = (int)lo_hires_val((lo_type)types[1], argv[1]);
+            setIntProperty(std::string(static_cast<const char *>(&argv[0]->s)), i);
+        }
+    }
+    else if (method == "setFloatProperty")
+    {
+        if (argc==2)
+        {
+            double f = (double)lo_hires_val((lo_type)types[1], argv[1]);
+            setFloatProperty(std::string(static_cast<const char *>(&argv[0]->s)), f);
+        }
     }
     else if (method == "aed")
     {
@@ -182,18 +199,50 @@ std::ostream &operator<<(std::ostream &out, const spatosc::Node &n)
 
 void Node::setStringProperty(const std::string &key, const std::string &value)
 {
-    properties_.setPropertyValue(key, value);
-    scene_.onPropertyChanged(this, key, value);
+    string_properties_.setPropertyValue(key, value);
+    scene_.onPropertyChanged<std::string>(this, key, value);
 }
 
 bool Node::getStringProperty(const std::string &key, std::string &value) const
 {
-    return properties_.getPropertyValue(key, value);
+    return string_properties_.getPropertyValue(key, value);
 }
 
 bool Node::removeStringProperty(const std::string &key)
 {
-    return properties_.removeProperty(key);
+    return string_properties_.removeProperty(key);
+}
+
+void Node::setFloatProperty(const std::string &key, const double &value)
+{
+    float_properties_.setPropertyValue(key, value);
+    scene_.onPropertyChanged<double>(this, key, value);
+}
+
+bool Node::getFloatProperty(const std::string &key, double &value) const
+{
+    return float_properties_.getPropertyValue(key, value);
+}
+
+bool Node::removeFloatProperty(const std::string &key)
+{
+    return float_properties_.removeProperty(key);
+}
+
+void Node::setIntProperty(const std::string &key, const int &value)
+{
+    int_properties_.setPropertyValue(key, value);
+    scene_.onPropertyChanged<int>(this, key, value);
+}
+
+bool Node::getIntProperty(const std::string &key, int &value) const
+{
+    return int_properties_.getPropertyValue(key, value);
+}
+
+bool Node::removeIntProperty(const std::string &key)
+{
+    return int_properties_.removeProperty(key);
 }
 
 } // end namespace spatosc

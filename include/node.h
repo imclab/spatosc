@@ -55,6 +55,12 @@ class Node
          */
         virtual ~Node();
 
+
+        /**
+         * Returns a string which represents the node type.
+         */
+        virtual std::string getType() const { return "Node"; }
+
         /**
          * Returns the identifier of this node.
          * @return A string to identify this Node.
@@ -144,7 +150,7 @@ class Node
         }
 
         /**
-         * Notify this node that it's new position has been sent
+         * Notify this node that it's new data has been sent
          */
         void stateSent()
         {
@@ -179,10 +185,44 @@ class Node
         bool getStringProperty(const std::string &key, std::string &value) const;
 
         /**
-         * Removes a property.
+         * Removes a text property.
          * @return Whether it deleted it, or false if it was not there.
          */
         bool removeStringProperty(const std::string &key);
+
+        /**
+         * Sets a float property for this node.
+         * @param value Note that it actually is a double, not a float.
+         * Creates it if it does not exist.
+         */
+        void setFloatProperty(const std::string &key, const double &value);
+        /**
+         * Retrieves a float property value for this node.
+         * @param value Note that it actually is a double, not a float.
+         * @return Success.
+         */
+        bool getFloatProperty(const std::string &key, double &value) const;
+        /**
+         * Removes a float property.
+         * @return Whether it deleted it, or false if it was not there.
+         */
+        bool removeFloatProperty(const std::string &key);
+
+        /**
+         * Sets an int property for this node.
+         * Creates it if it does not exist.
+         */
+        void setIntProperty(const std::string &key, const int &value);
+        /**
+         * Retrieves an int property value for this node.
+         * @return Success.
+         */
+        bool getIntProperty(const std::string &key, int &value) const;
+        /**
+         * Removes an int property.
+         * @return Whether it deleted it, or false if it was not there.
+         */
+        bool removeIntProperty(const std::string &key);
 
     protected:
         void forceNotifyScene();
@@ -194,9 +234,13 @@ class Node
         bool nodeChanged_;
     private:
         Vector3 pos_;
+        // NOTE: onNodeChanged MUST call stateSent(), which unsets the changed
+        // flag
         virtual void onNodeChanged(bool forcedNotify=false) = 0;
         virtual bool handleMessage_(const std::string &method, int argc, lo_arg ** argv, const char *types) = 0;
-        Properties<std::string> properties_;
+        Properties<std::string> string_properties_;
+        Properties<double> float_properties_;
+        Properties<int> int_properties_;
 };
 
 } // end namespace spatosc

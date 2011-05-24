@@ -1,13 +1,60 @@
-2011-0?-?? spatosc 0.1.10
+2011-05-24 spatosc 0.2.0
+------------------------
+
+This release is an official version in the 0.2 stable series. 
+It's the first release release in the 0.2 stable series. Each release in the 0.2 stable should be backward-compatible with each previous version in the series.
+
+This version contains new features and bug fixes.
+
+New Features:
+    * Export the wrapper as DLL for Windows (Visual Studio)
+    * Added Wrapper::addDmitriTranslator
+
+Bug fixes: 
+    * updated examples for spatosc-0.2
+    * fixed examples to use the BasicTranslator
+    * updates of osx package stuff in HACKING
+    * Makefiles should not be executable
+    * fix to SO_VERSION
+    * Fixed a memleak in Scene::addTranslator with a *Translator as argument.
+    * Removed Wrapper::addTranslator with a *Translator as argument.
+    * Added the "using-the-wrapper" example.
+
+
+2011-05-12 spatosc 0.1.12
+-------------------------
+
+This release is a developer snapshot in the 0.1 unstable series. 
+It's the third release candidate for preparing the 0.2 stable series. The API version is now 0.2.
+
+This version contains new features and bug fixes.
+
+New Features:
+    * DmitriTranslator now has properties enableGain and enableDelay to specify whether these should be sent via OSC
+    * DmitriTranslator Bus number should be set using setIntProperty "bus" <bus #>
+    * scened::addTranslator now also accepts a pointer (instead of the previously required template method>
+    * New PackageMaker document to make .pkg files for OSX
+    * Renamed SpatdifTranslator to BasicTranslator
+
+Bug fixes: 
+    * pd-external: Fixed setNodeIntProperty which was actually setting a float property
+
+
+2011-05-03 spatosc 0.1.10
 -------------------------
 
 This release is a developer snapshot in the 0.1 unstable series. 
 It's the second release candidate for preparing the 0.2 stable series.
 
-This version contains bug fixes.
+This version contains new features and bug fixes.
+
+New Features:
+    * Int and Float properties for any node
+    * Added sending of scene messages via OSC (eg, createSoundSource, deleteNode, connect, etc.). This will allow dynamic renderers to perform actions when the scene changes.
 
 Bug fixes: 
-    * (none)
+    * Important fix that properly updates all nodes sharing a connection (previously only the first connected node was updated)
+    * Allowed translator constructors to use default port arguments, so user doesn't need to provide them
 
 
 2011-04-07 spatosc 0.1.8

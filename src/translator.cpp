@@ -23,8 +23,7 @@
 #include "connection.h"
 #include "soundsource.h"
 #include "listener.h"
-
-#define UNUSED(x) ((void) (x))
+#include "unused.h"
 
 namespace spatosc
 {
@@ -32,10 +31,12 @@ namespace spatosc
 Translator::Translator(bool verbose) : verbose_(verbose)
 {}
 
-void Translator::pushOSCMessages(Connection *conn)
+	
+	
+void Translator::pushConnectionChanges(Connection *conn)
 {
-    if (verbose_)
-        std::cout << "Computation update for " << conn->getSource() << " -> " << conn->getSink() << " :" <<std::endl;
+    //if (verbose_)
+        //std::cout << "Computation update for " << conn->getSource() << " -> " << conn->getSink() << " :" <<std::endl;
 
     /*
     // SRC INCIDENCE:
@@ -53,7 +54,8 @@ void Translator::pushOSCMessages(Connection *conn)
     double snkScalar = (double) (1.0 - (.01*xconn->rolloffEffect  * (1.0 - snkIncidenceGain)));
      */
 
-    if (verbose_)
+    // if (verbose_)
+    if (0)
     {
         std::cout << "  dist:\t" << conn->distance() << std::endl;
         std::cout << "  azim:\t" << conn->azimuth() << std::endl;

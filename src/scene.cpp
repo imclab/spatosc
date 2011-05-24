@@ -35,6 +35,7 @@
 #include "soundsource.h"
 #include "translator.h"
 #include "geotransform.h"
+#include "oscutils.h"
 
 namespace spatosc
 {
@@ -154,6 +155,14 @@ SoundSource* Scene::createSoundSource(const std::string &id)
         soundSources_.push_back(tmp);
         node = tmp.get();
 
+        // send a message to any interested translators
+        onSceneChanged("ss", "createSoundSource", id.c_str(), SPATOSC_ARGS_END);
+        /*
+        std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
+        for (iter = translators_.begin(); iter != translators_.end(); ++iter)
+            iter->second->pushSceneChange("createSoundSource", id.c_str());
+         */
+
         if (autoConnect_)
         {
             ListenerIterator iter;
@@ -190,6 +199,14 @@ Listener* Scene::createListener(const std::string &id)
 
         // add it to the ListenerList:
         listeners_.push_back(tmp);
+
+        // send a message to any interested translators
+        onSceneChanged("ss", "createListener", id.c_str(), SPATOSC_ARGS_END);
+        /*
+        std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
+        for (iter = translators_.begin(); iter != translators_.end(); ++iter)
+            iter->second->pushSceneChange("createListener", id.c_str());
+        */
 
         if (autoConnect_)
         {
@@ -328,6 +345,15 @@ Connection* Scene::connect(SoundSource *src, Listener *snk)
         connections_.push_back(conn);
         src->addConnectionTo(conn);
         snk->addConnectionFrom(conn);
+
+        // send a message to any interested translators
+        onSceneChanged("sss", "connect", src->getID().c_str(), snk->getID().c_str(), SPATOSC_ARGS_END);
+        /*
+        std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
+        for (iter = translators_.begin(); iter != translators_.end(); ++iter)
+            iter->second->pushSceneChange("connect", src->getID().c_str(), snk->getID().c_str());
+*/
+
         onConnectionChanged(conn.get());
         return conn.get();
     }
@@ -355,6 +381,10 @@ bool Scene::disconnect(SoundSource *source, Listener *sink)
     }
     source->removeConnectionTo(conn);
     sink->removeConnectionFrom(conn);
+
+    // send a message that it has been deleted:
+    onSceneChanged("sss", "disconnect", source->getID().c_str(), sink->getID().c_str(), SPATOSC_ARGS_END);
+
     return eraseFromVector(connections_, conn);
 }
 
@@ -367,21 +397,24 @@ void Scene::onConnectionChanged(Connection *conn, bool forcedNotify)
 	if (conn->active() || forcedNotify)
     {
 		if (synchronous_ || forcedNotify)
-			pushOSCMessagesViaAllTranslators(conn, forcedNotify);
+			pushConnectionChangesViaAllTranslators(conn, forcedNotify);
     }
 }
 
 void Scene::forceRefresh()
 {
+    // FIXME: should re-create all nodes here.
+    // TODO: send createSoundSource, createListener, connect, messages
+    // ie, call pushSceneChanged() for all translators
     ConnConstIterator iter;
     for (iter = connections_.begin(); iter != connections_.end(); ++iter)
     {
     	(*iter)->recomputeConnection();
-    	pushOSCMessagesViaAllTranslators((*iter).get(), true);
+        pushConnectionChangesViaAllTranslators((*iter).get(), true);
     }
 }
 
-void Scene::pushOSCMessagesViaAllTranslators(Connection *conn, bool forcedNotify)
+void Scene::pushConnectionChangesViaAllTranslators(Connection *conn, bool forcedNotify)
 {
     SoundSource *src = conn->getSource();
     Listener *sink = conn->getSink();
@@ -400,9 +433,12 @@ void Scene::pushOSCMessagesViaAllTranslators(Connection *conn, bool forcedNotify
     {
         std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
         for (iter = translators_.begin(); iter != translators_.end(); ++iter)
-            iter->second->pushOSCMessages(conn);
-        src->stateSent();
-        sink->stateSent();
+            iter->second->pushConnectionChanges(conn);
+
+        // !!! can't do this here, because node may be needed for other
+        // connections.
+        //src->stateSent();
+        //sink->stateSent();
     }
 }
 
@@ -415,13 +451,20 @@ bool Scene::flushMessages()
     }
     else
     {
-        ConnConstIterator iter;
-        for (iter = connections_.begin(); iter != connections_.end(); ++iter)
+        ConnConstIterator c;
+        for (c = connections_.begin(); c != connections_.end(); ++c)
         {
-            Connection* conn = (*iter).get();
+            Connection* conn = (*c).get();
             if (conn->active())
-                pushOSCMessagesViaAllTranslators(conn);
+                pushConnectionChangesViaAllTranslators(conn);
         }
+
+        // now reset all changed flags on nodes:
+        for (ListenerIterator L = listeners_.begin(); L != listeners_.end(); ++L)
+            (*L)->stateSent();
+        for (SourceIterator n = soundSources_.begin(); n != soundSources_.end(); ++n)
+            (*n)->stateSent();
+
         return true;
     }
 }
@@ -447,6 +490,7 @@ bool Scene::deleteNode(const SoundSource *node)
         std::cerr << "Invalid source node." << std::endl;
         return false;
     }
+
     disconnectNodeConnections(node);
     return eraseFromVector(soundSources_, node);
 }
@@ -458,17 +502,32 @@ bool Scene::deleteNode(const Listener *node)
         std::cerr << "Invalid listener node." << std::endl;
         return false;
     }
+
     disconnectNodeConnections(node);
     return eraseFromVector(listeners_, node);
 }
+
+namespace
+{
+template <typename T>
+void clearVector(std::vector<T> &vec)
+{
+    std::vector<T>().swap(vec);
+}
+} // end of anonymous namespace
 
 void Scene::deleteAllNodes()
 {
     // we swap them with emtpy vectors to make sure their size is 0.
     // see http://www.gotw.ca/gotw/054.htm
-    std::vector<std::tr1::shared_ptr<Connection> >().swap(connections_);
-    std::vector<std::tr1::shared_ptr<Listener> >().swap(listeners_);
-    std::vector<std::tr1::shared_ptr<SoundSource> >().swap(soundSources_);
+    clearVector(connections_);
+    clearVector(listeners_);
+    clearVector(soundSources_);
+    //std::vector<std::tr1::shared_ptr<Connection> >().swap(connections_);
+    //std::vector<std::tr1::shared_ptr<Listener> >().swap(listeners_);
+    //std::vector<std::tr1::shared_ptr<SoundSource> >().swap(soundSources_);
+
+    onSceneChanged("s", "clear", SPATOSC_ARGS_END);
 }
 
 void Scene::onTransformChanged()
@@ -535,11 +594,29 @@ bool Scene::hasTranslator(const std::string &name) const
     return translators_.find(name) != translators_.end();
 }
 
-void Scene::onPropertyChanged(Node *node, const std::string &key, const std::string &value)
+void Scene::onSceneChanged(const char *types, ...)
 {
+    va_list ap;
+    va_start(ap, types);
+
     std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
     for (iter = translators_.begin(); iter != translators_.end(); ++iter)
-        iter->second->pushPropertyChange(node, key, value);
+        iter->second->pushSceneChange(types, ap);
+}
+
+Translator *Scene::addTranslator(const std::string &name, Translator *t)
+{
+    if (hasTranslator(name))
+    {
+        std::cout << "Warning: Cannot add translator named " << name << ". Already exists." << std::endl;
+        delete t;
+        return 0;
+    }
+    else
+    {
+        translators_[name] = std::tr1::shared_ptr<Translator>(t);
+        return getTranslator(name);
+    }
 }
 
 } // end namespace spatosc

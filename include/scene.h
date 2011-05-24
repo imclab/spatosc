@@ -30,6 +30,7 @@
 #include <iostream>
 #include "memory.h"
 #include "maths.h"
+#include "translator.h"
 
 namespace spatosc
 {
@@ -103,25 +104,33 @@ class Scene
         void debugPrint();
 
         /**
-         * Template method that sets the renderer plugin.
+         * Helper template method that adds a translator plugin with one IP and
+         * port (most cases).
          *
-         * The template argument must be a child of Translator.
+         * This is also here for legacy purposes (before we realized that
+         * translators may have various constructor arguments). For thos more
+         * specialized cases, you have to pass a pointer (see below).
+         *
+         * The template argument must be derived from Translator class.
+         *
+         * Each translator must have an identifier, so that you can remove it
+         * later. You can have many translators for a single scene.
          * 
-         * Each translator must have an identifier, so that you can remove it later. You can have many translators for a single scene.
          * Here is an example:
          * \code
          * Scene scene();
-         * scene.addTranslator<SpatdifTranslator>("spatdif", "127.0.0.1", "11111");
+         * scene.addTranslator<BasicTranslator>("basic", "127.0.0.1", "11111");
          * \endcode
          * 
-         * @return A Translator pointer. Null if there was already one with that name, or if an error occurred. Never free this pointer.
+         * @return A Translator pointer. Null if there was already one with that
+         * name, or if an error occurred. Never free this pointer.
          */
         template <typename T>
         Translator *addTranslator(const std::string &name, const std::string &address="", const std::string &port="", bool verbose = true)
         {
             if (hasTranslator(name))
             {
-                std::cout << "Warning: There is already a translator named " << name << std::endl;
+                std::cout << "Warning: Cannot add translator named " << name << ". Already exists." << std::endl;
                 return 0;
             }
             else
@@ -130,6 +139,23 @@ class Scene
                 return getTranslator(name);
             }
         }
+
+        /**
+         * Add a translator by passing a pointer.
+         *
+         * Here is an example:
+         * \code
+         * Scene scene();
+         * scene.addTranslator("basic", new BasicTranslator("127.0.0.1", "11111"));
+         * \endcode
+         *
+         * IMPORTANT: you should never free the object for the pointer that you
+         * passed to this function. Instead, use the removeTranslator() method.
+         *
+         * @return A Translator pointer. Null if there was already one with that
+         * name, or if an error occurred. Never free this pointer.
+         */
+        Translator *addTranslator(const std::string &name, Translator *t);
 
         /**
          * Returns a pointer to a given Translator or a null pointer if not found.
@@ -282,6 +308,8 @@ class Scene
          */
         void setSynchronous(bool synchronous);
 
+        bool isSynchronous() { return synchronous_; }
+
         /**
          * When in asynchronous mode, (not synchronous) one needs to call this quite often to flush the OSC messages.
          * To be in the asynchronous mode, one should setSynchronous with false as parameter.
@@ -298,7 +326,15 @@ class Scene
          * Tells all the translators that the given property has changed.
          * @warning Clients should not call this directly.
          */
-        void onPropertyChanged(Node *node, const std::string &key, const std::string &value);
+        template <typename T>
+        void onPropertyChanged(Node *node, const std::string &key, const T &value)
+        {
+            std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
+            for (iter = translators_.begin(); iter != translators_.end(); ++iter)
+                iter->second->pushPropertyChange(node, key, value);
+        }
+
+        void onSceneChanged(const char *types, ...);
 
         /**
          * Allows the scene to be completely refreshed. For example, if the
@@ -332,7 +368,7 @@ class Scene
         std::vector<std::tr1::shared_ptr<Connection> > connections_;
         bool verbose_;
         bool synchronous_;
-        void pushOSCMessagesViaAllTranslators(Connection *conn, bool forcedNotify=false);
+        void pushConnectionChangesViaAllTranslators(Connection *conn, bool forcedNotify=false);
 };
 
 } // end namespace spatosc

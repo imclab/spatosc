@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT(spatosc, [0.1.9], [http://github.com/sat-metalab/spatosc/issues], [spatosc], [http://github.com/sat-metalab/spatosc])
+AC_INIT(spatosc, [0.2.0], [http://github.com/sat-metalab/spatosc/issues], [spatosc], [http://github.com/sat-metalab/spatosc])
 AC_CONFIG_MACRO_DIR([m4])
 AC_MSG_NOTICE([Configuring spatosc])
 AM_INIT_AUTOMAKE([subdir-objects -Wno-portability])
@@ -19,7 +19,6 @@ AC_CANONICAL_HOST # fills $host variable
 #  * current: Increment when the interface changes. (and set revision to 0)
 #  * revision: Increment when the implementation changes, but not the interface.
 #  * age: Backward-compatible with how many interface numbers.
-# Note that when we change the API version, we should reset the SO VERSION to 0:0:0
 AC_SUBST([SPATOSC_SO_VERSION], [0:0:0])
 
 # The version of the API. Should be major.minor and not change until not backward-compatible
@@ -128,7 +127,6 @@ dnl fi
 # is no need to rename the template file when the API version changes.
 AC_CONFIG_FILES([
         Makefile 
-        spatosc.pc 
         include/version.h
         src/Makefile 
         tests/Makefile

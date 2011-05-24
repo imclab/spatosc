@@ -74,5 +74,7 @@ void Listener::onNodeChanged(bool forcedNotify)
 
     for (c = connectFROM_.begin(); c != connectFROM_.end(); ++c)
         scene_.onConnectionChanged(c->get(), forcedNotify);
+
+    stateSent();
 }
 } // end namespace spatosc

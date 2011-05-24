@@ -30,8 +30,8 @@ libspatosc_@SPATOSC_API_VERSION@_la_SOURCES = \
     oscutils.cpp \
     scene.cpp \
     soundsource.cpp \
-    spatdif_receiver.cpp \
-    spatdif_translator.cpp \
+    basic_receiver.cpp \
+    basic_translator.cpp \
     translator.cpp \
     wrapper.cpp
 
@@ -46,6 +46,7 @@ libspatosc_@SPATOSC_API_VERSION@_la_includedir = $(includedir)/spatosc-$(SPATOSC
 libspatosc_@SPATOSC_API_VERSION@_la_include_HEADERS = \
     $(top_srcdir)/include/connection.h \
     $(top_srcdir)/include/dmitri_translator.h \
+    $(top_srcdir)/include/dllexport.h \
     $(top_srcdir)/include/fudi_sender.h \
     $(top_srcdir)/include/fudi_translator.h \
     $(top_srcdir)/include/geotransform.h \
@@ -61,8 +62,8 @@ libspatosc_@SPATOSC_API_VERSION@_la_include_HEADERS = \
     $(top_srcdir)/include/property.h \
     $(top_srcdir)/include/scene.h \
     $(top_srcdir)/include/soundsource.h \
-    $(top_srcdir)/include/spatdif_receiver.h \
-    $(top_srcdir)/include/spatdif_translator.h \
+    $(top_srcdir)/include/basic_receiver.h \
+    $(top_srcdir)/include/basic_translator.h \
     $(top_srcdir)/include/spatosc.h \
     $(top_srcdir)/include/translator.h \
     $(top_srcdir)/include/unused.h \

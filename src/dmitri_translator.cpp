@@ -21,6 +21,7 @@
 #include "oscutils.h"
 #include "oscsender.h"
 #include "soundsource.h"
+#include "listener.h"
 #include "connection.h"
 
 #include <iostream>
@@ -31,80 +32,95 @@ namespace spatosc
 
 const char *DmitriTranslator::DEFAULT_SEND_PORT = "18033";
 const char *DmitriTranslator::DEFAULT_RECEIVER_PORT = "18099";
-double DmitriTranslator::SPACEMAP_EQUATOR_RADIUS = 700.0;
-const double DmitriTranslator::SPACEMAP_POLE_RADIUS = 1000.0;
 
 // ************************************************
-// FIXME: Wed Jan 19 14:12:24 EST 2011: tmatth
-// could these port values be defined in translator.h/cpp?
-// 2011-01-21:aalex:I think this default port number is D-Mitri-specific.
-DmitriTranslator::DmitriTranslator(const std::string &ip,
-        const std::string &toPort,
-        bool verbose = true) :
-    Translator(verbose),
-    sender_(new OscSender(ip, toPort)),
-    verbose_(verbose)
-{
-    if (verbose_)
-        std::cout << "D-Mitri translator sending to: " << sender_->toString() << std::endl;
-}
 
-DmitriTranslator::DmitriTranslator(const std::string &ip,
-    const std::string &toPort,
-    const std::string &fromPort,
-    bool verbose = false) :
+DmitriTranslator::DmitriTranslator(const std::string &ip, const std::string &toPort, const std::string &fromPort, bool verbose) :
 Translator(verbose),
 sender_(new OscSender(ip, toPort, fromPort)),
 verbose_(verbose)
 {
     if (verbose_)
     {
-        //std::cout << "Sending to D-Mitri on: " << lo_address_get_url(destAddr_) << std::endl;
-        //std::cout << "Outgoing address is:   " << lo_server_get_url(lo_serv_) << std::endl;
+        std::cout << "D-Mitri translator sending to: " << sender_->toString() << std::endl;
     }
 }
 
-void DmitriTranslator::pushOSCMessages(Connection *conn)
+DmitriTranslator::DmitriTranslator(const std::string &ip, const std::string &toPort, bool verbose) :
+Translator(verbose),
+sender_(new OscSender(ip, toPort, DmitriTranslator::DEFAULT_RECEIVER_PORT)),
+verbose_(verbose)
 {
-    std::string str;
-    SoundSource *src = conn->getSource();
+    if (verbose_)
+    {
+        std::cout << "D-Mitri translator sending to: " << sender_->toString() << std::endl;
+    }
+}
+
+void DmitriTranslator::pushConnectionChanges(Connection *conn)
+{
+    std::ostringstream ostr;
+
+    int busID = 1; // default bus 1
+    conn->getSource()->getIntProperty("bus", busID);
+
+    int enableGain = 1;
+    conn->getSource()->getIntProperty("enableGain", enableGain);
+
+    int enableDelay = 0;
+    conn->getSource()->getIntProperty("enableDelay", enableDelay);
+
+    double spacemapEquator = 700.0;
+    conn->getSink()->getFloatProperty("spacemapEquator", spacemapEquator);
+    
+    double spacemapPole = 1000.0;
+    conn->getSink()->getFloatProperty("spacemapPole", spacemapPole);
+
 
     float r = 1.0 - fabs( conn->elevation() / (M_PI/2) );
     float spacemapX, spacemapY;
     if (conn->elevation() >= 0)
     {
-        spacemapX = -sin(conn->azimuth()) * r * SPACEMAP_EQUATOR_RADIUS;
-        spacemapY =  cos(conn->azimuth()) * r * SPACEMAP_EQUATOR_RADIUS;
+        spacemapX = -sin(conn->azimuth()) * r * spacemapEquator;
+        spacemapY =  cos(conn->azimuth()) * r * spacemapEquator;
     } else {
-        spacemapX = -sin(conn->azimuth()) * (SPACEMAP_EQUATOR_RADIUS + ((1-r) * (SPACEMAP_POLE_RADIUS-SPACEMAP_EQUATOR_RADIUS)));
-        spacemapY =  cos(conn->azimuth()) * (SPACEMAP_EQUATOR_RADIUS + ((1-r) * (SPACEMAP_POLE_RADIUS-SPACEMAP_EQUATOR_RADIUS)));
+        spacemapX = -sin(conn->azimuth()) * (spacemapEquator + ((1-r) * (spacemapPole-spacemapEquator)));
+        spacemapY =  cos(conn->azimuth()) * (spacemapEquator + ((1-r) * (spacemapPole-spacemapEquator)));
     }
 
     //std::cout << "azim="<<conn->azimuth()<<" elev="<<conn->elevation()<<" r="<<r<<std::endl;
-    //std::cout << "Sending spacemap: " << spacemapX << "," << spacemapY << std::endl;
 
-    str = "/spacemap/" +  src->getID() + "/x";
-    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapX);
-    sender_->sendMessage(str.c_str(), "f", spacemapX, SPATOSC_ARGS_END);
+    ostr.str("");
+    ostr << "/spacemap/" << busID << "/x";
+    sender_->sendMessage(ostr.str().c_str(), "f", spacemapX, SPATOSC_ARGS_END);
+    //std::cout << "sent " << ostr.str() <<" "<< spacemapX << std::endl;
 
-    str = "/spacemap/" + src->getID() + "/y";
-    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, str.c_str(), "f", spacemapY);
-    sender_->sendMessage(str.c_str(), "f", spacemapY, SPATOSC_ARGS_END);
+    ostr.str("");
+    ostr << "/spacemap/" << busID << "/y";
+    sender_->sendMessage(ostr.str().c_str(), "f", spacemapY, SPATOSC_ARGS_END);
+    //std::cout << "sent " << ostr.str() <<" "<< spacemapY << std::endl;
 
-    str = "Bus " + src->getID() + " Level";
-    //lo_send_from(destAddr_, lo_serv_, LO_TT_IMMEDIATE, "/set", "sf", str.c_str(), conn->gain());
-    sender_->sendMessage("/set", "sf", str.c_str(), conn->gainDB(), SPATOSC_ARGS_END);
+    if (enableGain)
+    {
+        ostr.str("");
+        ostr << "Bus " << busID << " Level";
+        sender_->sendMessage("/set", "sf", ostr.str().c_str(), conn->gainDB(), SPATOSC_ARGS_END);
+        //std::cout << "sent " << ostr.str() <<" "<< conn->gainDB() << std::endl;
+    }
+
+    if (enableDelay)
+    {
+        // NOTE: Dmitri expects delay as nanoseconds (INT64)
+        ostr.str("");
+        ostr << "Bus " << busID << " Delay";
+        sender_->sendMessage("/set", "sh", ostr.str().c_str(), (long int)(conn->delay()*1000000), SPATOSC_ARGS_END);
+        //std::cout << "sent " << ostr.str() <<" "<< conn->delay() << std::endl;
+    }
 }
 
 OscSender &DmitriTranslator::getSender() const
 {
     return *sender_;
-}
-
-void DmitriTranslator::setEquatorRadius(double radius)
-{
-	SPACEMAP_EQUATOR_RADIUS = radius;
-	// TODO: need to recompute all connections and push them
 }
 
 } // end namespace spatosc

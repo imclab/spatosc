@@ -31,7 +31,7 @@
       
     -- define all the possible build configurations
     configurations {
---      "DebugDLL", "ReleaseDLL", 
+      "DebugDLL", "ReleaseDLL", 
       "DebugLib", "ReleaseLib", 
     }
     
@@ -118,9 +118,9 @@
       kind    "StaticLib"
       defines "LIBSPATOSC_LIB"
       
---    configuration { "*DLL" }
---      kind    "SharedLib"
---      defines "LIBSPATOSC_DLL"
+    configuration { "*DLL" }
+      kind    "SharedLib"
+      defines "LIBSPATOSC_DLL"
 
     configuration { "Debug*" }
       targetname "libspatosc_d"

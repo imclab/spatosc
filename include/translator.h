@@ -24,7 +24,9 @@
 #define __TRANSLATOR_H__
 
 #include <string>
-#define UNUSED(x) ((void) (x))
+#include <iostream>
+#include <cstdarg> // for va_list
+#include "unused.h" // FIXME: we should not define this macro in a public header
 
 namespace spatosc
 {
@@ -45,7 +47,7 @@ class Translator
         Translator(bool verbose = false);
 
         /**
-         * The main work of the translator is done by the pushOSCMessages() method, which is
+         * The main work of the translator is done by the pushConnectionChanges() method, which is
          * called whenever there is a change to some parameters within a connection.
          *
          * For each pair of nodes in the scene that are connected, it might calculate the
@@ -53,7 +55,20 @@ class Translator
          * It should then make sure there is some audio rendering going, either by sending interprocess
          * messages to control some audio engine, or by rendering audio by itself.
          */
-        virtual void pushOSCMessages(Connection *conn);
+        virtual void pushConnectionChanges(Connection *conn);
+
+        /**
+         * This is called whenever the scene changes (ie, a node is created or,
+         * deleted, a connection is made, etc). The change is available to any
+         * translator so that the proper resources can be allocated in the audio
+         * rendering process.
+         */
+        //virtual void pushSceneChange(const std::string &method, ...)
+        virtual void pushSceneChange(const char *types, va_list ap)
+        {
+            UNUSED(types);
+            UNUSED(ap);
+        }
 
         /**
          * Called when it's time to push OSC messages when a Node property has changed.
@@ -63,6 +78,29 @@ class Translator
             UNUSED(node);
             UNUSED(key);
             UNUSED(value);
+            //std::cout << "Warning: Translator::" << __FUNCTION__ << "(string) not overriden.\n";
+        }
+
+        /**
+         * Called when it's time to push OSC messages when a Node property has changed.
+         */
+        virtual void pushPropertyChange(Node *node, const std::string &key, const double &value)
+        {
+            UNUSED(node);
+            UNUSED(key);
+            UNUSED(value);
+            //std::cout << "Warning: Translator::" << __FUNCTION__ << "(double) not overriden.\n";
+        }
+
+        /**
+         * Called when it's time to push OSC messages when a Node property has changed.
+         */
+        virtual void pushPropertyChange(Node *node, const std::string &key, const int &value)
+        {
+            UNUSED(node);
+            UNUSED(key);
+            UNUSED(value);
+            //std::cout << "Warning: Translator::" << __FUNCTION__ << "(int) not overriden.\n";
         }
 
         /**

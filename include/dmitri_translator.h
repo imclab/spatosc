@@ -43,13 +43,13 @@ class Connection;
  *    The assumption is that the sphere is viewed from the center, looking up,
  *    and is projected on a plane. The lower hemisphere is unfolded and mapped
  *    along the outside of the resuling circular projection. Positive elevations
- *    result in spacemap positions ranging from (0,0) to SPACEMAP_EQUATOR_RADIUS
- *    and ngative elevations range from the SPACEMAP_EQUATOR_RADIUS to the
- *    SPACEMAP_POLE_RADUIS.
+ *    result in spacemap positions ranging from (0,0) to spacemapEquator and
+ *    negative elevations range from the spacemapEquator to the spacemapPole.
+ *    These can be set using setFloatProperty("spacemapEquator", 700.0)
  *
  *    Examples:
  *    -> a sound source in front (0,1,0) will have
- *       a spacemap position of: (0,-SPACEMAP_EQUATOR_RADIUS)
+ *       a spacemap position of: (0,-spacemapEquator)
  *    -> a sound source above (0,0,1) will have
  *       a spacemap position of: (0,0)
  *
@@ -71,13 +71,6 @@ class Connection;
 class DmitriTranslator : public Translator
 {
 public:
-    DmitriTranslator(const std::string &ip, const std::string &toPort, const std::string &fromPort, bool verbose);
-    DmitriTranslator(const std::string &ip, const std::string &toPort, bool verbose);
-
-    /**
-     * This is where we customize messages for D-Mitri's OSC protocol.
-     */
-    virtual void pushOSCMessages(Connection *conn);
 
     /**
      * The DEFAULT_SEND_PORT should always be 18033 (as of CueStation 5.0)
@@ -91,6 +84,26 @@ public:
     static const char *DEFAULT_RECEIVER_PORT;
 
     /**
+     * Constructor (only IP address is required; ports can be overridden)
+     */
+    DmitriTranslator(
+            const std::string &ip,
+            const std::string &toPort = DmitriTranslator::DEFAULT_SEND_PORT,
+            const std::string &fromPort = DmitriTranslator::DEFAULT_RECEIVER_PORT,
+            bool verbose = false);
+
+    /**
+     * Legacy constructor to support templated scene::addTranslator method
+     * (to be deprecated)
+     */
+    DmitriTranslator(const std::string &ip, const std::string &toPort, bool verbose = false);
+
+    /**
+     * This is where we customize messages for D-Mitri's OSC protocol.
+     */
+    virtual void pushConnectionChanges(Connection *conn);
+
+    /**
      * Gets the OscSender object so that you can send arbitrary commands to the
      * D-Mitri input socket. For example, you could send
      * \verbatim /set "Input 1 Level" 40 \endverbatim
@@ -99,19 +112,7 @@ public:
      */
     OscSender &getSender() const;
 
-    /**
-     * Set the equator radius in the spacemap.
-     *
-     * NOTE: You MUST do this before you create your scene, otherwise the effect
-     * won't be applied until a node is moved. Alternatively, you could call
-     * scene::forceRefresh to ensure that all nodes are properly updated
-     * afterwards
-     */
-    void setEquatorRadius(double radius);
-
 private:
-    static double SPACEMAP_EQUATOR_RADIUS;
-    static const double SPACEMAP_POLE_RADIUS;
     std::tr1::shared_ptr<OscSender> sender_;
     // not implemented
     DmitriTranslator(const DmitriTranslator&);

@@ -25,9 +25,12 @@
 #include <iostream>
 #include <string>
 #include "spatosc.h"
+#include "unused.h"
 
 using namespace spatosc;
-
+/**
+ * Tests the Property template class.
+ */
 bool test_property()
 {
     Property<std::string> property("foo", "bar");
@@ -36,6 +39,13 @@ bool test_property()
         std::cout << __FUNCTION__ << ": its value should be the same as the one given." << std::endl;
         return false;
     }
+
+    if (property.getName() != "foo")
+    {
+        std::cout << __FUNCTION__ << ": its name should be the same as the one given." << std::endl;
+        return false;
+    }
+
     property.setValue("spam");
     if (property.getValue() != "spam")
     {
@@ -45,6 +55,9 @@ bool test_property()
     return true;
 }
 
+/**
+ * Tests the Properties template class.
+ */
 bool test_properties()
 {
     Properties<std::string> properties;
@@ -94,8 +107,6 @@ bool test_properties()
     return true;
 }
 
-#define UNUSED(x) ((void) (x))
-
 class DummyTranslator : public spatosc::Translator
 {
     public:
@@ -112,12 +123,30 @@ class DummyTranslator : public spatosc::Translator
             UNUSED(node);
             UNUSED(key);
             UNUSED(value);
-            updated = true;
+            string_updated = true;
         }
-    static bool updated;
+        virtual void pushPropertyChange(spatosc::Node *node, const std::string &key, const int &value)
+        {
+            UNUSED(node);
+            UNUSED(key);
+            UNUSED(value);
+            int_updated = true;
+        }
+        virtual void pushPropertyChange(spatosc::Node *node, const std::string &key, const double &value)
+        {
+            UNUSED(node);
+            UNUSED(key);
+            UNUSED(value);
+            float_updated = true;
+        }
+    static bool string_updated;
+    static bool float_updated;
+    static bool int_updated;
 };
 
-bool DummyTranslator::updated = false;
+bool DummyTranslator::string_updated = false;
+bool DummyTranslator::int_updated = false;
+bool DummyTranslator::float_updated = false;
 
 bool test_notification()
 {
@@ -125,15 +154,62 @@ bool test_notification()
     Scene scene;
     scene.addTranslator<DummyTranslator>("dummy", "address", "port");
     SoundSource *source = scene.createSoundSource("source");
-    if (DummyTranslator::updated)
+    if (DummyTranslator::string_updated || DummyTranslator::float_updated || DummyTranslator::int_updated)
     {
         std::cerr <<" should not have received a property update yet.\n";
         return false;
     }
+
+    // String property:
     source->setStringProperty("foo", "bar");
-    if (! DummyTranslator::updated)
+    if (! DummyTranslator::string_updated)
     {
-        std::cerr <<" should have received a property update.\n";
+        std::cerr <<" should have received a string property update.\n";
+        return false;
+    }
+    std::string s_value("");
+    source->getStringProperty("foo", s_value);
+    if (s_value != "bar")
+    {
+        std::cerr <<" string property has not been set.\n";
+        return false;
+    }
+
+    // Float property:
+    source->setFloatProperty("bar", 3.14159);
+    if (! DummyTranslator::float_updated)
+    {
+        std::cerr <<" should have received a float property update.\n";
+        return false;
+    }
+    double f_value(0.0);
+    source->getFloatProperty("bar", f_value);
+    if (f_value != 3.14159)
+    {
+        std::cerr <<" float property has not been set.\n";
+        return false;
+    }
+
+    // Int property:
+    source->setIntProperty("egg", 2);
+    if (! DummyTranslator::int_updated)
+    {
+        std::cerr <<" should have received an int property update.\n";
+        return false;
+    }
+    int i_value(0);
+    source->getIntProperty("egg", i_value);
+    if (i_value != 2)
+    {
+        std::cerr <<" int property has not been set.\n";
+        return false;
+    }
+    source->removeIntProperty("egg");
+    i_value = 0;
+    source->getIntProperty("egg", i_value);
+    if (i_value != 0)
+    {
+        std::cerr <<" int property has not been removed.\n";
         return false;
     }
     return true;

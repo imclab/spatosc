@@ -21,11 +21,12 @@
  * The Wrapper class.
  */
 
-#ifndef __FACADE_H__
-#define __FACADE_H__
+#ifndef __WRAPPER_H__
+#define __WRAPPER_H__
 
 #include <string>
 #include "memory.h"
+#include "dllexport.h"
 
 namespace spatosc
 {
@@ -34,8 +35,13 @@ class Scene;
 
 /**
  * Wraps the whole spatosc library.
+ * 
+ * Implements the Facade design pattern.
+ * It makes the internal details of the library opaque to the user. That means you cannot access the Scene or its nodes directly.
+ * 
+ * For now, this is the only class that is accessible from Windows using the spatosc dynamic library.
  */
-class Wrapper
+class DLLEXPORT Wrapper
 {
     public:
         /**
@@ -94,7 +100,7 @@ class Wrapper
         bool setPosition(const std::string &nodeName, double x, double y, double z);
         /**
          * Adds a translator to use.
-         * Example of valid translators names include "SpatdifTranslator" and "DmitriTranslator".
+         * Example of valid translators names include "BasicTranslator" and "DmitriTranslator".
          * @param translatorName Must be the name of a valid child of the Translator class.
          * @return Success or not.
         */
@@ -126,6 +132,38 @@ class Wrapper
          */
         bool removeNodeStringProperty(const std::string &node, const std::string &key);
         /**
+         * Sets the value of a Node int Property.
+         * @return Success or not.
+         */
+        bool setNodeIntProperty(const std::string &node, const std::string &key, const int &value);
+        /**
+         * Retrieves the value of a Node int Property.
+         * @param value A reference to a int in which the value will be written.
+         * @return Success or not.
+         */
+        bool getNodeIntProperty(const std::string &node, const std::string &key, int &value);
+        /**
+         * Removes a Node int Property.
+         * @return Success or not.
+         */
+        bool removeNodeIntProperty(const std::string &node, const std::string &key);
+        /**
+         * Sets the value of a Node float Property.
+         * @return Success or not.
+         */
+        bool setNodeFloatProperty(const std::string &node, const std::string &key, const double &value);
+        /**
+         * Retrieves the value of a Node float Property.
+         * @param value A reference to a float in which the value will be written.
+         * @return Success or not.
+         */
+        bool getNodeFloatProperty(const std::string &node, const std::string &key, double &value);
+        /**
+         * Removes a Node float Property.
+         * @return Success or not.
+         */
+        bool removeNodeFloatProperty(const std::string &node, const std::string &key);
+        /**
          * Sets the scene's translation.
          */
         void setTranslation(double tx, double ty, double tz);
@@ -143,10 +181,29 @@ class Wrapper
          * Sets the scene's scale.
          */
         void setScale(double sx, double sy, double sz);
+        /**
+         * Sets a connection's distance factor.
+         * See Connection::setDistanceFactor.
+         */
+        bool setDistanceFactor(const std::string &sourceNode, const std::string &sinkNode, double factor);
+        /**
+         * Sets a connection's Doppler factor.
+         * See Connection::setDistanceFactor.
+         */
+        bool setDopplerFactor(const std::string &sourceNode, const std::string &sinkNode, double factor);
+        /**
+         * Enables or disables a node.
+         */
+        bool setNodeActive(const std::string &node, bool active);
+        /**
+         * The Dmitri translator doesn't work with addTranslator, so here's a specific method to add it.
+         */
+        bool addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, bool verbose);
     private:
         std::tr1::shared_ptr<Scene> scene_;
 };
 
 } // end of namespace spatosc
 
-#endif
+#endif // __WRAPPER_H__
+
