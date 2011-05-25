@@ -43,6 +43,16 @@ void Wrapper::debugPrint()
     scene_->debugPrint();
 }
 
+void Wrapper::setSynchronous(bool synchronous)
+{
+    scene_->setSynchronous(synchronous);
+}
+
+bool Wrapper::flushMessages()
+{
+    return scene_->flushMessages();
+}
+
 bool Wrapper::createListener(const std::string &nodeName)
 {
     Listener *node = scene_->createListener(nodeName);

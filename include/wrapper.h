@@ -52,7 +52,23 @@ class DLLEXPORT Wrapper
          * Prints the current scene to the console
          */
         void debugPrint();
-        
+        /**
+         * In synchronous mode, the messages are automaticlly sent evey time
+         * a node changes, which may cause a lot of strain on the CPU and the
+         * network. It may be desireable to manually control the update rate.
+         * To do so, one puts the library into asynchronous mode by setting 
+         * the following function with FALSE. Then, the programmer must
+         * explicitely update the scene by calling flushMessages() every now
+         * and then to flush the OSC messages to be sent.
+         */
+        void setSynchronous(bool synchronous);
+        /**
+         * When in asynchronous mode, (not synchronous) one needs to call this
+         * quite often to flush the OSC messages. If not, no messages will be
+         * sent, and the spatializaiton will not be updated.
+         * @return Success or not.
+         */
+        bool flushMessages();
         /**
          * Connects two nodes.
          * @return Success or not.
