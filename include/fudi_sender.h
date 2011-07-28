@@ -45,6 +45,7 @@ class FudiSender
          * Sends a FUDI message.
          * Note than FUDI messages always end with a semi-colon. (";")
          * When using the UDP protocol, they must also end with a newline character. ("\n")
+         * The use of this method is responsible for providing a properly formatted FUDI message, including the trailing semi-colon, plus the newline character, if using UDP.
          *
          * FUDI messages are made of ASCII strings whose atoms are separated by a space.
          * Atoms can be strings of string-formatted numbers.
