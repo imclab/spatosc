@@ -1,12 +1,10 @@
-#N canvas 581 104 805 919 10;
+#N canvas 312 233 805 919 10;
 #X obj 2 1 cnv 15 500 30 empty empty DSP.plugin:(ar.listener-quad~)
 5 15 1 18 -228856 -16662 0;
 #X obj 258 7 cnv 20 20 20 empty empty nodeID:(\$2) 5 10 0 12 -233017
 -66577 0;
-#X text 143 605 more help:;
 #X obj 13 37 receive~ \$2.plugin~;
 #X obj 15 641 send~ \$2.plugout~;
-#X obj 218 605 AUDIOSCAPE_HELP;
 #X floatatom 143 111 5 0 0 1 vmicL-front.channel #2.vmicL-front.channel-set
 #2.vmicL-front.channel-put;
 #X floatatom 144 223 8 0 0 1 vmicL-front.yaw #2.vmicL-front.yaw-set
@@ -60,6 +58,6 @@ connections to its type.;
 #X obj 292 465 param \$2 exp 2;
 #X text 386 464 sharpness of vmic incidence (0=omni:1=cos():2=cos*cos
 etc..);
-#X connect 3 0 4 0;
-#X connect 37 0 38 0;
+#X connect 2 0 3 0;
+#X connect 35 0 36 0;
 #X coords 0 0 1 1 400 400 0;
