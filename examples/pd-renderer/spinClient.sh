@@ -49,14 +49,14 @@ killall Pd-extended; killall spinserver; killall spinviewer;
 
 
 
-$SPINSERV &
-$SPINVIEW --screen 1 &
+#$SPINSERV &
+#$SPINVIEW --screen 1 &
 
 echo launch audio renderer
 
-$PDE -send "spatOSC-port 18032" -send "renderer-port 18222" -open basic-renderer.pd  spatOSC-spinClient.pd spinEdit.pd &
+#$PDE -send "spatOSC-port 18032" -send "renderer-port 18222" -open basic-renderer.pd  spatOSC-spinClient.pd spinEdit.pd &
 
-#$PDE -send "spatOSC-port 18032" -send "renderer-port 18222" -open basic-renderer.pd  spatOSC-client.pd &
+$PDE -send "spatOSC-port 18032" -send "renderer-port 18222" -open basic-renderer.pd  spatOSC-client.pd &
 
 #$PDE -send "spatOSC-port 18032" -open basic-renderer.pd -nogui &
 #$PDE -send "spatOSC-port 18032" -open spatOSC-client.pd &
