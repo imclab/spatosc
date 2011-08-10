@@ -108,7 +108,13 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
     {
         post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
     }
-    bool success = x->wrapper.addTranslator("default", translatorName, sendToAddress, sendToPort, SPATOSC_DEBUG);
+    
+    bool success;
+    if (translatorName == "DmitriTranslator")
+        success = x->wrapper.addDmitriTranslator("default", sendToAddress, sendToPort, SPATOSC_DEBUG);
+    else 
+        success = x->wrapper.addTranslator("default", translatorName, sendToAddress, sendToPort, SPATOSC_DEBUG);
+    
     if (! success)
     {
         post("[spatosc]: ERROR calling addTranslator from the constructor.");
@@ -271,7 +277,11 @@ static void spatosc_addTranslator(t_spatosc *x, t_symbol *identifier, t_symbol *
         printf("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
         post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
     }
-    output_success(x, x->wrapper.addTranslator(identifier->s_name, translatorName, sendToAddress, sendToPort, true));
+    
+    if (translatorName == "DmitriTranslator")
+        output_success(x, x->wrapper.addDmitriTranslator(identifier->s_name, sendToAddress, sendToPort, true));
+    else
+        output_success(x, x->wrapper.addTranslator(identifier->s_name, translatorName, sendToAddress, sendToPort, true));
 }
 
 static void spatosc_removeTranslator(t_spatosc *x, t_symbol *identifier)
