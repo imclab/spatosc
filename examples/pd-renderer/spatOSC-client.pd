@@ -1,9 +1,9 @@
-#N canvas 411 22 909 665 10;
+#N canvas 513 47 909 665 10;
 #X obj -36 76 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
 1 1;
 #X obj -36 18 r to_spatosc;
-#X obj 208 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 279 88;
-#X obj 324 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 391 60;
+#X obj 208 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 268 71;
+#X obj 324 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 367 77;
 #X text 213 12 source;
 #X text 316 10 listener;
 #N canvas 0 351 856 474 dynamic 0;
@@ -84,7 +84,7 @@
 ;
 #X floatatom 45 65 7 0 0 3 renderer-port renderer-port-set renderer-port
 ;
-#N canvas 0 321 879 369 OSC-messaging 0;
+#N canvas 0 321 1046 385 OSC-messaging 0;
 #X obj 105 218 OSCtx;
 #X msg 104 193 setAddress localhost \$1;
 #X obj 104 165 r renderer-port;
@@ -99,22 +99,24 @@
 #X obj 381 38 r renderer-port;
 #X obj 652 59 loadbang;
 #X obj 534 80 r spatOSC-port;
-#X msg 652 81 \; spatOSC-port 18032 \; renderer-port 18111;
 #X obj 14 72 OSCprepend /a.renderer/nodemess;
-#X msg 534 141 \; to_spatosc addTranslator basic BasicTranslator localhost
+#X msg 482 212 \; to_spatosc addTranslator basic BasicTranslator localhost
 \$1;
+#X msg 652 81 \; spatOSC-port 18042 \; renderer-port 18111;
+#X msg 534 141 \; to_spatosc removeTranslator basic \, addTranslator
+basic BasicTranslator 192.168.0.109 \$1;
 #X connect 1 0 0 0;
 #X connect 2 0 1 0;
 #X connect 3 0 4 0;
 #X connect 5 0 3 0;
 #X connect 6 0 7 0;
-#X connect 8 0 15 0;
+#X connect 8 0 14 0;
 #X connect 9 0 10 0;
 #X connect 9 0 0 0;
 #X connect 11 0 6 0;
-#X connect 12 0 14 0;
-#X connect 13 0 16 0;
-#X connect 15 0 0 0;
+#X connect 12 0 16 0;
+#X connect 13 0 17 0;
+#X connect 14 0 0 0;
 #X restore 45 17 pd OSC-messaging;
 #X floatatom 379 11 5 0 0 1 orientation - -;
 #X obj -37 168 cnv 15 900 480 empty empty SPAT_OSC_MESSAGES 4 12 0
