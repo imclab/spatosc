@@ -518,6 +518,8 @@ void clearVector(std::vector<T> &vec)
 
 void Scene::deleteAllNodes()
 {
+    onSceneChanged("s", "clear", SPATOSC_ARGS_END);
+    
     // we swap them with emtpy vectors to make sure their size is 0.
     // see http://www.gotw.ca/gotw/054.htm
     clearVector(connections_);
@@ -526,8 +528,6 @@ void Scene::deleteAllNodes()
     //std::vector<std::tr1::shared_ptr<Connection> >().swap(connections_);
     //std::vector<std::tr1::shared_ptr<Listener> >().swap(listeners_);
     //std::vector<std::tr1::shared_ptr<SoundSource> >().swap(soundSources_);
-
-    onSceneChanged("s", "clear", SPATOSC_ARGS_END);
 }
 
 void Scene::onTransformChanged()
