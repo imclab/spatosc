@@ -1,6 +1,14 @@
 Spatosc TODO
 ============
 
+August 2011 new stuff
+---------------------
+ * add SoundSource::setUri
+ * Wrapper::setPositionAed
+ * Node::refresh, Scene::refresh, Wrapper::refresh
+ * [spatosc]::flushMessages
+ * [spatosc]::setSynchronous
+
 Release-critical for 0.2
 ------------------------
  * Connection::handleMessage remove calls to assert()
