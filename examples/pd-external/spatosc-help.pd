@@ -1,6 +1,6 @@
-#N canvas -1815 27 980 1077 10;
+#N canvas 788 22 980 1077 10;
 #X obj 25 670 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
-1 1;
+0 1;
 #X msg 144 244 clearScene;
 #X floatatom 141 74 5 0 0 0 - - -;
 #X floatatom 180 74 5 0 0 0 - - -;
@@ -121,6 +121,14 @@ scene;
 #X obj 453 743 OSCrx 18032;
 #X msg 392 334 addTranslator basic3 BasicTranslator 198.168.0.103 18032
 ;
+#X obj 790 706 bng 15 250 50 0 empty empty output_messages 17 7 0 10
+-262144 -1 -1;
+#X msg 610 690 setSynchronous \$1;
+#X obj 610 664 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 611 730 s toSpatOSC;
+#X obj 791 651 == 0;
+#X obj 791 680 metro 30;
 #X connect 1 0 10 0;
 #X connect 2 0 7 0;
 #X connect 3 0 7 1;
@@ -173,3 +181,9 @@ scene;
 #X connect 74 0 10 0;
 #X connect 76 0 75 0;
 #X connect 77 0 10 0;
+#X connect 78 0 81 0;
+#X connect 79 0 81 0;
+#X connect 80 0 79 0;
+#X connect 80 0 82 0;
+#X connect 82 0 83 0;
+#X connect 83 0 78 0;
