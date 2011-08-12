@@ -8,6 +8,7 @@ August 2011 new stuff
  * Node::refresh, Scene::refresh, Wrapper::refresh
  * [spatosc]::flushMessages
  * [spatosc]::setSynchronous
+ * use boost::signals2 and simplify the OSC middleware that's in the Scene
 
 Release-critical for 0.2
 ------------------------
