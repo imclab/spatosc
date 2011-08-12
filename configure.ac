@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT(spatosc, [0.2.0], [http://github.com/sat-metalab/spatosc/issues], [spatosc], [http://github.com/sat-metalab/spatosc])
+AC_INIT(spatosc, [0.2.1], [http://github.com/sat-metalab/spatosc/issues], [spatosc], [http://github.com/sat-metalab/spatosc])
 AC_CONFIG_MACRO_DIR([m4])
 AC_MSG_NOTICE([Configuring spatosc])
 AM_INIT_AUTOMAKE([subdir-objects -Wno-portability])
@@ -19,7 +19,7 @@ AC_CANONICAL_HOST # fills $host variable
 #  * current: Increment when the interface changes. (and set revision to 0)
 #  * revision: Increment when the implementation changes, but not the interface.
 #  * age: Backward-compatible with how many interface numbers.
-AC_SUBST([SPATOSC_SO_VERSION], [0:0:0])
+AC_SUBST([SPATOSC_SO_VERSION], [1:0:1])
 
 # The version of the API. Should be major.minor and not change until not backward-compatible
 AC_SUBST([SPATOSC_API_VERSION], [0.2])

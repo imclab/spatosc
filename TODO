@@ -1,6 +1,14 @@
 Spatosc TODO
 ============
 
+August 2011 new stuff
+---------------------
+ * add SoundSource::setUri
+ * Wrapper::setPositionAed
+ * Node::refresh, Scene::refresh, Wrapper::refresh
+ * [spatosc]::flushMessages
+ * [spatosc]::setSynchronous
+
 Release-critical for 0.2
 ------------------------
  * Connection::handleMessage remove calls to assert()
@@ -35,8 +43,8 @@ Tests
 
 Features
 --------
- * Compile translators as dymanic libraries
- *  provide an example of an individual build system for a translate. ie, if someone has spatosc installed, they can write and build a new translator without modifying spatosc.
+ * Compile translators as dynamic libraries
+ * provide an example of an individual build system for a translate. ie, if someone has spatosc installed, they can write and build a new translator without modifying spatosc.
  * Rename current spatdif_translator to basic_translator. Eventually we can have a real spatdif translator that adheres exactly to the version found at spatdif.org
  * Support multicast and TCP in OscSender and OscReceiver. Perhaps use liblo urls in constructor arguments? (eg, osc.upd://239.0.0.1:9999/ or osc.tcp://localhost:9998/)
  * Support specifying the network interface to listen from
@@ -60,7 +68,6 @@ Packaging
 ---------
  * regex support on OSX has broken; need to fix
 
-
 Refactoring
 -----------
  * support quaternions in the API, no only aed-style orientation
@@ -72,7 +79,6 @@ Refactoring
  * Port could be an unsigned int for OscSender, OscReceiver, etc. It would make more sense
  * rename namespace OSCutils to oscutils
 
-
 Wrapper for OSC and FUDI callbacks
 ----------------------------------
  * [s:nodeName] [s:method] [s:typeTags] [s:args...]
@@ -83,6 +89,5 @@ sendOscMessageToTranslator(translator, args)
 sendOscSetFloatMessageToDmtri(translator, controlPoint, f)
 sendOscSetIntMessageToDmtri(translator, controlPoint, i)
 sendOscSetStringMessageToDmtri(translator, controlPoint, s)
-
 sendOscSetDoubleMessageToDmtri(translator, controlPoint, d)
 
