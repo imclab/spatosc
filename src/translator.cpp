@@ -31,8 +31,6 @@ namespace spatosc
 Translator::Translator(bool verbose) : verbose_(verbose)
 {}
 
-	
-	
 void Translator::pushConnectionChanges(Connection *conn)
 {
     //if (verbose_)
