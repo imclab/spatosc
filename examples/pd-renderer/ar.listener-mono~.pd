@@ -1,0 +1,34 @@
+#N canvas 907 54 788 521 10;
+#X obj 2 1 cnv 15 500 30 empty empty DSP.plugin:(ar.listener-mono~)
+5 15 1 18 -228856 -16662 0;
+#X obj 258 7 cnv 20 20 20 empty empty nodeID:(\$2) 5 10 0 12 -233017
+-66577 0;
+#X text 25 413 more help:;
+#X obj 13 37 receive~ \$2.plugin~;
+#X obj 16 369 send~ \$2.plugout~;
+#X obj 100 413 AUDIOSCAPE_HELP;
+#X floatatom 88 108 5 0 0 1 vmic.channel #2.vmic.channel-set #2.vmic.channel-put
+;
+#X floatatom 86 175 8 0 0 1 vmic.yaw #2.vmic.yaw-set #2.vmic.yaw-put
+;
+#X text 11 384 always provide through connection;
+#X obj 212 46 namecanvas \$2.plugin.patch;
+#X obj 212 70 param-declare \$1 \$2;
+#X obj 302 357 loadbang;
+#X obj 302 380 s \$2-conn.type!;
+#X floatatom 87 230 8 0 0 1 vmic.pitch #2.vmic.pitch-set #2.vmic.pitch-put
+;
+#X text 405 361 This listener plugin will alert existing or subsequent
+connections to its type.;
+#X floatatom 81 299 4 0 0 1 incidence-exponent #2.exp-set #2.exp-put
+;
+#X text 323 295 sharpness of vmic incidence (0=omni:1=cos():2=cos*cos
+etc..);
+#X obj 229 296 param \$2 exp 1;
+#X obj 218 109 param \$2 vmic.channel 1;
+#X obj 212 173 param \$2 vmic.yaw 0;
+#X obj 213 230 param \$2 vmic.pitch 0;
+#X obj 302 406 anyreg \$2-conn.type listener-mono.conn~;
+#X connect 3 0 4 0;
+#X connect 11 0 12 0;
+#X coords 0 0 1 1 400 400 0;
