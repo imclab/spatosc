@@ -22,13 +22,13 @@
 connections to its type.;
 #X floatatom 81 299 4 0 0 1 incidence-exponent #2.exp-set #2.exp-put
 ;
-#X text 323 295 sharpness of vmic incidence (0=omni:1=cos():2=cos*cos
+#X text 343 298 sharpness of vmic incidence (0=omni:1=cos():2=cos*cos
 etc..);
-#X obj 229 296 param \$2 exp 1;
 #X obj 218 109 param \$2 vmic.channel 1;
 #X obj 212 173 param \$2 vmic.yaw 0;
 #X obj 213 230 param \$2 vmic.pitch 0;
 #X obj 302 406 anyreg \$2-conn.type listener-mono.conn~;
+#X obj 229 296 param \$2 exp 0.4;
 #X connect 3 0 4 0;
 #X connect 11 0 12 0;
 #X coords 0 0 1 1 400 400 0;
