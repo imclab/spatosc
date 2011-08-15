@@ -1,4 +1,4 @@
-#N canvas -1461 30 948 950 10;
+#N canvas 756 27 948 950 10;
 #X obj 528 2 cnv 20 20 20 empty empty \$0=$zero 0 12 1 14 -262144 -66577
 0;
 #X obj 421 157 r \$1-from-SPIN;

@@ -158,6 +158,11 @@ static void spatosc_removeNodeIntProperty(t_spatosc *x, t_symbol *node, t_symbol
 static void spatosc_removeNodeFloatProperty(t_spatosc *x, t_symbol *node, t_symbol *key);
 static void spatosc_setDistanceFactor(t_spatosc *x, t_symbol *src, t_symbol *sink, t_floatarg factor);
 static void spatosc_setDopplerFactor(t_spatosc *x, t_symbol *src, t_symbol *sink, t_floatarg factor);
+static void spatosc_setSynchronous(t_spatosc *x, t_floatarg state);
+static void spatosc_flushMessagess(t_spatosc *x);
+
+
+
 
 extern "C" void spatosc_setup(void)
 {
@@ -183,6 +188,9 @@ extern "C" void spatosc_setup(void)
 	class_addmethod(spatosc_class, (t_method) spatosc_removeNodeFloatProperty, gensym("removeNodeFloatProperty"), A_SYMBOL, A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setDistanceFactor, gensym("setDistanceFactor"), A_SYMBOL, A_SYMBOL, A_FLOAT, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setDopplerFactor, gensym("setDopplerFactor"), A_SYMBOL, A_SYMBOL, A_FLOAT, 0);
+	class_addmethod(spatosc_class, (t_method) spatosc_setSynchronous, gensym("setSynchronous"), A_FLOAT, 0);
+	class_addbang(spatosc_class, (t_method) spatosc_flushMessagess); 
+	
     if (SPATOSC_DEBUG)
     {
         post("[spatosc]: (c) Society for Arts and Technology 2011");
@@ -205,6 +213,17 @@ static void spatosc_deleteNode(t_spatosc *x, t_symbol *node)
 {
     output_success(x, x->wrapper.deleteNode(node->s_name));
 }
+
+static void spatosc_setSynchronous(t_spatosc *x, t_floatarg state)
+{
+    x->wrapper.setSynchronous( (bool) state);
+}
+
+static void spatosc_flushMessagess(t_spatosc *x)
+{
+    x->wrapper.flushMessages();
+}
+
 
 static void spatosc_connect(t_spatosc *x, t_symbol *from, t_symbol *to)
 {
