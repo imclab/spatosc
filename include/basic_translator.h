@@ -50,6 +50,7 @@ class BasicTranslator : public Translator
                 const std::string &port = DEFAULT_SEND_PORT,
                 bool verbose = false);
 
+        virtual void debugPrint();
         virtual void pushConnectionChanges(Connection *conn);
         //virtual void pushSceneChange(const std::string &method, ...);
         virtual void pushSceneChange(const char *types, va_list ap);

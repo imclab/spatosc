@@ -47,6 +47,12 @@ class Translator
         Translator(bool verbose = false);
 
         /**
+         * Each translator overwrites the debugPrint method, which prints info
+         * about the translator's connection
+         */
+        virtual void debugPrint();
+
+        /**
          * The main work of the translator is done by the pushConnectionChanges() method, which is
          * called whenever there is a change to some parameters within a connection.
          *

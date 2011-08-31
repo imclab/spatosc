@@ -31,6 +31,11 @@ namespace spatosc
 Translator::Translator(bool verbose) : verbose_(verbose)
 {}
 
+void Translator::debugPrint()
+{
+    std::cout << "  Console Translator -- simple print to console" << std::endl;
+}
+
 void Translator::pushConnectionChanges(Connection *conn)
 {
     //if (verbose_)

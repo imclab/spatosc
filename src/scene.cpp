@@ -20,6 +20,7 @@
 #include "scene.h"
 #include "vectors.h"
 #include "config.h"
+#include "version.h"
 #ifdef HAVE_REGEX
 #include <regex.h>
 #endif
@@ -111,8 +112,17 @@ void Scene::debugPrint ()
     ListenerIterator L;
     SourceIterator n;
     ConnIterator c;
+    TranslatorIterator t;
 
     std::cout << "\n=====================================================" << std::endl;
+    std::cout << "SpatOSC (version " << SPATOSC_VERSION << ")" << std::endl;
+
+    std::cout << "[Translators]:: " << translators_.size() << " translators:" << std::endl;
+    for (t = translators_.begin(); t != translators_.end(); ++t)
+    {
+        t->second->debugPrint();
+    }
+
     std::cout << "[Scene]:: connectFilter = " << connectFilter_ << std::endl;
 
     std::cout << "[Scene]:: " << listeners_.size() << " listeners:" << std::endl;
@@ -431,7 +441,7 @@ void Scene::pushConnectionChangesViaAllTranslators(Connection *conn, bool forced
     }
     if (src->shouldSendNewState() || sink->shouldSendNewState() || forcedNotify)
     {
-        std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
+        TranslatorIterator iter;
         for (iter = translators_.begin(); iter != translators_.end(); ++iter)
             iter->second->pushConnectionChanges(conn);
 
@@ -599,7 +609,7 @@ void Scene::onSceneChanged(const char *types, ...)
     va_list ap;
     va_start(ap, types);
 
-    std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
+    TranslatorIterator iter;
     for (iter = translators_.begin(); iter != translators_.end(); ++iter)
         iter->second->pushSceneChange(types, ap);
 }
