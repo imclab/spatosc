@@ -364,7 +364,8 @@ Connection* Scene::connect(SoundSource *src, Listener *snk)
             iter->second->pushSceneChange("connect", src->getID().c_str(), snk->getID().c_str());
 */
 
-        onConnectionChanged(conn.get());
+        // force the connection to be recomputed and sent:
+        onConnectionChanged(conn.get(), true);
         return conn.get();
     }
     else

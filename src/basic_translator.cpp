@@ -44,7 +44,7 @@ BasicTranslator::BasicTranslator(const std::string &ip,
 
 void BasicTranslator::debugPrint()
 {
-    std::cout << "  Basic Translator -- " << sender_->toString() << std::endl;
+    std::cout << "  Basic Translator -- \t" << sender_->toString() << std::endl;
 }
 
 void BasicTranslator::sendPosition(const std::string &prefix, Node *node)
