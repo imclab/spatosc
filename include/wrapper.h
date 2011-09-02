@@ -49,6 +49,27 @@ class DLLEXPORT Wrapper
          */
         Wrapper();
         /**
+         * Prints the current scene to the console
+         */
+        void debugPrint();
+        /**
+         * In synchronous mode, the messages are automaticlly sent evey time
+         * a node changes, which may cause a lot of strain on the CPU and the
+         * network. It may be desireable to manually control the update rate.
+         * To do so, one puts the library into asynchronous mode by setting 
+         * the following function with FALSE. Then, the programmer must
+         * explicitely update the scene by calling flushMessages() every now
+         * and then to flush the OSC messages to be sent.
+         */
+        void setSynchronous(bool synchronous);
+        /**
+         * When in asynchronous mode, (not synchronous) one needs to call this
+         * quite often to flush the OSC messages. If not, no messages will be
+         * sent, and the spatializaiton will not be updated.
+         * @return Success or not.
+         */
+        bool flushMessages();
+        /**
          * Connects two nodes.
          * @return Success or not.
          */
@@ -105,6 +126,17 @@ class DLLEXPORT Wrapper
          * @return Success or not.
         */
         bool addTranslator(const std::string &name, const std::string &translatorName, const std::string &sendToAddress, const std::string &port, bool verbose);
+        /**
+         * The Dmitri translator doesn't work with addTranslator, so here's a specific method to add it.
+         */
+        bool addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, bool verbose);
+        /**
+         * It is also sometimes important to specify the outgoing port, because
+         * D-Mitri only accepts messages originating from a specific port on a
+         * specific port. This method allows you to specify the outgoing port
+         * in addition to the destination port.
+         */
+        bool addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, const std::string &fromPort, bool verbose);
         /**
          * Removes a translator.
          * @return Success or not.
@@ -195,10 +227,7 @@ class DLLEXPORT Wrapper
          * Enables or disables a node.
          */
         bool setNodeActive(const std::string &node, bool active);
-        /**
-         * The Dmitri translator doesn't work with addTranslator, so here's a specific method to add it.
-         */
-        bool addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, bool verbose);
+    
     private:
         std::tr1::shared_ptr<Scene> scene_;
 };

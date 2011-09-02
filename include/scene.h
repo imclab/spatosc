@@ -88,6 +88,8 @@ class Scene
         typedef std::vector<std::tr1::shared_ptr<SoundSource> >::iterator SourceIterator;
         typedef std::vector<std::tr1::shared_ptr<Connection> >::iterator ConnIterator;
         typedef std::vector<std::tr1::shared_ptr<Connection> >::const_iterator ConnConstIterator;
+        typedef std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator TranslatorIterator;
+
 
         /**
          * Constructor.

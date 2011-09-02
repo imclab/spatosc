@@ -99,6 +99,11 @@ public:
     DmitriTranslator(const std::string &ip, const std::string &toPort, bool verbose = false);
 
     /**
+     * Prints debug info about connection to console
+     */
+    virtual void debugPrint();
+
+    /**
      * This is where we customize messages for D-Mitri's OSC protocol.
      */
     virtual void pushConnectionChanges(Connection *conn);

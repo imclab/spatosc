@@ -42,10 +42,10 @@ void Listener::debugPrint() const
     Node::debugPrint();
 
     Scene::ConnConstIterator c;
-    std::cout << "    listen to:\t";
+    std::cout << "    listening to:\t";
     for (c = connectFROM_.begin(); c != connectFROM_.end(); ++c)
     {
-        std::cout << (*c)->getSource() << " ";
+        std::cout << (*c)->getSource()->getID() << " ";
     }
     if (connectFROM_.empty())
         std::cout << "<NO CONNECTIONS>";

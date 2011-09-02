@@ -47,6 +47,11 @@ FudiTranslator::FudiTranslator(const std::string &ip,
         std::cout << "FudiTranslator sending to: " << port_ << std::endl;
 }
 
+void FudiTranslator::debugPrint()
+{
+    std::cout << "  FUDI Translator -- \thost: " << ip_ << ", port: " << port_ << std::endl;
+}
+
 void FudiTranslator::sendFudi(const std::string &message)
 {
     FudiSender sender(ip_, port_, false);

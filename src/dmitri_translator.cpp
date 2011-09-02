@@ -57,6 +57,11 @@ verbose_(verbose)
     }
 }
 
+void DmitriTranslator::debugPrint()
+{
+    std::cout << "  D-Mitri Translator -- \t" << sender_->toString() << std::endl;
+}
+
 void DmitriTranslator::pushConnectionChanges(Connection *conn)
 {
     std::ostringstream ostr;

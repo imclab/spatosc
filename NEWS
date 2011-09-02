@@ -1,7 +1,7 @@
-2011-05-?? spatosc 0.2.2
+2011-0?-?? spatosc 0.3.2
 ------------------------
 
-This release is an official version in the 0.2 stable series. 
+This release is a developer snapshot in the 0.3 unstable series. 
 
 This version contains new features and bug fixes.
 
@@ -10,6 +10,21 @@ New Features:
 
 Bug fixes: 
     * (none)
+
+
+2011-08-12 spatosc 0.2.2
+------------------------
+
+This release is an official version in the 0.2 stable series. 
+
+This version contains new features and bug fixes.
+
+New Features:
+    * Added setSynchronous and flushMessages to the wrapper
+    * Added hello_world example using wrapper, which works with dmitri, basic renderer, and FUDI.
+
+Bug fixes: 
+    * Added Wrapper::addDmitriTranslator with outgoing OSC port number
 
 
 2011-05-24 spatosc 0.2.0

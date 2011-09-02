@@ -38,6 +38,21 @@ Wrapper::Wrapper() :
 {
 }
 
+void Wrapper::debugPrint()
+{
+    scene_->debugPrint();
+}
+
+void Wrapper::setSynchronous(bool synchronous)
+{
+    scene_->setSynchronous(synchronous);
+}
+
+bool Wrapper::flushMessages()
+{
+    return scene_->flushMessages();
+}
+
 bool Wrapper::createListener(const std::string &nodeName)
 {
     Listener *node = scene_->createListener(nodeName);
@@ -193,6 +208,16 @@ bool Wrapper::addTranslator(const std::string &name, const std::string &translat
         std::cerr << "No such translator: " << translatorName << "." << std::endl;
         return false;
     }
+}
+
+bool Wrapper::addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, bool verbose)
+{
+    return scene_->addTranslator(name, new DmitriTranslator(ip, toPort, verbose));
+}
+
+bool Wrapper::addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, const std::string &fromPort, bool verbose)
+{
+    return scene_->addTranslator(name, new DmitriTranslator(ip, toPort, fromPort, verbose));
 }
 
 bool Wrapper::removeTranslator(const std::string &name)
@@ -401,10 +426,6 @@ bool Wrapper::setNodeActive(const std::string &node, bool active)
     return true;
 }
 
-bool Wrapper::addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, bool verbose)
-{
-    return scene_->addTranslator(name, new DmitriTranslator(ip, toPort, verbose));
-}
 
 } // end of namespace spatosc
 
