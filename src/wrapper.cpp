@@ -173,6 +173,21 @@ bool Wrapper::setPosition(const std::string &nodeName, double x, double y, doubl
     }
 }
 
+bool Wrapper::setPositionAED(const std::string &nodeName, double angle, double elevation, double distance)
+{
+    Node *node = scene_->getNode(nodeName);
+    if (! node)
+    {
+        std::cerr << __FUNCTION__ << ": No such node: " << nodeName << std::endl;
+        return false;
+    }
+    else
+    {
+        node->setPositionAED(angle, elevation, distance);
+        return true;
+    }
+}
+
 void Wrapper::setTranslation(double tx, double ty, double tz)
 {
     scene_->setTranslation(tx, ty, tz);
