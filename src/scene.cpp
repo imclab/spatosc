@@ -38,6 +38,10 @@
 #include "geotransform.h"
 #include "oscutils.h"
 
+#include "basic_translator.h"
+#include "fudi_translator.h"
+#include "dmitri_translator.h"
+
 namespace spatosc
 {
 struct Scene::RegexHandle
@@ -628,6 +632,76 @@ Translator *Scene::addTranslator(const std::string &name, Translator *t)
         translators_[name] = std::tr1::shared_ptr<Translator>(t);
         return getTranslator(name);
     }
+}
+
+Translator *Scene::addTranslator(const std::string &name, const std::string &type)
+{
+    if (hasTranslator(name))
+    {
+        std::cout << "Warning: Cannot add translator named " << name << ". Already exists." << std::endl;
+        return 0;
+    }
+
+    if (type == "BasicTranslator")
+        return addTranslator(name, new BasicTranslator("localhost", BasicTranslator::DEFAULT_SEND_PORT));
+    else if (type == "DmitriTranslator")
+        return addTranslator(name, new DmitriTranslator("localhost", DmitriTranslator::DEFAULT_SEND_PORT, DmitriTranslator::DEFAULT_RECEIVER_PORT));
+    else if (type == "ConsoleTranslator")
+        return addTranslator(name, new ConsoleTranslator());
+    else if (type == "FudiTranslator")
+        return addTranslator(name, new FudiTranslator("localhost", FudiTranslator::DEFAULT_SEND_PORT));
+    else
+    {
+        std::cerr << "No such translator: " << type << std::endl;
+        return 0;
+    }
+}
+
+Translator *Scene::addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &port)
+{
+    if (hasTranslator(name))
+    {
+        std::cout << "Warning: Cannot add translator named " << name << ". Already exists." << std::endl;
+        return 0;
+    }
+
+    if (type == "BasicTranslator")
+        return addTranslator(name, new BasicTranslator(addr, port));
+    else if (type == "DmitriTranslator")
+        return addTranslator(name, new DmitriTranslator(addr, port, DmitriTranslator::DEFAULT_RECEIVER_PORT));
+    else if (type == "ConsoleTranslator")
+        return addTranslator(name, new ConsoleTranslator());
+    else if (type == "FudiTranslator")
+        return addTranslator(name, new FudiTranslator(addr, port));
+    else
+    {
+        std::cerr << "No such translator: " << type << std::endl;
+        return 0;
+    }
+}
+
+Translator *Scene::addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &toPort, const std::string &fromPort)
+{
+    if (hasTranslator(name))
+    {
+        std::cout << "Warning: Cannot add translator named " << name << ". Already exists." << std::endl;
+        return 0;
+    }
+
+    if (type == "BasicTranslator")
+        return addTranslator(name, new BasicTranslator(addr, toPort));
+    else if (type == "DmitriTranslator")
+        return addTranslator(name, new DmitriTranslator(addr, toPort, fromPort));
+    else if (type == "ConsoleTranslator")
+        return addTranslator(name, new ConsoleTranslator());
+    else if (type == "FudiTranslator")
+        return addTranslator(name, new FudiTranslator(addr, toPort));
+    else
+    {
+        std::cerr << "No such translator: " << type << std::endl;
+        return 0;
+    }
+
 }
 
 } // end namespace spatosc

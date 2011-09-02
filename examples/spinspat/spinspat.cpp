@@ -202,7 +202,7 @@ int main(int argc, char **argv)
     }
     
     // also send to spatdif translator for this example (for doppler component):
-    audioScene_.addTranslator<spatosc::BasicTranslator>("basic", basicTranslatorIP.c_str(), spatosc::BasicTranslator::DEFAULT_SEND_PORT);
+    audioScene_.addTranslator("basic", new spatosc::BasicTranslator(basicTranslatorIP.c_str(), spatosc::BasicTranslator::DEFAULT_SEND_PORT));
 
     
     //audioScene_.setOrientation(90.0, 0.0, 0.0);

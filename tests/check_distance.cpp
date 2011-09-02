@@ -32,7 +32,7 @@ using namespace spatosc;
 bool check_simple_distances()
 {
     Scene scene;
-    scene.addTranslator<DmitriTranslator>("dmitri", "127.0.0.1", DmitriTranslator::DEFAULT_SEND_PORT);
+    scene.addTranslator("dmitri", "DmitriTranslator");
     SoundSource *sound_a = scene.createSoundSource("sound_a");
     Listener *listener = scene.createListener("listener");
 

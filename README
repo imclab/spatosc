@@ -1,5 +1,7 @@
 Spatosc is a C++ library that supports communication with various 3D audio spatializers. 
 
+Developed by SAT Metalab, Societe des arts Technologiques (SAT): http://www.sat.qc.ca
+
 The library can be used to add high-end audio support to game engines, virtual reality systems, and immersive environments. It can also be used to create plugins (AU, VST, LADSPA) so traditional digital audio workstations can be used to design and automate spatial audio effects.
 
 The library communicates with a spatializer over nework protocols such as OpenSoundControl (OSC) or FUDI, which most modern spatializer already support. However, each spatializer will have a different control protocol, so spatosc provides "translators", which convert scene contents into appropriate messages.
@@ -15,14 +17,21 @@ Features:
  * One monolithic wrapper class for easy integration into any project
 
 Currently supported translators:
- * SpatOSC           The default (full spec) format, works with http://code.sat.qc.ca/trac/pdsheefa
+ * Basic             The default (full spec) format, works with http://code.sat.qc.ca/trac/pdsheefa
  * D-Mitri           http://www.meyersound.com/products/d-mitri
+ * FUDI              The protocol used by Pure Data for netsend and netreceive
 
-Support is planned for:
+Additional translators planned:
  * SPATDif           http://www.spatdif.org
  * Zirkonium         http://ima.zkm.de/~cramakri/zirkonium
- * Audioscape        http://audioscape.org
+
+Clients applications which support SpatOSC:
  * SPIN Framework    http://spinframework.org
+ * Pdsheefa          http://code.sat.qc.ca/trac/pdsheefa
+ * Pdsheefa (iOS)    (please inquire)
+ * Unity 3D          Supported with a plugin (code to be published)
+
+Future clients (in development):
  * Audio Unit (AU)   http://en.wikipedia.org/wiki/Audio_Units
  * VST               http://en.wikipedia.org/wiki/Virtual_Studio_Technology
 
@@ -56,7 +65,7 @@ This library uses the GNU Autotools. It should be easy to build and install it l
  $ ./configure
  $ make
  $ sudo make install
-
+gg
 NOTE: If building from a git checkout, you should run ./autogen.sh first.
 
 On GNU/Linux, you need to install the following software: 

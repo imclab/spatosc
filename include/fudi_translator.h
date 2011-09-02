@@ -43,7 +43,7 @@ class Node;
 class FudiTranslator : public Translator
 {
     public:
-        FudiTranslator(const std::string &ip, const std::string &port, bool verbose);
+        FudiTranslator(const std::string &ip, const std::string &port);
         virtual void debugPrint();
         virtual void pushConnectionChanges(Connection *conn);
         //virtual void pushPropertyChange(Node *node, const std::string &key, const std::string &value);

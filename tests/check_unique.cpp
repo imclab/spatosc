@@ -68,12 +68,12 @@ bool test_unique_mixed_node_types()
 bool test_multiple_translators()
 {
     Scene scene;
-    if (! scene.addTranslator<ConsoleTranslator>("default"))
+    if (! scene.addTranslator("default", new ConsoleTranslator()))
     {
         std::cout << "FAIL: could not add a first translator." << std::endl;
         return false;
     }
-    if (scene.addTranslator<ConsoleTranslator>("default"))
+    if (scene.addTranslator("default", new ConsoleTranslator()))
     {
         std::cout << "FAIL: could add a second translator with same name." << std::endl;
         return false;

@@ -46,7 +46,6 @@ Features
 --------
  * Compile translators as dynamic libraries
  * provide an example of an individual build system for a translate. ie, if someone has spatosc installed, they can write and build a new translator without modifying spatosc.
- * Rename current spatdif_translator to basic_translator. Eventually we can have a real spatdif translator that adheres exactly to the version found at spatdif.org
  * Support multicast and TCP in OscSender and OscReceiver. Perhaps use liblo urls in constructor arguments? (eg, osc.upd://239.0.0.1:9999/ or osc.tcp://localhost:9998/)
  * Support specifying the network interface to listen from
  * support either int, float, double for numerical OSC typetags. ie, in oscutil, change argMatchesType() to something like getStringArg() and getNumericArg() using these liblo methods:

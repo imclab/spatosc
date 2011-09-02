@@ -120,23 +120,31 @@ class DLLEXPORT Wrapper
          */
         bool setPosition(const std::string &nodeName, double x, double y, double z);
         /**
-         * Adds a translator to use.
-         * Example of valid translators names include "BasicTranslator" and "DmitriTranslator".
-         * @param translatorName Must be the name of a valid child of the Translator class.
+         * Adds a translator with default settings.
+         * @param name Is an unique reference name so that the translator may be modified or removed in the future.
+         * @param type Must be the name of a valid subclass of the Translator class (eg, "ConsoleTranslator", "BasicTranslator, "DmitriTranslator", etc.).
          * @return Success or not.
         */
-        bool addTranslator(const std::string &name, const std::string &translatorName, const std::string &sendToAddress, const std::string &port, bool verbose);
+        bool addTranslator(const std::string &name, const std::string &type);
         /**
-         * The Dmitri translator doesn't work with addTranslator, so here's a specific method to add it.
+         * Adds a translator and specifies a remote host and port
+         * @param name Is an unique reference name so that the translator may be modified or removed in the future.
+         * @param type Must be the name of a valid subclass of the Translator class (eg, "ConsoleTranslator", "BasicTranslator, "DmitriTranslator", etc.).
+         * @param addr The hostname or IP address or the remote host (or "localhost").
+         * @param port The port on the remote host that receives OSC messages.
+         * @return Success or not.
          */
-        bool addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, bool verbose);
+        bool addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &port);
         /**
-         * It is also sometimes important to specify the outgoing port, because
-         * D-Mitri only accepts messages originating from a specific port on a
-         * specific port. This method allows you to specify the outgoing port
-         * in addition to the destination port.
-         */
-        bool addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, const std::string &fromPort, bool verbose);
+         * Adds a translator and specifies a remote host and port, plus an outgoing port (important in the case of DmitriTranlator).
+         * @param name Is an unique reference name so that the translator may be modified or removed in the future.
+         * @param type Must be the name of a valid subclass of the Translator class (eg, "ConsoleTranslator", "BasicTranslator, "DmitriTranslator", etc.).
+         * @param addr The hostname or IP address or the remote host (or "localhost").
+         * @param toPort The port on the remote host that receives OSC messages.
+         * @param fromPort The local port on which to create an outgoing socket for sending OSC messages.
+         * @return Success or not.
+        */
+        bool addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &toPort, const std::string &fromPort);
         /**
          * Removes a translator.
          * @return Success or not.
@@ -147,6 +155,11 @@ class DLLEXPORT Wrapper
          * @return It exists or not.
          */
         bool hasTranslator(const std::string &name);
+        /**
+         * Set verbose debug printing on a translator.
+         * @return Success or not.
+         */
+        bool setTranslatorVerbose(const std::string &name, bool verbose);
         /**
          * Sets the value of a Node string Property.
          * @return Success or not.

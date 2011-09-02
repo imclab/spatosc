@@ -28,7 +28,7 @@
 namespace spatosc
 {
 
-Translator::Translator(bool verbose) : verbose_(verbose)
+Translator::Translator() : verbose_(false)
 {}
 
 void Translator::debugPrint()
@@ -57,8 +57,7 @@ void Translator::pushConnectionChanges(Connection *conn)
     double snkScalar = (double) (1.0 - (.01*xconn->rolloffEffect  * (1.0 - snkIncidenceGain)));
      */
 
-    // if (verbose_)
-    if (0)
+    if (verbose_)
     {
         std::cout << "  dist:\t" << conn->distance() << std::endl;
         std::cout << "  azim:\t" << conn->azimuth() << std::endl;
@@ -72,11 +71,9 @@ bool Translator::isVerbose() const
     return verbose_;
 }
 
-ConsoleTranslator::ConsoleTranslator(const std::string &ip, const std::string &port, bool verbose = false) :
-    Translator(verbose)
+ConsoleTranslator::ConsoleTranslator() :
+    Translator()
 {
-    UNUSED(port);
-    UNUSED(ip);
 }
 
 } // end namespace spatosc

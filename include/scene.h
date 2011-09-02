@@ -127,6 +127,7 @@ class Scene
          * @return A Translator pointer. Null if there was already one with that
          * name, or if an error occurred. Never free this pointer.
          */
+        /*
         template <typename T>
         Translator *addTranslator(const std::string &name, const std::string &address="", const std::string &port="", bool verbose = true)
         {
@@ -141,6 +142,7 @@ class Scene
                 return getTranslator(name);
             }
         }
+        */
 
         /**
          * Add a translator by passing a pointer.
@@ -158,6 +160,21 @@ class Scene
          * name, or if an error occurred. Never free this pointer.
          */
         Translator *addTranslator(const std::string &name, Translator *t);
+
+        /**
+         * Helper class for adding a translator with default arguments
+         */
+        Translator *addTranslator(const std::string &name, const std::string &type);
+
+        /**
+         * Helper class for adding a translator with a remote host
+         */
+
+        Translator *addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &port);
+        /**
+         * Helper class for adding a translator with a remote host and specific outgoing port (important for DmitriTranslator).
+         */
+        Translator *addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &toPort, const std::string &fromPort);
 
         /**
          * Returns a pointer to a given Translator or a null pointer if not found.

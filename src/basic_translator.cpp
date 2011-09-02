@@ -32,15 +32,11 @@ namespace spatosc
 
 const char *BasicTranslator::DEFAULT_SEND_PORT = "18032";
 
-BasicTranslator::BasicTranslator(const std::string &ip,
-        const std::string &port,
-        bool verbose) :
-    Translator(verbose),
+BasicTranslator::BasicTranslator(const std::string &ip, const std::string &port) :
+    Translator(),
     sender_(new OscSender(ip, port))
-    {
-        if (verbose_)
-            std::cout << "BasicTranslator sending to: " << sender_->toString() << std::endl;
-    }
+{
+}
 
 void BasicTranslator::debugPrint()
 {

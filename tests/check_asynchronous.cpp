@@ -30,9 +30,8 @@ class DummyTranslator : public spatosc::Translator
 {
     public:
         DummyTranslator(const std::string &ip,
-                const std::string &toPort,
-                bool verbose = false) :
-            spatosc::Translator(verbose)
+                const std::string &toPort) :
+            spatosc::Translator()
         {
             UNUSED(ip);
             UNUSED(toPort);
@@ -51,7 +50,7 @@ bool test_async()
 {
     using namespace spatosc;
     Scene scene;
-    scene.addTranslator<DummyTranslator>("dummy", "address", "port");
+    scene.addTranslator("dummy", new DummyTranslator("address", "port"));
     scene.setAutoConnect(false);
     scene.setSynchronous(false);
     SoundSource *source = scene.createSoundSource("source");
