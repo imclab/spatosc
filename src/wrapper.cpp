@@ -190,7 +190,7 @@ bool Wrapper::addTranslator(const std::string &name, const std::string &translat
         return scene_->addTranslator<FudiTranslator>(name, sendToAddress, port, verbose) != 0;
     else
     {
-        std::cerr << "No such translator: " << translatorName << std::endl;
+        std::cerr << "No such translator: " << translatorName << "." << std::endl;
         return false;
     }
 }
