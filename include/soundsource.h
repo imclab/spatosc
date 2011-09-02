@@ -56,8 +56,8 @@ class SoundSource : public Node
          * rtsp://127.0.0.1:12311
          * pd_plugin://audio_plugin_patch.pd
          */
-        void setURI(const std::string &uri);
-        std::string getURI() const { return uri_; }
+        //TODO: void setURI(const std::string &uri);
+        //TODO: std::string getURI() const { return uri_; }
 
         /*
         enum PlayingState {NOT_APPLICABLE, PLAYING, PAUSED};

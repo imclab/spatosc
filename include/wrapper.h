@@ -120,6 +120,11 @@ class DLLEXPORT Wrapper
          */
         bool setPosition(const std::string &nodeName, double x, double y, double z);
         /**
+         * Sets a node's position using angle, elevation and distance.
+         * @return Success or not.
+         */
+        bool setPositionAED(const std::string &nodeName, double angle, double elevation, double distance);
+        /**
          * Adds a translator with default settings.
          * @param name Is an unique reference name so that the translator may be modified or removed in the future.
          * @param type Must be the name of a valid subclass of the Translator class (eg, "ConsoleTranslator", "BasicTranslator, "DmitriTranslator", etc.).

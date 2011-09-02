@@ -173,6 +173,21 @@ bool Wrapper::setPosition(const std::string &nodeName, double x, double y, doubl
     }
 }
 
+bool Wrapper::setPositionAED(const std::string &nodeName, double angle, double elevation, double distance)
+{
+    Node *node = scene_->getNode(nodeName);
+    if (! node)
+    {
+        std::cerr << __FUNCTION__ << ": No such node: " << nodeName << std::endl;
+        return false;
+    }
+    else
+    {
+        node->setPositionAED(angle, elevation, distance);
+        return true;
+    }
+}
+
 void Wrapper::setTranslation(double tx, double ty, double tz)
 {
     scene_->setTranslation(tx, ty, tz);
@@ -213,17 +228,7 @@ bool Wrapper::addTranslator(const std::string &name, const std::string &type, co
     if (t!=0) return true;
     return false;
 }
-/*
-bool Wrapper::addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, bool verbose)
-{
-    return scene_->addTranslator(name, new DmitriTranslator(ip, toPort, verbose));
-}
 
-bool Wrapper::addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, const std::string &fromPort, bool verbose)
-{
-    return scene_->addTranslator(name, new DmitriTranslator(ip, toPort, fromPort, verbose));
-}
-*/
 bool Wrapper::removeTranslator(const std::string &name)
 {
     return scene_->removeTranslator(name);
