@@ -44,6 +44,7 @@ Tests
 
 Features
 --------
+ * Make a BinauralTranslator, which will send the exact same OSC messages as BasicRenderer, but will assume the listener's ears are spaced a little bit apart, and thus compute AED and other connection properties differently. ie, the listener will be like two slightly offset listeners.
  * Compile translators as dynamic libraries
  * provide an example of an individual build system for a translate. ie, if someone has spatosc installed, they can write and build a new translator without modifying spatosc.
  * Support multicast and TCP in OscSender and OscReceiver. Perhaps use liblo urls in constructor arguments? (eg, osc.upd://239.0.0.1:9999/ or osc.tcp://localhost:9998/)

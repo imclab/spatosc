@@ -22,6 +22,7 @@ Currently supported translators:
  * FUDI              The protocol used by Pure Data for netsend and netreceive
 
 Additional translators planned:
+ * Binaural          Almost identical to BasicTranslator, but with a separation of the listener's ears
  * SPATDif           http://www.spatdif.org
  * Zirkonium         http://ima.zkm.de/~cramakri/zirkonium
 
