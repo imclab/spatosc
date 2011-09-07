@@ -1,4 +1,4 @@
-#N canvas 854 449 604 841 10;
+#N canvas 1084 81 604 841 10;
 #X obj 2 1 cnv 15 500 30 empty empty DSP.plugin:(ar.listener-mono~)
 5 15 1 18 -228856 -16662 0;
 #X obj 258 7 cnv 20 20 20 empty empty nodeID:(\$2) 5 10 0 12 -233017
@@ -85,6 +85,14 @@ src-gain absorption_hz dist_ms;
 #X restore 263 116 pd debug;
 #X obj 72 647 dsp.conn-vmic~ \$0 0 vmic \$3;
 #X obj 231 615 dsp.compute-sink1 \$3 vmic;
+#X floatatom 183 730 5 0 0 1 outBus_assign - -;
+#X obj 73 683 dynamic-outbus;
+#X obj 182 683 getParam \$3 vmic.channel;
+#X obj 182 706 + 1;
+#X text 71 753 also output to dac channel vmic+1;
+#X text 169 288 NOTE:;
+#X text 206 285 mono outputs TWO signals: to dac channels corresponding
+to the vmic channel and the vmic channel + 1;
 #X connect 5 0 8 0;
 #X connect 8 0 17 0;
 #X connect 8 0 32 0;
@@ -104,5 +112,9 @@ src-gain absorption_hz dist_ms;
 #X connect 28 0 30 0;
 #X connect 29 0 30 1;
 #X connect 30 0 8 1;
+#X connect 32 0 35 0;
 #X connect 33 0 32 2;
+#X connect 34 0 35 1;
+#X connect 36 0 37 0;
+#X connect 37 0 34 0;
 #X coords 0 0 1 1 400 400 0;

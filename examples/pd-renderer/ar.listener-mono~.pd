@@ -24,11 +24,14 @@ connections to its type.;
 ;
 #X text 343 298 sharpness of vmic incidence (0=omni:1=cos():2=cos*cos
 etc..);
-#X obj 218 109 param \$2 vmic.channel 1;
+#X obj 215 106 param \$2 vmic.channel 1;
 #X obj 212 173 param \$2 vmic.yaw 0;
 #X obj 213 230 param \$2 vmic.pitch 0;
 #X obj 302 406 anyreg \$2-conn.type listener-mono.conn~;
 #X obj 229 296 param \$2 exp 0.4;
+#X text 372 109 NOTE:;
+#X text 409 106 mono outputs TWO signals: to dac channels corresponding
+to the vmic channel and the vmic channel + 1;
 #X connect 3 0 4 0;
 #X connect 11 0 12 0;
 #X coords 0 0 1 1 400 400 0;

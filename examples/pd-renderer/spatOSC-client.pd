@@ -1,9 +1,9 @@
-#N canvas 809 64 909 665 10;
+#N canvas 853 132 909 665 10;
 #X obj -36 76 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
 1 1;
 #X obj -36 18 r to_spatosc;
-#X obj 208 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 268 71;
-#X obj 324 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 367 77;
+#X obj 208 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 254 44;
+#X obj 324 37 grid grid1 100 0 199 100 0 199 0 1 1 10 10 369 120;
 #X text 213 12 source;
 #X text 316 10 listener;
 #N canvas 0 351 856 474 dynamic 0;
@@ -212,18 +212,16 @@ src-0 ear 10;
 #X floatatom 388 476 5 0 0 0 - - -;
 #X floatatom 388 441 5 0 0 0 - - -;
 #X msg 426 432 \; to_spatosc setPosition src-1 0 \$1 0;
-#X floatatom 518 70 5 0 0 0 - - -;
+#X floatatom 529 97 5 0 0 0 - - -;
 #X msg 422 521 \; to_spatosc setNodeFloatProperty src-0 fq \$1;
 #X floatatom 389 527 5 0 0 0 - - -;
-#X obj 566 91 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 571 120 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 501 143 s to_renderer;
-#X msg 581 92 /a.renderer/nodemess pd dsp \$1;
-#X msg 552 70 /a.renderer/nodemess src-0 setParam fq \$1;
-#X msg 503 46 /a.renderer/setOutputFormat stereo;
-#X msg 489 23 /a.renderer/setOutputFormat quad;
-#X floatatom 590 118 5 -60 6 1 _db - -;
-#X msg 591 139 /a.renderer/setOutputDB \$1;
+#X msg 589 118 /a.renderer/nodemess pd dsp \$1;
+#X msg 563 97 /a.renderer/nodemess src-0 setParam fq \$1;
+#X floatatom 748 142 5 -60 6 1 _db - -;
+#X msg 585 141 /a.renderer/setOutputDB \$1;
 #N canvas 457 27 742 283 debug 0;
 #X obj -20 9 cnv 15 700 240 empty empty debug 4 12 0 14 -233017 -1
 0;
@@ -242,6 +240,15 @@ src-0 ear 10;
 0;
 #X symbolatom 45 99 24 0 0 3 spatOSCrx-addr spatOSCrx-addr-set spatOSCrx-addr
 ;
+#X msg 503 73 /a.renderer/setOutputFormat \$1;
+#X obj 502 54 symbol;
+#X msg 552 34 quad;
+#X msg 587 35 stereo;
+#X msg 632 35 mono;
+#X msg 426 586 \; to_spatosc setNodeFloatProperty ear setSpread \$1
+;
+#X floatatom 392 590 5 0 0 0 - - -;
+#X text 427 567 set listener's spread;
 #X connect 1 0 7 0;
 #X connect 2 0 6 0;
 #X connect 2 1 6 1;
@@ -265,8 +272,12 @@ src-0 ear 10;
 #X connect 49 0 51 0;
 #X connect 51 0 50 0;
 #X connect 52 0 50 0;
-#X connect 53 0 50 0;
+#X connect 53 0 54 0;
 #X connect 54 0 50 0;
-#X connect 55 0 56 0;
-#X connect 56 0 50 0;
-#X connect 58 0 22 1;
+#X connect 56 0 22 1;
+#X connect 59 0 50 0;
+#X connect 60 0 59 0;
+#X connect 61 0 60 0;
+#X connect 62 0 60 0;
+#X connect 63 0 60 0;
+#X connect 65 0 64 0;
