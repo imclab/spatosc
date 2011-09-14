@@ -47,9 +47,9 @@ class BasicTranslator : public Translator
 
         BasicTranslator(
                 const std::string &ip,
-                const std::string &port = DEFAULT_SEND_PORT,
-                bool verbose = false);
+                const std::string &port = DEFAULT_SEND_PORT);
 
+        virtual void debugPrint();
         virtual void pushConnectionChanges(Connection *conn);
         //virtual void pushSceneChange(const std::string &method, ...);
         virtual void pushSceneChange(const char *types, va_list ap);

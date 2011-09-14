@@ -1,4 +1,19 @@
-2011-05-25 spatosc 0.2.2
+2011-0?-?? spatosc 0.3.2
+------------------------
+
+This release is a developer snapshot in the 0.3 unstable series. 
+
+This version contains new features and bug fixes.
+
+New Features:
+    * The old addTranslator methods have been improved, and the odd case for DmitriTranslator has been removed. Instead, there is are several overloaded helper functions in the Scene class (with wrapped method in Wrapper) to help add translators
+    * The verbose flag has been removed as a constructor argument for translators, and is replaced with a setVerbose method.
+
+Bug fixes: 
+    * connection parameters are forced to be computed and sent when the connection is first established
+
+
+2011-08-12 spatosc 0.2.2
 ------------------------
 
 This release is an official version in the 0.2 stable series. 

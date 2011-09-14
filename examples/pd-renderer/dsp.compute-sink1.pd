@@ -1,4 +1,4 @@
-#N canvas 533 372 685 634 10;
+#N canvas -727 340 685 634 10;
 #X floatatom 115 407 5 0 0 0 - - -;
 #X floatatom 144 514 7 0 0 1 absorption_hz - -;
 #X floatatom 227 166 5 0 0 0 - - -;
@@ -11,14 +11,14 @@
 #X obj 90 382 t f f;
 #X obj 69 538 pack 0 0;
 #X floatatom 155 406 5 0 0 0 - - -;
-#X floatatom 553 321 5 0 0 0 - - -;
+#X floatatom 580 310 5 0 0 0 - - -;
 #X obj 341 283 pow 2;
 #X text 187 409 rolloff filtering intensity;
 #X obj 197 67 inlet azi elev;
 #X obj 197 93 unpack 0 0;
 #X obj 196 130 change -999;
 #X obj 340 179 change -999;
-#X text 552 231 sink spread;
+#X text 552 198 sink spread;
 #X obj 90 326 expr .5+.5*cos($f1 - $f2) * $f3;
 #X obj 341 238 expr .5+.5*cos($f1 - $f2);
 #X floatatom 488 179 8 0 0 1 pitch - -;
@@ -29,11 +29,12 @@
 #X floatatom 415 204 5 0 0 0 - - -;
 #X obj 488 149 getParam \$1 \$2.pitch;
 #X obj 181 213 getParam \$1 \$2.yaw;
-#X obj 553 254 r \$1.exp;
-#X obj 553 284 + \$3;
 #X text 89 11 args: NodeName sinkName (e.g. ear vmicR) <opt arg3>:
 exponent-offset (for fine adjustment e.g. 0.5 \, so a center speaker
 can have a greater exponent);
+#X obj 554 217 r \$1.spread;
+#X obj 553 278 t b f;
+#X obj 554 240 clip 0 99999;
 #X connect 0 0 8 0;
 #X connect 3 0 9 0;
 #X connect 4 0 5 0;
@@ -63,5 +64,8 @@ can have a greater exponent);
 #X connect 23 0 21 1;
 #X connect 28 0 22 0;
 #X connect 29 0 4 0;
-#X connect 30 0 31 0;
-#X connect 31 0 12 0;
+#X connect 31 0 33 0;
+#X connect 32 0 21 0;
+#X connect 32 0 20 0;
+#X connect 32 1 12 0;
+#X connect 33 0 32 0;

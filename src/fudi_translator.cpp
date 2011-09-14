@@ -37,14 +37,15 @@ namespace spatosc
 const char *FudiTranslator::DEFAULT_SEND_PORT = "31337";
 
 FudiTranslator::FudiTranslator(const std::string &ip,
-    const std::string &port,
-    bool verbose = true) :
-    Translator(verbose),
+    const std::string &port) :
     port_((unsigned int) atoi(port.c_str())),
     ip_(ip)
 {
-    if (verbose_)
-        std::cout << "FudiTranslator sending to: " << port_ << std::endl;
+}
+
+void FudiTranslator::debugPrint()
+{
+    std::cout << "  FUDI Translator -- \thost: " << ip_ << ", port: " << port_ << std::endl;
 }
 
 void FudiTranslator::sendFudi(const std::string &message)

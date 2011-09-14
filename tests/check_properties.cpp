@@ -110,13 +110,9 @@ bool test_properties()
 class DummyTranslator : public spatosc::Translator
 {
     public:
-        DummyTranslator(const std::string &ip,
-                const std::string &toPort,
-                bool verbose = false) :
-            spatosc::Translator(verbose)
+        DummyTranslator() :
+            spatosc::Translator()
         {
-            UNUSED(ip);
-            UNUSED(toPort);
         }
         virtual void pushPropertyChange(spatosc::Node *node, const std::string &key, const std::string &value)
         {
@@ -152,7 +148,7 @@ bool test_notification()
 {
     using namespace spatosc;
     Scene scene;
-    scene.addTranslator<DummyTranslator>("dummy", "address", "port");
+    scene.addTranslator("dummy", new DummyTranslator());
     SoundSource *source = scene.createSoundSource("source");
     if (DummyTranslator::string_updated || DummyTranslator::float_updated || DummyTranslator::int_updated)
     {

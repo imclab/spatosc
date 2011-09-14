@@ -44,7 +44,13 @@ class Translator
          * Constructor.
          * @param verbose Whether it should print info to the console or not.
          */
-        Translator(bool verbose = false);
+        Translator();
+
+        /**
+         * Each translator overwrites the debugPrint method, which prints info
+         * about the translator's connection
+         */
+        virtual void debugPrint();
 
         /**
          * The main work of the translator is done by the pushConnectionChanges() method, which is
@@ -109,6 +115,11 @@ class Translator
         virtual ~Translator() {}
 
         /**
+         * Set verbose debugging:
+         */
+        void setVerbose(bool v) { verbose_ = v; }
+
+        /**
          * Returns whether this translator is verbose or not.
          */
         bool isVerbose() const;
@@ -123,7 +134,7 @@ class Translator
 class ConsoleTranslator : public Translator
 {
     public:
-        ConsoleTranslator(const std::string &ip, const std::string &port, bool verbose);
+        ConsoleTranslator();
 };
 
 } // end namespace spatosc

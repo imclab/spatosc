@@ -47,10 +47,8 @@ int main(int /*argc*/, char ** /*argv*/)
     SoundSource *bar = scene.createSoundSource("2");
 
     // In order to send OSC, some output plugin must be specified. In this case,
-    // we choose D-Mitri, and provide the IP address of the server on the
-    // control network. Note that D-Mitri uses 2 interfaces, a control network
-    // (typically IPv4) and an audio network (AVB):
-    scene.addTranslator<DmitriTranslator>("dmitri", "127.0.0.1", DmitriTranslator::DEFAULT_SEND_PORT);
+    // we choose the BasicTranslator
+    scene.addTranslator("translator", "BasicTranslator");
 
     // The Scene class can print out everything to the console:
     if (VERBOSE)

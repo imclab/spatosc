@@ -20,6 +20,7 @@
 #include "scene.h"
 #include "vectors.h"
 #include "config.h"
+#include "version.h"
 #ifdef HAVE_REGEX
 #include <regex.h>
 #endif
@@ -36,6 +37,10 @@
 #include "translator.h"
 #include "geotransform.h"
 #include "oscutils.h"
+
+#include "basic_translator.h"
+#include "fudi_translator.h"
+#include "dmitri_translator.h"
 
 namespace spatosc
 {
@@ -111,8 +116,18 @@ void Scene::debugPrint ()
     ListenerIterator L;
     SourceIterator n;
     ConnIterator c;
+    TranslatorIterator t;
 
     std::cout << "\n=====================================================" << std::endl;
+    std::cout << "SpatOSC (version " << SPATOSC_VERSION << ")" << std::endl;
+
+    std::cout << "[Translators]:: " << translators_.size() << " translators:" << std::endl;
+    for (t = translators_.begin(); t != translators_.end(); ++t)
+    {
+        std::cout << "  [Translator] id=" << t->first << ":" << std::endl;
+        t->second->debugPrint();
+    }
+
     std::cout << "[Scene]:: connectFilter = " << connectFilter_ << std::endl;
 
     std::cout << "[Scene]:: " << listeners_.size() << " listeners:" << std::endl;
@@ -354,7 +369,8 @@ Connection* Scene::connect(SoundSource *src, Listener *snk)
             iter->second->pushSceneChange("connect", src->getID().c_str(), snk->getID().c_str());
 */
 
-        onConnectionChanged(conn.get());
+        // force the connection to be recomputed and sent:
+        onConnectionChanged(conn.get(), true);
         return conn.get();
     }
     else
@@ -431,7 +447,7 @@ void Scene::pushConnectionChangesViaAllTranslators(Connection *conn, bool forced
     }
     if (src->shouldSendNewState() || sink->shouldSendNewState() || forcedNotify)
     {
-        std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
+        TranslatorIterator iter;
         for (iter = translators_.begin(); iter != translators_.end(); ++iter)
             iter->second->pushConnectionChanges(conn);
 
@@ -518,6 +534,8 @@ void clearVector(std::vector<T> &vec)
 
 void Scene::deleteAllNodes()
 {
+    onSceneChanged("s", "clear", SPATOSC_ARGS_END);
+    
     // we swap them with emtpy vectors to make sure their size is 0.
     // see http://www.gotw.ca/gotw/054.htm
     clearVector(connections_);
@@ -526,8 +544,6 @@ void Scene::deleteAllNodes()
     //std::vector<std::tr1::shared_ptr<Connection> >().swap(connections_);
     //std::vector<std::tr1::shared_ptr<Listener> >().swap(listeners_);
     //std::vector<std::tr1::shared_ptr<SoundSource> >().swap(soundSources_);
-
-    onSceneChanged("s", "clear", SPATOSC_ARGS_END);
 }
 
 void Scene::onTransformChanged()
@@ -599,7 +615,7 @@ void Scene::onSceneChanged(const char *types, ...)
     va_list ap;
     va_start(ap, types);
 
-    std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
+    TranslatorIterator iter;
     for (iter = translators_.begin(); iter != translators_.end(); ++iter)
         iter->second->pushSceneChange(types, ap);
 }
@@ -617,6 +633,76 @@ Translator *Scene::addTranslator(const std::string &name, Translator *t)
         translators_[name] = std::tr1::shared_ptr<Translator>(t);
         return getTranslator(name);
     }
+}
+
+Translator *Scene::addTranslator(const std::string &name, const std::string &type)
+{
+    if (hasTranslator(name))
+    {
+        std::cout << "Warning: Cannot add translator named " << name << ". Already exists." << std::endl;
+        return 0;
+    }
+
+    if (type == "BasicTranslator")
+        return addTranslator(name, new BasicTranslator("localhost", BasicTranslator::DEFAULT_SEND_PORT));
+    else if (type == "DmitriTranslator")
+        return addTranslator(name, new DmitriTranslator("localhost", DmitriTranslator::DEFAULT_SEND_PORT, DmitriTranslator::DEFAULT_RECEIVER_PORT));
+    else if (type == "ConsoleTranslator")
+        return addTranslator(name, new ConsoleTranslator());
+    else if (type == "FudiTranslator")
+        return addTranslator(name, new FudiTranslator("localhost", FudiTranslator::DEFAULT_SEND_PORT));
+    else
+    {
+        std::cerr << "No such translator: " << type << std::endl;
+        return 0;
+    }
+}
+
+Translator *Scene::addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &port)
+{
+    if (hasTranslator(name))
+    {
+        std::cout << "Warning: Cannot add translator named " << name << ". Already exists." << std::endl;
+        return 0;
+    }
+
+    if (type == "BasicTranslator")
+        return addTranslator(name, new BasicTranslator(addr, port));
+    else if (type == "DmitriTranslator")
+        return addTranslator(name, new DmitriTranslator(addr, port, DmitriTranslator::DEFAULT_RECEIVER_PORT));
+    else if (type == "ConsoleTranslator")
+        return addTranslator(name, new ConsoleTranslator());
+    else if (type == "FudiTranslator")
+        return addTranslator(name, new FudiTranslator(addr, port));
+    else
+    {
+        std::cerr << "No such translator: " << type << std::endl;
+        return 0;
+    }
+}
+
+Translator *Scene::addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &toPort, const std::string &fromPort)
+{
+    if (hasTranslator(name))
+    {
+        std::cout << "Warning: Cannot add translator named " << name << ". Already exists." << std::endl;
+        return 0;
+    }
+
+    if (type == "BasicTranslator")
+        return addTranslator(name, new BasicTranslator(addr, toPort));
+    else if (type == "DmitriTranslator")
+        return addTranslator(name, new DmitriTranslator(addr, toPort, fromPort));
+    else if (type == "ConsoleTranslator")
+        return addTranslator(name, new ConsoleTranslator());
+    else if (type == "FudiTranslator")
+        return addTranslator(name, new FudiTranslator(addr, toPort));
+    else
+    {
+        std::cerr << "No such translator: " << type << std::endl;
+        return 0;
+    }
+
 }
 
 } // end namespace spatosc

@@ -174,7 +174,7 @@ GUI::GUI() :
     default_stage_height_(600.0f),
     sound_(0)
 {
-    scene_->addTranslator<spatosc::BasicTranslator>("basic", "127.0.0.1", spatosc::BasicTranslator::DEFAULT_SEND_PORT, true);
+    scene_->addTranslator("basic", new spatosc::BasicTranslator("127.0.0.1", spatosc::BasicTranslator::DEFAULT_SEND_PORT));
     scene_->setScale(INV_PIXELS_PER_METER, INV_PIXELS_PER_METER, INV_PIXELS_PER_METER);
     createStage();
     connectMouseCallbacks();

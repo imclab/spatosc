@@ -89,14 +89,18 @@ public:
     DmitriTranslator(
             const std::string &ip,
             const std::string &toPort = DmitriTranslator::DEFAULT_SEND_PORT,
-            const std::string &fromPort = DmitriTranslator::DEFAULT_RECEIVER_PORT,
-            bool verbose = false);
+            const std::string &fromPort = DmitriTranslator::DEFAULT_RECEIVER_PORT);
 
     /**
      * Legacy constructor to support templated scene::addTranslator method
      * (to be deprecated)
      */
-    DmitriTranslator(const std::string &ip, const std::string &toPort, bool verbose = false);
+    //DmitriTranslator(const std::string &ip, const std::string &toPort);
+
+    /**
+     * Prints debug info about connection to console
+     */
+    virtual void debugPrint();
 
     /**
      * This is where we customize messages for D-Mitri's OSC protocol.

@@ -23,6 +23,6 @@
 #ifndef __VERSION_H__
 #define __VERSION_H__
 
-#define SPATOSC_VERSION     @PACKAGE_VERSION@
+#define SPATOSC_VERSION    "@PACKAGE_VERSION@"
 
 #endif // __VERSION_H__

@@ -51,9 +51,9 @@ int main(int argc, char ** /*argv*/)
     // we choose the BasicTranslator, which can be rendered, for example, by
     // the pd-vbap example
     if (argc > 1)
-        scene.addTranslator<FudiTranslator>("fudi", "localhost", "31337");
+        scene.addTranslator("fudi", new FudiTranslator("localhost", "31337"));
     else
-        scene.addTranslator<BasicTranslator>("basic", "127.0.0.1", "9999");
+        scene.addTranslator("basic", new BasicTranslator("127.0.0.1", "9999"));
 
     // The Scene class can print out everything to the console:
     if (VERBOSE)

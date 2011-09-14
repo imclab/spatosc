@@ -22,7 +22,7 @@ std::string OscSender::toString() const
 {
     std::stringstream sstr;
     sstr << lo_server_get_port(server_);
-    return "host:" + host_ + ", port:" + toPort_ + " (outgoing port: "+sstr.str()+")";
+    return "host: " + host_ + ", port: " + toPort_ + " (outgoing port: "+sstr.str()+")";
 }
 
 

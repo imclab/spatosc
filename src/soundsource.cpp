@@ -57,8 +57,15 @@ void SoundSource::onNodeChanged(bool forcedNotify)
     for (c = connectTO_.begin(); c != connectTO_.end(); ++c)
         scene_.onConnectionChanged(c->get(), forcedNotify);
 
-    if (scene_.isSynchronous()) stateSent();
+    if (scene_.isSynchronous())
+        stateSent();
 }
+
+//void SoundSource::setURI(const std::string &uri)
+//{
+//    uri_ = uri;
+//    // TODO: trigger some signal so that the renderer sends some message
+//}
 
 } // end namespace spatosc
 

@@ -173,6 +173,21 @@ bool Wrapper::setPosition(const std::string &nodeName, double x, double y, doubl
     }
 }
 
+bool Wrapper::setPositionAED(const std::string &nodeName, double angle, double elevation, double distance)
+{
+    Node *node = scene_->getNode(nodeName);
+    if (! node)
+    {
+        std::cerr << __FUNCTION__ << ": No such node: " << nodeName << std::endl;
+        return false;
+    }
+    else
+    {
+        node->setPositionAED(angle, elevation, distance);
+        return true;
+    }
+}
+
 void Wrapper::setTranslation(double tx, double ty, double tz)
 {
     scene_->setTranslation(tx, ty, tz);
@@ -193,31 +208,25 @@ void Wrapper::setScale(double sx, double sy, double sz)
     scene_->setScale(sx, sy, sz);
 }
 
-bool Wrapper::addTranslator(const std::string &name, const std::string &translatorName, const std::string &sendToAddress, const std::string &port, bool verbose)
+bool Wrapper::addTranslator(const std::string &name, const std::string &type)
 {
-    if (translatorName == "BasicTranslator")
-        return scene_->addTranslator<BasicTranslator>(name, sendToAddress, port, verbose) != 0;
-    else if (translatorName == "DmitriTranslator")
-        return scene_->addTranslator<DmitriTranslator>(name, sendToAddress, port, verbose) != 0; // FIXME:4th arg to DmitriTranslator's constructor is not a bool!
-    else if (translatorName == "ConsoleTranslator")
-        return scene_->addTranslator<ConsoleTranslator>(name, sendToAddress, port, verbose) != 0;
-    else if (translatorName == "FudiTranslator")
-        return scene_->addTranslator<FudiTranslator>(name, sendToAddress, port, verbose) != 0;
-    else
-    {
-        std::cerr << "No such translator: " << translatorName << std::endl;
-        return false;
-    }
+    Translator *t = scene_->addTranslator(name, type);
+    if (t!=0) return true;
+    return false;
 }
 
-bool Wrapper::addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, bool verbose)
+bool Wrapper::addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &port)
 {
-    return scene_->addTranslator(name, new DmitriTranslator(ip, toPort, verbose));
+    Translator *t = scene_->addTranslator(name, type, addr, port);
+    if (t!=0) return true;
+    return false;
 }
 
-bool Wrapper::addDmitriTranslator(const std::string &name, const std::string &ip, const std::string &toPort, const std::string &fromPort, bool verbose)
+bool Wrapper::addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &toPort, const std::string &fromPort)
 {
-    return scene_->addTranslator(name, new DmitriTranslator(ip, toPort, fromPort, verbose));
+    Translator *t = scene_->addTranslator(name, type, addr, toPort, fromPort);
+    if (t!=0) return true;
+    return false;
 }
 
 bool Wrapper::removeTranslator(const std::string &name)
@@ -228,6 +237,17 @@ bool Wrapper::removeTranslator(const std::string &name)
 bool Wrapper::hasTranslator(const std::string &name)
 {
     return scene_->hasTranslator(name);
+}
+
+bool Wrapper::setTranslatorVerbose(const std::string &name, bool verbose)
+{
+    Translator *t = scene_->getTranslator(name);
+    if (t)
+    {
+        t->setVerbose(verbose);
+        return true;
+    }
+    return false;
 }
 
 bool Wrapper::setNodeStringProperty(const std::string &node, const std::string &key, const std::string &value)

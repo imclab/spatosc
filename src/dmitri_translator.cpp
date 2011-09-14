@@ -35,26 +35,23 @@ const char *DmitriTranslator::DEFAULT_RECEIVER_PORT = "18099";
 
 // ************************************************
 
-DmitriTranslator::DmitriTranslator(const std::string &ip, const std::string &toPort, const std::string &fromPort, bool verbose) :
-Translator(verbose),
-sender_(new OscSender(ip, toPort, fromPort)),
-verbose_(verbose)
+DmitriTranslator::DmitriTranslator(const std::string &ip, const std::string &toPort, const std::string &fromPort) :
+Translator(),
+sender_(new OscSender(ip, toPort, fromPort))
 {
-    if (verbose_)
-    {
-        std::cout << "D-Mitri translator sending to: " << sender_->toString() << std::endl;
-    }
 }
 
-DmitriTranslator::DmitriTranslator(const std::string &ip, const std::string &toPort, bool verbose) :
-Translator(verbose),
-sender_(new OscSender(ip, toPort, DmitriTranslator::DEFAULT_RECEIVER_PORT)),
-verbose_(verbose)
+/*
+DmitriTranslator::DmitriTranslator(const std::string &ip, const std::string &toPort) :
+Translator(),
+sender_(new OscSender(ip, toPort, DmitriTranslator::DEFAULT_RECEIVER_PORT))
 {
-    if (verbose_)
-    {
-        std::cout << "D-Mitri translator sending to: " << sender_->toString() << std::endl;
-    }
+}
+*/
+
+void DmitriTranslator::debugPrint()
+{
+    std::cout << "  D-Mitri Translator -- " << sender_->toString() << std::endl;
 }
 
 void DmitriTranslator::pushConnectionChanges(Connection *conn)
