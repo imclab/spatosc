@@ -39,12 +39,12 @@ all-local: doxyfile.stamp
 clean-local:
 	rm -rf html
 
+endif 
+
 osx-pkg:
 	@echo "Making spatosc .pkg installer for OSX";
 	@echo "Creating build tree in /etc/spatosc";
 	make DESTDIR=/tmp/spatosc install
 	@echo "Running PackageMaker";
 	@echo "...TODO";
-
-endif 
 
