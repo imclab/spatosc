@@ -53,7 +53,7 @@ int main(int argc, char ** /*argv*/)
     if (argc > 1)
         scene.addTranslator("fudi", new FudiTranslator("localhost", "31337"));
     else
-        scene.addTranslator("basic", new BasicTranslator("127.0.0.1", "9999"));
+        scene.addTranslator("basic", new BasicTranslator("127.0.0.1", "18032"));
 
     // The Scene class can print out everything to the console:
     if (VERBOSE)
