@@ -45,9 +45,7 @@ class BasicTranslator : public Translator
 
         static const char *DEFAULT_SEND_PORT;
 
-        BasicTranslator(
-                const std::string &ip,
-                const std::string &port = DEFAULT_SEND_PORT);
+        BasicTranslator(const std::string &addr);
 
         virtual void debugPrint();
         virtual void pushConnectionChanges(Connection *conn);

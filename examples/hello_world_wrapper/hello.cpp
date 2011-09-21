@@ -33,9 +33,9 @@ int main(int /*argc*/, char ** /*argv*/)
     // We will output messages using several translators to show the full
     // capabilities of SpatOSC. Usually, only one translator is necassary.
     // (Note that DMitri requires a special function)
-    spatosc.addTranslator("fudi", "FudiTranslator", "localhost", "31337");
-    spatosc.addTranslator("basic", "BasicTranslator", "localhost", "9999");
-    spatosc.addTranslator("dmitri", "DmitriTranslator", "localhost", "18033");
+    spatosc.addTranslator("fudi", "FudiTranslator", "localhost:31337");
+    spatosc.addTranslator("basic", "BasicTranslator", "osc.udp://localhost:9999");
+    spatosc.addTranslator("dmitri", "DmitriTranslator", "osc.udp://localhost:18033");
 
 
     // Each scene needs to have at least one Listener:

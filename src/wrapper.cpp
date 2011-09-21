@@ -215,16 +215,16 @@ bool Wrapper::addTranslator(const std::string &name, const std::string &type)
     return false;
 }
 
-bool Wrapper::addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &port)
+bool Wrapper::addTranslator(const std::string &name, const std::string &type, const std::string &addr)
 {
-    Translator *t = scene_->addTranslator(name, type, addr, port);
+    Translator *t = scene_->addTranslator(name, type, addr);
     if (t!=0) return true;
     return false;
 }
 
-bool Wrapper::addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &toPort, const std::string &fromPort)
+bool Wrapper::addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &fromPort)
 {
-    Translator *t = scene_->addTranslator(name, type, addr, toPort, fromPort);
+    Translator *t = scene_->addTranslator(name, type, addr, fromPort);
     if (t!=0) return true;
     return false;
 }

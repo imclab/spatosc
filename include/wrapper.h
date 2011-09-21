@@ -135,21 +135,19 @@ class DLLEXPORT Wrapper
          * Adds a translator and specifies a remote host and port
          * @param name Is an unique reference name so that the translator may be modified or removed in the future.
          * @param type Must be the name of a valid subclass of the Translator class (eg, "ConsoleTranslator", "BasicTranslator, "DmitriTranslator", etc.).
-         * @param addr The hostname or IP address or the remote host (or "localhost").
-         * @param port The port on the remote host that receives OSC messages.
+         * @param addr The OSC address string for the remote host, in format: osc.udp://host:port.
          * @return Success or not.
          */
-        bool addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &port);
+        bool addTranslator(const std::string &name, const std::string &type, const std::string &addr);
         /**
          * Adds a translator and specifies a remote host and port, plus an outgoing port (important in the case of DmitriTranlator).
          * @param name Is an unique reference name so that the translator may be modified or removed in the future.
          * @param type Must be the name of a valid subclass of the Translator class (eg, "ConsoleTranslator", "BasicTranslator, "DmitriTranslator", etc.).
-         * @param addr The hostname or IP address or the remote host (or "localhost").
-         * @param toPort The port on the remote host that receives OSC messages.
+         * @param addr The OSC address string for the remote host, in format: osc.udp://host:port.
          * @param fromPort The local port on which to create an outgoing socket for sending OSC messages.
          * @return Success or not.
         */
-        bool addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &toPort, const std::string &fromPort);
+        bool addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &fromPort);
         /**
          * Removes a translator.
          * @return Success or not.

@@ -147,12 +147,6 @@ class Scene
         /**
          * Add a translator by passing a pointer.
          *
-         * Here is an example:
-         * \code
-         * Scene scene();
-         * scene.addTranslator("basic", new BasicTranslator("127.0.0.1", "11111"));
-         * \endcode
-         *
          * IMPORTANT: you should never free the object for the pointer that you
          * passed to this function. Instead, use the removeTranslator() method.
          *
@@ -167,14 +161,30 @@ class Scene
         Translator *addTranslator(const std::string &name, const std::string &type);
 
         /**
-         * Helper class for adding a translator with a remote host
+         * Helper class for adding a translator with a remote host address
+         * 
+         * Note: For OSC addresses, addr should be in URL form. Example:
+         * \code
+         * osc.udp://localhost:9999
+         * \endcode
+         * For FUDI and other protocols, specify a colon separated host:port:
+         * \code
+         * localhost:9999
+         * \endcode
+         *
+         * Here is an example:
+         * \code
+         * Scene scene();
+         * scene.addTranslator("basic", new BasicTranslator("osc.udp://127.0.0.1:9999"));
+         * \endcode
+         *
          */
 
-        Translator *addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &port);
+        Translator *addTranslator(const std::string &name, const std::string &type, const std::string &addr);
         /**
          * Helper class for adding a translator with a remote host and specific outgoing port (important for DmitriTranslator).
          */
-        Translator *addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &toPort, const std::string &fromPort);
+        Translator *addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &fromPort);
 
         /**
          * Returns a pointer to a given Translator or a null pointer if not found.

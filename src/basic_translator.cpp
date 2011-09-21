@@ -32,9 +32,9 @@ namespace spatosc
 
 const char *BasicTranslator::DEFAULT_SEND_PORT = "18032";
 
-BasicTranslator::BasicTranslator(const std::string &ip, const std::string &port) :
+BasicTranslator::BasicTranslator(const std::string &addr) :
     Translator(),
-    sender_(new OscSender(ip, port))
+    sender_(new OscSender(addr))
 {
 }
 

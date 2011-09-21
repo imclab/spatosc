@@ -35,10 +35,17 @@ const char *DmitriTranslator::DEFAULT_RECEIVER_PORT = "18099";
 
 // ************************************************
 
-DmitriTranslator::DmitriTranslator(const std::string &ip, const std::string &toPort, const std::string &fromPort) :
-Translator(),
-sender_(new OscSender(ip, toPort, fromPort))
+DmitriTranslator::DmitriTranslator(const std::string &addr, const std::string &fromPort) :
+Translator()
 {
+    if (addr.compare(0,4,"osc.")==0)
+    {
+        sender_ = std::tr1::shared_ptr<OscSender>(new OscSender(addr, fromPort));
+    }
+    else
+    {
+        sender_ = std::tr1::shared_ptr<OscSender>(new OscSender("osc.udp://"+addr+":"+DmitriTranslator::DEFAULT_SEND_PORT));
+    }
 }
 
 /*

@@ -84,11 +84,10 @@ public:
     static const char *DEFAULT_RECEIVER_PORT;
 
     /**
-     * Constructor (only IP address is required; ports can be overridden)
+     * Constructor requires only IP address for addr, although, you may choose to enter the full url (eg, osc.udp://dmitriIP:18032). The default fromPort may also be overridden.
      */
     DmitriTranslator(
-            const std::string &ip,
-            const std::string &toPort = DmitriTranslator::DEFAULT_SEND_PORT,
+            const std::string &addr,
             const std::string &fromPort = DmitriTranslator::DEFAULT_RECEIVER_PORT);
 
     /**

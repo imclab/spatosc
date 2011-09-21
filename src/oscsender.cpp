@@ -3,7 +3,7 @@
 
 namespace spatosc
 {
-
+/*
 OscSender::OscSender(const std::string &host, const std::string &toPort) :
     host_(host), toPort_(toPort.c_str()), fromPort_(""),
     address_(lo_address_new(host.c_str(), toPort_.c_str())),
@@ -17,12 +17,30 @@ OscSender::OscSender(const std::string &host, const std::string &toPort, const s
     server_(lo_server_new(fromPort_.c_str(), 0))
 {
 }
+*/
+OscSender::OscSender(const std::string &addr) :
+    fromPort_(""),
+    address_(lo_address_new_from_url(addr.c_str())),
+    server_(lo_server_new(0, 0))
+{
+}
+
+OscSender::OscSender(const std::string &addr, const std::string &fromPort) :
+    fromPort_(fromPort),
+    address_(lo_address_new_from_url(addr.c_str())),
+    server_(lo_server_new(fromPort_.c_str(), 0))
+{
+}
+
+
+
 
 std::string OscSender::toString() const
 {
     std::stringstream sstr;
     sstr << lo_server_get_port(server_);
-    return "host: " + host_ + ", port: " + toPort_ + " (outgoing port: "+sstr.str()+")";
+    //return "host: " + host_ + ", port: " + toPort_ + " (outgoing port: "+sstr.str()+")";
+    return std::string(lo_address_get_url(address_)) + " (outgoing port: "+sstr.str()+")";
 }
 
 

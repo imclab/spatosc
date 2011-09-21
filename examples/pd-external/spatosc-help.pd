@@ -1,15 +1,12 @@
-#N canvas 788 22 980 1077 10;
-#X obj 25 670 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
+#N canvas 371 57 851 743 10;
+#X obj 33 349 tgl 20 0 empty empty success 25 10 0 10 -258113 -1 -1
 0 1;
-#X msg 144 244 clearScene;
-#X floatatom 141 74 5 0 0 0 - - -;
-#X floatatom 180 74 5 0 0 0 - - -;
-#X floatatom 219 74 5 0 0 0 - - -;
-#X text 23 -36 [spatosc] Creates a spatosc audio scene and allows one
+#X floatatom 549 222 5 0 0 0 - - -;
+#X floatatom 588 222 5 0 0 0 - - -;
+#X floatatom 627 222 5 0 0 0 - - -;
+#X text 22 -22 [spatosc] Creates a spatosc audio scene and allows one
 to create sound source nodes and listeners in a 3D virtual audio environment.
 ;
-#X text 27 5 The spatosc library wraps audio spatialization engines
-and controls them using the Open Sound Control protocol.;
 #N canvas 0 22 290 211 pack3f 0;
 #X obj 79 103 pack f f f;
 #X obj 99 73 t b f;
@@ -26,22 +23,14 @@ and controls them using the Open Sound Control protocol.;
 #X connect 3 0 0 0;
 #X connect 4 0 1 0;
 #X connect 5 0 2 0;
-#X restore 141 94 pd pack3f;
-#X text 153 642 Usage: [spatosc s:translator f:port s:host];
-#X text 146 658 The arguments are not mandatory. You can provide none
-of \, only one \, two or all three. The default translator simply prints
-to the console.;
-#X obj 25 638 spatosc;
-#X msg 142 333 removeTranslator spatdif;
-#X msg 142 355 removeTranslator default;
-#X msg 140 377 hasTranslator default;
-#X text 149 704 Example using arguments:;
-#X obj 146 724 spatosc DmitriTranslator 18033 localhost;
-#X obj 18 786 netreceive 31337 1;
-#X msg 140 289 addTranslator fudi FudiTranslator localhost 31337;
-#X floatatom 144 173 5 0 0 0 - - -;
-#X floatatom 182 172 5 0 0 0 - - -;
-#X floatatom 221 172 5 0 0 0 - - -;
+#X restore 549 242 pd pack3f;
+#X obj 33 327 spatosc;
+#X msg 74 228 removeTranslator default;
+#X msg 87 254 hasTranslator default;
+#X obj 27 522 netreceive 31337 1;
+#X floatatom 565 321 5 0 0 0 - - -;
+#X floatatom 603 320 5 0 0 0 - - -;
+#X floatatom 642 320 5 0 0 0 - - -;
 #N canvas 0 22 290 211 pack3f 0;
 #X obj 79 103 pack f f f;
 #X obj 99 73 t b f;
@@ -58,132 +47,179 @@ to the console.;
 #X connect 3 0 0 0;
 #X connect 4 0 1 0;
 #X connect 5 0 2 0;
-#X restore 143 192 pd pack3f;
-#X msg 140 149 createListener ear;
-#X msg 141 114 setPosition noise \$1 \$2 \$3;
-#X msg 143 213 setPosition ear \$1 \$2 \$3;
-#X msg 181 413 setNodeStringProperty noise foo bar;
-#X msg 181 432 removeNodeStringProperty noise foo;
-#X obj 18 827 print viaFudi;
-#X obj 113 813 list split 2;
-#X obj 113 888 unpack s s;
-#X symbolatom 113 915 10 0 0 0 - - -;
-#X symbolatom 179 914 10 0 0 0 - - -;
-#X obj 249 890 unpack f f f;
-#X floatatom 249 914 5 0 0 0 - - -;
-#X floatatom 294 915 5 0 0 0 - - -;
-#X floatatom 333 914 5 0 0 0 - - -;
-#X obj 113 866 list trim;
-#X obj 249 869 route xyz;
-#X obj 249 848 list trim;
-#X text 15 751 If you choose the FudiTranslator \, it's easy to receive
+#X restore 564 340 pd pack3f;
+#X msg 558 298 createListener ear;
+#X msg 549 262 setPosition noise \$1 \$2 \$3;
+#X msg 564 361 setPosition ear \$1 \$2 \$3;
+#X obj 27 563 print viaFudi;
+#X obj 122 549 list split 2;
+#X obj 122 624 unpack s s;
+#X symbolatom 122 651 10 0 0 0 - - -;
+#X symbolatom 188 650 10 0 0 0 - - -;
+#X obj 258 626 unpack f f f;
+#X floatatom 258 650 5 0 0 0 - - -;
+#X floatatom 303 651 5 0 0 0 - - -;
+#X floatatom 342 650 5 0 0 0 - - -;
+#X obj 122 602 list trim;
+#X obj 258 605 route xyz;
+#X obj 258 584 list trim;
+#X text 24 487 If you choose the FudiTranslator \, it's easy to receive
 messages with [netreceive]:;
-#X text 263 47 <-- Create a sound source;
-#X text 288 151 <-- Create a listener;
-#X text 238 245 <-- Clear the whole scene;
-#X text 137 272 Choose a translator \, which sends messages about the
-scene;
-#X text 281 377 <-- Check if a given translator is running;
-#X msg 193 513 setNodeFloatProperty noise param 1.4;
-#X msg 184 462 setNodeIntProperty noise channel 1000;
-#X msg 481 552 0;
-#X text 515 549 no effect;
-#X msg 599 553 100;
-#X text 628 551 normal;
-#X msg 698 552 200;
-#X text 731 552 more extreme;
-#X msg 221 569 setDistanceFactor noise ear \$1;
-#X msg 484 588 0;
-#X text 518 585 no effect;
-#X msg 602 589 100;
-#X text 631 588 normal;
-#X msg 701 588 200;
-#X text 734 588 more extreme;
-#X msg 224 605 setDopplerFactor noise ear \$1;
-#X obj 75 635 r toSpatOSC;
-#X msg 532 47 \; toSpatOSC setAutoConnect \$1;
-#X obj 532 22 tgl 15 0 empty empty auto-connect 17 7 1 12 -262144 -1
--1 0 1;
-#X msg 529 156 \; toSpatOSC setConnectFilter \$1;
-#X obj 529 131 symbol;
-#X msg 528 92 ear;
-#X msg 564 93 ignore;
-#X msg 187 481 removeNodeIntProperty noise channel;
-#X text 408 413 <-- Add / remove string properties (node must exist)
+#X text 655 195 <-- Create a sound source;
+#X text 706 300 <-- Create a listener;
+#X text 226 253 <-- Check if a given translator is running;
+#X obj 110 307 r toSpatOSC;
+#X msg 533 196 createSource noise;
+#X obj 474 572 print from_spatOSC_basicTranslator;
+#X obj 34 432 spatosc DmitriTranslator osc.udp://localhost:18033;
+#X msg 105 278 debug;
+#X msg 33 129 addTranslator fudi FudiTranslator localhost:31337;
+#X text 153 279 <- full debug (prints to console only \, not pd window)
 ;
-#X text 418 466 <-- Add / remove int properties (node must exist);
-#X msg 141 309 addTranslator basic BasicTranslator localhost 18032
+#X text 87 327 Usage: [spatosc s:translator s:oscUrl];
+#X msg 34 407 debug;
+#X text 80 412 (note this is a different audio scene);
+#X text 86 395 Example object creation using arguments:;
+#X obj 511 404 s toSpatOSC;
+#X msg 523 171 clearScene;
+#X text 617 172 <-- Clear the whole scene;
+#X obj 434 -17 cnv 15 250 150 empty empty More_info: 10 12 1 12 -228856
+-128992 0;
+#N canvas 0 0 847 292 HOW_TO_SET_NODE_PROPERTIES 0;
+#X msg 142 -125 setNodeStringProperty noise foo bar;
+#X msg 142 -106 removeNodeStringProperty noise foo;
+#X msg 154 -25 setNodeFloatProperty noise param 1.4;
+#X msg 148 -57 removeNodeIntProperty noise channel;
+#X text 369 -125 <-- Add / remove string properties (node must exist)
 ;
-#X msg 201 534 removeNodeFloatProperty noise param;
-#X text 423 511 <-- Add / remove int properties (node must exist);
-#X msg 141 48 createSource noise;
-#X obj 453 772 print from_spatOSC_basicTranslator;
-#X obj 453 743 OSCrx 18032;
-#X msg 392 334 addTranslator basic3 BasicTranslator 198.168.0.103 18032
-;
-#X obj 790 706 bng 15 250 50 0 empty empty output_messages 17 7 0 10
+#X text 379 -72 <-- Add / remove int properties (node must exist);
+#X msg 162 -4 removeNodeFloatProperty noise param;
+#X text 384 -27 <-- Add / remove int properties (node must exist);
+#X msg 145 -76 setNodeIntProperty noise channel 4;
+#X obj 50 56 s toSpatOSC;
+#X connect 0 0 9 0;
+#X connect 1 0 9 0;
+#X connect 2 0 9 0;
+#X connect 3 0 9 0;
+#X connect 6 0 9 0;
+#X connect 8 0 9 0;
+#X restore 462 22 pd HOW_TO_SET_NODE_PROPERTIES;
+#N canvas 40 100 450 300 ABOUT_SCHEDULING 0;
+#X obj 235 187 bng 15 250 50 0 empty empty output_messages 17 7 0 10
 -262144 -1 -1;
-#X msg 610 690 setSynchronous \$1;
-#X obj 610 664 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X msg 114 175 setSynchronous \$1;
+#X obj 114 149 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 611 730 s toSpatOSC;
-#X obj 791 651 == 0;
-#X obj 791 680 metro 30;
-#X connect 1 0 10 0;
-#X connect 2 0 7 0;
-#X connect 3 0 7 1;
-#X connect 4 0 7 2;
-#X connect 7 0 23 0;
-#X connect 10 0 0 0;
-#X connect 11 0 10 0;
-#X connect 12 0 10 0;
-#X connect 13 0 10 0;
-#X connect 16 0 27 0;
-#X connect 16 0 28 0;
-#X connect 17 0 10 0;
-#X connect 18 0 21 0;
-#X connect 19 0 21 1;
-#X connect 20 0 21 2;
-#X connect 21 0 24 0;
-#X connect 22 0 10 0;
-#X connect 23 0 10 0;
-#X connect 24 0 10 0;
-#X connect 25 0 10 0;
-#X connect 26 0 10 0;
-#X connect 28 0 36 0;
-#X connect 28 1 38 0;
-#X connect 29 0 30 0;
-#X connect 29 1 31 0;
-#X connect 32 0 33 0;
-#X connect 32 1 34 0;
-#X connect 32 2 35 0;
-#X connect 36 0 29 0;
-#X connect 37 0 32 0;
-#X connect 38 0 37 0;
-#X connect 45 0 10 0;
-#X connect 46 0 10 0;
-#X connect 47 0 53 0;
-#X connect 49 0 53 0;
-#X connect 51 0 53 0;
-#X connect 53 0 10 0;
-#X connect 54 0 60 0;
-#X connect 56 0 60 0;
-#X connect 58 0 60 0;
-#X connect 60 0 10 0;
-#X connect 61 0 10 0;
-#X connect 63 0 62 0;
-#X connect 65 0 64 0;
-#X connect 66 0 65 0;
-#X connect 67 0 65 0;
-#X connect 68 0 10 0;
-#X connect 71 0 10 0;
-#X connect 72 0 10 0;
-#X connect 74 0 10 0;
-#X connect 76 0 75 0;
-#X connect 77 0 10 0;
-#X connect 78 0 81 0;
-#X connect 79 0 81 0;
-#X connect 80 0 79 0;
-#X connect 80 0 82 0;
-#X connect 82 0 83 0;
-#X connect 83 0 78 0;
+#X obj 165 223 s toSpatOSC;
+#X obj 236 132 == 0;
+#X obj 236 161 metro 30;
+#X text 39 30 By default \, SpatOSC operates in "synchronous" mode
+\, meaning that every time a node or connection's state changes \,
+an OSC message will go out immediately (well \, only if the value actually
+changes). By disabling synchronous mode \, you must manually bang the
+object to emit changes via OSC. This can let you manage network load
+more precisely.;
+#X connect 0 0 3 0;
+#X connect 1 0 3 0;
+#X connect 2 0 1 0;
+#X connect 2 0 4 0;
+#X connect 4 0 5 0;
+#X connect 5 0 0 0;
+#X restore 462 43 pd ABOUT_SCHEDULING;
+#N canvas 0 0 450 300 PHYSICAL_MODELLING_FACTORS 0;
+#X msg 244 169 0;
+#X text 278 166 no effect;
+#X msg 254 186 100;
+#X text 283 185 normal;
+#X text 297 203 more extreme;
+#X msg 244 229 setDopplerFactor noise ear \$1;
+#X obj 73 241 s toSpatOSC;
+#X msg 264 203 200;
+#X msg 158 81 0;
+#X text 192 78 no effect;
+#X msg 168 98 100;
+#X text 197 97 normal;
+#X text 211 115 more extreme;
+#X msg 178 115 200;
+#X msg 158 141 setDistanceFactor noise ear \$1;
+#X connect 0 0 5 0;
+#X connect 2 0 5 0;
+#X connect 5 0 6 0;
+#X connect 7 0 5 0;
+#X connect 8 0 14 0;
+#X connect 10 0 14 0;
+#X connect 13 0 14 0;
+#X connect 14 0 6 0;
+#X restore 462 64 pd PHYSICAL_MODELLING_FACTORS;
+#N canvas 0 0 450 300 ADVANCED_CONNECTION_FEATURES 0;
+#X msg 124 41 \; toSpatOSC setAutoConnect \$1;
+#X obj 124 16 tgl 15 0 empty empty auto-connect 17 7 1 12 -262144 -1
+-1 0 1;
+#X msg 121 150 \; toSpatOSC setConnectFilter \$1;
+#X obj 121 125 symbol;
+#X msg 120 86 ear;
+#X msg 156 87 ignore;
+#X connect 1 0 0 0;
+#X connect 3 0 2 0;
+#X connect 4 0 3 0;
+#X connect 5 0 3 0;
+#X restore 462 87 pd ADVANCED_CONNECTION_FEATURES;
+#X text 20 24 The spatosc library sends spatial audio updates via OpenSoundControl
+(OSC) to various spatializers \, as long as there exists a compatible
+"translator" (kind of like a plugin) in the library.;
+#X text 465 483 Receiving from the BasicTranslator:;
+#X obj 452 522 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X text 20 91 Choose a translator (note \, a "default" translator already
+exists);
+#X obj 474 543 OSCrx 18032;
+#X obj 467 621 OSCrx 9999 tcp;
+#X obj 465 652 print from_TCP_basicTranslator;
+#X obj 437 593 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg 46 154 addTranslator default BasicTranslator osc.udp://localhost:10832
+;
+#X text 282 156 <- this is the default one;
+#X text 314 168 (already exists);
+#X text 552 542 <- default;
+#X text 568 619 <- tcpTest;
+#X msg 56 192 addTranslator tcpTest BasicTranslator osc.tcp://localhost:9999
+;
+#X connect 1 0 5 0;
+#X connect 2 0 5 1;
+#X connect 3 0 5 2;
+#X connect 5 0 15 0;
+#X connect 6 0 0 0;
+#X connect 7 0 6 0;
+#X connect 8 0 6 0;
+#X connect 9 0 17 0;
+#X connect 9 0 18 0;
+#X connect 10 0 13 0;
+#X connect 11 0 13 1;
+#X connect 12 0 13 2;
+#X connect 13 0 16 0;
+#X connect 14 0 44 0;
+#X connect 15 0 44 0;
+#X connect 16 0 44 0;
+#X connect 18 0 26 0;
+#X connect 18 1 28 0;
+#X connect 19 0 20 0;
+#X connect 19 1 21 0;
+#X connect 22 0 23 0;
+#X connect 22 1 24 0;
+#X connect 22 2 25 0;
+#X connect 26 0 19 0;
+#X connect 27 0 22 0;
+#X connect 28 0 27 0;
+#X connect 33 0 6 0;
+#X connect 34 0 44 0;
+#X connect 37 0 6 0;
+#X connect 38 0 6 0;
+#X connect 41 0 36 0;
+#X connect 45 0 44 0;
+#X connect 54 0 56 0;
+#X connect 56 0 35 0;
+#X connect 57 0 58 0;
+#X connect 59 0 57 0;
+#X connect 60 0 6 0;
+#X connect 65 0 6 0;

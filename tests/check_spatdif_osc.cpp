@@ -34,7 +34,7 @@ int main()
 {
     // test's scene's receiving facilities
     const char *TEST_PORT = "11111";
-    spatosc::OscSender sender("127.0.0.1", TEST_PORT);
+    spatosc::OscSender sender(std::string("osc.udp://127.0.0.1:")+TEST_PORT);
     spatosc::OscScene scene(TEST_PORT);
     spatosc::SoundSource *source(scene.createSoundSource("dummy"));
     spatosc::SoundSource *source2(scene.createSoundSource("bunny"));

@@ -41,14 +41,25 @@ class OscSender
         /**
          * Constructor that will create server on fromPort for sending messages to host:toPort.
          */
-        OscSender(const std::string &host, const std::string &toPort, const std::string &fromPort);
+        //OscSender(const std::string &host, const std::string &toPort, const std::string &fromPort);
         /**
          * Constructor that will create a random server for sending messages to host:toPort.
          */
-        OscSender(const std::string &host, const std::string &toPort);
+        //OscSender(const std::string &host, const std::string &toPort);
+
+        /**
+         * Constructor that will create server on fromPort for sending messages to addr. Note: addr has form like osc.udp://host:port
+         */
+        OscSender(const std::string &addr, const std::string &fromPort);
+        /**
+         * Constructor that will create a random server for sending messages to addr. Note: addr has form like osc.udp://host:port
+         */
+        OscSender(const std::string &addr);
+ 
+
         std::string toString() const;
-        const char * host() { return host_.c_str(); }
-        const char * port() { return toPort_.c_str(); }
+        //const char * host() { return host_.c_str(); }
+        //const char * port() { return toPort_.c_str(); }
          /**
           * Send a message with one or more string, float and/or int args.
           * The list of arguments MUST be terminated with SPATOSC_ARGS_END.
@@ -66,8 +77,8 @@ class OscSender
         OscSender(const OscSender&);
         const OscSender& operator=(const OscSender&);
         void sendMessage(const std::string &OSCpath, lo_message msg) const;
-        std::string host_;
-        std::string toPort_;
+        //std::string host_;
+        //std::string toPort_;
         std::string fromPort_;
         lo_address address_;
         lo_server server_;

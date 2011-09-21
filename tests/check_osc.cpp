@@ -74,7 +74,7 @@ int main()
     spatosc::OscReceiver receiver(TEST_PORT);
     if (VERBOSE)
         std::cout << "Start sender on port " << TEST_PORT << std::endl;
-    spatosc::OscSender sender("127.0.0.1", TEST_PORT);
+    spatosc::OscSender sender(std::string("osc.udp://127.0.0.1:")+TEST_PORT);
     receiver.addHandler("/ping", "sif", ping_cb, &data);
     sender.sendMessage("/ping", "sif", data.arg_0.c_str(), data.arg_1, data.arg_2, LO_ARGS_END);
     receiver.receive();

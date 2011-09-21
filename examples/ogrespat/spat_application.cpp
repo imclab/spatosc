@@ -50,7 +50,7 @@ SpatApplication::SpatApplication() :
 void SpatApplication::createAudioScene()
 {
     audioScene_.setSynchronous(false); // we will need to call flushMessages() once in a while
-    audioScene_.addTranslator("basic", new spatosc::BasicTranslator("127.0.0.1", spatosc::BasicTranslator::DEFAULT_SEND_PORT));
+    audioScene_.addTranslator("basic", "BasicTranslator");
     audioScene_.setOrientation(90.0, 0.0, 0.0);
     soundSourceOne_ = audioScene_.createSoundSource("source1");
     soundSourceTwo_ = audioScene_.createSoundSource("source2");

@@ -644,9 +644,9 @@ Translator *Scene::addTranslator(const std::string &name, const std::string &typ
     }
 
     if (type == "BasicTranslator")
-        return addTranslator(name, new BasicTranslator("localhost", BasicTranslator::DEFAULT_SEND_PORT));
+        return addTranslator(name, new BasicTranslator(std::string("osc.udp://localhost:")+BasicTranslator::DEFAULT_SEND_PORT));
     else if (type == "DmitriTranslator")
-        return addTranslator(name, new DmitriTranslator("localhost", DmitriTranslator::DEFAULT_SEND_PORT, DmitriTranslator::DEFAULT_RECEIVER_PORT));
+        return addTranslator(name, new DmitriTranslator(std::string("osc.udp://localhost:")+ DmitriTranslator::DEFAULT_SEND_PORT, DmitriTranslator::DEFAULT_RECEIVER_PORT));
     else if (type == "ConsoleTranslator")
         return addTranslator(name, new ConsoleTranslator());
     else if (type == "FudiTranslator")
@@ -658,7 +658,7 @@ Translator *Scene::addTranslator(const std::string &name, const std::string &typ
     }
 }
 
-Translator *Scene::addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &port)
+Translator *Scene::addTranslator(const std::string &name, const std::string &type, const std::string &addr)
 {
     if (hasTranslator(name))
     {
@@ -667,13 +667,19 @@ Translator *Scene::addTranslator(const std::string &name, const std::string &typ
     }
 
     if (type == "BasicTranslator")
-        return addTranslator(name, new BasicTranslator(addr, port));
+        return addTranslator(name, new BasicTranslator(addr));
     else if (type == "DmitriTranslator")
-        return addTranslator(name, new DmitriTranslator(addr, port, DmitriTranslator::DEFAULT_RECEIVER_PORT));
+        return addTranslator(name, new DmitriTranslator(addr, DmitriTranslator::DEFAULT_RECEIVER_PORT));
     else if (type == "ConsoleTranslator")
         return addTranslator(name, new ConsoleTranslator());
     else if (type == "FudiTranslator")
-        return addTranslator(name, new FudiTranslator(addr, port));
+    {
+        size_t colon = addr.find(":");
+        if (colon!=std::string::npos)
+            return addTranslator(name, new FudiTranslator(addr.substr(0,colon),addr.substr(colon+1)));
+        else
+            return addTranslator(name, new FudiTranslator(addr, FudiTranslator::DEFAULT_SEND_PORT));
+    }
     else
     {
         std::cerr << "No such translator: " << type << std::endl;
@@ -681,7 +687,7 @@ Translator *Scene::addTranslator(const std::string &name, const std::string &typ
     }
 }
 
-Translator *Scene::addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &toPort, const std::string &fromPort)
+Translator *Scene::addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &fromPort)
 {
     if (hasTranslator(name))
     {
@@ -689,20 +695,11 @@ Translator *Scene::addTranslator(const std::string &name, const std::string &typ
         return 0;
     }
 
-    if (type == "BasicTranslator")
-        return addTranslator(name, new BasicTranslator(addr, toPort));
-    else if (type == "DmitriTranslator")
-        return addTranslator(name, new DmitriTranslator(addr, toPort, fromPort));
-    else if (type == "ConsoleTranslator")
-        return addTranslator(name, new ConsoleTranslator());
-    else if (type == "FudiTranslator")
-        return addTranslator(name, new FudiTranslator(addr, toPort));
+    // only Dmitri Translator supports this for now:
+    if (type == "DmitriTranslator")
+        return addTranslator(name, new DmitriTranslator(addr, fromPort));
     else
-    {
-        std::cerr << "No such translator: " << type << std::endl;
-        return 0;
-    }
-
+        return addTranslator(name, type, addr);
 }
 
 } // end namespace spatosc

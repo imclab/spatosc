@@ -45,7 +45,7 @@ typedef struct _spatosc
 
 static void spatosc_print_usage()
 {
-    post("[spatosc] ERROR: Usage: [spatosc <s:translator> <f:port> <s:host>]");
+    post("[spatosc] ERROR: Usage: [spatosc <s:translator> <s:addr>], where addr is a URL-based OSC address.");
 }
 
 static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
@@ -54,60 +54,32 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
     t_spatosc *x = (t_spatosc *) pd_new(spatosc_class);
     x->wrapper = spatosc::Wrapper();
     
-    int port = 0;
-    t_symbol *host = gensym("NULL");
-    t_symbol *translator = gensym("NULL");
+    std::string translatorName = "BasicTranslator";
+    std::string addr = "osc.udp://localhost:18032";
+    
     // arg 0: TRANSLATOR
     if (argc >= 1) 
     {
         if (argv[0].a_type == A_SYMBOL)
-            translator = argv[0].a_w.w_symbol;
+            translatorName = std::string(argv[0].a_w.w_symbol->s_name);
         else
             spatosc_print_usage();
     }
-    // arg 1: PORT
-    if (argc >= 2)
+    // arg 1: ADDR
+    if (argc >= 2) 
     {
-        if (argv[1].a_type == A_FLOAT)
-            port = (int) argv[1].a_w.w_float;
+        if (argv[1].a_type == A_SYMBOL)
+            addr = std::string(argv[1].a_w.w_symbol->s_name);
         else
             spatosc_print_usage();
-    }
-    // arg 2: HOST
-    if (argc >= 3) 
-    {
-        if (argv[2].a_type == A_SYMBOL)
-            host = argv[2].a_w.w_symbol;
-        else
-            spatosc_print_usage();
-    }
-    std::string translatorName = "ConsoleTranslator";
-    std::string sendToAddress = "localhost";
-    std::string sendToPort = "0";
-    if (std::string("NULL") != translator->s_name)
-    {
-        translatorName = translator->s_name;
-        if (translatorName == "DmitriTranslator")
-            sendToPort = spatosc::DmitriTranslator::DEFAULT_SEND_PORT;
-        else if (translatorName == "BasicTranslator")
-            sendToPort = spatosc::BasicTranslator::DEFAULT_SEND_PORT;
-        else if (translatorName == "FudiTranslator")
-            sendToPort = spatosc::FudiTranslator::DEFAULT_SEND_PORT;
-    }
-    if (std::string("NULL") != host->s_name)
-        sendToAddress = host->s_name;
-    if (0 != port)
-    {
-        std::ostringstream os;
-        os << port;
-        sendToPort = os.str();
-    }
-    if (SPATOSC_DEBUG)
-    {
-        post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s\n", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
     }
     
-    bool success = x->wrapper.addTranslator("default", translatorName, sendToAddress, sendToPort);
+    if (SPATOSC_DEBUG)
+    {
+        post("[spatosc]: translatorName: %s, sending to: %s\n", translatorName.c_str(), addr.c_str());
+    }
+    
+    bool success = x->wrapper.addTranslator("default", translatorName, addr);
     x->wrapper.setTranslatorVerbose("default", SPATOSC_DEBUG);
    
 
@@ -144,7 +116,7 @@ static void spatosc_setOrientation(t_spatosc *x, t_symbol *node, t_floatarg pitc
 static void spatosc_setPosition(t_spatosc *x, t_symbol *node, t_floatarg xPos, t_floatarg yPos, t_floatarg zPos);
 static void spatosc_setPositionAED(t_spatosc *x, t_symbol *node, t_floatarg angle, t_floatarg elevation, t_floatarg distance);
 static void spatosc_setAutoConnect(t_spatosc *x, t_floatarg enabled);
-static void spatosc_addTranslator(t_spatosc *x, t_symbol *identifier, t_symbol *translator, t_symbol *host, t_floatarg port);
+static void spatosc_addTranslator(t_spatosc *x, t_symbol *identifier, t_symbol *translator, t_symbol *addr);
 static void spatosc_removeTranslator(t_spatosc *x, t_symbol *translator);
 static void spatosc_hasTranslator(t_spatosc *x, t_symbol *translator);
 static void spatosc_setNodeStringProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_symbol *value);
@@ -158,12 +130,13 @@ static void spatosc_setDopplerFactor(t_spatosc *x, t_symbol *src, t_symbol *sink
 static void spatosc_setSynchronous(t_spatosc *x, t_floatarg state);
 static void spatosc_flushMessagess(t_spatosc *x);
 
-
+static void spatosc_debug(t_spatosc *x) { x->wrapper.debugPrint(); }
 
 
 extern "C" void spatosc_setup(void)
 {
     spatosc_class = class_new(gensym("spatosc"), (t_newmethod) spatosc_new, (t_method) spatosc_free, sizeof(t_spatosc), CLASS_DEFAULT, A_GIMME, 0);
+	class_addmethod(spatosc_class, (t_method) spatosc_debug, gensym("debug"), A_NULL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_createSource, gensym("createSource"), A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_createListener, gensym("createListener"), A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_deleteNode, gensym("deleteNode"), A_SYMBOL, 0);
@@ -175,7 +148,7 @@ extern "C" void spatosc_setup(void)
 	class_addmethod(spatosc_class, (t_method) spatosc_setOrientation, gensym("setOrientation"), A_SYMBOL, A_FLOAT, A_FLOAT, A_FLOAT, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setPosition, gensym("setPosition"), A_SYMBOL, A_FLOAT, A_FLOAT, A_FLOAT, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setPosition, gensym("setPositionAED"), A_SYMBOL, A_FLOAT, A_FLOAT, A_FLOAT, 0);
-	class_addmethod(spatosc_class, (t_method) spatosc_addTranslator, gensym("addTranslator"), A_SYMBOL, A_SYMBOL, A_SYMBOL, A_FLOAT, 0);
+	class_addmethod(spatosc_class, (t_method) spatosc_addTranslator, gensym("addTranslator"), A_SYMBOL, A_SYMBOL, A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_removeTranslator, gensym("removeTranslator"), A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_hasTranslator, gensym("hasTranslator"), A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setNodeStringProperty, gensym("setNodeStringProperty"), A_SYMBOL, A_SYMBOL, A_SYMBOL, 0);
@@ -265,43 +238,18 @@ static void spatosc_setAutoConnect(t_spatosc *x, t_floatarg enabled)
     output_success(x, x->wrapper.setAutoConnect(enabled != 0.0f));
 }
 
-// TODO: invert port and host args?
-static void spatosc_addTranslator(t_spatosc *x, t_symbol *identifier, t_symbol *translator, t_symbol *host, t_floatarg port)
+static void spatosc_addTranslator(t_spatosc *x, t_symbol *identifier, t_symbol *translator, t_symbol *addr)
 {
-    std::string translatorName = "ConsoleTranslator";
-    std::string sendToAddress = "localhost";
-    std::string sendToPort = spatosc::BasicTranslator::DEFAULT_SEND_PORT;
-    if (std::string("NULL") != translator->s_name)
-    {
-        translatorName = translator->s_name;
-        if (translatorName == "DmitriTranslator")
-            sendToPort = spatosc::DmitriTranslator::DEFAULT_SEND_PORT;
-        if (translatorName == "FudiTranslator")
-            sendToPort = spatosc::FudiTranslator::DEFAULT_SEND_PORT;
-    }
-    if (host)
-    {
-        if (std::string("NULL") != host->s_name)
-        {
-            sendToAddress = host->s_name;
-        }
-    }
-    else
-        post("[spatosc]: Error: invalid host symbol");
-    if (0 != port)
-    {
-        std::ostringstream os;
-        os << port;
-        sendToPort = os.str();
-    }
-    if (SPATOSC_DEBUG)
-    {
-        printf("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
-        post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
-    }
     
-    output_success(x, x->wrapper.addTranslator(identifier->s_name, translatorName, sendToAddress, sendToPort));
+    bool success = x->wrapper.addTranslator(std::string(identifier->s_name), std::string(translator->s_name), std::string(addr->s_name));
     x->wrapper.setTranslatorVerbose(identifier->s_name, SPATOSC_DEBUG);
+
+    if (!success)
+        post("[spatosc]: Error adding translator (name=%s type=%s addr=%s)", identifier->s_name, translator->s_name, addr->s_name);
+    else if (SPATOSC_DEBUG)
+        post("[spatosc]: added translator (name=%s type=%s addr=%s)", identifier->s_name, translator->s_name, addr->s_name);
+
+    output_success(x, success);
 }
 
 static void spatosc_removeTranslator(t_spatosc *x, t_symbol *identifier)
