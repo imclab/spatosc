@@ -56,6 +56,7 @@ class OscSender
          */
         OscSender(const std::string &addr);
  
+        void debugPrint();
 
         std::string toString() const;
         //const char * host() { return host_.c_str(); }
@@ -82,6 +83,7 @@ class OscSender
         std::string fromPort_;
         lo_address address_;
         lo_server server_;
+        lo_server_thread serverThread_;
 };
 
 } // end of namespace spatosc

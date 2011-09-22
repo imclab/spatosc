@@ -40,7 +40,8 @@ BasicTranslator::BasicTranslator(const std::string &addr) :
 
 void BasicTranslator::debugPrint()
 {
-    std::cout << "  Basic Translator -- \t" << sender_->toString() << std::endl;
+    std::cout << "type: Basic Translator, " << sender_->toString() << std::endl;
+    sender_->debugPrint();
 }
 
 void BasicTranslator::sendPosition(const std::string &prefix, Node *node)

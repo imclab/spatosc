@@ -58,7 +58,7 @@ sender_(new OscSender(ip, toPort, DmitriTranslator::DEFAULT_RECEIVER_PORT))
 
 void DmitriTranslator::debugPrint()
 {
-    std::cout << "  D-Mitri Translator -- " << sender_->toString() << std::endl;
+    std::cout << "type: D-Mitri Translator, " << sender_->toString() << std::endl;
 }
 
 void DmitriTranslator::pushConnectionChanges(Connection *conn)

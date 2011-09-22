@@ -33,7 +33,7 @@ Translator::Translator() : verbose_(false)
 
 void Translator::debugPrint()
 {
-    std::cout << "  Console Translator -- simple print to console" << std::endl;
+    std::cout << "type: Console Translator, simple print to console" << std::endl;
 }
 
 void Translator::pushConnectionChanges(Connection *conn)

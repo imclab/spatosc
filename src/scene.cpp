@@ -124,7 +124,7 @@ void Scene::debugPrint ()
     std::cout << "[Translators]:: " << translators_.size() << " translators:" << std::endl;
     for (t = translators_.begin(); t != translators_.end(); ++t)
     {
-        std::cout << "  id=" << t->first << ": ";// << std::endl;
+        std::cout << "  id: " << t->first << ", ";// << std::endl;
         t->second->debugPrint();
     }
 
