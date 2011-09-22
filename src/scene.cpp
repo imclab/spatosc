@@ -124,7 +124,7 @@ void Scene::debugPrint ()
     std::cout << "[Translators]:: " << translators_.size() << " translators:" << std::endl;
     for (t = translators_.begin(); t != translators_.end(); ++t)
     {
-        std::cout << "  [Translator] id=" << t->first << ":" << std::endl;
+        std::cout << "  id=" << t->first << ": ";// << std::endl;
         t->second->debugPrint();
     }
 
@@ -449,8 +449,9 @@ void Scene::pushConnectionChangesViaAllTranslators(Connection *conn, bool forced
     {
         TranslatorIterator iter;
         for (iter = translators_.begin(); iter != translators_.end(); ++iter)
+        {
             iter->second->pushConnectionChanges(conn);
-
+        } 
         // !!! can't do this here, because node may be needed for other
         // connections.
         //src->stateSent();

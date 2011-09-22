@@ -10,6 +10,13 @@ August 2011 new stuff
  * [spatosc]::setSynchronous
  * use boost::signals2 and simplify the OSC middleware that's in the Scene
 
+Critical multi-translator bug:
+------------------------
+When multiple translators are used, the va_list gets eaten by liblo when sending with the first translator. The others will get an error: lo_message_add_varargs called with mismatching types and data. You can trace this by looking at createSoundSounce, which will result in Scene::onSceneChanged. A va_start macro is called and the va_list gets passed to Translator::pushSceneChange, then OscSender::SendMessage, then lo_send_message_from(), then finally, to lo_message_add_varargs_internal(), where the va_end is called.
+
+After that, the va_list is passed to more translators, but has corrupt data.
+
+
 Release-critical for 0.2
 ------------------------
  * Connection::handleMessage remove calls to assert()

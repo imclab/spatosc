@@ -28,7 +28,7 @@
 #include <osg/Timer>
 
 #include <spinFramework/spinApp.h>
-#include <spinFramework/sceneManager.h>
+#include <spinFramework/SceneManager.h>
 #include <spinFramework/spinClientContext.h>
 #include <spinFramework/ViewerManipulator.h>
 #include <spinFramework/spinUtil.h>
@@ -195,14 +195,14 @@ int main(int argc, char **argv)
 	    //spatosc::DmitriTranslator *dmitriTranslator = dynamic_cast<spatosc::DmitriTranslator>(audioScene_.addTranslator<spatosc::DmitriTranslator>("dmitri", dmitriIP.c_str(), spatosc::DmitriTranslator::DEFAULT_SEND_PORT));
         
         // POINTER METHOD:
-        spatosc::DmitriTranslator *dmitriTranslator = new spatosc::DmitriTranslator(dmitriIP.c_str());
+        spatosc::DmitriTranslator *dmitriTranslator = new spatosc::DmitriTranslator(std::string("osc.udp://")+dmitriIP+":"+spatosc::DmitriTranslator::DEFAULT_SEND_PORT);
         audioScene_.addTranslator("dmitri", dmitriTranslator);
         
         //dmitriTranslator->setEquatorRadius(1000.0);
     }
     
     // also send to spatdif translator for this example (for doppler component):
-    audioScene_.addTranslator("basic", new spatosc::BasicTranslator(basicTranslatorIP.c_str(), spatosc::BasicTranslator::DEFAULT_SEND_PORT));
+    audioScene_.addTranslator("basic", new spatosc::BasicTranslator(std::string("osc.udp://")+basicTranslatorIP+":"+spatosc::BasicTranslator::DEFAULT_SEND_PORT));
 
     
     //audioScene_.setOrientation(90.0, 0.0, 0.0);
