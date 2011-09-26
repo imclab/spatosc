@@ -330,6 +330,36 @@ bool Scene::setConnectFilter(std::string s)
 #endif
 }
 
+void Scene::setDefaultDistanceFactor(double newFactor, bool updateExisting)
+{
+    Connection::defaultDistanceFactor = newFactor;
+    if (updateExisting)
+    {
+        for (ConnIterator c = connections_.begin(); c != connections_.end(); ++c)
+            (*c)->setDistanceFactor(newFactor);
+    }
+}
+
+void Scene::setDefaultDopplerFactor(double newFactor, bool updateExisting)
+{
+    Connection::defaultDopplerFactor = newFactor;
+    if (updateExisting)
+    {
+        for (ConnIterator c = connections_.begin(); c != connections_.end(); ++c)
+            (*c)->setDopplerFactor(newFactor);
+    }
+}
+
+void Scene::setDefaultRolloffFactor(double newFactor, bool updateExisting)
+{
+    Connection::defaultRolloffFactor = newFactor;
+    if (updateExisting)
+    {
+        for (ConnIterator c = connections_.begin(); c != connections_.end(); ++c)
+            (*c)->setRolloffFactor(newFactor);
+    }
+}
+
 Connection* Scene::connect(SoundSource *src, Listener *snk)
 {
     using std::tr1::shared_ptr;

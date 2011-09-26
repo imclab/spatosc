@@ -280,6 +280,28 @@ class Scene
         bool setConnectFilter(std::string s);
 
         /**
+         * Sets the default distanceFactor used in connections between nodes.
+         * All new Connection instances will be created with this value; if you
+         * want to update existing connections, set the updateExisting flag to
+         * true.
+         */
+        void setDefaultDistanceFactor(double newFactor, bool updateExisting=false);
+        /**
+         * Sets the default dopplerFactor used in connections between nodes.
+         * All new Connection instances will be created with this value; if you
+         * want to update existing connections, set the updateExisting flag to
+         * true.
+         */
+        void setDefaultDopplerFactor(double newFactor, bool updateExisting=false);
+        /**
+         * Sets the default rolloffFactor used in connections between nodes.
+         * All new Connection instances will be created with this value; if you
+         * want to update existing connections, set the updateExisting flag to
+         * true.
+         */
+        void setDefaultRolloffFactor(double newFactor, bool updateExisting=false);
+
+        /**
          * Connects two nodes together.
          * @return A Connection pointer. Null if either of the two nodes are not found, or if they are already connected. Never free this pointer. It will become invalid if this connection is deleted.
          */

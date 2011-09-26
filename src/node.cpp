@@ -37,7 +37,8 @@ Node::Node(const std::string &nodeID, Scene &scene) :
     orientation_(),
     active_(true),
     nodeChanged_(true),
-    pos_()
+    pos_(),
+    radius_(0.0)
 {}
 
 Node::~Node()
@@ -57,6 +58,7 @@ void Node::debugPrint() const
     std::cout << "  " << id_ << ":" << std::endl;
     std::cout << "    pos:\t" << pos_.x << "," << pos_.y << "," << pos_.z << std::endl;
     std::cout << "    rot:\t" << orientation_.x << "," << orientation_.y << "," << orientation_.z << std::endl;
+    std::cout << "    radius:\t" << radius_ << std::endl;
     std::cout << "    active?\t" << active_ << std::endl;
 }
 
@@ -89,6 +91,15 @@ void Node::setPositionAED(double angle, double elevation, double distance)
 {
     Vector3 xyz = sphericalToCartesian(Vector3(angle, elevation, distance));
     setPosition(xyz.x, xyz.y, xyz.z);
+}
+
+void Node::setRadius(double r)
+{
+    if (r != radius_)
+    {
+        radius_ = r;
+        notifyScene();
+    }
 }
 
 void Node::setOrientation(double pitch, double roll, double yaw)

@@ -6,8 +6,12 @@ This release is a developer snapshot in the 0.3 unstable series.
 This version contains new features and bug fixes.
 
 New Features:
+    * All OSC addresses are now specified in URL format (eg, osc.udp://localhost:18032). This has been done to allow for the use of multicast and TCP.
+    * TCP sending has been successfully implemented and tested.
     * The old addTranslator methods have been improved, and the odd case for DmitriTranslator has been removed. Instead, there is are several overloaded helper functions in the Scene class (with wrapped method in Wrapper) to help add translators
     * The verbose flag has been removed as a constructor argument for translators, and is replaced with a setVerbose method.
+    * A new 'radius' parameter is now available for sound sources, which defines the perceptual size of a source. There are no connection effects within this radius (ie, gain/delay/etc will be unity), and perceptual effects are only computed up to the radius' bound.
+    * There are now global default values for distanceFactor, dopplerFactor, and rolloffFactor. These can be set for any future connections created in the scene, and a flag can be passed to update ALL current connections to use this new value.
 
 Bug fixes: 
     * connection parameters are forced to be computed and sent when the connection is first established

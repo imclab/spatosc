@@ -110,9 +110,27 @@ class DLLEXPORT Wrapper
          */
         bool setConnectFilter(const std::string &filterRegex);
         /**
-         * Sets a node's orientation.
+         * Sets the default distance factor for all future connections, and
+         * updates existing connections depending on passed flag
          * @return Success or not.
          */
+        bool setDefaultDistanceFactor(double factor, bool updateExisting);
+        /**
+         * Sets the default doppler factor for all future connections, and
+         * updates existing connections depending on passed flag
+         * @return Success or not.
+         */
+        bool setDefaultDopplerFactor(double factor, bool updateExisting);
+        /**
+         * Sets the default rolloff factor for all future connections, and
+         * updates existing connections depending on passed flag
+         * @return Success or not.
+         */
+        bool setDefaultRolloffFactor(double factor, bool updateExisting);
+        /**
+         * Sets a node's orientation.
+         * @return Success or not.
+         */ 
         bool setOrientation(const std::string &nodeName, double pitch, double roll, double yaw);
         /**
          * Sets a node's position.
@@ -124,6 +142,12 @@ class DLLEXPORT Wrapper
          * @return Success or not.
          */
         bool setPositionAED(const std::string &nodeName, double angle, double elevation, double distance);
+        /**
+         * Sets a node's radius (no connection effects / unity audio gain) will
+         * be applied within this radius.
+         * @return Success or not.
+         */
+        bool setRadius(const std::string &nodeName, double radius);
         /**
          * Adds a translator with default settings.
          * @param name Is an unique reference name so that the translator may be modified or removed in the future.

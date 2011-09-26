@@ -104,6 +104,26 @@ class Node
         void setPositionAED(double angle, double elevation, double distance);
 
         /**
+         * Set the node's radius.
+         *
+         * By default, the radius is zero (a true point source), but it may be
+         * desirable to spread the node in order to have a more gradual
+         * transition when the listener passes by. Technically, connection
+         * effects are nil when the listener is within the radius; eg, gain
+         * is unity.
+         */
+        void setRadius(double r);
+        
+        /**
+         * Returns this node's radius.
+         * @return The radius.
+         */
+        double getRadius() const
+        {
+            return radius_;
+        }
+
+        /**
          * Sets this node's orientation.
          *
          * The orientation of a Node means the direction in which it is facing.
@@ -234,6 +254,7 @@ class Node
         bool nodeChanged_;
     private:
         Vector3 pos_;
+        double radius_;
         // NOTE: onNodeChanged MUST call stateSent(), which unsets the changed
         // flag
         virtual void onNodeChanged(bool forcedNotify=false) = 0;

@@ -27,6 +27,10 @@
 namespace spatosc
 {
 
+double Connection::defaultDistanceFactor = 100.0;
+double Connection::defaultDopplerFactor = 100.0;
+double Connection::defaultRolloffFactor = 100.0;
+
 Connection::Connection(SoundSource *source, Listener *sink) :
     id_(source->getID() + "->" + sink->getID()),
     src_(source),
@@ -35,9 +39,9 @@ Connection::Connection(SoundSource *source, Listener *sink) :
     gain_(0.0),
     gainDB_(0.0),
     vdel_(0.0),
-    distanceFactor_(100.0),
-    rolloffFactor_(100.0),
-    dopplerFactor_(100.0)
+    distanceFactor_(Connection::defaultDistanceFactor),
+    rolloffFactor_(Connection::defaultDopplerFactor),
+    dopplerFactor_(Connection::defaultRolloffFactor)
 {
     // calculate and store distance, azimuth and elevation
     recomputeConnection();
@@ -75,14 +79,23 @@ void Connection::recomputeConnection()
 		std::cout << "QuatToEuler? = " << QuatToEuler(q)*TO_DEGREES << std::endl;
 		*/
 
-
-		// now from distance, compute gain and variable delay:
-		double distanceScalar = 1 / (1.0 + pow(distance(), static_cast<double>(distanceFactor_) * 0.01));
-		vdel_ = distance() * (1 / SPEED_OF_SOUND) * .01 * dopplerFactor_;
-		gainDB_ = 20 * log10(distanceScalar);
-
-	}
-
+        // the distance() function returns the true distance, but for the gain
+        // and vdel calculation, we want the distance to the radius:
+        double dist = distance() - src_->getRadius();
+        
+        if (dist>0)
+        {
+		    // now from distance, compute gain and variable delay:
+		    double distanceScalar = 1 / (1.0 + pow(dist, static_cast<double>(distanceFactor_) * 0.01));
+		    vdel_ = dist * (1 / SPEED_OF_SOUND) * .01 * dopplerFactor_;
+	    	gainDB_ = 20 * log10(distanceScalar);
+        }
+        else
+        {
+		    vdel_ = 0.0;
+	    	gainDB_ = 0.0;
+	    }
+    }
 
 	else
 	{

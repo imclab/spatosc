@@ -42,6 +42,10 @@ public:
     Connection(SoundSource *source, Listener *sink);
     ~Connection();
 
+    static double defaultDistanceFactor;
+    static double defaultDopplerFactor;
+    static double defaultRolloffFactor;
+
     /**
      * Update distance, azimuth and elevation values (usually called by Scene instance)
      */

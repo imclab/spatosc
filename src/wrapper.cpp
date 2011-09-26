@@ -97,6 +97,22 @@ bool Wrapper::setConnectFilter(const std::string &filterRegex)
     return scene_->setConnectFilter(filterRegex);
 }
 
+bool Wrapper::setDefaultDistanceFactor(double factor, bool updateExisting)
+{
+    scene_->setDefaultDistanceFactor(factor,updateExisting);
+    return true;
+}
+bool Wrapper::setDefaultDopplerFactor(double factor, bool updateExisting)
+{
+    scene_->setDefaultDopplerFactor(factor,updateExisting);
+    return true;
+}
+bool Wrapper::setDefaultRolloffFactor(double factor, bool updateExisting)
+{
+    scene_->setDefaultRolloffFactor(factor,updateExisting);
+    return true;
+}
+
 bool Wrapper::clearScene()
 {
     scene_->deleteAllNodes();
@@ -187,6 +203,22 @@ bool Wrapper::setPositionAED(const std::string &nodeName, double angle, double e
         return true;
     }
 }
+
+bool Wrapper::setRadius(const std::string &nodeName, double radius)
+{
+    Node *node = scene_->getNode(nodeName);
+    if (! node)
+    {
+        std::cerr << __FUNCTION__ << ": No such node: " << nodeName << std::endl;
+        return false;
+    }
+    else
+    {
+        node->setRadius(radius);
+        return true;
+    }
+}
+
 
 void Wrapper::setTranslation(double tx, double ty, double tz)
 {
