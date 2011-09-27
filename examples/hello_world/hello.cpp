@@ -40,6 +40,14 @@ int main(int argc, char ** /*argv*/)
     // set verbosity of info messages:
     scene.setVerbose(VERBOSE);
 
+    // In order to send OSC, some output plugin must be specified. In this case,
+    // we choose the BasicTranslator, which can be rendered, for example, by
+    // the pd-vbap example.
+    if (argc > 1)
+        scene.addTranslator("fudi", new FudiTranslator("localhost", "31337"));
+    else
+        scene.addTranslator("basic", new BasicTranslator("osc.udp://127.0.0.1:18032"));
+
     // Each scene needs to have at least one Listener:
     scene.createListener("listener");
 
@@ -47,13 +55,11 @@ int main(int argc, char ** /*argv*/)
     SoundSource *foo = scene.createSoundSource("foo");
     SoundSource *bar = scene.createSoundSource("bar");
 
-    // In order to send OSC, some output plugin must be specified. In this case,
-    // we choose the BasicTranslator, which can be rendered, for example, by
-    // the pd-vbap example
-    if (argc > 1)
-        scene.addTranslator("fudi", new FudiTranslator("localhost", "31337"));
-    else
-        scene.addTranslator("basic", new BasicTranslator("osc.udp://127.0.0.1:18032"));
+    // Specifying sounds for the nodes is not fully supported yet (ie, supports
+    // only live inputs). However, the BasicRenderer that comes with Pdsheefa
+    // recognizes the following message:
+    foo->setStringProperty("setMediaURI", "plugin://plugins/testnoise~");
+    bar->setStringProperty("setMediaURI", "plugin://plugins/testone~");
 
     // The Scene class can print out everything to the console:
     if (VERBOSE)
