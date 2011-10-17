@@ -1,15 +1,12 @@
-2011-??-?? spatosc 0.2.4
+2011-10-17 spatosc 0.2.4
 ------------------------
 
 This release is an official version in the 0.2 stable series. 
 
-This version contains new features and bug fixes.
+This version contains a new feature.
 
-New Features:
-    * (none)
-
-Bug fixes: 
-    * (none)
+New Feature:
+    * add setPositionAED in wrapper and example Pd external
 
 
 2011-08-12 spatosc 0.2.2
