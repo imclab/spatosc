@@ -28,7 +28,7 @@
 #include <sstream>
 #include <string>
 
-#define UNUSED(x) ((void) (x))
+// #define UNUSED(x) ((void) (x))
 
 //static const bool SPATOSC_DEBUG = true;
 static const bool SPATOSC_DEBUG = false;
