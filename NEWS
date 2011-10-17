@@ -1,4 +1,7 @@
-2011-0?-?? spatosc 0.3.2
+Spatosc release NEWS
+====================
+
+2011-10-17 spatosc 0.3.0
 ------------------------
 
 This release is a developer snapshot in the 0.3 unstable series. 
@@ -6,15 +9,19 @@ This release is a developer snapshot in the 0.3 unstable series.
 This version contains new features and bug fixes.
 
 New Features:
-    * All OSC addresses are now specified in URL format (eg, osc.udp://localhost:18032). This has been done to allow for the use of multicast and TCP.
-    * TCP sending has been successfully implemented and tested.
-    * The old addTranslator methods have been improved, and the odd case for DmitriTranslator has been removed. Instead, there is are several overloaded helper functions in the Scene class (with wrapped method in Wrapper) to help add translators
-    * The verbose flag has been removed as a constructor argument for translators, and is replaced with a setVerbose method.
-    * A new 'radius' parameter is now available for sound sources, which defines the perceptual size of a source. There are no connection effects within this radius (ie, gain/delay/etc will be unity), and perceptual effects are only computed up to the radius' bound.
-    * There are now global default values for distanceFactor, dopplerFactor, and rolloffFactor. These can be set for any future connections created in the scene, and a flag can be passed to update ALL current connections to use this new value.
+
+* All OSC addresses are now specified in URL format (eg, osc.udp://localhost:18032). This has been done to allow for the use of multicast and TCP.
+* TCP sending has been successfully implemented and tested.
+* The old addTranslator methods have been improved, and the odd case for DmitriTranslator has been removed. Instead, there is are several overloaded helper functions in the Scene class (with wrapped method in Wrapper) to help add translators
+* The verbose flag has been removed as a constructor argument for translators, and is replaced with a setVerbose method.
+* A new 'radius' parameter is now available for sound sources, which defines the perceptual size of a source. There are no connection effects within this radius (ie, gain/delay/etc will be unity), and perceptual effects are only computed up to the radius' bound.
+* There are now global default values for distanceFactor, dopplerFactor, and rolloffFactor. These can be set for any future connections created in the scene, and a flag can be passed to update ALL current connections to use this new value.
+* add Wrapper::setPositionAED and use it in pd external
+* remove SoundSource::setMediaURI
 
 Bug fixes: 
-    * connection parameters are forced to be computed and sent when the connection is first established
+
+* connection parameters are forced to be computed and sent when the connection is first established
 
 
 2011-08-12 spatosc 0.2.2
@@ -25,11 +32,13 @@ This release is an official version in the 0.2 stable series.
 This version contains new features and bug fixes.
 
 New Features:
-    * Added setSynchronous and flushMessages to the wrapper
-    * Added hello_world example using wrapper, which works with dmitri, basic renderer, and FUDI.
+
+* Added setSynchronous and flushMessages to the wrapper
+* Added hello_world example using wrapper, which works with dmitri, basic renderer, and FUDI.
 
 Bug fixes: 
-    * Added Wrapper::addDmitriTranslator with outgoing OSC port number
+
+* Added Wrapper::addDmitriTranslator with outgoing OSC port number
 
 
 2011-05-24 spatosc 0.2.0
@@ -41,18 +50,20 @@ It's the first release release in the 0.2 stable series. Each release in the 0.2
 This version contains new features and bug fixes.
 
 New Features:
-    * Export the wrapper as DLL for Windows (Visual Studio)
-    * Added Wrapper::addDmitriTranslator
+
+* Export the wrapper as DLL for Windows (Visual Studio)
+* Added Wrapper::addDmitriTranslator
 
 Bug fixes: 
-    * updated examples for spatosc-0.2
-    * fixed examples to use the BasicTranslator
-    * updates of osx package stuff in HACKING
-    * Makefiles should not be executable
-    * fix to SO_VERSION
-    * Fixed a memleak in Scene::addTranslator with a *Translator as argument.
-    * Removed Wrapper::addTranslator with a *Translator as argument.
-    * Added the "using-the-wrapper" example.
+
+* updated examples for spatosc-0.2
+* fixed examples to use the BasicTranslator
+* updates of osx package stuff in HACKING
+* Makefiles should not be executable
+* fix to SO_VERSION
+* Fixed a memleak in Scene::addTranslator with a *Translator as argument.
+* Removed Wrapper::addTranslator with a *Translator as argument.
+* Added the "using-the-wrapper" example.
 
 
 2011-05-12 spatosc 0.1.12
@@ -64,14 +75,16 @@ It's the third release candidate for preparing the 0.2 stable series. The API ve
 This version contains new features and bug fixes.
 
 New Features:
-    * DmitriTranslator now has properties enableGain and enableDelay to specify whether these should be sent via OSC
-    * DmitriTranslator Bus number should be set using setIntProperty "bus" <bus #>
-    * scened::addTranslator now also accepts a pointer (instead of the previously required template method>
-    * New PackageMaker document to make .pkg files for OSX
-    * Renamed SpatdifTranslator to BasicTranslator
+
+* DmitriTranslator now has properties enableGain and enableDelay to specify whether these should be sent via OSC
+* DmitriTranslator Bus number should be set using setIntProperty "bus" <bus #>
+* scened::addTranslator now also accepts a pointer (instead of the previously required template method>
+* New PackageMaker document to make .pkg files for OSX
+* Renamed SpatdifTranslator to BasicTranslator
 
 Bug fixes: 
-    * pd-external: Fixed setNodeIntProperty which was actually setting a float property
+
+* pd-external: Fixed setNodeIntProperty which was actually setting a float property
 
 
 2011-05-03 spatosc 0.1.10
@@ -83,12 +96,14 @@ It's the second release candidate for preparing the 0.2 stable series.
 This version contains new features and bug fixes.
 
 New Features:
-    * Int and Float properties for any node
-    * Added sending of scene messages via OSC (eg, createSoundSource, deleteNode, connect, etc.). This will allow dynamic renderers to perform actions when the scene changes.
+
+* Int and Float properties for any node
+* Added sending of scene messages via OSC (eg, createSoundSource, deleteNode, connect, etc.). This will allow dynamic renderers to perform actions when the scene changes.
 
 Bug fixes: 
-    * Important fix that properly updates all nodes sharing a connection (previously only the first connected node was updated)
-    * Allowed translator constructors to use default port arguments, so user doesn't need to provide them
+
+* Important fix that properly updates all nodes sharing a connection (previously only the first connected node was updated)
+* Allowed translator constructors to use default port arguments, so user doesn't need to provide them
 
 
 2011-04-07 spatosc 0.1.8
@@ -100,10 +115,11 @@ It's the first release candidate for preparing the 0.2 stable series.
 This version contains bug fixes.
 
 Bug fixes: 
-    * On Windows, fixed path to include/config.h in build/premake4.lua
-    * On Mac OS X, using the new libtool
-    * Do not generate man pages
-    * Fixed spinspat example
+
+* On Windows, fixed path to include/config.h in build/premake4.lua
+* On Mac OS X, using the new libtool
+* Do not generate man pages
+* Fixed spinspat example
 
 
 2011-04-05 spatosc 0.1.6
@@ -114,10 +130,12 @@ This release is a developer snapshot in the 0.1 unstable series.
 This version contains new features and bug fixes.
 
 New features:
-    * Updated project URL and README
+
+* Updated project URL and README
 
 Bug fixes: 
-    * Do not include tr1/memory directly
+
+* Do not include tr1/memory directly
 
 
 2011-03-07 spatosc 0.1.4
@@ -128,23 +146,25 @@ This release is a developer snapshot in the 0.1 unstable series.
 This version contains new features and bug fixes.
 
 New features:
-    * Added node string properties
-    * added setter methods for distanceFactor, dopplerFactor, etc
-    * updates to dmitri translator, including documentation and ability to change spacemap radius
-    * Support multiple translators
-    * Add the FudiTranslator, which sends messages to Pure Data's [netreceive]
+
+* Added node string properties
+* added setter methods for distanceFactor, dopplerFactor, etc
+* updates to dmitri translator, including documentation and ability to change spacemap radius
+* Support multiple translators
+* Add the FudiTranslator, which sends messages to Pure Data's [netreceive]
 
 Bug fixes: 
-    * pkg-config: added liblo to Requires.private
-    * check for ifdef WIN32 in fudi_sender.cpp
-    * validate that OSC args match desired types
-    * fixes for WIN32 build, and some updates to spinspat example
-    * changed distance gain attenuation to control Bus level, instead of Input level
-    * README: added note about building from git
-    * changed a couple 'and' and 'not' into && and ! for compatibility with windows
-    * configure: drop pedantic flag
-    * Added Node::setActive
-    * Removed -j make option in one_step_build.sh
+
+* pkg-config: added liblo to Requires.private
+* check for ifdef WIN32 in fudi_sender.cpp
+* validate that OSC args match desired types
+* fixes for WIN32 build, and some updates to spinspat example
+* changed distance gain attenuation to control Bus level, instead of Input level
+* README: added note about building from git
+* changed a couple 'and' and 'not' into && and ! for compatibility with windows
+* configure: drop pedantic flag
+* Added Node::setActive
+* Removed -j make option in one_step_build.sh
 
 
 2011-02-18 spatosc 0.1.2
@@ -155,8 +175,9 @@ This release is a developer snapshot in the 0.1 unstable series.
 This version contains bug fixes.
 
 Bug fixes: 
-    * removed premake4.exe binary with no source from the repository.
-    * Improved libtool versioning
+
+* removed premake4.exe binary with no source from the repository.
+* Improved libtool versioning
 
 
 2011-02-15 spatosc 0.1.0
