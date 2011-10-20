@@ -283,36 +283,6 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
         if (true) {
             [self updateCoords: mouseLoc];
         }
-        printf("mouseLoc.x: %f, mouseLoc.y: %f\n",
-               mouseLoc.x,mouseLoc.y);
-        printf("mCenter.x: %f, mCenter.y: %f\n", 
-               mCentre.x,mCentre.y);
-        printf("mSourcePoint.x: %f, mSourcePoint.y: %f\n", 
-               mSourcePoint.x,mSourcePoint.y);
-        NSPoint sourceScreenToDome = [self screenToDome:mouseLoc];
-        printf("sourceScreenToDome.x: %f, sourceScreenToDome.y: %f\n", 
-               sourceScreenToDome.x,sourceScreenToDome.y);
-        
-        /*
-        float xCorr = 0.0;
-        if (sourceScreenToDome.x > 1.0) {
-            xCorr = 1.0;
-        } else if (sourceScreenToDome.x < -1.0) {
-            xCorr = -1.0;
-        } else {
-            xCorr = sourceScreenToDome.x;
-        }
-        
-        float yCorr = 0.0;
-        if (sourceScreenToDome.y > 1.0) {
-            yCorr = 1.0;
-        } else if (sourceScreenToDome.y < -1.0) {
-            yCorr = -1.0;
-        } else {
-            yCorr = sourceScreenToDome.y;
-        }
-        NSPoint pointCorr = NSMakePoint(xCorr,yCorr);
-         */
     }
         
 	[self setNeedsDisplay:YES];	// update the display of the crosshairs
@@ -409,12 +379,9 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
 // dome view.
 -(void)updateCoords:(NSPoint)pos
 {
-    PolarAngles angles = [self pointToPolar:[self screenToDome:pos]];
     NSPoint point = [self screenToDome:pos];
     
     float root = kPolarRadius*kPolarRadius - point.x*point.x - point.y*point.y;
-    //float dist = sqrt(rPos.x*rPos.x + rPos.y*rPos.y);
-    //NSRect rect = {{mCentre.x-(mRadius*dist*2)/2, mCentre.y-(mRadius*dist*2)/2},{mRadius*dist*2,mRadius*dist*2}};
     
     [self setSourcePoint:point];
     if (root < 0.0f) {

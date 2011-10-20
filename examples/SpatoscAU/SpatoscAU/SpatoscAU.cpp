@@ -60,7 +60,7 @@ SpatoscAU::SpatoscAU(AudioUnit component)
 	CreateElements();
 	Globals()->UseIndexedParameters(kNumberOfParameters);
 	//SetParameter(kParam_One, kDefaultValue_ParamOne );
-    SetParameter(kSpatosc_Gain, kSpatosc_Gain_Def );
+    //SetParameter(kSpatosc_Gain, kSpatosc_Gain_Def );
 	SetParameter(kSpatosc_Azim, kSpatosc_Azim_Def );
 	SetParameter(kSpatosc_Elev, kSpatosc_Elev_Def );
 	SetParameter(kSpatosc_Dist, kSpatosc_Dist_Def );
@@ -106,6 +106,7 @@ OSStatus			SpatoscAU::GetParameterInfo(AudioUnitScope		inScope,
     if (inScope == kAudioUnitScope_Global) {
         switch(inParameterID)
         {
+            /*    
             case kSpatosc_Gain:
                 AUBase::FillInParameterName (outParameterInfo, kSpatosc_Gain_Name, false);
                 outParameterInfo.unit = kAudioUnitParameterUnit_LinearGain;
@@ -113,6 +114,7 @@ OSStatus			SpatoscAU::GetParameterInfo(AudioUnitScope		inScope,
                 outParameterInfo.maxValue = kSpatosc_Gain_Max;
                 outParameterInfo.defaultValue = kSpatosc_Gain_Def;
                 break;
+             */
             case kSpatosc_Azim:
                 AUBase::FillInParameterName (outParameterInfo, kSpatosc_Azim_Name, false);
                 outParameterInfo.unit = kAudioUnitParameterUnit_Degrees;
@@ -256,7 +258,7 @@ void		SpatoscAU::SpatoscAUKernel::Process(	const Float32 	*inSourceP,
 	UInt32 nSampleFrames = inFramesToProcess;
 	const Float32 *sourceP = inSourceP;
 	Float32 *destP = inDestP;
-    Float32 gain = GetParameter( kSpatosc_Gain );
+    //Float32 gain = GetParameter( kSpatosc_Gain );
 	
 	while (nSampleFrames-- > 0) {
 		Float32 inputSample = *sourceP;
@@ -268,7 +270,7 @@ void		SpatoscAU::SpatoscAUKernel::Process(	const Float32 	*inSourceP,
 									// we're only processing one of an arbitrary number of interleaved channels
 
         // here's where you do your DSP work
-        Float32 outputSample = inputSample * gain;
+        Float32 outputSample = inputSample;
 		
 		*destP = outputSample;
 		destP += inNumChannels;

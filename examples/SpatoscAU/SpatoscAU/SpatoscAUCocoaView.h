@@ -87,15 +87,16 @@ extern NSString *kDomeViewEndGestureNotification;
     // IB Members
 	IBOutlet DomeView *domeView;
     
-    IBOutlet NSTextField           *gainField;
-    IBOutlet SpatoscAU_GestureSlider *gainSlider;	
+    IBOutlet NSTextField           *distField;
+    IBOutlet SpatoscAU_GestureSlider *distSlider;	
     IBOutlet NSTextField           *azimField;
     IBOutlet SpatoscAU_GestureSlider *azimSlider;
     IBOutlet NSTextField           *elevField;
     IBOutlet SpatoscAU_GestureSlider *elevSlider;
+    /*
     IBOutlet NSTextField           *distField;
     IBOutlet SpatoscAU_GestureSlider *distSlider;
-	
+	*/
 	
     // Other Members
     AudioUnit 				mAU;
@@ -109,7 +110,7 @@ extern NSString *kDomeViewEndGestureNotification;
 - (AudioUnit)getAU;
 
 #pragma mark ____ INTERFACE ACTIONS ____
-- (IBAction) gainChanged:(id)sender;
+//- (IBAction) gainChanged:(id)sender;
 - (IBAction) azimChanged:(id)sender;
 - (IBAction) elevChanged:(id)sender;
 - (IBAction) distChanged:(id)sender;

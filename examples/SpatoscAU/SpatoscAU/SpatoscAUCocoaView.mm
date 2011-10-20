@@ -157,26 +157,27 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
      */
     
     // Manual controls:
-	
+	/*
    	mParameter[0].mAudioUnit = inAU;
 	mParameter[0].mParameterID = kSpatosc_Gain;
 	mParameter[0].mScope = kAudioUnitScope_Global;
 	mParameter[0].mElement = 0;
-	
+	*/
+     
+	mParameter[0].mAudioUnit = inAU;
+	mParameter[0].mParameterID = kSpatosc_Azim;
+	mParameter[0].mScope = kAudioUnitScope_Global;
+	mParameter[0].mElement = 0;	
+    
 	mParameter[1].mAudioUnit = inAU;
-	mParameter[1].mParameterID = kSpatosc_Azim;
+	mParameter[1].mParameterID = kSpatosc_Elev;
 	mParameter[1].mScope = kAudioUnitScope_Global;
 	mParameter[1].mElement = 0;	
     
 	mParameter[2].mAudioUnit = inAU;
-	mParameter[2].mParameterID = kSpatosc_Elev;
+	mParameter[2].mParameterID = kSpatosc_Dist;
 	mParameter[2].mScope = kAudioUnitScope_Global;
 	mParameter[2].mElement = 0;	
-    
-	mParameter[3].mAudioUnit = inAU;
-	mParameter[3].mParameterID = kSpatosc_Dist;
-	mParameter[3].mScope = kAudioUnitScope_Global;
-	mParameter[3].mElement = 0;	
 	
 	//txAddr = lo_address_new("localhost", "7777");
     //spatScene = new spatosc::Scene();
@@ -198,7 +199,7 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 }
 
 #pragma mark - Interface Actions
-
+/*
 - (IBAction)gainChanged:(id)sender {
     float floatValue = [sender floatValue];
     
@@ -210,10 +211,10 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
     }
     
 }
+ */
 
 - (IBAction)azimChanged:(id)sender {
     float floatValue = [sender floatValue];
-	
 	NSAssert(AUParameterSet(mParameterListener, sender, &mParameter[1], (Float32)floatValue, 0) == noErr, @"[spatosc_CocoaView azimChanged:] AUParameterSet()");
     if (sender == azimSlider) {
         [azimField setFloatValue:floatValue];
@@ -303,6 +304,7 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 
 // This routine is called when the user has clicked on the slider. We need to send a begin parameter change gesture to alert hosts that the parameter may be changing value
 -(void) handleMouseDown: (NSNotification *) aNotification {
+    /*
 	if ([aNotification object] == gainSlider) {
 		AudioUnitEvent event;
 		event.mArgument.mParameter = mParameter[0];
@@ -311,8 +313,9 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 		AUEventListenerNotify (NULL, self, &event);		// NOTE, if you have an AUEventListenerRef because you are listening to event notification, 
         // pass that as the first argument to AUEventListenerNotify instead of NULL 
 	}
+     */
 	
-	else if ([aNotification object] == azimSlider) {
+	if ([aNotification object] == azimSlider) {
 		AudioUnitEvent event;
 		event.mArgument.mParameter = mParameter[1];
 		event.mEventType = kAudioUnitEvent_BeginParameterChangeGesture;
@@ -341,6 +344,7 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 }
 
 -(void) handleMouseUp: (NSNotification *) aNotification {
+    /*
 	if ([aNotification object] == gainSlider) {
 		AudioUnitEvent event;
 		event.mArgument.mParameter = mParameter[0];
@@ -349,9 +353,10 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 		AUEventListenerNotify (NULL, self, &event);		// NOTE, if you have an AUEventListenerRef because you are listening to event notification, 
         // pass that as the first argument to AUEventListenerNotify instead of NULL 
 	}
-	else if ([aNotification object] == azimSlider) {
+     */
+	if ([aNotification object] == azimSlider) {
 		AudioUnitEvent event;
-		event.mArgument.mParameter = mParameter[1];
+		event.mArgument.mParameter = mParameter[0];
 		event.mEventType = kAudioUnitEvent_EndParameterChangeGesture;
 		
 		AUEventListenerNotify (NULL, self, &event);		// NOTE, if you have an AUEventListenerRef because you are listening to event notification, 
@@ -359,7 +364,7 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 	}
 	else if ([aNotification object] == elevSlider) {
 		AudioUnitEvent event;
-		event.mArgument.mParameter = mParameter[2];
+		event.mArgument.mParameter = mParameter[1];
 		event.mEventType = kAudioUnitEvent_EndParameterChangeGesture;
 		
 		AUEventListenerNotify (NULL, self, &event);		// NOTE, if you have an AUEventListenerRef because you are listening to event notification, 
@@ -367,7 +372,7 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 	}
 	else if ([aNotification object] == distSlider) {
 		AudioUnitEvent event;
-		event.mArgument.mParameter = mParameter[3];
+		event.mArgument.mParameter = mParameter[2];
 		event.mEventType = kAudioUnitEvent_EndParameterChangeGesture;
 		
 		AUEventListenerNotify (NULL, self, &event);		// NOTE, if you have an AUEventListenerRef because you are listening to event notification, 
@@ -436,10 +441,10 @@ void addParamListener (AUEventListenerRef listener, void* refCon, AudioUnitEvent
 										&mEventListener));
 	
 	AudioUnitEvent auEvent;
-	AudioUnitParameter parameter = {mAU, kSpatosc_Gain, kAudioUnitScope_Global, 0 };
+	AudioUnitParameter parameter = {mAU, kSpatosc_Azim, kAudioUnitScope_Global, 0 };
 	auEvent.mArgument.mParameter = parameter;
 	
-	addParamListener (mEventListener, self, &auEvent);
+	//addParamListener (mEventListener, self, &auEvent);
     
 	auEvent.mArgument.mParameter.mParameterID = kSpatosc_Azim;
 	addParamListener (mEventListener, self, &auEvent);
@@ -491,10 +496,12 @@ void addParamListener (AUEventListenerRef listener, void* refCon, AudioUnitEvent
 - (void)_parameterListener:(void *)inObject parameter:(const AudioUnitParameter *)inParameter value:(Float32)inValue
 {
 	switch (inParameter->mParameterID) {
+            /*
 		case kSpatosc_Gain:
 			//[gainSlider setFloatValue:inValue];
 			//[gainField setStringValue:[[NSNumber numberWithFloat:inValue] stringValue]];
 			break;
+             */
 		case kSpatosc_Azim:
 			[azimSlider setFloatValue:inValue];
 			[azimField setStringValue:[[NSNumber numberWithFloat:inValue] stringValue]];
@@ -531,29 +538,32 @@ void addParamListener (AUEventListenerRef listener, void* refCon, AudioUnitEvent
             AudioUnitGetParameter([self getAU], kSpatosc_Dist, kAudioUnitScope_Global, 0, &dist);
 			switch (inEvent->mArgument.mParameter.mParameterID) {
  
+                    /*
                 case kSpatosc_Gain:
-                    //[gainSlider setFloatValue: inValue];
-                    //[gainField setFloatValue: inValue];
-                    break;
-                case kSpatosc_Azim:
-                    //[azimSlider setFloatValue: inValue];
-                    //[azimField  setFloatValue: inValue];
-                    //[domeView setAzimuth: inValue];
-                    
+                    [gainSlider setFloatValue: inValue];
                     [gainField setFloatValue: inValue];
+                    break;
+                     */
+                case kSpatosc_Azim:
+                    [azimSlider setFloatValue: inValue];
+                    [azimField  setFloatValue: inValue];
+                    [domeView setAzimuth: inValue];
+                    
+                    //[gainField setFloatValue: inValue];
                     source->setPositionAED(inValue/180.0*M_PI, elev/180.0*M_PI, dist);
                     break;
                 case kSpatosc_Elev:
-                    //[elevSlider setFloatValue: inValue];
-                    //[elevField setFloatValue: inValue];
-                    //[domeView setZenith: inValue];
+                    [elevSlider setFloatValue: inValue];
+                    [elevField setFloatValue: inValue];
+                    [domeView setZenith: inValue];
                     
-                    [gainField setFloatValue: inValue];
+                    //[gainField setFloatValue: inValue];
                     source->setPositionAED(azim/180.0*M_PI, inValue/180.0*M_PI, dist);
                     break;
                 case kSpatosc_Dist:
-                    //[distSlider setFloatValue: inValue];
-                    //[distField setFloatValue: inValue];
+                    [distSlider setFloatValue: inValue];
+                    [distField setFloatValue: inValue];
+                    
                     source->setPositionAED(azim/180.0*M_PI, elev/180.0*M_PI, inValue);
                     break;
             }

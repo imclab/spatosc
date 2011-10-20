@@ -69,21 +69,22 @@ typedef struct PolarAngles
 // parameters
 enum {
 	//Add your parameters here...
-	kSpatosc_Gain = 0,
-	kSpatosc_Azim = 1,
-	kSpatosc_Elev = 2,
-	kSpatosc_Dist = 3,
-	kNumberOfParameters=4
-    //kSpatosc_AzimSpan = 4,
-    //kSpatosc_ElevSpan = 5,
-    //kNumberOfParameters = 6
+	//kSpatosc_Gain = 0,
+	kSpatosc_Azim = 0,
+	kSpatosc_Elev = 1,
+	kSpatosc_Dist = 2,
+    //kSpatosc_AzimSpan = 3,
+    //kSpatosc_ElevSpan = 4,
+    kNumberOfParameters = 3
 };
 
+/*
 const CFStringRef kSpatosc_Gain_Name = CFSTR("Gain");
 const float kSpatosc_Gain_Min = 0.0f;
 const float kSpatosc_Gain_Max = 1.0f;
 const float kSpatosc_Gain_Def = 0.75f;
-
+*/
+ 
 const CFStringRef kSpatosc_Azim_Name = CFSTR("Azimuth");
 const float kSpatosc_Azim_Min = -180.0f;
 const float kSpatosc_Azim_Max = 180.0f;
