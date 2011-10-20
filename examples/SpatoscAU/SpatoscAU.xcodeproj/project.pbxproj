@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		191C9E4514338BCE00698D10 /* spatosc.h in Headers */ = {isa = PBXBuildFile; fileRef = 191C9E4414338BCE00698D10 /* spatosc.h */; };
-		191C9E4914338ED300698D10 /* lo.h in Headers */ = {isa = PBXBuildFile; fileRef = 191C9E4814338ED300698D10 /* lo.h */; };
-		191C9E4B143398E100698D10 /* liblo.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 191C9E4A143398E100698D10 /* liblo.7.dylib */; };
-		191C9E4D143398ED00698D10 /* libspatosc-0.3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 191C9E4C143398ED00698D10 /* libspatosc-0.3.0.dylib */; };
 		199DFA391429317A00710F3B /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199DFA381429317A00710F3B /* CoreServices.framework */; };
 		199DFA3B1429317A00710F3B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199DFA3A1429317A00710F3B /* AudioToolbox.framework */; };
 		199DFA3D1429317A00710F3B /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199DFA3C1429317A00710F3B /* AudioUnit.framework */; };
@@ -68,11 +64,11 @@
 		199DFABD1429321300710F3B /* SpatoscAU.component in CopyFiles */ = {isa = PBXBuildFile; fileRef = 199DFA351429317A00710F3B /* SpatoscAU.component */; };
 		19AC619414352002004897DD /* DomeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 19AC619214352002004897DD /* DomeView.h */; };
 		19AC619514352002004897DD /* DomeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 19AC619314352002004897DD /* DomeView.mm */; };
-		19C4F8C61439451100DAB7C8 /* libspatosc-0.3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C4F8C51439451100DAB7C8 /* libspatosc-0.3.0.dylib */; };
 		19E212A4143649E800E928F1 /* DomeView.h in Headers */ = {isa = PBXBuildFile; fileRef = 19AC619214352002004897DD /* DomeView.h */; };
 		19E212A5143649F200E928F1 /* AUBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 199DFA7B1429317A00710F3B /* AUBase.h */; };
 		19E212A6143660B300E928F1 /* DomeView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 19AC619314352002004897DD /* DomeView.mm */; };
-		19E212A81436611900E928F1 /* liblo.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 19E212A71436611900E928F1 /* liblo.7.dylib */; };
+		1C477205145086F7006518AA /* libspatosc-0.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C477204145086F7006518AA /* libspatosc-0.3.dylib */; };
+		1C47720614508735006518AA /* libspatosc-0.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C477204145086F7006518AA /* libspatosc-0.3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,7 +85,7 @@
 		199DFABC142931B800710F3B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "/Users/adminuser/Library/Audio/Plug-Ins/Components";
+			dstPath = "$(HOME)/Library/Audio/Plug-Ins/Components";
 			dstSubfolderSpec = 0;
 			files = (
 				199DFABD1429321300710F3B /* SpatoscAU.component in CopyFiles */,
@@ -99,12 +95,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		191C9E41143384D800698D10 /* libspatosc-0.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libspatosc-0.3.dylib"; path = "usr/local/lib/libspatosc-0.3.dylib"; sourceTree = SDKROOT; };
-		191C9E4414338BCE00698D10 /* spatosc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = spatosc.h; path = "/usr/local/include/spatosc-0.3/spatosc/spatosc.h"; sourceTree = "<absolute>"; };
-		191C9E4614338EAF00698D10 /* liblo.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblo.dylib; path = usr/local/lib/liblo.dylib; sourceTree = SDKROOT; };
-		191C9E4814338ED300698D10 /* lo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = lo.h; path = /usr/local/include/lo/lo.h; sourceTree = "<absolute>"; };
-		191C9E4A143398E100698D10 /* liblo.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblo.7.dylib; path = usr/local/lib/liblo.7.dylib; sourceTree = SDKROOT; };
-		191C9E4C143398ED00698D10 /* libspatosc-0.3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libspatosc-0.3.0.dylib"; path = "usr/local/lib/libspatosc-0.3.0.dylib"; sourceTree = SDKROOT; };
 		199DFA351429317A00710F3B /* SpatoscAU.component */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpatoscAU.component; sourceTree = BUILT_PRODUCTS_DIR; };
 		199DFA381429317A00710F3B /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		199DFA3A1429317A00710F3B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -165,8 +155,7 @@
 		199DFAB31429317A00710F3B /* SpatoscAUCocoaViewFactory-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SpatoscAUCocoaViewFactory-Info.plist"; sourceTree = "<group>"; };
 		19AC619214352002004897DD /* DomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DomeView.h; sourceTree = "<group>"; };
 		19AC619314352002004897DD /* DomeView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DomeView.mm; sourceTree = "<group>"; };
-		19C4F8C51439451100DAB7C8 /* libspatosc-0.3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libspatosc-0.3.0.dylib"; path = "usr/local/lib/libspatosc-0.3.0.dylib"; sourceTree = SDKROOT; };
-		19E212A71436611900E928F1 /* liblo.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = liblo.7.dylib; path = usr/local/lib/liblo.7.dylib; sourceTree = SDKROOT; };
+		1C477204145086F7006518AA /* libspatosc-0.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libspatosc-0.3.dylib"; path = "usr/local/lib/libspatosc-0.3.dylib"; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,8 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				191C9E4D143398ED00698D10 /* libspatosc-0.3.0.dylib in Frameworks */,
-				191C9E4B143398E100698D10 /* liblo.7.dylib in Frameworks */,
+				1C477205145086F7006518AA /* libspatosc-0.3.dylib in Frameworks */,
 				199DFA391429317A00710F3B /* CoreServices.framework in Frameworks */,
 				199DFA3B1429317A00710F3B /* AudioToolbox.framework in Frameworks */,
 				199DFA3D1429317A00710F3B /* AudioUnit.framework in Frameworks */,
@@ -187,8 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19C4F8C61439451100DAB7C8 /* libspatosc-0.3.0.dylib in Frameworks */,
-				19E212A81436611900E928F1 /* liblo.7.dylib in Frameworks */,
+				1C47720614508735006518AA /* libspatosc-0.3.dylib in Frameworks */,
 				199DFA4A1429317A00710F3B /* CoreServices.framework in Frameworks */,
 				199DFA4B1429317A00710F3B /* AudioToolbox.framework in Frameworks */,
 				199DFA4C1429317A00710F3B /* AudioUnit.framework in Frameworks */,
@@ -202,10 +189,8 @@
 		199DFA281429317900710F3B = {
 			isa = PBXGroup;
 			children = (
-				19AC619814352030004897DD /* SpatOSC */,
-				19AC619714352012004897DD /* Liblo */,
 				199DFA511429317A00710F3B /* SpatoscAU */,
-				199DFA371429317A00710F3B /* Frameworks */,
+				199DFA371429317A00710F3B /* Frameworks & Libraries */,
 				199DFA361429317A00710F3B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -219,26 +204,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		199DFA371429317A00710F3B /* Frameworks */ = {
+		199DFA371429317A00710F3B /* Frameworks & Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				1C477204145086F7006518AA /* libspatosc-0.3.dylib */,
+				199DFA411429317A00710F3B /* AppKit.framework */,
+				199DFA421429317A00710F3B /* CoreData.framework */,
+				199DFA431429317A00710F3B /* Foundation.framework */,
 				199DFA381429317A00710F3B /* CoreServices.framework */,
 				199DFA3A1429317A00710F3B /* AudioToolbox.framework */,
 				199DFA3C1429317A00710F3B /* AudioUnit.framework */,
 				199DFA3E1429317A00710F3B /* Cocoa.framework */,
-				199DFA401429317A00710F3B /* Other Frameworks */,
 			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		199DFA401429317A00710F3B /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				199DFA411429317A00710F3B /* AppKit.framework */,
-				199DFA421429317A00710F3B /* CoreData.framework */,
-				199DFA431429317A00710F3B /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
+			name = "Frameworks & Libraries";
 			sourceTree = "<group>";
 		};
 		199DFA511429317A00710F3B /* SpatoscAU */ = {
@@ -331,28 +309,6 @@
 			name = AUSource;
 			sourceTree = "<group>";
 		};
-		19AC619714352012004897DD /* Liblo */ = {
-			isa = PBXGroup;
-			children = (
-				191C9E4614338EAF00698D10 /* liblo.dylib */,
-				19E212A71436611900E928F1 /* liblo.7.dylib */,
-				191C9E4A143398E100698D10 /* liblo.7.dylib */,
-				191C9E4814338ED300698D10 /* lo.h */,
-			);
-			name = Liblo;
-			sourceTree = "<group>";
-		};
-		19AC619814352030004897DD /* SpatOSC */ = {
-			isa = PBXGroup;
-			children = (
-				19C4F8C51439451100DAB7C8 /* libspatosc-0.3.0.dylib */,
-				191C9E4414338BCE00698D10 /* spatosc.h */,
-				191C9E41143384D800698D10 /* libspatosc-0.3.dylib */,
-				191C9E4C143398ED00698D10 /* libspatosc-0.3.0.dylib */,
-			);
-			name = SpatOSC;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -360,8 +316,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				191C9E4914338ED300698D10 /* lo.h in Headers */,
-				191C9E4514338BCE00698D10 /* spatosc.h in Headers */,
 				199DFA5A1429317A00710F3B /* SpatoscAU.h in Headers */,
 				199DFA611429317A00710F3B /* SpatoscAUVersion.h in Headers */,
 				199DFA661429317A00710F3B /* CAAUParameter.h in Headers */,
@@ -563,51 +517,45 @@
 		199DFAB41429317A00710F3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"/usr/local/include/spatosc-0.3",
 					"/Developer/Extras/CoreAudio/**",
 					/opt/local/include,
-					"/usr/local/include/**",
+					/usr/local/include,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
-				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
 		199DFAB51429317A00710F3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"/usr/local/include/spatosc-0.3",
 					"/Developer/Extras/CoreAudio/**",
 					/opt/local/include,
-					"/usr/local/include/**",
+					/usr/local/include,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = NO;
-				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "";
-				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
@@ -633,7 +581,6 @@
 		199DFABA1429317A00710F3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = NO;
 				EXPORTED_SYMBOLS_FILE = SpatoscAU/SpatoscAU.exp;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -641,7 +588,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SpatoscAU/SpatoscAU-Prefix.pch";
 				GENERATE_PKGINFO_FILE = YES;
-				HEADER_SEARCH_PATHS = "/usr/local/include/**";
 				INFOPLIST_FILE = "SpatoscAU/SpatoscAU-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/Components/";
 				LIBRARY_STYLE = Bundle;
@@ -656,15 +602,12 @@
 		199DFABB1429317A00710F3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EXPORTED_SYMBOLS_FILE = SpatoscAU/SpatoscAU.exp;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SpatoscAU/SpatoscAU-Prefix.pch";
 				GENERATE_PKGINFO_FILE = YES;
-				HEADER_SEARCH_PATHS = "/usr/local/include/**";
 				INFOPLIST_FILE = "SpatoscAU/SpatoscAU-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/Components/";
 				LIBRARY_STYLE = Bundle;
