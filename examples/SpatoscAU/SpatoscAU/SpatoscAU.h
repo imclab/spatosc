@@ -102,7 +102,6 @@ const float kSpatosc_Dist_Max = 1000.0f;
 const float kSpatosc_Dist_Def = 1.0f;
 
 // NEW stuff
-/*
 const CFStringRef kSpatosc_AzimSpan_Name = CFSTR("Asimuth Span");
 const float kSpatosc_AzimSpan_Min = 0.0f;
 const float kSpatosc_AzimSpan_Max = kSpatosc_Azim_Max * 2.0;
@@ -112,9 +111,9 @@ const CFStringRef kSpatosc_ElevSpan_Name = CFSTR("Elevation Span");
 const float kSpatosc_ElevSpan_Min = 0.0f;
 const float kSpatosc_ElevSpan_Max = 90.0f;
 const float kSpatosc_ElevSpan_Def = 0.0f;
-*/
  
 // OLD stuff (replace with NEW):
+/*
 const float kMin_AzimuthSpan = 0.0f;
 const float kMax_AzimuthSpan = kSpatosc_Azim_Max * 2;
 const float kDefault_AzimuthSpan = 0.0f;
@@ -122,7 +121,8 @@ const float kDefault_AzimuthSpan = 0.0f;
 const float kMin_ZenithSpan = 0.0f;
 const float kMax_ZenithSpan = 90.0f;
 const float kDefault_ZenithSpan = 0.0f;
-
+*/
+ 
 static int channelCount = 0; 
 
 #pragma mark ____SpatoscAU

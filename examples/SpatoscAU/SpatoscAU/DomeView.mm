@@ -6,7 +6,11 @@
 -(void)updateCoordsWithLockedZenith:(NSPoint)pos;
 
 -(void)drawSpanArc;
+-(void)drawSourcePoint;
+-(void)drawWallCircle:(NSRect)rect;
 -(void)drawCenterDot;
+-(void)drawAzimuthLine;
+-(void)drawZenithCircle;
 -(void)drawCrosshairs;
 
 -(NSPoint)domeToScreen:(NSPoint)d;
@@ -74,9 +78,6 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
 
 - (void)drawRect:(NSRect)rect
 {    
-    NSBezierPath * path;
-    //NSPoint centre = { mDomeFrame.size.width / 2, mDomeFrame.size.height / 2 };
-    
     if (!mBackgroundCache)
     {
         //NSString *filepath = [[NSBundle bundleForClass: [Zirkalloy_DomeView class]] pathForImageResource: @"bgDome"];
@@ -86,34 +87,77 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
 
 		[mBackgroundCache lockFocus];
         
-        [[NSColor whiteColor] setFill];
-        [[NSColor blackColor] setStroke];
-        
-        path = [NSBezierPath bezierPathWithOvalInRect:rect];
-        [path fill];
-        [path stroke];
-                
-        //NSRect centreDot = {{ mCentre.x - kDotRadius / 2, mCentre.y - kDotRadius / 2 },{ kDotRadius, kDotRadius }};
-        NSPoint screen = [self domeToScreen:mCentre];
-        NSRect centreDot = {{screen.x,mCentre.y-(kDotRadius/2)},{kDotRadius, kDotRadius}};
-        path = [NSBezierPath bezierPathWithOvalInRect:centreDot];
-        [[NSColor redColor] setFill];
-        [path fill];
+        [self drawWallCircle:rect];
         
         [mBackgroundCache unlockFocus];
     }
 
     [mBackgroundCache drawInRect: mDomeFrame fromRect: NSZeroRect operation: NSCompositeSourceOver fraction: 1.0];
     
-    [self drawSpanArc];
-    [self drawCenterDot];
     [self drawCrosshairs];
+    [self drawCenterDot];
+    [self drawSpanArc];
+    [self drawSourcePoint];
+    [self drawAzimuthLine];
+    [self drawZenithCircle];
 }
 
+-(void)drawWallCircle:(NSRect)rect
+{
+    NSBezierPath * path;
+    
+    [[NSColor whiteColor] setFill];
+    [[NSColor blackColor] setStroke];
+    
+    path = [NSBezierPath bezierPathWithOvalInRect:rect];
+    [path fill];
+    [path stroke];
+}
+-(void)drawCenterDot
+{
+    NSBezierPath * path;
+    
+    NSRect centreDot = {{ mCentre.x - kDotRadius / 2, mCentre.y - kDotRadius / 2 },{ kDotRadius, kDotRadius }};
+    
+    path = [NSBezierPath bezierPathWithOvalInRect:centreDot];
+    
+    [[NSColor redColor] setFill];
+    [path fill];   
+}
+-(void)drawAzimuthLine
+{
+    NSBezierPath * line = [NSBezierPath bezierPath];   
+    
+    NSPoint centreDot = NSMakePoint(mCentre.x,mCentre.y);
+    
+    // Fetch source point
+    NSPoint screen = [self domeToScreen:mSourcePoint];
+    float screenX = screen.x;
+    float screenY = screen.y;
+    NSPoint sourceDot = NSMakePoint(screenX,screenY);
+    
+    [line moveToPoint:centreDot];
+    [line lineToPoint:sourceDot];
+    
+    [[NSColor redColor] setStroke];
+    [line stroke];   
+}
+-(void)drawZenithCircle
+{
+    NSBezierPath * path;
+    
+    float dist = sqrt(mSourcePoint.x*mSourcePoint.x + mSourcePoint.y*mSourcePoint.y);
+    NSRect rect = {{mCentre.x-(mRadius*dist*2)/2, mCentre.y-(mRadius*dist*2)/2},{mRadius*dist*2,mRadius*dist*2}};
+    
+    [[NSColor redColor] setStroke];
+    
+    path = [NSBezierPath bezierPathWithOvalInRect:rect];
+    [path stroke];
+}
 -(void) drawSpanArc
 {
-    float aDelta = mShapeSize.x * kMax_AzimuthSpan / 2;
-    float zDelta = mShapeSize.y * kMax_ZenithSpan / 2;
+    float aDelta = mShapeSize.x * kSpatosc_AzimSpan_Max / 2;
+    float zDelta = mShapeSize.y * kSpatosc_ElevSpan_Max / 2;
     
     float middle = mSourceHeading.azimuth + 90.0f;
     float minA = (middle - aDelta);
@@ -145,8 +189,8 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
     }
     
     // Handle high zenith span overlap
-    if (mShapeSize.x * kMax_AzimuthSpan > kMax_AzimuthSpan / 2 &&
-        mShapeSize.y * kMax_ZenithSpan / 2 + mSourceHeading.zenith > kSpatosc_Elev_Max)
+    if (mShapeSize.x * kSpatosc_AzimSpan_Max > kSpatosc_ElevSpan_Max / 2 &&
+        mShapeSize.y * kSpatosc_ElevSpan_Max / 2 + mSourceHeading.zenith > kSpatosc_Elev_Max)
     {
         maxA = middle - (180 - aDelta);
         minA = middle + (180 - aDelta);
@@ -154,6 +198,12 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
     }
     
     NSBezierPath * path = [NSBezierPath bezierPath];
+    
+    printf("mCentre.x:%f,mCentre.y:%f,rmaxZ:%f,rminZ:%f\n",
+           mCentre.x,mCentre.y,rmaxZ,rminZ);
+    printf("aDelta:%f,zDelta:%f",aDelta,zDelta);
+    printf("minA:%f,maxA:%f,maxA2:%f,minA2:%f\n",
+           minA,maxA,maxA2,minA2);
     
     [path appendBezierPathWithArcWithCenter:mCentre radius:rmaxZ startAngle:minA endAngle:maxA clockwise: reverse];
     [path appendBezierPathWithArcWithCenter:mCentre radius:rminZ startAngle:maxA2 endAngle:minA2 clockwise: YES];
@@ -166,9 +216,9 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
     [path fill];
 }
 
--(void) drawCenterDot
+-(void) drawSourcePoint
 {
-    // Fetch "middle" point
+    // Fetch source point
     NSPoint screen = [self domeToScreen:mSourcePoint];
     float screenX = screen.x - kDotRadius;
     float screenY = screen.y - kDotRadius;
@@ -230,8 +280,40 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
     }
     else
     {
-        [self updateCoords: mouseLoc];
-	}
+        if (true) {
+            [self updateCoords: mouseLoc];
+        }
+        printf("mouseLoc.x: %f, mouseLoc.y: %f\n",
+               mouseLoc.x,mouseLoc.y);
+        printf("mCenter.x: %f, mCenter.y: %f\n", 
+               mCentre.x,mCentre.y);
+        printf("mSourcePoint.x: %f, mSourcePoint.y: %f\n", 
+               mSourcePoint.x,mSourcePoint.y);
+        NSPoint sourceScreenToDome = [self screenToDome:mouseLoc];
+        printf("sourceScreenToDome.x: %f, sourceScreenToDome.y: %f\n", 
+               sourceScreenToDome.x,sourceScreenToDome.y);
+        
+        /*
+        float xCorr = 0.0;
+        if (sourceScreenToDome.x > 1.0) {
+            xCorr = 1.0;
+        } else if (sourceScreenToDome.x < -1.0) {
+            xCorr = -1.0;
+        } else {
+            xCorr = sourceScreenToDome.x;
+        }
+        
+        float yCorr = 0.0;
+        if (sourceScreenToDome.y > 1.0) {
+            yCorr = 1.0;
+        } else if (sourceScreenToDome.y < -1.0) {
+            yCorr = -1.0;
+        } else {
+            yCorr = sourceScreenToDome.y;
+        }
+        NSPoint pointCorr = NSMakePoint(xCorr,yCorr);
+         */
+    }
         
 	[self setNeedsDisplay:YES];	// update the display of the crosshairs
 }
@@ -327,9 +409,17 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
 // dome view.
 -(void)updateCoords:(NSPoint)pos
 {
-    NSPoint rPos = [self screenToDome:pos];
+    PolarAngles angles = [self pointToPolar:[self screenToDome:pos]];
+    NSPoint point = [self screenToDome:pos];
     
-    [self setSourcePoint: rPos];
+    float root = kPolarRadius*kPolarRadius - point.x*point.x - point.y*point.y;
+    //float dist = sqrt(rPos.x*rPos.x + rPos.y*rPos.y);
+    //NSRect rect = {{mCentre.x-(mRadius*dist*2)/2, mCentre.y-(mRadius*dist*2)/2},{mRadius*dist*2,mRadius*dist*2}};
+    
+    [self setSourcePoint:point];
+    if (root < 0.0f) {
+        [self setZenith:0.0f];
+    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName: kDomeViewDataChangedNotification object:self];
 }
@@ -375,22 +465,22 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
 
 -(void)setAzimuthSpan:(float)azimuthSpan
 {
-    mShapeSize.x = azimuthSpan / kMax_AzimuthSpan;
+    mShapeSize.x = azimuthSpan / kSpatosc_AzimSpan_Max;
 }
 
 -(float)azimuthSpan
 {
-    return mShapeSize.x * kMax_AzimuthSpan;
+    return mShapeSize.x * kSpatosc_AzimSpan_Max;
 }
 
 -(void)setZenithSpan:(float)zenithSpan
 {
-    mShapeSize.y = zenithSpan / kMax_ZenithSpan;
+    mShapeSize.y = zenithSpan / kSpatosc_ElevSpan_Max;
 }
 
 -(float)zenithSpan
 {
-    return mShapeSize.y * kMax_ZenithSpan;
+    return mShapeSize.y * kSpatosc_ElevSpan_Max;
 }
 
 -(NSPoint)domeToScreen:(NSPoint)d

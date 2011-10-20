@@ -205,14 +205,14 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 
 - (IBAction)gainChanged:(id)sender {
     float floatValue = [sender floatValue];
-    /*
+    
 	NSAssert(AUParameterSet(mParameterListener, sender, &mParameter[0], (Float32)floatValue, 0) == noErr, @"[spatosc_CocoaView gainChanged:] AUParameterSet()");
     if (sender == gainSlider) {
         [gainField setFloatValue:floatValue];
     } else {
         [gainSlider setFloatValue:floatValue];
     }
-     */
+    
 }
 
 - (IBAction)azimChanged:(id)sender {
