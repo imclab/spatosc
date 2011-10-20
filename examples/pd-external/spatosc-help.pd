@@ -1,4 +1,4 @@
-#N canvas 371 57 851 743 10;
+#N canvas 375 81 851 743 10;
 #X obj 33 349 tgl 20 0 empty empty success 25 10 0 10 -258113 -1 -1
 1 1;
 #X floatatom 549 222 5 0 0 0 - - -;
@@ -83,7 +83,7 @@ messages with [netreceive]:;
 #X text 617 172 <-- Clear the whole scene;
 #X obj 434 -17 cnv 15 250 150 empty empty More_info: 10 12 1 12 -228856
 -128992 0;
-#N canvas 0 0 847 292 HOW_TO_SET_NODE_PROPERTIES 0;
+#N canvas 4 49 847 292 HOW_TO_SET_NODE_PROPERTIES 0;
 #X msg 142 -125 setNodeStringProperty noise foo bar;
 #X msg 142 -106 removeNodeStringProperty noise foo;
 #X msg 154 -25 setNodeFloatProperty noise param 1.4;
@@ -102,7 +102,7 @@ messages with [netreceive]:;
 #X connect 6 0 9 0;
 #X connect 8 0 9 0;
 #X restore 462 22 pd HOW_TO_SET_NODE_PROPERTIES;
-#N canvas 40 100 450 300 ABOUT_SCHEDULING 0;
+#N canvas 44 124 450 300 ABOUT_SCHEDULING 0;
 #X obj 235 187 bng 15 250 50 0 empty empty output_messages 17 7 0 10
 -262144 -1 -1;
 #X msg 114 175 setSynchronous \$1;
@@ -165,7 +165,7 @@ more precisely.;
 #X text 20 24 The spatosc library sends spatial audio updates via OpenSoundControl
 (OSC) to various spatializers \, as long as there exists a compatible
 "translator" (kind of like a plugin) in the library.;
-#X text 465 483 Receiving from the BasicTranslator:;
+#X text 465 482 Receiving from the BasicTranslator:;
 #X obj 452 522 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
 #X text 20 91 Choose a translator (note \, a "default" translator already
@@ -184,6 +184,27 @@ exists);
 #X msg 56 192 addTranslator tcpTest BasicTranslator osc.tcp://localhost:9999
 ;
 #X msg 84 250 removeTranslator tcpTest;
+#X floatatom 608 393 5 0 0 0 - - -;
+#X floatatom 646 392 5 0 0 0 - - -;
+#X floatatom 685 392 5 0 0 0 - - -;
+#N canvas 0 22 290 211 pack3f 0;
+#X obj 79 103 pack f f f;
+#X obj 99 73 t b f;
+#X obj 144 71 t b f;
+#X obj 63 44 inlet;
+#X obj 110 41 inlet;
+#X obj 162 45 inlet;
+#X obj 80 137 outlet;
+#X connect 0 0 6 0;
+#X connect 1 0 0 0;
+#X connect 1 1 0 1;
+#X connect 2 0 0 0;
+#X connect 2 1 0 2;
+#X connect 3 0 0 0;
+#X connect 4 0 1 0;
+#X connect 5 0 2 0;
+#X restore 607 412 pd pack3f;
+#X msg 607 433 setPositionAED noise \$1 \$2 \$3;
 #X connect 1 0 5 0;
 #X connect 2 0 5 1;
 #X connect 3 0 5 2;
@@ -222,3 +243,8 @@ exists);
 #X connect 58 0 6 0;
 #X connect 63 0 6 0;
 #X connect 64 0 6 0;
+#X connect 65 0 68 0;
+#X connect 66 0 68 1;
+#X connect 67 0 68 2;
+#X connect 68 0 69 0;
+#X connect 69 0 42 0;
