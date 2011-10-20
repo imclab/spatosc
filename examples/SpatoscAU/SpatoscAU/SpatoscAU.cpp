@@ -54,18 +54,40 @@ COMPONENT_ENTRY(SpatoscAU)
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //	SpatoscAU::SpatoscAU
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+int SpatoscAU::sourceCount = 0;
+
 SpatoscAU::SpatoscAU(AudioUnit component)
 	: AUEffectBase(component)
 {
+    // only need to do this once (not with every new AU instance).
+    // TODO: move this elsewhere
+    spatosc::SingletonScene::Instance().addTranslator("basic", new spatosc::BasicTranslator("osc.udp://127.0.0.1:18032"));
+    spatosc::SingletonScene::Instance().createListener("listener");
+    
+    
 	CreateElements();
-	Globals()->UseIndexedParameters(kNumberOfParameters);
-	//SetParameter(kParam_One, kDefaultValue_ParamOne );
+	
+    // create a unique name for this source:
+    std::ostringstream o;
+	o << "source" << SpatoscAU::sourceCount++;
+    id = o.str();
+    source = spatosc::SingletonScene::Instance().createSoundSource(id);
+    source->setStringProperty("setMediaURI","plugin://plugins/testnoise~");
+    spatosc::SingletonScene::Instance().debugPrint();
+
+    //SetProperty(kSoundSourceID, kAudioUnitScope_Global,<#AudioUnitElement inElement#>, id, sizeof(id));
+    
+    Globals()->UseIndexedParameters(kNumberOfParameters);
+    //SetParameter(kParam_One, kDefaultValue_ParamOne );
     SetParameter(kSpatosc_Gain, kSpatosc_Gain_Def );
 	SetParameter(kSpatosc_Azim, kSpatosc_Azim_Def );
 	SetParameter(kSpatosc_Elev, kSpatosc_Elev_Def );
 	SetParameter(kSpatosc_Dist, kSpatosc_Dist_Def );
 	//SetParameter(kSpatosc_AzimSpan, kSpatosc_AzimSpan_Def );
 	//SetParameter(kSpatosc_ElevSpan, kSpatosc_ElevSpan_Def );
+    
+    
     
     channelCount++;
     //NSLog(@"channelCount: %d", channelCount);

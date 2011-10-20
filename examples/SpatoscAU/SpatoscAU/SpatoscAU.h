@@ -79,6 +79,8 @@ enum {
     //kNumberOfParameters = 6
 };
 
+static const AudioUnitPropertyID kSoundSourceID = 1000;
+
 const CFStringRef kSpatosc_Gain_Name = CFSTR("Gain");
 const float kSpatosc_Gain_Min = 0.0f;
 const float kSpatosc_Gain_Max = 1.0f;
@@ -127,8 +129,6 @@ static int channelCount = 0;
 class SpatoscAU : public AUEffectBase
 {
 public:
-    //spatosc::SoundSource * source;
-    //spatosc::Scene * spatScene;
     
     SpatoscAU(AudioUnit component);
 #if AU_DEBUG_DISPATCHER
@@ -172,7 +172,9 @@ public:
 	/*! @method Version */
 	virtual OSStatus		Version() { return kSpatoscAUVersion; }
 	
-    
+    static int sourceCount;
+    std::string id;
+    spatosc::SoundSource *source;
 	
 protected:
 		class SpatoscAUKernel : public AUKernelBase		// most real work happens here
@@ -195,7 +197,8 @@ public:
 		
 private:
         //state variables...
-	};
+        
+    };
 };
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

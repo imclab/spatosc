@@ -46,6 +46,7 @@
 #include "properties.h"
 #include "property.h"
 #include "scene.h"
+#include "singleton.h"
 #include "soundsource.h"
 #include "basic_translator.h"
 #include "translator.h"

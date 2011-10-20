@@ -61,9 +61,11 @@ void ParameterListenerDispatcher (void *inRefCon, void *inObject, const AudioUni
 void EventListenerDispatcher (void *inRefCon, void *inObject, const AudioUnitEvent *inEvent, UInt64 inHostTime, Float32 inValue)
 {
 	SpatoscAUCocoaView *SELF = (SpatoscAUCocoaView *)inRefCon;
-    [SELF retain];
+    //[SELF retain];
 	[SELF priv_eventListener:inObject event:inEvent value:inValue];
 	
+    printf("EventListenerDispatcher. retain count for SpatoscAUCocaoView %d is %d\n", SELF, [SELF retainCount]);
+    
     /*
 	float azim, elev, dist;
 	
@@ -178,12 +180,14 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 	mParameter[3].mScope = kAudioUnitScope_Global;
 	mParameter[3].mElement = 0;	
 	
+    /*
 	//txAddr = lo_address_new("localhost", "7777");
     //spatScene = new spatosc::Scene();
     spatScene.addTranslator("basic", new spatosc::BasicTranslator("osc.udp://127.0.0.1:18032"));
     spatScene.createListener("listener");
     source = spatScene.createSoundSource("foo");
     source->setStringProperty("setMediaURI","plugin://plugins/testnoise~");
+     */
      
 	// add new listeners
 	[self _addListeners];
@@ -522,6 +526,15 @@ void addParamListener (AUEventListenerRef listener, void* refCon, AudioUnitEvent
 
 - (void)priv_eventListener:(void *) inObject event:(const AudioUnitEvent *)inEvent value:(Float32)inValue
 {
+    // TODO: replace the following like with a getProperty call to get
+    // the (pointer?) to the source in the SpatoscAU class instance:
+    spatosc::SoundSource *source = spatosc::SingletonScene::Instance().getSoundSource("source0");
+    if (!source)
+    {
+        printf("ERROR: could not find soundsource 'source0'\n");
+        return;
+    }
+    
     Float32 azim, elev, dist;
 	switch (inEvent->mEventType)
     {
