@@ -68,10 +68,10 @@ extern NSString *kDomeViewEndGestureNotification;
 
 @interface SpatoscAUCocoaView : NSView
 {
-@public
-	lo_address txAddr; 
-    spatosc::SoundSource * source;
-    spatosc::Scene spatScene;
+//@public
+	//lo_address txAddr; 
+    //spatosc::SoundSource * source;
+    //spatosc::Scene spatScene;
 @private
     /*
     // IB Members
