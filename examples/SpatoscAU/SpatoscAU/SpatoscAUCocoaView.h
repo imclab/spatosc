@@ -68,22 +68,7 @@ extern NSString *kDomeViewEndGestureNotification;
 
 @interface SpatoscAUCocoaView : NSView
 {
-//@public
-	//lo_address txAddr; 
-    //spatosc::SoundSource * source;
-    //spatosc::Scene spatScene;
 @private
-    /*
-    // IB Members
-    IBOutlet SpatoscAU_GestureSlider * uiParam1Slider;
-    IBOutlet NSTextField *			uiParam1TextField;
-	
-    // Other Members
-    AudioUnit 				mAU;
-	AudioUnitParameter		mParameter[1];
-    AUParameterListenerRef	mParameterListener;
-    */
-    
     // IB Members
 	IBOutlet DomeView *domeView;
     
@@ -93,10 +78,6 @@ extern NSString *kDomeViewEndGestureNotification;
     IBOutlet SpatoscAU_GestureSlider *azimSlider;
     IBOutlet NSTextField           *elevField;
     IBOutlet SpatoscAU_GestureSlider *elevSlider;
-    /*
-    IBOutlet NSTextField           *distField;
-    IBOutlet SpatoscAU_GestureSlider *distSlider;
-	*/
 	
     // Other Members
     AudioUnit 				mAU;
@@ -110,7 +91,6 @@ extern NSString *kDomeViewEndGestureNotification;
 - (AudioUnit)getAU;
 
 #pragma mark ____ INTERFACE ACTIONS ____
-//- (IBAction) gainChanged:(id)sender;
 - (IBAction) azimChanged:(id)sender;
 - (IBAction) elevChanged:(id)sender;
 - (IBAction) distChanged:(id)sender;

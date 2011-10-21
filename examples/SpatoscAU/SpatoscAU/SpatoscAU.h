@@ -69,7 +69,6 @@ typedef struct PolarAngles
 // parameters
 enum {
 	//Add your parameters here...
-	//kSpatosc_Gain = 0,
 	kSpatosc_Azim = 0,
 	kSpatosc_Elev = 1,
 	kSpatosc_Dist = 2,
@@ -78,16 +77,7 @@ enum {
     kNumberOfParameters = 3
 };
 
-//<<<<<<< HEAD
 static const AudioUnitPropertyID kSoundSourceID = 1000;
-
-/*
->>>>>>> 3b6b1e5d2f96019bc22eeb181b56f6a8af53875b
-const CFStringRef kSpatosc_Gain_Name = CFSTR("Gain");
-const float kSpatosc_Gain_Min = 0.0f;
-const float kSpatosc_Gain_Max = 1.0f;
-const float kSpatosc_Gain_Def = 0.75f;
-*/
  
 const CFStringRef kSpatosc_Azim_Name = CFSTR("Azimuth");
 const float kSpatosc_Azim_Min = -180.0f;
@@ -115,19 +105,6 @@ const float kSpatosc_ElevSpan_Min = 0.0f;
 const float kSpatosc_ElevSpan_Max = 90.0f;
 const float kSpatosc_ElevSpan_Def = 0.0f;
  
-// OLD stuff (replace with NEW):
-/*
-const float kMin_AzimuthSpan = 0.0f;
-const float kMax_AzimuthSpan = kSpatosc_Azim_Max * 2;
-const float kDefault_AzimuthSpan = 0.0f;
-
-const float kMin_ZenithSpan = 0.0f;
-const float kMax_ZenithSpan = 90.0f;
-const float kDefault_ZenithSpan = 0.0f;
-*/
- 
-static int channelCount = 0; 
-
 #pragma mark ____SpatoscAU
 class SpatoscAU : public AUEffectBase
 {
@@ -140,12 +117,6 @@ public:
     
     virtual OSStatus Initialize() {
         AUEffectBase::Initialize();
-        //scene.addTranslator("basic", "BasicTranslator", "osc.udp//127.0.0.1:18032");
-        //spatScene = new spatosc::Scene();
-        //spatScene->addTranslator("basic", new spatosc::BasicTranslator("osc.udp://127.0.0.1:18032"));
-        //spatScene->createListener("listener");
-        //source = spatScene->createSoundSource("foo");
-        //AUEffectBase::Initialize();
         return noErr;
     }
 	

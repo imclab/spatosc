@@ -12,6 +12,7 @@
 -(void)drawAzimuthLine;
 -(void)drawZenithCircle;
 -(void)drawCrosshairs;
+-(void)drawCoordLabels:(NSRect)rect;
 
 -(NSPoint)domeToScreen:(NSPoint)d;
 -(NSPoint)screenToDome:(NSPoint)s;
@@ -77,12 +78,9 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
 }
 
 - (void)drawRect:(NSRect)rect
-{    
+{   
     if (!mBackgroundCache)
     {
-        //NSString *filepath = [[NSBundle bundleForClass: [Zirkalloy_DomeView class]] pathForImageResource: @"bgDome"];
-        //mBackgroundCache = [[NSImage alloc] initByReferencingFile: filepath];
-        
         mBackgroundCache = [[NSImage alloc] initWithSize: [self frame].size];
 
 		[mBackgroundCache lockFocus];
@@ -92,15 +90,18 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
         [mBackgroundCache unlockFocus];
     }
 
-    [mBackgroundCache drawInRect: mDomeFrame fromRect: NSZeroRect operation: NSCompositeSourceOver fraction: 1.0];
-    
+    //[mBackgroundCache drawInRect: mDomeFrame fromRect: NSZeroRect operation: NSCompositeSourceOver fraction: 1.0];
+     
     [self drawCrosshairs];
     [self drawCenterDot];
     [self drawSpanArc];
     [self drawSourcePoint];
     [self drawAzimuthLine];
     [self drawZenithCircle];
+    [self drawCoordLabels:rect];
 }
+
+
 
 -(void)drawWallCircle:(NSRect)rect
 {
@@ -199,12 +200,14 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
     
     NSBezierPath * path = [NSBezierPath bezierPath];
     
+    /*
     printf("mCentre.x:%f,mCentre.y:%f,rmaxZ:%f,rminZ:%f\n",
            mCentre.x,mCentre.y,rmaxZ,rminZ);
     printf("aDelta:%f,zDelta:%f",aDelta,zDelta);
     printf("minA:%f,maxA:%f,maxA2:%f,minA2:%f\n",
            minA,maxA,maxA2,minA2);
-    
+    */
+     
     [path appendBezierPathWithArcWithCenter:mCentre radius:rmaxZ startAngle:minA endAngle:maxA clockwise: reverse];
     [path appendBezierPathWithArcWithCenter:mCentre radius:rminZ startAngle:maxA2 endAngle:minA2 clockwise: YES];
     [path closePath];
@@ -215,7 +218,6 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
     [path stroke];
     [path fill];
 }
-
 -(void) drawSourcePoint
 {
     // Fetch source point
@@ -230,7 +232,6 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
     [path setLineWidth: 2.0f];
     [path stroke];
 }
-
 -(void) drawCrosshairs
 {    
     [[[NSColor blackColor] colorWithAlphaComponent:0.5f] setStroke];
@@ -260,6 +261,21 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
     [xAxis stroke];
     [yAxis stroke];
 }
+-(void) drawCoordLabels:(NSRect)rect
+{
+    //note we are using the convenience method, so we don't need to autorelease the object
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Helvetica" size:14], NSFontAttributeName,[NSColor blackColor], NSForegroundColorAttributeName, nil];
+    
+    NSAttributedString * currentText = [[NSAttributedString alloc] initWithString:@"0" attributes: attributes];
+    
+    NSSize attrSize = [currentText size];
+    
+    [currentText drawAtPoint:NSMakePoint(mCentre.x+2,rect.size.height-attrSize.height)];
+    
+    currentText = [[NSAttributedString alloc] initWithString:@"-90" attributes: attributes];
+    [currentText drawAtPoint:NSMakePoint(rect.size.width-attrSize.width,rect.size.height/2)];
+}
+
 
 
 #pragma mark ___ Events ___

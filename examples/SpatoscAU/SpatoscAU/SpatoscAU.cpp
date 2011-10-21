@@ -79,18 +79,12 @@ SpatoscAU::SpatoscAU(AudioUnit component)
     //SetProperty(kSoundSourceID, kAudioUnitScope_Global,<#AudioUnitElement inElement#>, id, sizeof(id));
     
     Globals()->UseIndexedParameters(kNumberOfParameters);
-    //SetParameter(kParam_One, kDefaultValue_ParamOne );
-    //SetParameter(kSpatosc_Gain, kSpatosc_Gain_Def );
     
 	SetParameter(kSpatosc_Azim, kSpatosc_Azim_Def );
 	SetParameter(kSpatosc_Elev, kSpatosc_Elev_Def );
 	SetParameter(kSpatosc_Dist, kSpatosc_Dist_Def );
 	//SetParameter(kSpatosc_AzimSpan, kSpatosc_AzimSpan_Def );
 	//SetParameter(kSpatosc_ElevSpan, kSpatosc_ElevSpan_Def );
-    
-    channelCount++;
-    //NSLog(@"channelCount: %d", channelCount);
-    printf("channelCount: %d", channelCount);
         
 #if AU_DEBUG_DISPATCHER
 	mDebugDispatcher = new AUDebugDispatcher (this);
@@ -127,15 +121,6 @@ OSStatus			SpatoscAU::GetParameterInfo(AudioUnitScope		inScope,
     if (inScope == kAudioUnitScope_Global) {
         switch(inParameterID)
         {
-            /*    
-            case kSpatosc_Gain:
-                AUBase::FillInParameterName (outParameterInfo, kSpatosc_Gain_Name, false);
-                outParameterInfo.unit = kAudioUnitParameterUnit_LinearGain;
-                outParameterInfo.minValue = kSpatosc_Gain_Min;
-                outParameterInfo.maxValue = kSpatosc_Gain_Max;
-                outParameterInfo.defaultValue = kSpatosc_Gain_Def;
-                break;
-             */
             case kSpatosc_Azim:
                 AUBase::FillInParameterName (outParameterInfo, kSpatosc_Azim_Name, false);
                 outParameterInfo.unit = kAudioUnitParameterUnit_Degrees;
@@ -245,14 +230,6 @@ OSStatus			SpatoscAU::GetProperty(	AudioUnitPropertyID inID,
 SpatoscAU::SpatoscAUKernel::SpatoscAUKernel(AUEffectBase *inAudioUnit )
 : AUKernelBase(inAudioUnit)
 {
-    ///using namespace spatosc;
-    //Scene scene;    
-    //scene.addTranslator("basic", new BasicTranslator("osc.udp//127.0.0.1:18032"));
-    //scene.addTranslator("basic", "BasicTranslator", "osc.udp//127.0.0.1:18032");
-    //scene.createListener("listener");
-    
-    //SoundSource *foo = scene.createSoundSource("foo");
-    //SoundSource *bar = scene.createSoundSource("bar");
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -279,7 +256,6 @@ void		SpatoscAU::SpatoscAUKernel::Process(	const Float32 	*inSourceP,
 	UInt32 nSampleFrames = inFramesToProcess;
 	const Float32 *sourceP = inSourceP;
 	Float32 *destP = inDestP;
-    //Float32 gain = GetParameter( kSpatosc_Gain );
 	
 	while (nSampleFrames-- > 0) {
 		Float32 inputSample = *sourceP;
