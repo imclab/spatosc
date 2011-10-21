@@ -67,12 +67,7 @@ SpatoscAU::SpatoscAU(AudioUnit component)
     
     
 	CreateElements();
-//<<<<<<< HEAD
-	Globals()->UseIndexedParameters(kNumberOfParameters);
-	//SetParameter(kParam_One, kDefaultValue_ParamOne );
-    //SetParameter(kSpatosc_Gain, kSpatosc_Gain_Def );
-//=======
-	
+
     // create a unique name for this source:
     std::ostringstream o;
 	o << "source" << SpatoscAU::sourceCount++;
@@ -85,15 +80,13 @@ SpatoscAU::SpatoscAU(AudioUnit component)
     
     Globals()->UseIndexedParameters(kNumberOfParameters);
     //SetParameter(kParam_One, kDefaultValue_ParamOne );
-    SetParameter(kSpatosc_Gain, kSpatosc_Gain_Def );
-//>>>>>>> 3b6b1e5d2f96019bc22eeb181b56f6a8af53875b
+    //SetParameter(kSpatosc_Gain, kSpatosc_Gain_Def );
+    
 	SetParameter(kSpatosc_Azim, kSpatosc_Azim_Def );
 	SetParameter(kSpatosc_Elev, kSpatosc_Elev_Def );
 	SetParameter(kSpatosc_Dist, kSpatosc_Dist_Def );
 	//SetParameter(kSpatosc_AzimSpan, kSpatosc_AzimSpan_Def );
 	//SetParameter(kSpatosc_ElevSpan, kSpatosc_ElevSpan_Def );
-    
-    
     
     channelCount++;
     //NSLog(@"channelCount: %d", channelCount);

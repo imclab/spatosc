@@ -64,8 +64,6 @@ void EventListenerDispatcher (void *inRefCon, void *inObject, const AudioUnitEve
     //[SELF retain];
 	[SELF priv_eventListener:inObject event:inEvent value:inValue];
 	
-    printf("EventListenerDispatcher. retain count for SpatoscAUCocaoView %d is %d\n", SELF, [SELF retainCount]);
-    
     /*
 	float azim, elev, dist;
 	

@@ -28,6 +28,7 @@ html/
 doxyfile
 spatosc*.pc
 !examples/*/Makefile
+examples/.DS_Store
 *.pdf
 *.gz
 *.swp
