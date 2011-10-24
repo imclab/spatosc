@@ -36,10 +36,13 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
 
 - (id)initWithFrame:(NSRect)frameRect
 {
-    //frameRect.origin.x -= kMargin;
-    //frameRect.origin.y -= kMargin;
-    //frameRect.size.width += kMargin * 2;
-    //frameRect.size.height += kMargin * 2;
+    frameRect.origin.x -= kMargin;
+    frameRect.origin.y -= kMargin;
+    frameRect.size.width += kMargin * 2;
+    frameRect.size.height += kMargin * 2;
+    
+    printf("frameRect.origin: %f %f, size: %f %f\n", frameRect.origin.x,
+           frameRect.origin.y, frameRect.size.width, frameRect.size.height);
     
 	if ((self = [super initWithFrame:frameRect]) != nil)
     {
@@ -90,7 +93,7 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
         [mBackgroundCache unlockFocus];
     }
 
-    //[mBackgroundCache drawInRect: mDomeFrame fromRect: NSZeroRect operation: NSCompositeSourceOver fraction: 1.0];
+    [mBackgroundCache drawInRect: mDomeFrame fromRect: NSZeroRect operation: NSCompositeSourceOver fraction: 1.0];
      
     [self drawCrosshairs];
     [self drawCenterDot];
@@ -98,7 +101,7 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
     [self drawSourcePoint];
     [self drawAzimuthLine];
     [self drawZenithCircle];
-    [self drawCoordLabels:rect];
+    //[self drawCoordLabels:rect];
 }
 
 
@@ -281,23 +284,30 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
 #pragma mark ___ Events ___
 -(void) mouseDown:(NSEvent *)e
 {
+    NSPoint windowLoc = [e locationInWindow];
 	NSPoint mouseLoc = [self convertPoint:[e locationInWindow] fromView:nil];
-	mMouseDown = YES;
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName: kDomeViewBeginGestureNotification object:self];
     
-    if ([e modifierFlags] & NSShiftKeyMask)
-    {
-        [self updateCoordsWithLockedZenith: mouseLoc];
-    }
-    else if ([e modifierFlags] & NSAlternateKeyMask)
-    {
-        [self updateCoordsWithLockedAzimuth: mouseLoc];
-    }
-    else
-    {
-        if (true) {
-            [self updateCoords: mouseLoc];
+    printf("windowLoc: %f %f, mouseLoc: %f %f\n", windowLoc.x, windowLoc.y,
+           mouseLoc.x, mouseLoc.y);
+    
+    if (mouseLoc.x < mDomeFrame.size.width && mouseLoc.y < mDomeFrame.size.height) {
+        mMouseDown = YES;
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName: kDomeViewBeginGestureNotification object:self];
+        
+        if ([e modifierFlags] & NSShiftKeyMask)
+        {
+            [self updateCoordsWithLockedZenith: mouseLoc];
+        }
+        else if ([e modifierFlags] & NSAlternateKeyMask)
+        {
+            [self updateCoordsWithLockedAzimuth: mouseLoc];
+        }
+        else
+        {
+            if (true) {
+                [self updateCoords: mouseLoc];
+            }
         }
     }
         
@@ -309,18 +319,20 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
 	NSPoint mouseLoc = [self convertPoint:[e locationInWindow] fromView:nil];
 	mMouseDown = YES;
     
-    if ([e modifierFlags] & NSShiftKeyMask)
-    {
-        [self updateCoordsWithLockedZenith: mouseLoc];
+    if (mouseLoc.x < mDomeFrame.size.width && mouseLoc.y < mDomeFrame.size.height) {
+        if ([e modifierFlags] & NSShiftKeyMask)
+        {
+            [self updateCoordsWithLockedZenith: mouseLoc];
+        }
+        else if ([e modifierFlags] & NSAlternateKeyMask)
+        {
+            [self updateCoordsWithLockedAzimuth: mouseLoc];
+        }
+        else
+        {
+            [self updateCoords: mouseLoc];
+        }
     }
-    else if ([e modifierFlags] & NSAlternateKeyMask)
-    {
-        [self updateCoordsWithLockedAzimuth: mouseLoc];
-    }
-    else
-    {
-        [self updateCoords: mouseLoc];
-	}
     
 	[self setNeedsDisplay:YES];
 }

@@ -71,17 +71,19 @@ extern NSString *kDomeViewEndGestureNotification;
 @private
     // IB Members
 	IBOutlet DomeView *domeView;
+
+    IBOutlet NSTextField           *azimField;
+    IBOutlet SpatoscAU_GestureSlider *azimSlider;
+    
+    IBOutlet NSTextField           *elevField;
+    IBOutlet SpatoscAU_GestureSlider *elevSlider;
     
     IBOutlet NSTextField           *distField;
     IBOutlet SpatoscAU_GestureSlider *distSlider;	
-    IBOutlet NSTextField           *azimField;
-    IBOutlet SpatoscAU_GestureSlider *azimSlider;
-    IBOutlet NSTextField           *elevField;
-    IBOutlet SpatoscAU_GestureSlider *elevSlider;
 	
     // Other Members
     AudioUnit 				mAU;
-	AudioUnitParameter		mParameter[4];
+	AudioUnitParameter		mParameter[3];
     AUParameterListenerRef	mParameterListener;
 	AUEventListenerRef		mEventListener;
 }
