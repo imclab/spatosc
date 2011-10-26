@@ -1,6 +1,6 @@
-#N canvas -1815 27 980 1077 10;
+#N canvas 0 25 980 1077 10;
 #X obj 25 670 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
-1 1;
+0 1;
 #X msg 144 244 clearScene;
 #X floatatom 141 74 5 0 0 0 - - -;
 #X floatatom 180 74 5 0 0 0 - - -;
@@ -117,8 +117,6 @@ scene;
 #X msg 201 534 removeNodeFloatProperty noise param;
 #X text 423 511 <-- Add / remove int properties (node must exist);
 #X msg 141 48 createSource noise;
-#X obj 453 772 print from_spatOSC_basicTranslator;
-#X obj 453 743 OSCrx 18032;
 #X msg 392 334 addTranslator basic3 BasicTranslator 198.168.0.103 18032
 ;
 #X connect 1 0 10 0;
@@ -171,5 +169,4 @@ scene;
 #X connect 71 0 10 0;
 #X connect 72 0 10 0;
 #X connect 74 0 10 0;
-#X connect 76 0 75 0;
-#X connect 77 0 10 0;
+#X connect 75 0 10 0;
