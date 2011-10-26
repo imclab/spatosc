@@ -1,6 +1,8 @@
 Spatosc TODO
 ============
 
+* When we set XYZ, or AED, renderers should receiver AED, no matter what.
+
 August 2011 new stuff
 ---------------------
  * add SoundSource::setUri
