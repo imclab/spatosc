@@ -1,4 +1,4 @@
-#N canvas 0 25 980 1077 10;
+#N canvas 700 25 846 989 10;
 #X obj 25 670 tgl 50 0 empty empty success 17 -7 0 10 -258113 -1 -1
 0 1;
 #X msg 144 244 clearScene;
@@ -119,6 +119,8 @@ scene;
 #X msg 141 48 createSource noise;
 #X msg 392 334 addTranslator basic3 BasicTranslator 198.168.0.103 18032
 ;
+#X msg 434 732 forceRefresh;
+#X text 11 726 Outputs 1 if success;
 #X connect 1 0 10 0;
 #X connect 2 0 7 0;
 #X connect 3 0 7 1;
@@ -170,3 +172,4 @@ scene;
 #X connect 72 0 10 0;
 #X connect 74 0 10 0;
 #X connect 75 0 10 0;
+#X connect 76 0 10 0;

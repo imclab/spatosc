@@ -28,8 +28,8 @@
 #include <sstream>
 #include <string>
 
-//static const bool SPATOSC_DEBUG = true;
-static const bool SPATOSC_DEBUG = false;
+static const bool SPATOSC_DEBUG = true;
+//static const bool SPATOSC_DEBUG = false;
 static const float SUCCESS = 1.0;
 static const float FAILURE = 0.0;
 
@@ -104,7 +104,7 @@ static void *spatosc_new(t_symbol *s, int argc, t_atom *argv)
     }
     if (SPATOSC_DEBUG)
     {
-        post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s\n", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
+        post("[spatosc]: translatorName=%s sendToPort=%s sendToAddress=%s", translatorName.c_str(), sendToPort.c_str(), sendToAddress.c_str());
     }
     
     bool success;
@@ -157,6 +157,7 @@ static void spatosc_removeNodeIntProperty(t_spatosc *x, t_symbol *node, t_symbol
 static void spatosc_removeNodeFloatProperty(t_spatosc *x, t_symbol *node, t_symbol *key);
 static void spatosc_setDistanceFactor(t_spatosc *x, t_symbol *src, t_symbol *sink, t_floatarg factor);
 static void spatosc_setDopplerFactor(t_spatosc *x, t_symbol *src, t_symbol *sink, t_floatarg factor);
+static void spatosc_forceRefresh(t_spatosc *x, int argc, t_atom *argv);
 
 extern "C" void spatosc_setup(void)
 {
@@ -167,6 +168,7 @@ extern "C" void spatosc_setup(void)
 	class_addmethod(spatosc_class, (t_method) spatosc_connect, gensym("connect"), A_SYMBOL, A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_disconnect, gensym("disconnect"), A_SYMBOL, A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_clearScene, gensym("clearScene"), A_GIMME, 0);
+	class_addmethod(spatosc_class, (t_method) spatosc_forceRefresh, gensym("forceRefresh"), A_GIMME, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setAutoConnect, gensym("setAutoConnect"), A_FLOAT, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setConnectFilter, gensym("setConnectFilter"), A_SYMBOL, 0);
 	class_addmethod(spatosc_class, (t_method) spatosc_setOrientation, gensym("setOrientation"), A_SYMBOL, A_FLOAT, A_FLOAT, A_FLOAT, 0);
@@ -193,31 +195,43 @@ extern "C" void spatosc_setup(void)
 
 static void spatosc_createSource(t_spatosc *x, t_symbol *node)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.createSource(node->s_name));
 }
 
 static void spatosc_createListener(t_spatosc *x, t_symbol *node)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.createListener(node->s_name));
 }
 
 static void spatosc_deleteNode(t_spatosc *x, t_symbol *node)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.deleteNode(node->s_name));
 }
 
 static void spatosc_connect(t_spatosc *x, t_symbol *from, t_symbol *to)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.connect(from->s_name, to->s_name));
 }
 
 static void spatosc_disconnect(t_spatosc *x, t_symbol *from, t_symbol *to)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.disconnect(from->s_name, to->s_name));
 }
 
 static void spatosc_clearScene(t_spatosc *x, int argc, t_atom *argv)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     UNUSED(argc);
     UNUSED(argv);
     output_success(x, x->wrapper.clearScene());
@@ -225,32 +239,44 @@ static void spatosc_clearScene(t_spatosc *x, int argc, t_atom *argv)
 
 static void spatosc_setConnectFilter(t_spatosc *x, t_symbol *filter)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.setConnectFilter(filter->s_name));
 }
 
 static void spatosc_setOrientation(t_spatosc *x, t_symbol *node, t_floatarg pitch, t_floatarg roll, t_floatarg yaw)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.setOrientation(node->s_name, pitch, roll, yaw));
 }
 
 static void spatosc_setPosition(t_spatosc *x, t_symbol *node, t_floatarg xPos, t_floatarg yPos, t_floatarg zPos)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.setPosition(node->s_name, xPos, yPos, zPos));
 }
 
 static void spatosc_setPositionAED(t_spatosc *x, t_symbol *node, t_floatarg angle, t_floatarg elevation, t_floatarg distance)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.setPositionAED(node->s_name, angle, elevation, distance));
 }
 
 static void spatosc_setAutoConnect(t_spatosc *x, t_floatarg enabled)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.setAutoConnect(enabled != 0.0f));
 }
 
 // TODO: invert port and host args?
 static void spatosc_addTranslator(t_spatosc *x, t_symbol *identifier, t_symbol *translator, t_symbol *host, t_floatarg port)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     std::string translatorName = "ConsoleTranslator";
     std::string sendToAddress = "localhost";
     std::string sendToPort = spatosc::BasicTranslator::DEFAULT_SEND_PORT;
@@ -291,53 +317,82 @@ static void spatosc_addTranslator(t_spatosc *x, t_symbol *identifier, t_symbol *
 
 static void spatosc_removeTranslator(t_spatosc *x, t_symbol *identifier)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.removeTranslator(identifier->s_name));
 }
 
 static void spatosc_hasTranslator(t_spatosc *x, t_symbol *identifier)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.hasTranslator(identifier->s_name));
 }
 
 // setNode*Property:
 static void spatosc_setNodeStringProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_symbol *value)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.setNodeStringProperty(node->s_name, key->s_name, value->s_name));
 }
 
 static void spatosc_setNodeFloatProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_floatarg value)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.setNodeFloatProperty(node->s_name, key->s_name, (double) value));
 }
 
 static void spatosc_setNodeIntProperty(t_spatosc *x, t_symbol *node, t_symbol *key, t_floatarg value)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.setNodeIntProperty(node->s_name, key->s_name, (int) value));
 }
 
 // removeNode*Property:
 static void spatosc_removeNodeStringProperty(t_spatosc *x, t_symbol *node, t_symbol *key)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.removeNodeStringProperty(node->s_name, key->s_name));
 }
 
 static void spatosc_removeNodeIntProperty(t_spatosc *x, t_symbol *node, t_symbol *key)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.removeNodeIntProperty(node->s_name, key->s_name));
 }
 
 static void spatosc_removeNodeFloatProperty(t_spatosc *x, t_symbol *node, t_symbol *key)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.removeNodeFloatProperty(node->s_name, key->s_name));
 }
 
 static void spatosc_setDistanceFactor(t_spatosc *x, t_symbol *src, t_symbol *sink, t_floatarg factor)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.setDistanceFactor(src->s_name, sink->s_name, factor));
 }
 
 static void spatosc_setDopplerFactor(t_spatosc *x, t_symbol *src, t_symbol *sink, t_floatarg factor)
 {
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
     output_success(x, x->wrapper.setDopplerFactor(src->s_name, sink->s_name, factor));
+}
+
+static void spatosc_forceRefresh(t_spatosc *x, int argc, t_atom *argv)
+{
+    if (SPATOSC_DEBUG)
+        post("[spatosc]: %s", __FUNCTION__);
+    UNUSED(argc);
+    UNUSED(argv);
+    output_success(x, x->wrapper.forceRefresh());
 }
 

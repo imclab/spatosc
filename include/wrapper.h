@@ -232,6 +232,11 @@ class DLLEXPORT Wrapper
          * Enables or disables a node.
          */
         bool setNodeActive(const std::string &node, bool active);
+        /**
+         * Refreshes all nodes and connections in the scene.
+         * @return Success or not.
+         */
+        bool forceRefresh();
     
     private:
         std::tr1::shared_ptr<Scene> scene_;

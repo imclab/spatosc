@@ -103,6 +103,13 @@ bool Wrapper::clearScene()
     return true;
 }
 
+bool Wrapper::forceRefresh()
+{
+    scene_->forceRefresh();
+    return true;
+}
+
+
 bool Wrapper::setAutoConnect(bool enabled)
 {
     scene_->setAutoConnect(enabled);
