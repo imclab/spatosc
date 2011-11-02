@@ -47,38 +47,18 @@
 void ParameterListenerDispatcher (void *inRefCon, void *inObject, const AudioUnitParameter *inParameter, Float32 inValue)
 {
 	SpatoscAUCocoaView *SELF = (SpatoscAUCocoaView *)inRefCon;
-    [SELF _parameterListener:inObject parameter:inParameter value:inValue];
+    [SELF priv_parameterListener:inObject parameter:inParameter value:inValue];
 }
  
 // This listener responds to parameter changes, gestures, and property notifications
 void EventListenerDispatcher (void *inRefCon, void *inObject, const AudioUnitEvent *inEvent, UInt64 inHostTime, Float32 inValue)
 {
 	SpatoscAUCocoaView *SELF = (SpatoscAUCocoaView *)inRefCon;
-    //[SELF retain];
-	[SELF priv_eventListener:inObject event:inEvent value:inValue];
+    //printf(SELF);
+    if (SELF != NULL) {
+        [SELF priv_eventListener:inObject event:inEvent value:inValue];
+    }
 	
-    /*
-	float azim, elev, dist;
-	
-	switch (inEvent->mArgument.mParameter.mParameterID)
-	{
-        case kSpatosc_Azim:
-			AudioUnitGetParameter([SELF getAU], kSpatosc_Elev, kAudioUnitScope_Global, 0, &elev);
-			AudioUnitGetParameter([SELF getAU], kSpatosc_Dist, kAudioUnitScope_Global, 0, &dist);
-			//lo_send(SELF->txAddr, "/AED", "fff", inValue, elev, dist);
-			break;
-		case kSpatosc_Elev:
-			AudioUnitGetParameter([SELF getAU], kSpatosc_Azim, kAudioUnitScope_Global, 0, &azim);
-			AudioUnitGetParameter([SELF getAU], kSpatosc_Dist, kAudioUnitScope_Global, 0, &dist);
-			//lo_send(SELF->txAddr, "/AED", "fff", azim, inValue, dist);
-			break;
-		case kSpatosc_Dist:
-			AudioUnitGetParameter([SELF getAU], kSpatosc_Azim, kAudioUnitScope_Global, 0, &azim);
-			AudioUnitGetParameter([SELF getAU], kSpatosc_Elev, kAudioUnitScope_Global, 0, &elev);
-			//lo_send(SELF->txAddr, "/AED", "fff", azim, elev, inValue);
-			break;
-	}
-     */
 	/*
      AudioUnitGetParameter(				AudioUnit					inUnit,
      AudioUnitParameterID		inID,
@@ -122,7 +102,8 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 
 - (void)dealloc
 {
-    [self _removeListeners];
+    printf("dealloc\n");
+    [self priv_removeListeners];
     [super dealloc];
 }
 
@@ -131,7 +112,7 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 - (void)setAU:(AudioUnit)inAU
 {
 	// remove previous listeners
-	if (mAU) [self _removeListeners];
+	if (mAU) [self priv_removeListeners];
 	mAU = inAU;
     
 	// Dome view observers
@@ -154,12 +135,17 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 	mParameter[2].mParameterID = kSpatosc_Dist;
 	mParameter[2].mScope = kAudioUnitScope_Global;
 	mParameter[2].mElement = 0;	
+    
+    mParameter[3].mAudioUnit = inAU;
+	mParameter[3].mParameterID = kSpatosc_DistMult;
+	mParameter[3].mScope = kAudioUnitScope_Global;
+	mParameter[3].mElement = 0;	
      
 	// add new listeners
-	[self _addListeners];
+	[self priv_addListeners];
 	
 	// initial setup
-	[self _synchronizeUIWithParameterValues];
+	[self priv_synchronizeUIWithParameterValues];
 }
 
 - (AudioUnit)getAU
@@ -200,9 +186,14 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
     }
 }
 
+- (IBAction)distMultChanged:(id)sender {
+    float floatValue = [sender floatValue];
+	NSAssert(AUParameterSet(mParameterListener, sender, &mParameter[3], (Float32)floatValue, 0) == noErr, @"[spatosc_CocoaView distMultChanged:] AUParameterSet()");
+}
+
 #pragma mark - Dome View Actions
 
-- (void) onDataChanged:(NSNotification *) aNotification
+- (void)onDataChanged:(NSNotification *) aNotification
 {
     AudioUnitParameter azimParameter = { mAU, kSpatosc_Azim, kAudioUnitScope_Global, 0 };
     AudioUnitParameter elevParameter = { mAU, kSpatosc_Elev,  kAudioUnitScope_Global, 0 };
@@ -211,7 +202,7 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 	NSAssert(AUParameterSet(mEventListener, elevField, &elevParameter, (Float32)domeView.zenith, 0) == noErr, @"[spatosc_CocoaView elevChanged:] AUParameterSet()");
 }
 
-- (void) onBeginGesture:(NSNotification *) aNotification 
+- (void)onBeginGesture:(NSNotification *) aNotification 
 {
 	AudioUnitEvent event;
 	AudioUnitParameter parameter = { mAU, kSpatosc_Azim, kAudioUnitScope_Global, 0 };
@@ -224,7 +215,7 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 	AUEventListenerNotify (mEventListener, self, &event);
 }
 
-- (void) onEndGesture:(NSNotification *) aNotification
+- (void)onEndGesture:(NSNotification *) aNotification
 {
 	AudioUnitEvent event;
 	AudioUnitParameter parameter = {mAU, kSpatosc_Azim, kAudioUnitScope_Global, 0 };
@@ -240,7 +231,7 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 #pragma mark - Notifications
 
 // This routine is called when the user has clicked on the slider. We need to send a begin parameter change gesture to alert hosts that the parameter may be changing value
--(void) handleMouseDown: (NSNotification *) aNotification {
+-(void)handleMouseDown: (NSNotification *) aNotification {
 	if ([aNotification object] == azimSlider) {
 		AudioUnitEvent event;
 		event.mArgument.mParameter = mParameter[0];
@@ -269,7 +260,7 @@ NSString *SpatoscAU_GestureSliderMouseUpNotification = @"CAGestureSliderMouseUpN
 	}
 }
 
--(void) handleMouseUp: (NSNotification *) aNotification {
+-(void)handleMouseUp: (NSNotification *) aNotification {
 	if ([aNotification object] == azimSlider) {
 		AudioUnitEvent event;
 		event.mArgument.mParameter = mParameter[0];
@@ -310,18 +301,18 @@ void addParamListener (AUEventListenerRef listener, void* refCon, AudioUnitEvent
 	verify_noerr ( AUEventListenerAddEventType(	listener, refCon, inEvent));	
 }
 
-- (void)_addListeners
+- (void)priv_addListeners
 {
 	NSAssert (	AUListenerCreate(	ParameterListenerDispatcher, self, 
                                     CFRunLoopGetCurrent(), kCFRunLoopDefaultMode, 0.100, // 100 ms
                                     &mParameterListener	) == noErr,
-                @"[SpatoscAUCocoaView _addListeners] AUListenerCreate()");
+                @"[SpatoscAUCocoaView priv_addListeners] AUListenerCreate()");
 	
     int i;
     for (i = 0; i < kNumberOfParameters; ++i) {
         mParameter[i].mAudioUnit = mAU;
         NSAssert (	AUListenerAddParameter (mParameterListener, NULL, &mParameter[i]) == noErr,
-                    @"[SpatoscAUCocoaView _addListeners] AUListenerAddParameter()");
+                    @"[SpatoscAUCocoaView priv_addListeners] AUListenerAddParameter()");
     }
     
     
@@ -342,27 +333,61 @@ void addParamListener (AUEventListenerRef listener, void* refCon, AudioUnitEvent
 	auEvent.mArgument.mParameter.mParameterID = kSpatosc_Dist;
 	addParamListener (mEventListener, self, &auEvent);
     
+    auEvent.mArgument.mParameter.mParameterID = kSpatosc_DistMult;
+	addParamListener (mEventListener, self, &auEvent);
+    
     /*
    	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleMouseDown:) name:SpatoscAU_GestureSliderMouseDownNotification object:uiParam1Slider];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleMouseUp:) name:SpatoscAU_GestureSliderMouseUpNotification object:uiParam1Slider];
      */
 }
 
-- (void)_removeListeners
+void removeParamListener (AUEventListenerRef listener, void* refCon, AudioUnitEvent *inEvent)
+{
+	inEvent->mEventType = kAudioUnitEvent_BeginParameterChangeGesture;
+	verify_noerr ( AUEventListenerRemoveEventType(	listener, refCon, inEvent));
+	
+	inEvent->mEventType = kAudioUnitEvent_EndParameterChangeGesture;
+	verify_noerr ( AUEventListenerRemoveEventType(	listener, refCon, inEvent));
+	
+	inEvent->mEventType = kAudioUnitEvent_ParameterValueChange;
+	verify_noerr ( AUEventListenerRemoveEventType(	listener, refCon, inEvent));	
+}
+
+- (void)priv_removeListeners
 {
     int i;
     for (i = 0; i < kNumberOfParameters; ++i) {
         NSAssert (	AUListenerRemoveParameter(mParameterListener, NULL, &mParameter[i]) == noErr,
-                    @"[SpatoscAUCocoaView _removeListeners] AUListenerRemoveParameter()");
+                    @"[SpatoscAUCocoaView priv_removeListeners] AUListenerRemoveParameter()");
     }
     
 	NSAssert (	AUListenerDispose(mParameterListener) == noErr,
-                @"[SpatoscAUCocoaView _removeListeners] AUListenerDispose()");
+                @"[SpatoscAUCocoaView priv_removeListeners] AUListenerDispose()");
+    
+    AudioUnitEvent auEvent;
+	AudioUnitParameter parameter = {mAU, kSpatosc_Azim, kAudioUnitScope_Global, 0 };
+	auEvent.mArgument.mParameter = parameter;
+    
+	auEvent.mArgument.mParameter.mParameterID = kSpatosc_Azim;
+	removeParamListener (mEventListener, self, &auEvent);
+    
+	auEvent.mArgument.mParameter.mParameterID = kSpatosc_Elev;
+	removeParamListener (mEventListener, self, &auEvent);
+    
+	auEvent.mArgument.mParameter.mParameterID = kSpatosc_Dist;
+	removeParamListener (mEventListener, self, &auEvent);
+    
+	auEvent.mArgument.mParameter.mParameterID = kSpatosc_DistMult;
+	removeParamListener (mEventListener, self, &auEvent);
+    
+    NSAssert (	AUListenerDispose(mEventListener) == noErr,
+              @"[SpatoscAUCocoaView priv_removeListeners] AUListenerDispose()");
                 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)_synchronizeUIWithParameterValues
+- (void)priv_synchronizeUIWithParameterValues
 {
 	Float32 value;
     int i;
@@ -370,7 +395,7 @@ void addParamListener (AUEventListenerRef listener, void* refCon, AudioUnitEvent
     for (i = 0; i < kNumberOfParameters; ++i) {
         // only has global parameters
         NSAssert (	AudioUnitGetParameter(mAU, mParameter[i].mParameterID, kAudioUnitScope_Global, 0, &value) == noErr,
-                    @"[SpatoscAUCocoaView synchronizeUIWithParameterValues] (x.1)");
+                  @"[SpatoscAUCocoaView synchronizeUIWithParameterValues] (x.1)");
         NSAssert (	AUParameterSet (mParameterListener, self, &mParameter[i], value, 0) == noErr,
                     @"[SpatoscAUCocoaView synchronizeUIWithParameterValues] (x.2)");
         NSAssert (	AUParameterListenerNotify (mParameterListener, self, &mParameter[i]) == noErr,
@@ -380,7 +405,7 @@ void addParamListener (AUEventListenerRef listener, void* refCon, AudioUnitEvent
 
 #pragma mark - Listener Callback Dispatchee
 
-- (void)_parameterListener:(void *)inObject parameter:(const AudioUnitParameter *)inParameter value:(Float32)inValue
+- (void)priv_parameterListener:(void *)inObject parameter:(const AudioUnitParameter *)inParameter value:(Float32)inValue
 {
 	switch (inParameter->mParameterID) {
 		case kSpatosc_Azim:
@@ -409,13 +434,14 @@ void addParamListener (AUEventListenerRef listener, void* refCon, AudioUnitEvent
         return;
     }
     
-    Float32 azim, elev, dist;
+    Float32 azim, elev, dist, distMult;
 	switch (inEvent->mEventType)
     {
 		case kAudioUnitEvent_ParameterValueChange:
             AudioUnitGetParameter([self getAU], kSpatosc_Azim, kAudioUnitScope_Global, 0, &azim);
             AudioUnitGetParameter([self getAU], kSpatosc_Elev, kAudioUnitScope_Global, 0, &elev);
             AudioUnitGetParameter([self getAU], kSpatosc_Dist, kAudioUnitScope_Global, 0, &dist);
+            AudioUnitGetParameter([self getAU], kSpatosc_DistMult, kAudioUnitScope_Global, 0, &distMult);
 			switch (inEvent->mArgument.mParameter.mParameterID) {
                 case kSpatosc_Azim:
                     [azimSlider setFloatValue: inValue];
@@ -437,7 +463,12 @@ void addParamListener (AUEventListenerRef listener, void* refCon, AudioUnitEvent
                     [distSlider setFloatValue: inValue];
                     [distField setFloatValue: inValue];
                     
-                    source->setPositionAED(azim/180.0*M_PI, elev/180.0*M_PI, inValue);
+                    source->setPositionAED(azim/180.0*M_PI, elev/180.0*M_PI, inValue*distMult);
+                    break;
+                case kSpatosc_DistMult:
+                    [distMultField setFloatValue: inValue];
+                    
+                    source->setPositionAED(azim/180.0*M_PI, elev/180.0*M_PI, inValue*dist);
                     break;
             }
 			break;

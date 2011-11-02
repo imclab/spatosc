@@ -83,6 +83,8 @@ SpatoscAU::SpatoscAU(AudioUnit component)
 	SetParameter(kSpatosc_Azim, kSpatosc_Azim_Def );
 	SetParameter(kSpatosc_Elev, kSpatosc_Elev_Def );
 	SetParameter(kSpatosc_Dist, kSpatosc_Dist_Def );
+	SetParameter(kSpatosc_DistMult, kSpatosc_DistMult_Def );
+	//SetParameter(kSpatosc_OSCFormat, kSpatosc_OSCFormat_Def );
 	//SetParameter(kSpatosc_AzimSpan, kSpatosc_AzimSpan_Def );
 	//SetParameter(kSpatosc_ElevSpan, kSpatosc_ElevSpan_Def );
         
@@ -141,6 +143,13 @@ OSStatus			SpatoscAU::GetParameterInfo(AudioUnitScope		inScope,
                 outParameterInfo.minValue = kSpatosc_Dist_Min;
                 outParameterInfo.maxValue = kSpatosc_Dist_Max;
                 outParameterInfo.defaultValue = kSpatosc_Dist_Def;
+                break;
+            case kSpatosc_DistMult:
+                AUBase::FillInParameterName (outParameterInfo, kSpatosc_DistMult_Name, false);
+                outParameterInfo.unit = kAudioUnitParameterUnit_Meters;
+                outParameterInfo.minValue = kSpatosc_DistMult_Min;
+                outParameterInfo.maxValue = kSpatosc_DistMult_Max;
+                outParameterInfo.defaultValue = kSpatosc_DistMult_Def;
                 break;
 			default:
                 result = kAudioUnitErr_InvalidParameter;

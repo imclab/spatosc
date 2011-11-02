@@ -317,9 +317,10 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
 - (void)mouseDragged:(NSEvent *)e
 {
 	NSPoint mouseLoc = [self convertPoint:[e locationInWindow] fromView:nil];
-	mMouseDown = YES;
+	//mMouseDown = YES;
     
-    if (mouseLoc.x < mDomeFrame.size.width && mouseLoc.y < mDomeFrame.size.height) {
+    //if (mouseLoc.x < mDomeFrame.size.width && mouseLoc.y < mDomeFrame.size.height) {
+    if (mMouseDown) {
         if ([e modifierFlags] & NSShiftKeyMask)
         {
             [self updateCoordsWithLockedZenith: mouseLoc];
@@ -332,7 +333,8 @@ NSString *kDomeViewEndGestureNotification= @"DomeViewEndGestureNotification";
         {
             [self updateCoords: mouseLoc];
         }
-    }
+    } 
+    //}
     
 	[self setNeedsDisplay:YES];
 }

@@ -80,10 +80,14 @@ extern NSString *kDomeViewEndGestureNotification;
     
     IBOutlet NSTextField           *distField;
     IBOutlet SpatoscAU_GestureSlider *distSlider;	
+    
+    IBOutlet NSTextField           *distMultField;
+    
+    IBOutlet NSMatrix *oscFormatToggle;
 	
     // Other Members
     AudioUnit 				mAU;
-	AudioUnitParameter		mParameter[3];
+	AudioUnitParameter		mParameter[4];
     AUParameterListenerRef	mParameterListener;
 	AUEventListenerRef		mEventListener;
 }
@@ -93,17 +97,18 @@ extern NSString *kDomeViewEndGestureNotification;
 - (AudioUnit)getAU;
 
 #pragma mark ____ INTERFACE ACTIONS ____
-- (IBAction) azimChanged:(id)sender;
-- (IBAction) elevChanged:(id)sender;
-- (IBAction) distChanged:(id)sender;
+- (IBAction)azimChanged:(id)sender;
+- (IBAction)elevChanged:(id)sender;
+- (IBAction)distChanged:(id)sender;
+- (IBAction)distMultChanged:(id)sender;
 
 #pragma mark ____ PRIVATE FUNCTIONS
-- (void)_synchronizeUIWithParameterValues;
-- (void)_addListeners;
-- (void)_removeListeners;
+- (void)priv_synchronizeUIWithParameterValues;
+- (void)priv_addListeners;
+- (void)priv_removeListeners;
 
 #pragma mark ____ LISTENER CALLBACK DISPATCHEE ____
-- (void)_parameterListener:(void *)inObject parameter:(const AudioUnitParameter *)inParameter value:(Float32)inValue;
+- (void)priv_parameterListener:(void *)inObject parameter:(const AudioUnitParameter *)inParameter value:(Float32)inValue;
 - (void)priv_eventListener:(void *) inObject event:(const AudioUnitEvent *)inEvent value:(Float32)inValue;
 
 @end

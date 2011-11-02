@@ -72,9 +72,11 @@ enum {
 	kSpatosc_Azim = 0,
 	kSpatosc_Elev = 1,
 	kSpatosc_Dist = 2,
-    //kSpatosc_AzimSpan = 3,
-    //kSpatosc_ElevSpan = 4,
-    kNumberOfParameters = 3
+    kSpatosc_DistMult = 3,
+    //kSpatosc_AzimSpan = 4,
+    //kSpatosc_ElevSpan = 5,
+    kNumberOfParameters = 4
+    //kNumberOfParameters = 6
 };
 
 static const AudioUnitPropertyID kSoundSourceID = 1000;
@@ -94,7 +96,20 @@ const float kSpatosc_Dist_Min = 0.0f;
 const float kSpatosc_Dist_Max = 1000.0f;
 const float kSpatosc_Dist_Def = 1.0f;
 
-// NEW stuff
+const CFStringRef kSpatosc_DistMult_Name = CFSTR("Distance Multiplier");
+const float kSpatosc_DistMult_Min = 0.0f;
+const float kSpatosc_DistMult_Max = 1000.0f;
+const float kSpatosc_DistMult_Def = 1.0f;
+
+/*
+const CFStringRef kSpatosc_OSCFormat_Name = CFSTR("OSCFormat");
+const CFStringRef kSpatosc_OSCFormat_Zirkonium = CFSTR("Zirkonium");
+const CFStringRef kSpatosc_OSCFormat_SPIN = CFSTR("SPIN");
+const CFStringRef kSpatosc_OSCFormat_DMitri = CFSTR("D-Mitri");
+const CFStringRef kSpatosc_OSCFormat_Def = kSpatosc_OSCFormat_SPIN;
+*/
+ 
+// NEW stuff - NOT implemented
 const CFStringRef kSpatosc_AzimSpan_Name = CFSTR("Asimuth Span");
 const float kSpatosc_AzimSpan_Min = 0.0f;
 const float kSpatosc_AzimSpan_Max = kSpatosc_Azim_Max * 2.0;
