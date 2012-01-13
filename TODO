@@ -4,10 +4,7 @@ Spatosc TODO
 August 2011 new stuff
 ---------------------
  * add SoundSource::setUri
- * Wrapper::setPositionAed
  * Node::refresh, Scene::refresh, Wrapper::refresh
- * [spatosc]::flushMessages
- * [spatosc]::setSynchronous
  * use boost::signals2 and simplify the OSC middleware that's in the Scene
 
 Critical multi-translator bug:
