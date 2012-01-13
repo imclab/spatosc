@@ -22,7 +22,6 @@
 #include "oscutils.h"
 #include "listener.h"
 #include <iostream>
-#include <cassert>
 
 namespace spatosc
 {
