@@ -1,4 +1,4 @@
-all: hello.node
+all: hello.node helloworld.node
 
 CFLAGS = -g  \
     -fPIC  \
@@ -17,8 +17,17 @@ hello.node: hello.o
 hello.o: hello.cpp
 	g++  ${CFLAGS} -c -o hello.o hello.cpp
 
-run: hello.node
+helloworld.node: helloworld.o
+	g++  ${LDFLAGS} helloworld.o -o helloworld.node
+
+helloworld.o: helloworld.cpp
+	g++  ${CFLAGS} -c -o helloworld.o helloworld.cpp
+
+runhello: hello.node
 	node ./test.js
+
+runhelloworld: helloworld.node
+	node ./test-helloworld.js
 
 clean:
 	rm -f *.o *.node
