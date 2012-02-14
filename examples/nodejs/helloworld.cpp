@@ -1,4 +1,7 @@
 #include <v8.h>
+#include <iostream>
+#include <sstream>
+#include <ostream>
 #include <node.h>
 
 using namespace node;
@@ -49,7 +52,9 @@ public:
     HandleScope scope;
     HelloWorld* hw = ObjectWrap::Unwrap<HelloWorld>(args.This());
     hw->m_count++;
-    Local<String> result = String::New("Hello World");
+    std::ostringstream os;
+    os << "Hello " << hw->m_count;
+    Local<String> result = String::New(os.str().c_str());
     return scope.Close(result);
   }
 
