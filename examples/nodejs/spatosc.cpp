@@ -1,10 +1,9 @@
 #include <v8.h>
 
-using namespace v8;
-
 extern "C" void
-init (Handle<Object> target) 
+init (v8::Handle<v8::Object> target) 
 {
-      HandleScope scope;
-        target->Set(String::New("hello"), String::New("World"));
+      v8::HandleScope scope;
+        target->Set(v8::String::New("hello"), v8::String::New("World"));
 }
+
