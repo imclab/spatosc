@@ -14,8 +14,8 @@ LDFLAGS = -lv8 -shared
 hello.node: hello.o
 	g++  ${LDFLAGS} hello.o -o hello.node
 
-hello.o: spatosc.cpp
-	g++  ${CFLAGS} -c -o hello.o spatosc.cpp
+hello.o: hello.cpp
+	g++  ${CFLAGS} -c -o hello.o hello.cpp
 
 run: hello.node
 	node ./test.js
