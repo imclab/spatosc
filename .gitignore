@@ -63,3 +63,7 @@ doxyfile.stamp
 man/
 examples/using-the-wrapper/hello
 examples/using-the-wrapper/run
+
+###### python module ######
+!python_module/Makefile
+python_modules/spatosc.so
