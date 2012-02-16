@@ -289,6 +289,7 @@ class DLLEXPORT Wrapper
          * Enables or disables a node.
          */
         bool setNodeActive(const std::string &node, bool active);
+        bool setVerbose(bool verbose);
     
     private:
         std::tr1::shared_ptr<Scene> scene_;

@@ -284,6 +284,12 @@ bool Wrapper::setTranslatorVerbose(const std::string &name, bool verbose)
     return false;
 }
 
+bool Wrapper::setVerbose(bool verbose)
+{
+    scene_->setVerbose(verbose);
+    return true;
+}
+
 bool Wrapper::setNodeStringProperty(const std::string &node, const std::string &key, const std::string &value)
 {
     Node *nodePtr = scene_->getNode(node);
