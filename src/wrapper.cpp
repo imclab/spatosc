@@ -219,7 +219,6 @@ bool Wrapper::setRadius(const std::string &nodeName, double radius)
     }
 }
 
-
 void Wrapper::setTranslation(double tx, double ty, double tz)
 {
     scene_->setTranslation(tx, ty, tz);
@@ -243,21 +242,24 @@ void Wrapper::setScale(double sx, double sy, double sz)
 bool Wrapper::addTranslator(const std::string &name, const std::string &type)
 {
     Translator *t = scene_->addTranslator(name, type);
-    if (t!=0) return true;
+    if (t != 0)
+        return true;
     return false;
 }
 
 bool Wrapper::addTranslator(const std::string &name, const std::string &type, const std::string &addr)
 {
     Translator *t = scene_->addTranslator(name, type, addr);
-    if (t!=0) return true;
+    if (t != 0)
+        return true;
     return false;
 }
 
 bool Wrapper::addTranslator(const std::string &name, const std::string &type, const std::string &addr, const std::string &fromPort)
 {
     Translator *t = scene_->addTranslator(name, type, addr, fromPort);
-    if (t!=0) return true;
+    if (t != 0)
+        return true;
     return false;
 }
 
