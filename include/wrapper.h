@@ -34,7 +34,7 @@ namespace spatosc
 class Scene;
 
 /**
- * Wraps the whole spatosc library.
+ * Wraps the whole SpatOSC library.
  * 
  * Implements the Facade design pattern.
  * It makes the internal details of the library opaque to the user. That means you cannot access the Scene or its nodes directly.
@@ -133,6 +133,13 @@ class DLLEXPORT Wrapper
          */ 
         bool setOrientation(const std::string &nodeName, double pitch, double roll, double yaw);
         /**
+         * See setOrientation
+         */
+        bool setNodeOrientation(const std::string &nodeName, double pitch, double roll, double yaw)
+        {
+            return setOrientation(nodeName, pitch, roll, yaw);
+        }
+        /**
          * Sets a node's position.
          * @return Success or not.
          */
@@ -155,6 +162,21 @@ class DLLEXPORT Wrapper
          * @return Success or not.
         */
         bool addTranslator(const std::string &name, const std::string &type);
+
+        /**
+         * See addTranslator
+         */
+        bool addTranslatorWithAddress(const std::string &name, const std::string &type, const std::string &addr)
+        {
+            return addTranslator(name, type, addr);
+        }
+        /**
+         * See addTranslator
+         */
+        bool addTranslatorWithoutAddress(const std::string &name, const std::string &type)
+        {
+            return addTranslator(name, type);
+        }
         /**
          * Adds a translator and specifies a remote host and port
          * @param name Is an unique reference name so that the translator may be modified or removed in the future.
