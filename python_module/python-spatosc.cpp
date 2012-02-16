@@ -1,6 +1,4 @@
 /*
- * basic_receiver.cpp
- *
  * This file is part of Spatosc.
  *
  * Copyright (c) 2010 Society for Arts and Technologies <info@sat.qc.ca>
@@ -22,14 +20,22 @@
 #include "spatosc/spatosc.h"
 #include <boost/python.hpp>
 
+using namespace boost::python;
+using namespace spatosc;
+
+// TODO: wrap overloaded methods:
+// BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(addTranslator_overloads, Wrapper::addTranslator_overloads, 2, 3) // min args, max args
+// .def("addTranslator", &Wrapper::addTranslator,
+//         addTranslator_overloads(args("name", "type", "addr"))
+//     )
+
 BOOST_PYTHON_MODULE(spatosc)
 {
-    using namespace boost::python;
-    using namespace spatosc;
 
-    class_<Wrapper>("Wrapper")
-        //.def("addTranslator", &Wrapper::addTranslator)
+    class_<Wrapper>("Wrapper", "Wraps a SpatOSC scene")
         .def("clearScene", &Wrapper::clearScene)
+        .def("addTranslatorWithAddress", &Wrapper::addTranslatorWithAddress)
+        .def("addTranslatorWithoutAddress", &Wrapper::addTranslatorWithoutAddress)
         .def("connect", &Wrapper::connect)
         .def("createListener", &Wrapper::createListener)
         .def("createSource", &Wrapper::createSource)
@@ -55,8 +61,8 @@ BOOST_PYTHON_MODULE(spatosc)
         .def("setNodeActive", &Wrapper::setNodeActive)
         .def("setNodeFloatProperty", &Wrapper::setNodeFloatProperty)
         .def("setNodeIntProperty", &Wrapper::setNodeIntProperty)
+        .def("setNodeOrientation", &Wrapper::setNodeOrientation)
         .def("setNodeStringProperty", &Wrapper::setNodeStringProperty)
-        //.def("setOrientation", &Wrapper::setOrientation)
         .def("setPosition", &Wrapper::setPosition)
         .def("setPositionAED", &Wrapper::setPositionAED)
         .def("setRadius", &Wrapper::setRadius)
