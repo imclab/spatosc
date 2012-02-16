@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+"""
+Rotates a sound source around.
+"""
+# FIXME: The scene doesn't seem to flush the messages!
+
 import spatosc
 import time
 
