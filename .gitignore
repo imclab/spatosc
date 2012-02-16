@@ -66,4 +66,8 @@ examples/using-the-wrapper/run
 
 ###### python module ######
 !python_module/Makefile
-python_modules/spatosc.so
+python_module/spatosc.so
+
+
+######### prototypes ########
+prototypes/nodejs/*.node
