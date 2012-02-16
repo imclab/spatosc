@@ -70,6 +70,7 @@ BOOST_PYTHON_MODULE(spatosc)
         .def("setSynchronous", &Wrapper::setSynchronous)
         .def("setTranslation", &Wrapper::setTranslation)
         .def("setTranslatorVerbose", &Wrapper::setTranslatorVerbose)
+        .def("setVerbose", &Wrapper::setVerbose)
         ;
 }
 
