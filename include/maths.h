@@ -587,6 +587,8 @@ Vector3 QuatToEuler(Quaternion q);
 /**
  * Converts spherical coordinates to 3D cartesian coordinates.
  * @param aed azimuth-elevation-distance coordinates.
+ * azimuth is in radians
+ * The default coordinate space in this library is left-handed. On the horizontal axis, +X is on the right. On the longitudinal axis, +Y is in the front. On the vertical axis, +Z is up.
  */
 Vector3 sphericalToCartesian(Vector3 aed);
 
