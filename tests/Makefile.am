@@ -8,6 +8,7 @@ check_PROGRAMS = \
     check_connections \
     check_distance \
     check_it_works \
+    check_maths \
     check_osc \
     check_oscutils \
     check_properties \
@@ -25,6 +26,7 @@ check_connectfilter_SOURCES = check_connectfilter.cpp
 check_connections_SOURCES = check_connections.cpp
 check_distance_SOURCES = check_distance.cpp
 check_it_works_SOURCES = check_it_works.cpp
+check_maths_SOURCES = check_maths.cpp
 check_osc_SOURCES = check_osc.cpp
 check_oscutils_SOURCES = check_oscutils.cpp
 check_properties_SOURCES = check_properties.cpp
