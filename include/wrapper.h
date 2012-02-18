@@ -146,6 +146,7 @@ class DLLEXPORT Wrapper
         bool setPosition(const std::string &nodeName, double x, double y, double z);
         /**
          * Sets a node's position using angle, elevation and distance.
+         * Angle is in radians.
          * @return Success or not.
          */
         bool setPositionAED(const std::string &nodeName, double angle, double elevation, double distance);
