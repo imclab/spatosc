@@ -17,13 +17,19 @@ def run():
     # scene.setSynchronous(True) # FIXME: does this work at all?
     scene.debugPrint()
     try:
+        deg2rad = 0.017453292519943
         angle = 0.0
         while True:
             time.sleep(1.0)
             angle = ((angle + 10.0) % 360.0)
-            scene.setPositionAED("source0", angle * 0.017453292519943, 0.0, 10.0)
+            #azim = 45 * deg2rad
+            azim = angle * deg2rad
+            #elev = angle * deg2rad
+            elev = 0.0
+            dist = 10.0
+            scene.setPositionAED("source0", azim, elev, dist)
             scene.debugPrint()
-            print("scene.setPositionAED(\"%s\", %f, %f, %f)" % ("source0", angle, 0.0, 10.0))
+            print("scene.setPositionAED(\"%s\", %f, %f, %f)" % ("source0", azim, elev, dist))
             scene.flushMessages()
     except KeyboardInterrupt, e:
         print("")

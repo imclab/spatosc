@@ -70,19 +70,12 @@ void Node::setActive(bool isActive)
 
 void Node::setPosition(double x, double y, double z)
 {
-    std::cout << "Node::setPosition " << x << " " << y << " " << z << std::endl;
     if (x != pos_.x || y != pos_.y || z != pos_.z)
     {
         pos_.x = x;
         pos_.y = y;
         pos_.z = z;
-        std::cout << x << " " << y << " " << z << std::endl;
         notifyScene();
-    }
-    else
-    {
-        std::cout << "same as before!!!!!!!!!!!!!!!" << std::endl;
-        std::cout << pos_.x << " " << pos_.y << " " << pos_.z << std::endl;
     }
 }
 
@@ -97,7 +90,6 @@ Vector3 Node::getPosition() const
 void Node::setPositionAED(double angle, double elevation, double distance)
 {
     Vector3 xyz = sphericalToCartesian(Vector3(angle, elevation, distance));
-    std::cout << "Node::setPositionAED " << angle << " " << elevation << " " << distance << std::endl;
     setPosition(xyz.x, xyz.y, xyz.z);
 }
 

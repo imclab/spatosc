@@ -191,7 +191,6 @@ bool Wrapper::setPosition(const std::string &nodeName, double x, double y, doubl
 
 bool Wrapper::setPositionAED(const std::string &nodeName, double angle, double elevation, double distance)
 {
-    std::cout << "Wrapper::setPositionAED " << nodeName << " " << angle << " " << elevation << " " << distance << std::endl;
     Node *node = scene_->getNode(nodeName);
     if (! node)
     {
