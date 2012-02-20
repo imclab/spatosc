@@ -389,14 +389,12 @@ Vector3 QuatToEuler(Quaternion q1)
 Vector3 sphericalToCartesian(Vector3 aed)
 {
     // http://en.wikipedia.org/wiki/Spherical_coordinate_system
-	// TODO: varify conversion
-    // XXX: x is actually a
-    // XXX: y is actually e
-    // XXX: z is actually d
-    double x = aed.z * sin(aed.y) * cos(aed.x);
-    double y = aed.z * sin(aed.y) * sin(aed.x);
-    double z = aed.z * cos(aed.y);
-
+    double a = aed.x;
+    double e = aed.y-M_PI/2;
+    double d = aed.z;
+    double x = d * sin(e) * cos(a);
+    double y = d * sin(e) * sin(a);
+    double z = d * cos(e);
     return Vector3(x,y,z);
 }
 

@@ -1,6 +1,11 @@
 #!/bin/bash
 CFLAGS = `python-config --cflags` `pkg-config --cflags spatosc-0.3` -I.. -enable-lib64 -fPIC -Wall
-LIBS = `python-config --libs` `pkg-config --libs spatosc-0.3` --enable-lib64 -fPIC -shared --start-group -lutil -lpthread --end-group -lboost_python-py26
+
+ifeq ($(shell uname -s),Darwin)
+  LIBS = `python-config --libs` `pkg-config --libs spatosc-0.3` --enable-lib64 -fPIC -shared --start-group -lutil -lpthread --end-group -lboost_python-mt -L/opt/local/lib
+else
+  LIBS = `python-config --libs` `pkg-config --libs spatosc-0.3` --enable-lib64 -fPIC -shared --start-group -lutil -lpthread --end-group -lboost_python-py26
+endif
 
 all: spatosc.so
 
