@@ -20,8 +20,9 @@ def run():
         angle = 0.0
         while True:
             time.sleep(1.0)
-            angle = (angle + 10.0) % 360.0
-            scene.setPositionAED("source0", angle, 0.0, 10.0)
+            angle = ((angle + 10.0) % 360.0)
+            scene.setPositionAED("source0", angle * 0.017453292519943, 0.0, 10.0)
+            scene.debugPrint()
             print("scene.setPositionAED(\"%s\", %f, %f, %f)" % ("source0", angle, 0.0, 10.0))
             scene.flushMessages()
     except KeyboardInterrupt, e:
