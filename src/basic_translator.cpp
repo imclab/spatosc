@@ -46,11 +46,9 @@ void BasicTranslator::debugPrint()
 
 void BasicTranslator::sendPosition(const std::string &prefix, Node *node)
 {
-
-	
-	// no need to send this to the renderer
+    // no need to send this to the renderer
     std::string path = prefix +  "/xyz";
-   Vector3 vect(node->getPosition());
+    Vector3 vect(node->getPosition());
     // sender_->sendMessage(path, "fff", vect.x, vect.y, vect.z, SPATOSC_ARGS_END);
 }
 
@@ -94,6 +92,7 @@ void BasicTranslator::pushSceneChange(const char *types, va_list ap)
     // (includes messages like createListener, createSoundSource, connect, etc)
     sender_->sendMessage("/spatosc/core", types, ap);
 }
+
 /*
 void BasicTranslator::pushSceneChange(const std::string &method, ...)
 {
@@ -131,6 +130,13 @@ void BasicTranslator::pushPropertyChange(Node *node, const std::string &key, con
     //std::cout << "pushing property for node " << node->getID() << ": " << key << value << std::endl;
     std::string path = "/spatosc/core/" + node->getType() + "/" + node->getID() + "/prop";
     sender_->sendMessage(path, "sf", key.c_str(), (float)value, SPATOSC_ARGS_END);
+}
+
+void BasicTranslator::pushChangeNodeURI(Node *node, const std::string &uri)
+{
+    //std::cout << "pushing URI for node " << node->getID() << ": " << uri << std::endl;
+    std::string path = "/spatosc/core/" + node->getType() + "/" + node->getID() + "/uri";
+    sender_->sendMessage(path, "s", uri.c_str(), SPATOSC_ARGS_END);
 }
 
 } // end namespace spatosc

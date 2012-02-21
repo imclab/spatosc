@@ -256,4 +256,11 @@ bool Node::removeIntProperty(const std::string &key)
     return int_properties_.removeProperty(key);
 }
 
+void Node::setURI(const std::string &uri)
+{
+    uri_ = uri;
+    scene_.onChangeNodeURI(this, uri);
+}
+
 } // end namespace spatosc
+

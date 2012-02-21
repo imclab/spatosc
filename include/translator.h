@@ -88,6 +88,15 @@ class Translator
         }
 
         /**
+         * This is called when a Node URI changes.
+         */
+        virtual void pushChangeNodeURI(Node *node, const std::string &uri)
+        {
+            UNUSED(node);
+            UNUSED(uri);
+        }
+
+        /**
          * Called when it's time to push OSC messages when a Node property has changed.
          */
         virtual void pushPropertyChange(Node *node, const std::string &key, const double &value)

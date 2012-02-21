@@ -56,6 +56,7 @@ class BasicTranslator : public Translator
         virtual void pushPropertyChange(Node *node, const std::string &key, const double &value);
         virtual void pushPropertyChange(Node *node, const std::string &key, const int &value);
 
+        virtual void pushChangeNodeURI(Node *node, const std::string &uri);
 
     private:
         std::tr1::shared_ptr<OscSender> sender_;

@@ -42,10 +42,10 @@ class SoundSource : public Node
         void addConnectionTo(const std::tr1::shared_ptr<Connection> &conn);
         void removeConnectionTo(const Connection *conn);
 
-        // TODO: media extension:
-
         /*
          * Possible uniform resource locators for a sound source:
+         * 
+         * Examples:
          * file://soundfilename.wav
          * file:///home/johndoe/soundfilename.wav
          * http://www.server.com/soundfile.wav
@@ -56,8 +56,8 @@ class SoundSource : public Node
          * rtsp://127.0.0.1:12311
          * pd_plugin://audio_plugin_patch.pd
          */
-        //TODO: void setURI(const std::string &uri);
-        //TODO: std::string getURI() const { return uri_; }
+        void setMediaURI(const std::string &uri);
+        std::string getMediaURI() const { return uri_; }
 
         /*
         enum PlayingState {NOT_APPLICABLE, PLAYING, PAUSED};

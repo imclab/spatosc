@@ -61,11 +61,11 @@ void SoundSource::onNodeChanged(bool forcedNotify)
         stateSent();
 }
 
-//void SoundSource::setURI(const std::string &uri)
-//{
-//    uri_ = uri;
-//    // TODO: trigger some signal so that the renderer sends some message
-//}
+void SoundSource::setMediaURI(const std::string &uri)
+{
+    uri_ = uri;
+    // TODO: trigger some signal so that the renderer sends some message
+}
 
 } // end namespace spatosc
 

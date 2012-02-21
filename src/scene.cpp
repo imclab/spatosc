@@ -733,5 +733,12 @@ Translator *Scene::addTranslator(const std::string &name, const std::string &typ
         return addTranslator(name, type, addr);
 }
 
+void Scene::onChangeNodeURI(Node *node, const std::string &uri)
+{
+    std::map<std::string, std::tr1::shared_ptr<Translator> >::iterator iter;
+    for (iter = translators_.begin(); iter != translators_.end(); ++iter)
+        iter->second->pushChangeNodeURI(node, uri);
+}
+
 } // end namespace spatosc
 

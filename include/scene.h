@@ -393,6 +393,10 @@ class Scene
          * to send updates for all nodes.
          */
         void forceRefresh();
+        /**
+         * Called by Node when its setURI method is called.
+         */
+        void onChangeNodeURI(Node *node, const std::string &uri);
 
     private:
         // private handle class

@@ -243,6 +243,11 @@ class Node
          * @return Whether it deleted it, or false if it was not there.
          */
         bool removeIntProperty(const std::string &key);
+        /**
+         * Sets the Media URI for this Node.
+         * Calls in turn Scene.onChangeNodeURI, which calls Translator.pushChangeNodeURI
+         */
+        void Node::setURI(const std::string &uri)
 
     protected:
         void forceNotifyScene();
