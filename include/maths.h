@@ -444,6 +444,7 @@ class Quaternion
             x(_x), y(_y), z(_z), w(_w)
             {}
         void ToAxis(Vector3 &axis, double angle){
+            (void) angle; // unused
             Quaternion q=(*this).Norm();
             angle=acosf(q.w)*2.0f /*TO_RADIANS*/;
             double sa=1.0f/sqrtf(1.0f-q.w*q.w);
