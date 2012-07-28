@@ -60,6 +60,7 @@ void Connection::recomputeConnection()
 	{
 		Vector3 connVec = src_->getPosition() - snk_->getPosition();
 		Vector3 snkDir = snk_->getOrientation() * Vector3(0.0, 1.0, 0.0);
+        (void) snkDir; // unused
 
 		// Rotate connVec by the negative of the rotation described by the snk's
 		// orientation. To do this, just flip the sign of the quat.w:

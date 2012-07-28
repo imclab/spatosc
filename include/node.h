@@ -247,7 +247,7 @@ class Node
          * Sets the Media URI for this Node.
          * Calls in turn Scene.onChangeNodeURI, which calls Translator.pushChangeNodeURI
          */
-        void Node::setURI(const std::string &uri)
+        void setURI(const std::string &uri);
 
     protected:
         void forceNotifyScene();
@@ -260,6 +260,7 @@ class Node
     private:
         Vector3 pos_;
         double radius_;
+        std::string uri_;
         // NOTE: onNodeChanged MUST call stateSent(), which unsets the changed
         // flag
         virtual void onNodeChanged(bool forcedNotify=false) = 0;
